@@ -41,6 +41,10 @@ describe User do
     }
   end
 
+  it "should respond to assignments" do
+    User.new(@attr).should respond_to :assignments
+  end
+
   it "should create a new instance given a valid attribute" do
     User.create!(@attr)
   end

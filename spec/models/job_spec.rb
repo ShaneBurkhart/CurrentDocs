@@ -14,19 +14,23 @@ require 'spec_helper'
 describe Job do
 
 	before do
-		@user = Job.create(name: "Job", user_id: 1)
+		@job = Job.create(name: "Job", user_id: 1)
 	end
   
   it "should respond to name" do
-  	Job.should respond_to :name
+  	@job.should respond_to :name
   end
 
   it "should respond to user" do
-  	@user.should respond_to :user
+  	@job.should respond_to :user
   end
 
 	it "should respond to plans" do
-  	@user.should respond_to :plans
+  	@job.should respond_to :plans
+  end
+
+  it "should respond to assignments" do
+    @job.should respond_to :assignments
   end
 
   it "should have a name" do
@@ -39,9 +43,9 @@ describe Job do
   	j.should_not be_valid
   end
 
-  it "should be valid" do
-  	j = Job.new(name: "Name", user_id: 1)
-  	j.should be_valid
+  it "should not have duplicate name for one user" do
+    one = Job.new(name: "Job", user_id: 1)
+    one.should_not be_valid
   end
 
 end
