@@ -1,26 +1,54 @@
-<%= link_to "Plansource", root_path, :class => 'brand' %>
-<ul class="nav">
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to 'Login', new_user_session_path %>
-    </li>
-  <% end %>
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to 'Edit account', edit_user_registration_path %>
-    </li>
-    <% if current_user.has_role? :admin %>
-      <li>
-      <%= link_to 'Admin', users_path %>
-      </li>
-    <% end %>
-  <% else %>
-    <li>
-    <%= link_to 'Sign up', new_user_registration_path %>
-    </li>
-  <% end %>
-</ul>
+<div class="container"> 
+  <h3><%= link_to "Plansource", root_path, :class => 'logo' %></h3>
+  <div class="navbar">
+    <nav class="navbar-inner">
+      <div class="container">
+
+        <ul class="nav">
+          <li class="<%= controller_name == "home" ? "active" : "" %>">
+            <%= link_to "About", root_path %>
+          </li>
+          <li>
+            <%= link_to "Mobile Apps", "https://play.google.com/store/apps/details?id=com.theplanviewer.donkka" %>
+          </li>
+          <li>
+            <%= link_to "Printing", "#" %>
+          </li>
+          <% if user_signed_in? %>
+            <li>
+            <%= link_to 'Edit account', edit_user_registration_path %>
+            </li>
+            <% if current_user.has_role? :admin %>
+              <li>
+              <%= link_to 'Admin', users_path %>
+              </li>
+            <% end %>
+          <% else %>
+            <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
+            <%= link_to 'Sign up', new_user_registration_path %>
+            </li>
+          <% end %>
+          <% if user_signed_in? %>
+            <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
+            <%= link_to 'My Jobs', "#" %>
+            </li>
+          <% end %>
+          <% if user_signed_in? %>
+            <li>
+            <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+            </li>
+          <% else %>
+            <li class="<%= controller_name == "sessions" && action_name == "new" ? "active" : "" %>">
+            <%= link_to 'Login', new_user_session_path %>
+            </li>
+          <% end %>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+</div>
+
+
+
+

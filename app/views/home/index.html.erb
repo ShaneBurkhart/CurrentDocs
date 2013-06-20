@@ -1,4 +1,22 @@
-<h3>Home</h3>
-<% @users.each do |user| %>
-  <p>User: <%=link_to user.name, user %></p>
-<% end %>
+<div class="hero-unit white">
+  <h1>Outdated Plans Suck!</h1>
+  <p>Getting the most recent plans to the jobsite is tough and expensive.  With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</p>
+  <%= link_to "Start For Free!", new_user_registration_path, class: "btn btn-success btn-large" %>
+</div>
+<div class="row">
+	<div class="span4">
+		<h2>Send Plans Fast!</h2>
+		<p>Send plans to jobsites at the speed of light!  Simply upload and share plans with anyone. Joining is easy and free!</p>
+		<%= link_to "Join Now", new_user_registration_path, class: "btn " %>
+	</div>
+	<div class="span4">
+		<h2>Mobile Viewing</h2>
+		<p>Quickly view all of your plans with our Android and iPhone apps.  Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office. </p>
+		<%= link_to "Learn More", "#", class: "btn " %>
+	</div>
+	<div class="span4">
+		<h2>Quick, Easy Printing!</h2>
+		<p>Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease.  Our prices make us an affordable alternative.</p>
+		<%= link_to "See Prices", "#", class: "btn" %>
+	</div>
+</div>

@@ -1,12 +1,20 @@
 PlanSource::Application.routes.draw do
   authenticated :user do
-    root :to => 'user#show'
+    root :to => 'home#index'
   end
   root :to => "home#index"
   devise_for :users
-  resources :users
+  resources :users, only: ["index", "show"]
 
-  resources :magazines do
-	  resources :ads
-	end
+  namespace :api do
+    resources :jobs, except: ["new", "edit"] do
+      resources :plans, except: ["new", "edit"]
+    end
+  end
+
+	match "/mobile" => "mobile#index"
+	match "/prints" => "prints#index"
+
+#bad implementation of about pages routes(Shouldn't user resources)
+	#resources :prints, only: ["index"]
 end

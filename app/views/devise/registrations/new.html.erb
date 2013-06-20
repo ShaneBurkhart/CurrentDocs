@@ -2,7 +2,9 @@
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-vertical' }) do |f| %>
   <%= f.error_notification %>
   <%= display_base_errors resource %>
-  <%= f.input :name, :autofocus => true %>
+  <%= f.association :roles, :collection => ["Viewer", "Manager"],
+    :value_method => lambda { |el| Role.find_by_name(el).id }, :as => :radio_buttons, :required => true, :checked => Role.find_by_name("Viewer").id  %>
+  <%= f.input :name, :autofocus => true, :required => true %>
   <%= f.input :email, :required => true %>
   <%= f.input :password, :required => true %>
   <%= f.input :password_confirmation, :required => true %>

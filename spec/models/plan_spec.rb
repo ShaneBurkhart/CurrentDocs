@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: plans
+#
+#  id         :integer          not null, primary key
+#  page_name  :string(255)
+#  filename   :string(255)
+#  job_id     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 require 'spec_helper'
 
 describe Plan do
