@@ -9,13 +9,13 @@
             <%= link_to "About", root_path %>
           </li>
           <li>
-            <%= link_to "Mobile Apps", "https://play.google.com/store/apps/details?id=com.theplanviewer.donkka" %>
+            <%= link_to "Mobile Apps", mobile_path %>
           </li>
-          <li>
-            <%= link_to "Printing", "#" %>
+          <li class="<%= controller_name == "prints" ? "active" : "" %>">
+            <%= link_to "Printing", prints_path %>
           </li>
           <% if user_signed_in? %>
-            <li>
+            <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
             <%= link_to 'Edit account', edit_user_registration_path %>
             </li>
             <% if current_user.has_role? :admin %>
@@ -29,8 +29,8 @@
             </li>
           <% end %>
           <% if user_signed_in? %>
-            <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
-            <%= link_to 'My Jobs', "#" %>
+            <li class="<%= controller_name == "app" ? "active" : "" %>">
+            <%= link_to 'My Jobs', app_path %>
             </li>
           <% end %>
           <% if user_signed_in? %>

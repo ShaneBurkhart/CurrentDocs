@@ -1,0 +1,30 @@
+<% content_for :head do %>
+	<%= javascript_include_tag "plan_source" %>
+<% end %>
+<div id="ember-job-app"></div>
+
+<script type="text/x-handlebars">
+	{{outlet}}
+</script>
+
+<script type="text/x-handlebars" id="jobs">
+	<table class="table table-hover">
+		<thead>
+			<th>Job Name</th>
+			<th class="pull-right">Controls</th>
+		</thead>
+		<tbody>
+			{{#each model}}
+				<tr>
+					<td>{{name}}</td>
+					<td>
+						<ul class="controls pull-right unstyled">
+							<li><a href="">Edit</a></li>
+							<li><a href="">Delete</a></li>
+						</ul>
+					</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>	
+</script>

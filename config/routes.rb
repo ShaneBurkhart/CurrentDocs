@@ -14,6 +14,7 @@ PlanSource::Application.routes.draw do
 
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
+  match "/app" => "app#index"
 
 #bad implementation of about pages routes(Shouldn't user resources)
 	#resources :prints, only: ["index"]
