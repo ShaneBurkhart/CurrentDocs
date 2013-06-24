@@ -2,28 +2,112 @@
 	<%= javascript_include_tag "plan_source" %>
 <% end %>
 <div id="ember-job-app"></div>
+<form enctype="multipart/form-data" class="hidden invisible" id="plan_source_upload_form">
+	<input type="hidden" name="plan_id" id="plan_id">
+	<input type="file" name="file" id="file">
+	<input type="submit" value="Submit" id="submit">
+</form>
 
 <script type="text/x-handlebars">
 	{{outlet}}
 </script>
 
+<script type="text/x-handlebars" id="add_job_view">
+	{{#if view.isAdding}}
+		<input type="text" id="new-job-name" placeholder="Enter a job name" autofocus>
+		<span class="muted">Press enter to add</span>
+	{{else}}
+		<a href="" class="btn btn-success btn-long" {{action "add" target="view"}}>+ Add Job</a>
+	{{/if}}
+</script>
+
+<script type="text/x-handlebars" id="add_plan_view">
+	{{#if view.isAdding}}
+		<input type="text" id="new-plan-name" placeholder="Enter a plan name" autofocus>
+		<span class="muted">Press enter to add</span>
+	{{else}}
+		<a href="" class="btn btn-success btn-long" {{action "add" target="view"}}>+ Add Plan</a>
+	{{/if}}
+</script>
+
 <script type="text/x-handlebars" id="jobs">
+	{{outlet}}
+</script>
+
+<script type="text/x-handlebars" id="jobs/index">
+	<h2>My Jobs</h2>
+	{{view "PlanSource.AddJobView"}}
 	<table class="table table-hover">
 		<thead>
 			<th>Job Name</th>
-			<th class="pull-right">Controls</th>
+			<th>Owner</th>
+			<% if can? :destroy, Job %>
+				<th class="pull-right">Controls</th>
+			<% end %>
 		</thead>
 		<tbody>
-			{{#each model}}
-				<tr>
+			{{#each controller itemController="job"}}
+				{{#linkTo "plans" this tagName="tr" classNames="job"}}
 					<td>{{name}}</td>
+					<td>{{user.name}}</td>
 					<td>
+						<% if can? :destroy, Job %>
 						<ul class="controls pull-right unstyled">
 							<li><a href="">Edit</a></li>
-							<li><a href="">Delete</a></li>
+							<li><a href="" {{action "delete"}}>Delete</a></li>
 						</ul>
+						<% end %>
+					</td>
+				{{/linkTo}}
+				{{else}}
+				<tr>
+					<td>
+						<p>You don't have any jobs.</p>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>	
+</script>
+
+<script type="text/x-handlebars" id="plans">
+	<h2>{{name}}</h2>
+	{{view "PlanSource.AddPlanView"}}
+	<table class="table table-hover">
+		<thead>
+			<th>#</th>
+			<th>Plan Name</th>
+			<th>Filename</th>
+			<% if can? :destroy, Job %>
+				<th class="pull-right">Controls</th>
+			<% end %>
+		</thead>
+		<tbody>
+			{{#each plans itemController="plan"}}
+				<tr>
+					<td>{{pageNum}}</td>
+					<td>{{pageName}}</td>
+					<td>{{filename}}</td>
+					<td>
+						<% if can? :destroy, Job %>
+						<ul class="controls pull-right unstyled">
+							<li><a {{action "upload"}} data-id="{{unbound id}}">Upload</a></li>
+							<li><a {{action "delete"}}>Delete</a></li>
+						</ul>
+						<% end %>
 					</td>
 				</tr>
+				{{else}}
+					<tr>
+						<td>
+							<p>There aren't any plans in this job.</p>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
 			{{/each}}
 		</tbody>
 	</table>	

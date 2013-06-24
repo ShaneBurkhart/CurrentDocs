@@ -13,7 +13,7 @@
 class Plan < ActiveRecord::Base
 	belongs_to :job
   attr_accessible :filename, :job_id, :page_name
-  validates :filename, :job_id, :page_name, presence: true
+  validates :job_id, :page_name, presence: true
   validate :check_for_duplicate_page_name_in_job
 
 
@@ -21,6 +21,9 @@ class Plan < ActiveRecord::Base
 	  def check_for_duplicate_page_name_in_job
 	  	p = Plan.find_all_by_job_id(self.job_id)
 	  	p.each do |plan|
+	  		if(plan.id == self.id)
+	  			return
+	  		end
   			if(plan.page_name == self.page_name)
   				errors.add(:page_name, 'already exists')
   				return

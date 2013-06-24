@@ -1,27 +1,36 @@
 class Api::JobsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :user_not_there!
 
   def index
-    render :json => current_user.jobs
+    jobs = current_user.jobs
+    jobs.each do |job|
+      plan_ids! job
+    end
+    render :json => {:jobs => jobs, :plans => plans_from_jobs_array(jobs)}
   end
 
   def show
     begin
       job = current_user.jobs.find(params[:id])
+      plan_ids! job
     rescue Exception => e
       job = []
     end
-    render :json => job
+    render :json => {:job => job, :plans => job.plans}
   end
 
   def create
-    if current_user.can? :create
-      Job.create(params["job"])
+    if can? :create, Job
+      job = Job.create(:name => params["job"]["name"], :user_id => current_user.id)
+      plan_ids! job
+      render :json => {:job => job}
+    else
+      render :text => "You don't have permission to do that"
     end
   end
 
   def update
-    if current_user.can? :update
+    if can? :update
       Job.update_attributes(params["job"])
     end
   end
@@ -29,12 +38,39 @@ class Api::JobsController < ApplicationController
   def destroy
     begin
       job = current_user.jobs.find(params[:id])
-      if current_user.can? :destroy
+      if !job
+        render :text => "No job with that index"
+      end
+      if can? :destroy, Job
         job.destroy
+        render :json => nil, :status => :ok
       else
         render :text => "You do not have permission to do that"
       end
     rescue Exception => e
+      render :text => e.to_s, :status => :ok
     end
   end
+
+  private
+
+    def plans_from_jobs_array(jobs)
+      plans = []
+      jobs.each do |job|
+        plans += job.plans
+      end
+      plans
+    end
+
+    def plan_ids!(job)
+      ids = []
+      job.plans.each do |plan|
+        ids[plan.id]
+      end
+      job[:plan_ids] = ids
+    end
+
+    def user_not_there! 
+      render :text => "No user currently signed in" unless user_signed_in?
+    end
 end

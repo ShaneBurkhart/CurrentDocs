@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Plansource" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Plansource" %>">
@@ -20,7 +21,9 @@
           </div>
         </div>
       </div> <!--! end of .container -->
+      <div id="push"></div>
     </div> <!--! end of #main -->
+
     <footer>
       <div class="container">
         <p class="muted credit">Create By <a href="">Shane Burkhart</a></p>

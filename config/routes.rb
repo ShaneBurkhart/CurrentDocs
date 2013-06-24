@@ -7,15 +7,14 @@ PlanSource::Application.routes.draw do
   resources :users, only: ["index", "show"]
 
   namespace :api do
-    resources :jobs, except: ["new", "edit"] do
-      resources :plans, except: ["new", "edit"]
-    end
+    resources :jobs, except: ["new", "edit"]
+    resources :plans, except: ["new", "edit"]
+    resources :users, except: ["new", "edit"]
+    resource :upload, only: ["create"]
   end
 
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
   match "/app" => "app#index"
 
-#bad implementation of about pages routes(Shouldn't user resources)
-	#resources :prints, only: ["index"]
 end
