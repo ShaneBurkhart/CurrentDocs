@@ -14,7 +14,7 @@ PlanSource.AddPlanView = Ember.View.extend({
     if(!name || name == "")
     	return;
     job = this.get("controller").get("model");
-    var plan = PlanSource.Plan.createRecord({"pageName" : name});
+    var plan = PlanSource.Plan.createRecord({"planName" : name});
 		job.get("plans").pushObject(plan);
 		plan.save();
 		container.val("");

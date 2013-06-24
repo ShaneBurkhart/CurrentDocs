@@ -87,8 +87,8 @@
 		<tbody>
 			{{#each plans itemController="plan"}}
 				<tr>
-					<td>{{pageNum}}</td>
-					<td>{{pageName}}</td>
+					<td>{{planNum}}</td>
+					<td>{{planName}}</td>
 					<td>{{filename}}</td>
 					<td>
 						<% if can? :destroy, Job %>

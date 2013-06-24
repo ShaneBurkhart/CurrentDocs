@@ -12,20 +12,34 @@
 
 class Plan < ActiveRecord::Base
 	belongs_to :job
-  attr_accessible :filename, :job_id, :page_name
-  validates :job_id, :page_name, presence: true
-  validate :check_for_duplicate_page_name_in_job
+  attr_accessible :filename, :job_id, :plan_name, :plan_num
+  validates :job_id, :plan_num, :plan_name, presence: true
+  validate :check_for_duplicate_plan_name_in_job
+  validate :check_for_duplicate_plan_num
 
 
 	private
-	  def check_for_duplicate_page_name_in_job
+		def check_for_duplicate_plan_num
+			p = Plan.find_all_by_job_id(self.job_id)
+	  	p.each do |plan|
+	  		if(plan.id == self.id)
+	  			return
+	  		end
+  			if(plan.plan_num == self.plan_num)
+  				errors.add(:plan_num, 'already exists')
+  				return
+	  		end
+	  	end
+		end
+
+	  def check_for_duplicate_plan_name_in_job
 	  	p = Plan.find_all_by_job_id(self.job_id)
 	  	p.each do |plan|
 	  		if(plan.id == self.id)
 	  			return
 	  		end
-  			if(plan.page_name == self.page_name)
-  				errors.add(:page_name, 'already exists')
+  			if(plan.plan_name == self.plan_name)
+  				errors.add(:plan_name, 'already exists')
   				return
 	  		end
 	  	end

@@ -1,5 +1,6 @@
 PlanSource.Plan = DS.Model.extend({
-	pageName : DS.attr("string"),
+	planNum : DS.attr("number"),
+	planName : DS.attr("string"),
 	filename : DS.attr("string"),
 	job : DS.belongsTo("PlanSource.Job")
 });

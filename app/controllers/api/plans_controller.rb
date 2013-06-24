@@ -21,6 +21,7 @@ class Api::PlansController < ApplicationController
 
   def create
     if can? :create, Plan
+      params["plan"][:plan_num] = next_plan_num(params["plan"][:job_id])
       plan = Plan.create(params["plan"])
       render :json => {:plan => plan}
     else
@@ -56,6 +57,20 @@ class Api::PlansController < ApplicationController
   end
 
   private
+
+    def next_plan_num(job_id)
+      greatest = 0
+      begin
+        Job.find(job_id).plans.each do |plan|
+          if plan.plan_num >= greatest
+            greatest = plan.plan_num
+          end
+        end
+        return greatest + 1
+      rescue
+        return greatest
+      end
+    end
 
     def find_plan(plan_id)
       current_user.jobs.each do |job|

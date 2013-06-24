@@ -20,7 +20,6 @@ PlanSource.AddJobView = Ember.View.extend({
   },
 
 	keyPress: function(e){
-		console.log("Adding");
 		var code = (e.keyCode ? e.keyCode : e.which);
 	  if (code == 13)
 			this.addJob(e);
