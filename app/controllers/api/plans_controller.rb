@@ -30,9 +30,12 @@ class Api::PlansController < ApplicationController
   end
 
   def update
-    #if can? :update
-    #  Job.update_attributes(params["job"])
-    #end
+    if can? :update, Plan
+      plan = Plan.create(params["plan"])
+      render :json => {:plan => plan}
+    else
+      render :text => "You don't have permission to do that"
+    end
   end
 
   def destroy

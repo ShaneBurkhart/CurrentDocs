@@ -40,6 +40,7 @@ $.fn.upload = function(remote, successFn, progressFn) {
         });
     });
 }
+
 $(document).ready(function(){
 	$("#file").change(function(){
 		if(!$(this).val() || $(this).val() == "")
@@ -47,9 +48,10 @@ $(document).ready(function(){
 		var plan_id = $("#plan_id").val();
 		$("#plan_source_upload_form").upload("/api/upload", function(){
 			PlanSource.Plan.find(plan_id).reload();
-			console.log("Finished");
+            $(".loading").slideUp(75);
 		}, function(p){
-			console.log(p.loaded/p.total*100);
+            $(".loading").slideDown(75);
+            $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
 		});
 		$(this).val("");
 	});	

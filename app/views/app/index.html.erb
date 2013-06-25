@@ -1,12 +1,19 @@
 <% content_for :head do %>
 	<%= javascript_include_tag "plan_source" %>
 <% end %>
+<div class="loading">
+	<p class="loading-text">Loading... <span class="loading-percent">100</span>%</p>
+</div>
 <div id="ember-job-app"></div>
 <form enctype="multipart/form-data" class="hidden invisible" id="plan_source_upload_form">
 	<input type="hidden" name="plan_id" id="plan_id">
 	<input type="file" name="file" id="file">
 	<input type="submit" value="Submit" id="submit">
 </form>
+
+<script type="text/javascript">
+	user = "<%= current_user.name %>";
+</script>
 
 <script type="text/x-handlebars">
 	{{outlet}}
@@ -49,7 +56,13 @@
 			{{#each controller itemController="job"}}
 				{{#linkTo "plans" this tagName="tr" classNames="job"}}
 					<td>{{name}}</td>
-					<td>{{user.name}}</td>
+					<td>
+						{{#if isMe}}
+							Me
+						{{else}}
+							{{user.name}}
+						{{/if}}
+						</td>
 					<td>
 						<% if can? :destroy, Job %>
 						<ul class="controls pull-right unstyled">
@@ -74,7 +87,8 @@
 
 <script type="text/x-handlebars" id="plans">
 	<h2>{{name}}</h2>
-	{{view "PlanSource.AddPlanView"}}
+	<p>{{#linkTo index}}Back to your jobs{{/linkTo}}</p>
+	<p>{{view "PlanSource.AddPlanView"}}</p>
 	<table class="table table-hover">
 		<thead>
 			<th>#</th>
@@ -87,12 +101,29 @@
 		<tbody>
 			{{#each plans itemController="plan"}}
 				<tr>
-					<td>{{planNum}}</td>
-					<td>{{planName}}</td>
+					<td>
+						{{#if isEditing}}
+							{{view Ember.TextField valueBinding="planNum" classNames="short"}}
+						{{else}}
+							{{planNum}}
+						{{/if}}
+					</td>
+					<td>
+						{{#if isEditing}}
+							{{view Ember.TextField valueBinding="planName"}}
+						{{else}}
+							{{planName}}
+						{{/if}}
+					</td>
 					<td>{{filename}}</td>
 					<td>
 						<% if can? :destroy, Job %>
 						<ul class="controls pull-right unstyled">
+							{{#if isEditing}}
+								<li><a {{action "doneEditing"}}>Done Editing</a></li>
+							{{else}}
+								<li><a {{action "edit"}}>Edit</a></li>
+							{{/if}}
 							<li><a {{action "upload"}} data-id="{{unbound id}}">Upload</a></li>
 							<li><a {{action "delete"}}>Delete</a></li>
 						</ul>
