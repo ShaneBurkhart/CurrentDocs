@@ -14,3 +14,11 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require uploadify
+
+$(document).ready(function(){
+	var xhr2 = ( window.FormData !== undefined );
+	if(!xhr2){
+		$(".browser-error").attr("class", "browser-error");
+		$("body").css("padding-top", "40px");
+	}
+});
