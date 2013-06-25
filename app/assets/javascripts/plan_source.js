@@ -56,3 +56,9 @@ $(document).ready(function(){
 		$(this).val("");
 	});	
 });
+
+
+PlanSource.download = function(plan_id){
+    if(plan_id)
+        $(".downloader").attr("src", "/api/download/" + plan_id);
+}

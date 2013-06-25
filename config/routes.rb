@@ -11,6 +11,7 @@ PlanSource::Application.routes.draw do
     resources :plans, except: ["new", "edit"]
     resources :users, except: ["new", "edit"]
     resource :upload, only: ["create"]
+    match "/download/:id" => "downloads#download"
   end
 
 	match "/mobile" => "mobile#index"

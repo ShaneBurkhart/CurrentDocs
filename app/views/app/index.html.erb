@@ -10,6 +10,7 @@
 	<input type="file" name="file" id="file">
 	<input type="submit" value="Submit" id="submit">
 </form>
+<iframe class="downloader hidden"></iframe>
 
 <script type="text/javascript">
 	user = "<%= current_user.name %>";
@@ -115,7 +116,7 @@
 							{{planName}}
 						{{/if}}
 					</td>
-					<td>{{filename}}</td>
+					<td><a href="/api/download/{{unbound id}}">{{filename}}</a></td>
 					<td>
 						<% if can? :destroy, Job %>
 						<ul class="controls pull-right unstyled">
