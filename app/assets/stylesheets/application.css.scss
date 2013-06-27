@@ -10,11 +10,11 @@
  *
  *= require_self
  *= require_tree .
- *= require uploadify
 */
 
 @import "bootstrap";
 @import "bootstrap-responsive";
+/*@import "bootstrap-override";*/
 
 .logo{
 	text-decoration: none;

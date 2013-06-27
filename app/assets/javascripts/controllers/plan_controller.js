@@ -20,7 +20,14 @@ PlanSource.PlanController = Ember.ObjectController.extend({
 
 	doneEditing : function(){
 		this.set("isEditing", false);
-		this.commit();
+		this.get("model").save();
+	},
+
+	keyPress: function(e){
+		console.log("Test");
+		var code = (e.keyCode ? e.keyCode : e.which);
+	  if (this.get("isEditing") && code == 13)
+			this.doneEditing(e);
 	}
 
 });

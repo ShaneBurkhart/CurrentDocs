@@ -31,7 +31,8 @@ class Api::PlansController < ApplicationController
 
   def update
     if can? :update, Plan
-      plan = Plan.create(params["plan"])
+      plan = Plan.find(params[:id])
+      plan.update_attributes(params["plan"])
       render :json => {:plan => plan}
     else
       render :text => "You don't have permission to do that"
