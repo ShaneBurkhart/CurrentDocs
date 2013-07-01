@@ -15,27 +15,47 @@ class Plan < ActiveRecord::Base
   attr_accessible :filename, :job_id, :plan_name, :plan_num
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
-  validate :check_for_duplicate_plan_num
-  #before_validation :fix_plan_num
+  #validate :check_for_duplicate_plan_num
+  before_destroy :delete_file, :delete_plan_num
 
+  def delete_file
+  	path = Rails.root.join("public", "_files", self.id.to_s)
+  	return unless File.exists?(path)
+  	File.delete path
+  end
 
-	private
-		def fix_plan_num
-			#check if greater than highest
-			highest = highest_plan_num
-			self.plan_num = plan_num > highest ? highest : self.plan_num
-			
-			p = Plan.find_all_by_job_id(self.job_id)
-	  	p.each do |plan|
-	  		if(plan.id == self.id)
-	  			return
-	  		end
-  			if(plan.plan_num == self.plan_num)
-  				errors.add(:plan_num, 'already exists')
-  				return
-	  		end
-	  	end
+  def delete_plan_num
+  	p = Plan.find_all_by_job_id(self.job_id)
+  	p.each do |plan|
+  		next unless(plan.id != self.id)
+			if plan.plan_num > self.plan_num
+				plan.update_attributes(:plan_num => plan.plan_num - 1)
+  		end
+  	end
+  end
+
+	def set_plan_num(num)
+		oldNum = self.plan_num
+		highest = highest_plan_num
+		self.plan_num = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
+		if self.plan_num == oldNum
+			return #return if nothing changed
 		end
+		if self.plan_num > oldNum
+			op = ">"; at = "-"; op2 = "<="
+		else
+			op = "<";	at = "+"; op2 = ">="
+		end
+		p = Plan.find_all_by_job_id(self.job_id)
+  	p.each do |plan|
+  		next unless(plan.id != self.id)
+			if(plan.plan_num.send(op, oldNum) && plan.plan_num.send(op2, self.plan_num))
+				plan.update_attributes(:plan_num => plan.plan_num.send(at, 1))
+  		end
+  	end
+	end
+
+		private
 
 		def highest_plan_num
 			greatest = 1

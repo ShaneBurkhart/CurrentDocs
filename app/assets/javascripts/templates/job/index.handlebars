@@ -1,0 +1,16 @@
+<h2>{{name}}</h2>
+<p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
+<p>{{view "PlanSource.AddPlanView"}}</p>
+<table class="table table-hover">
+	<thead>
+		<th>#</th>
+		<th>Plan Name</th>
+		<th>Filename</th>
+		<th class="pull-right">Controls</th>
+	</thead>
+	<tbody>
+
+	{{outlet}}
+
+	</tbody>
+</table>	

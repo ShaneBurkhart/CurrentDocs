@@ -4,7 +4,12 @@
 <div class="loading">
 	<p class="loading-text">Loading... <span class="loading-percent">100</span>%</p>
 </div>
-<div id="ember-job-app"></div>
+<div class="section">
+	<div class="container">
+		<div id="ember-job-app" class="box box-border"></div>
+	</div>
+</div>
+
 <form enctype="multipart/form-data" class="hidden invisible" id="plan_source_upload_form">
 	<input type="hidden" name="plan_id" id="plan_id">
 	<input type="file" name="file" id="file">
@@ -16,9 +21,7 @@
 	user = "<%= current_user.name %>";
 </script>
 
-<script type="text/x-handlebars">
-	{{outlet}}
-</script>
+
 
 <script type="text/x-handlebars" id="add_job_view">
 	{{#if view.isAdding}}
@@ -36,111 +39,4 @@
 	{{else}}
 		<a href="" class="btn btn-success btn-long" {{action "add" target="view"}}>+ Add Plan</a>
 	{{/if}}
-</script>
-
-<script type="text/x-handlebars" id="jobs">
-	{{outlet}}
-</script>
-
-<script type="text/x-handlebars" id="jobs/index">
-	<h2>My Jobs</h2>
-	{{view "PlanSource.AddJobView"}}
-	<table class="table table-hover">
-		<thead>
-			<th>Job Name</th>
-			<th>Owner</th>
-			<% if can? :destroy, Job %>
-				<th class="pull-right">Controls</th>
-			<% end %>
-		</thead>
-		<tbody>
-			{{#each controller itemController="job"}}
-				{{#linkTo "plans" this tagName="tr" classNames="job"}}
-					<td>{{name}}</td>
-					<td>
-						{{#if isMe}}
-							Me
-						{{else}}
-							{{user.name}}
-						{{/if}}
-						</td>
-					<td>
-						<% if can? :destroy, Job %>
-						<ul class="controls pull-right unstyled">
-							<li><a href="">Edit</a></li>
-							<li><a href="" {{action "delete"}}>Delete</a></li>
-						</ul>
-						<% end %>
-					</td>
-				{{/linkTo}}
-				{{else}}
-				<tr>
-					<td>
-						<p>You don't have any jobs.</p>
-					</td>
-					<td></td>
-					<td></td>
-				</tr>
-			{{/each}}
-		</tbody>
-	</table>	
-</script>
-
-<script type="text/x-handlebars" id="plans">
-	<h2>{{name}}</h2>
-	<p>{{#linkTo index}}Back to your jobs{{/linkTo}}</p>
-	<p>{{view "PlanSource.AddPlanView"}}</p>
-	<table class="table table-hover">
-		<thead>
-			<th>#</th>
-			<th>Plan Name</th>
-			<th>Filename</th>
-			<% if can? :destroy, Job %>
-				<th class="pull-right">Controls</th>
-			<% end %>
-		</thead>
-		<tbody>
-			{{#each plans itemController="plan"}}
-				<tr>
-					<td>
-						{{#if isEditing}}
-							{{view Ember.TextField valueBinding="planNum" classNames="short"}}
-						{{else}}
-							{{planNum}}
-						{{/if}}
-					</td>
-					<td>
-						{{#if isEditing}}
-							{{view Ember.TextField valueBinding="planName"}}
-						{{else}}
-							{{planName}}
-						{{/if}}
-					</td>
-					<td><a href="/api/download/{{unbound id}}">{{filename}}</a></td>
-					<td>
-						<% if can? :destroy, Job %>
-						<ul class="controls pull-right unstyled">
-							{{#if isEditing}}
-								<li><a {{action "doneEditing"}}>Done Editing</a></li>
-							{{else}}
-								<li><a {{action "edit"}}>Edit</a></li>
-							{{/if}}
-							<li><a {{action "upload"}} data-id="{{unbound id}}">Upload</a></li>
-							<li><a {{action "delete"}}>Delete</a></li>
-						</ul>
-						<% end %>
-					</td>
-				</tr>
-				{{else}}
-					<tr>
-						<td>
-							<p>There aren't any plans in this job.</p>
-						</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-			{{/each}}
-		</tbody>
-	</table>	
 </script>

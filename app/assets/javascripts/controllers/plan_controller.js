@@ -4,6 +4,7 @@ PlanSource.PlanController = Ember.ObjectController.extend({
 		var plan = this.get('model');
 	  plan.deleteRecord();
 	  plan.save();
+	  PlanSource.Job.find();
 	},
 
 	upload : function(event){
@@ -18,9 +19,18 @@ PlanSource.PlanController = Ember.ObjectController.extend({
 		this.set("isEditing", true);
 	}, 
 
+	addObserver : false,
+
 	doneEditing : function(){
 		this.set("isEditing", false);
-		this.get("model").save();
+		var o = this.get("model"), self = this;
+		if(!this.get("addObserver")){
+			o.on('didUpdate', function() {
+  			self.get("model").get("job").reload();
+			});
+			this.set("addObserver", true);
+		}
+		o.save();
 	},
 
 	keyPress: function(e){

@@ -1,0 +1,43 @@
+<h2>My Jobs</h2>
+{{view PlanSource.AddJobModal}}
+<table class="table table-hover">
+	<thead>
+		<th>Job Name</th>
+		<th>Owner</th>
+			<th class="pull-right">Controls</th>
+	</thead>
+	<tbody>
+		{{#each controller itemController="jobItem"}}
+			{{#linkTo "job" this tagName="tr" classNames="job"}}
+				<td>
+					{{#if isEditing}}
+						{{view Ember.TextField valueBinding="name"}}
+					{{else}}
+						{{name}}
+					{{/if}}
+				</td>
+				<td>
+					{{#if isMe}}
+						Me
+					{{else}}
+						{{user.name}}
+					{{/if}}
+					</td>
+				<td>
+					<ul class="controls pull-right unstyled">
+						{{view PlanSource.EditJobModal}}
+						{{view PlanSource.DeleteJobModal}}
+					</ul>
+				</td>
+			{{/linkTo}}
+			{{else}}
+			<tr>
+				<td>
+					<p>You don't have any jobs.</p>
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

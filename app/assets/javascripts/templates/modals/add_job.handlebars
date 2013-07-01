@@ -1,0 +1,21 @@
+<a class="button button-green" {{action show target=view}}>+ Add Job</a>
+{{#if view.isShowing}}
+	<div class="modal-wrapper">
+		<div class="overlay"></div>
+		<div class="dialog box box-border">
+			<div class="header">
+				<p class="title">Enter a job name.</p>
+			</div>
+			<div class="body">
+				<p>Enter a name for your new job.</p>
+				<input type="text" id="new-job-name" placeholder="Job name">
+			</div>
+			<div class="footer">
+				<div class="buttons">
+					<a class="button button-blue" {{action createJob target=view}} >Create</a>
+					<a class="button" {{action close target=view}}>Cancel</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}

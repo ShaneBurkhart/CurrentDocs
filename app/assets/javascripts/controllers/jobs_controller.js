@@ -1,3 +1,3 @@
-PlanSource.JobsController = Ember.ArrayController.extend({
-
+PlanSource.JobsIndexController = Ember.ArrayController.extend({
+	
 });

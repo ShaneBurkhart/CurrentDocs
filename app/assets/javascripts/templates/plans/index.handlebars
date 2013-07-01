@@ -1,0 +1,39 @@
+{{#each controller itemController="plan"}}
+	<tr>
+		<td>
+			{{#if isEditing}}
+				{{view Ember.TextField valueBinding="planNum" classNames="short"}}
+			{{else}}
+				{{planNum}}
+			{{/if}}
+		</td>
+		<td>
+			{{#if isEditing}}
+				{{view Ember.TextField valueBinding="planName"}}
+			{{else}}
+				{{planName}}
+			{{/if}}
+		</td>
+		<td><a href="/api/download/{{unbound id}}">{{filename}}</a></td>
+		<td>
+			<ul class="controls pull-right unstyled">
+				{{#if isEditing}}
+					<li><a {{action "doneEditing"}}>Done Editing</a></li>
+				{{else}}
+					<li><a {{action "edit"}}>Edit</a></li>
+				{{/if}}
+				<li><a {{action "upload"}} data-id="{{unbound id}}">Upload</a></li>
+				<li><a {{action "delete"}}>Delete</a></li>
+			</ul>
+		</td>
+	</tr>
+	{{else}}
+		<tr>
+			<td>
+				<p>There aren't any plans in this job.</p>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+{{/each}}

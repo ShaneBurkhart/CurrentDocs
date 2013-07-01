@@ -1,0 +1,21 @@
+<a {{action show target=view bubbles=false}}>Edit</a>
+{{#if view.isShowing}}
+	<div class="modal-wrapper">
+		<div class="overlay"></div>
+		<div class="dialog box box-border">
+			<div class="header">
+				<p class="title">Edit your job.</p>
+			</div>
+			<div class="body">
+				<p>Enter a new name for this job.</p>
+				<input type="text" id="edit-job-name" placeholder="Job name">
+			</div>
+			<div class="footer">
+				<div class="buttons">
+					<a class="button button-blue" {{action editJob target=view bubbles=false}} >Change</a>
+					<a class="button" {{action close target=view bubbles=false}}>Cancel</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}

@@ -5,7 +5,8 @@ PlanSource.AddJobView = Ember.View.extend({
 	isAdding : false,
 
 	add : function(){
-		this.set("isAdding", true);
+		PlanSource.AddJobModal.create().append();
+		//this.set("isAdding", true);
 	},
 
   addJob: function(evt) {

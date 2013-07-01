@@ -1,57 +1,55 @@
-<div class="container"> 
-  <h3><%= link_to "Plansource", root_path, :class => 'logo' %></h3>
-  <div class="navbar">
-    <nav class="navbar-inner">
-      <div class="container">
+<div class="navigation navigation-dark navigation-fixed">
+  <div class="container">
+    <ul>
+      <li class="<%= controller_name == "home" ? "active" : "" %>">
+        <%= link_to "About", root_path%>
+      </li>
+      <li class="<%= controller_name == "blog" ? "active" : "" %>">
+        <%= link_to "Blog", root_path %>
+      </li>
+      <li class="<%= controller_name == "prints" ? "active" : "" %>">
+        <%= link_to "Printing", prints_path %>
+      </li>
+      <li class="<%= controller_name == "mobile" ? "active" : "" %>">
+        <%= link_to "Mobile Apps", mobile_path %>
+      </li>
 
-        <ul class="nav">
-          <li class="<%= controller_name == "home" ? "active" : "" %>">
-            <%= link_to "About", root_path %>
+      <div class="pull-right">
+        <% if user_signed_in? %>
+          <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
+          <%= link_to 'Edit account', edit_user_registration_path %>
           </li>
-          <li class="<%= controller_name == "blog" ? "active" : "" %>">
-            <%= link_to "Blog", root_path %>
-          </li>
-          <li>
-            <%= link_to "Mobile Apps", mobile_path %>
-          </li>
-          <li class="<%= controller_name == "prints" ? "active" : "" %>">
-            <%= link_to "Printing", prints_path %>
-          </li>
-          <% if user_signed_in? %>
-            <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
-            <%= link_to 'Edit account', edit_user_registration_path %>
-            </li>
-            <% if current_user.has_role? :admin %>
-              <li>
-              <%= link_to 'Admin', users_path %>
-              </li>
-            <% end %>
-          <% else %>
-            <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
-            <%= link_to 'Sign up', new_user_registration_path %>
-            </li>
-          <% end %>
-          <% if user_signed_in? %>
-            <li class="<%= controller_name == "app" ? "active" : "" %>">
-            <%= link_to 'My Jobs', app_path %>
-            </li>
-          <% end %>
-          <% if user_signed_in? %>
+          <% if current_user.has_role? :admin %>
             <li>
-            <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
-            </li>
-          <% else %>
-            <li class="<%= controller_name == "sessions" && action_name == "new" ? "active" : "" %>">
-            <%= link_to 'Login', new_user_session_path %>
+            <%= link_to 'Admin', users_path %>
             </li>
           <% end %>
-        </ul>
-
+        <% else %>
+          <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
+          <%= link_to 'Sign up', new_user_registration_path %>
+          </li>
+        <% end %>
+        <% if user_signed_in? %>
+          <li class="<%= controller_name == "app" ? "active" : "" %>">
+          <%= link_to 'My Jobs', app_path %>
+          </li>
+        <% end %>
+        <% if user_signed_in? %>
+          <li>
+          <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+          </li>
+        <% else %>
+          <li class="<%= controller_name == "sessions" && action_name == "new" ? "active" : "" %>">
+          <%= link_to 'Login', new_user_session_path %>
+          </li>
+        <% end %>
       </div>
-    </nav>
+    </ul>
   </div>
 </div>
 
-
-
-
+<div class="brand-container">
+  <div class="container"> 
+      <h3><%= link_to (image_tag "logo.png"), root_path, :class => 'logo' %></h3>
+  </div>
+</div>

@@ -12,7 +12,8 @@
 //= require_tree ./routes
 
 PlanSource = Ember.Application.create({
-	rootElement : "#ember-job-app"
+	rootElement : "#ember-job-app",
+    LOG_TRANSITIONS: true
 });
 
 $.fn.upload = function(remote, successFn, progressFn) {

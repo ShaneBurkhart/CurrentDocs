@@ -32,6 +32,8 @@ class Api::PlansController < ApplicationController
   def update
     if can? :update, Plan
       plan = Plan.find(params[:id])
+      plan.set_plan_num params["plan"]["plan_num"]
+      params["plan"].delete "plan_num"
       plan.update_attributes(params["plan"])
       render :json => {:plan => plan}
     else
@@ -78,8 +80,12 @@ class Api::PlansController < ApplicationController
 
     def find_plan(plan_id)
       current_user.jobs.each do |job|
-        plan = job.plans.find(plan_id)
-        if(plan)
+        begin
+          plan = job.plans.find(plan_id)
+        rescue
+          next
+        end
+        if(!plan.nil?)
           return plan
         end
       end
