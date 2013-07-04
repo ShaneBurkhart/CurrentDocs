@@ -19,6 +19,22 @@ class Job < ActiveRecord::Base
   validate :check_for_dubplicate_name_for_single_user
 
 
+  def self.get_plans_from_jobs(jobs)
+  	plans = []
+    jobs.each do |job|
+      plans += job.plans
+    end
+    plans
+  end
+
+  def add_plan_ids!
+  	ids = []
+    job.plans.each do |plan|
+      ids[plan.id]
+    end
+    job[:plan_ids] = ids
+  end
+
 	private
 
 	  def check_for_dubplicate_name_for_single_user
