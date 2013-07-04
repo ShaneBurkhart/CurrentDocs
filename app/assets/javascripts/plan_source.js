@@ -16,6 +16,10 @@ PlanSource = Ember.Application.create({
     LOG_TRANSITIONS: true
 });
 
+Ember.Handlebars.registerBoundHelper("date", function(date){
+    return moment(date).fromNow();
+});
+
 $.fn.upload = function(remote, successFn, progressFn) {
     return this.each(function() {
 

@@ -127,6 +127,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     mini_portile (0.5.0)
+    momentjs-rails (2.0.0.2)
+      railties (>= 3.1)
     multi_json (1.7.7)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -226,6 +228,7 @@ DEPENDENCIES
   handlebars-source (= 1.0.0.rc4)
   jquery-rails
   launchy (>= 2.2.0)
+  momentjs-rails
   quiet_assets (>= 1.0.2)
   rails (= 3.2.13)
   rake (~> 10.1.0)
