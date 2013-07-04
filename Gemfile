@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.13'
+gem "rake", "~> 10.1.0"
 gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -29,4 +30,3 @@ gem "binding_of_caller", ">= 0.7.1", :group => :development, :platforms => [:mri
 gem 'ember-rails'
 gem 'ember-source', '1.0.0.rc5' # or the version you need
 gem 'handlebars-source', '1.0.0.rc4' # or the version you need
-gem 'uploadify-rails'
