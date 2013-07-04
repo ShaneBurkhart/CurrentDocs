@@ -2,11 +2,11 @@ class Api::JobsController < ApplicationController
   before_filter :user_not_there!
 
   def index
-    jobs = current_user.jobs
-    jobs.each do |job|
+    @jobs = current_user.jobs
+    @jobs.each do |job|
       plan_ids! job
     end
-    render :json => {:jobs => jobs, :plans => plans_from_jobs_array(jobs)}
+    render :json => {:jobs => @jobs, :plans => plans_from_jobs_array(@jobs)}
   end
 
   def show
@@ -20,22 +20,21 @@ class Api::JobsController < ApplicationController
   end
 
   def create
-    if can? :create, Job
-      job = Job.create(:name => params["job"]["name"], :user_id => current_user.id)
-      plan_ids! job
-      render :json => {:job => job}
+    if can? :create, @job
+      @job = Job.create(:name => params["job"]["name"], :user_id => current_user.id)
+      plan_ids! @job
+      render :json => {:job => @job}
     else
       render :text => "You don't have permission to do that"
     end
   end
 
   def update
-    if can?(:update, Job)
-      job = current_user.jobs.find(params[:id])
-      job.update_attributes(name: params[:job][:name]) unless !job
+    @job = Job.find(params[:id])
+    if can? :update, Job
+      @job.update_attributes(name: params[:job][:name]) unless !@job
     end
-    job = job || {}
-    render :json => {:job => job}
+    render :json => {:job => @job}
   end
 
   def destroy

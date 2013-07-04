@@ -23,137 +23,105 @@ describe Api::JobsController do
   # This should return the minimal set of attributes required to create a valid
   # Api::Job. As you add validations to Api::Job, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {  } }
+  let(:valid_attributes) { {
+    name: "Job Name",
+    user_id: 1
+  } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # Api::JobsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
+  before(:each) do
+    sign_in FactoryGirl.create :manager
+  end
+
   describe "GET index" do
-    it "assigns all api_jobs as @api_jobs" do
-      job = Api::Job.create! valid_attributes
+    it "assigns all jobs as @jobs" do
+      job = Job.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:api_jobs).should eq([job])
+      assigns(:jobs).should eq([job])
     end
   end
 
   describe "GET show" do
-    it "assigns the requested api_job as @api_job" do
-      job = Api::Job.create! valid_attributes
+    it "assigns the requested job as @job" do
+      job = Job.create! valid_attributes
       get :show, {:id => job.to_param}, valid_session
-      assigns(:api_job).should eq(job)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new api_job as @api_job" do
-      get :new, {}, valid_session
-      assigns(:api_job).should be_a_new(Api::Job)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested api_job as @api_job" do
-      job = Api::Job.create! valid_attributes
-      get :edit, {:id => job.to_param}, valid_session
-      assigns(:api_job).should eq(job)
+      assigns(:job).should eq(job)
     end
   end
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new Api::Job" do
+      it "creates a new Job" do
         expect {
-          post :create, {:api_job => valid_attributes}, valid_session
-        }.to change(Api::Job, :count).by(1)
+          post :create, {:job => valid_attributes}, valid_session
+        }.to change(Job, :count).by(1)
       end
 
-      it "assigns a newly created api_job as @api_job" do
-        post :create, {:api_job => valid_attributes}, valid_session
-        assigns(:api_job).should be_a(Api::Job)
-        assigns(:api_job).should be_persisted
+      it "can only be created if manager is sign_in" do
+        sign_out current_user
+        sign_in FactoryGirl.create :viewer
+        expect {
+          post :create, {:job => valid_attributes}, valid_session
+        }.to change(Job, :count).by(0)
       end
 
-      it "redirects to the created api_job" do
-        post :create, {:api_job => valid_attributes}, valid_session
-        response.should redirect_to(Api::Job.last)
+      it "assigns a newly created job as @job" do
+        post :create, {:job => valid_attributes}, valid_session
+        assigns(:job).should be_a(Job)
+        assigns(:job).should be_persisted
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved api_job as @api_job" do
+      it "assigns a newly created but unsaved job as @job" do
         # Trigger the behavior that occurs when invalid params are submitted
-        Api::Job.any_instance.stub(:save).and_return(false)
-        post :create, {:api_job => {  }}, valid_session
-        assigns(:api_job).should be_a_new(Api::Job)
-      end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Api::Job.any_instance.stub(:save).and_return(false)
-        post :create, {:api_job => {  }}, valid_session
-        response.should render_template("new")
+        Job.any_instance.stub(:save).and_return(false)
+        post :create, {:job => {  }}, valid_session
+        assigns(:job).should be_a_new(Job)
       end
     end
   end
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested api_job" do
-        job = Api::Job.create! valid_attributes
-        # Assuming there are no other api_jobs in the database, this
+      it "updates the requested job" do
+        job = Job.create! valid_attributes
+        # Assuming there are no other jobs in the database, this
         # specifies that the Api::Job created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Api::Job.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => job.to_param, :api_job => { "these" => "params" }}, valid_session
+        Job.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
+        put :update, {:id => job.to_param, :job => { "these" => "params" }}, valid_session
       end
 
-      it "assigns the requested api_job as @api_job" do
-        job = Api::Job.create! valid_attributes
-        put :update, {:id => job.to_param, :api_job => valid_attributes}, valid_session
-        assigns(:api_job).should eq(job)
-      end
-
-      it "redirects to the api_job" do
-        job = Api::Job.create! valid_attributes
-        put :update, {:id => job.to_param, :api_job => valid_attributes}, valid_session
-        response.should redirect_to(job)
+      it "assigns the requested job as @job" do
+        job = Job.create! valid_attributes
+        put :update, {:id => job.to_param, :job => valid_attributes}, valid_session
+        assigns(:job).should eq(job)
       end
     end
 
     describe "with invalid params" do
-      it "assigns the api_job as @api_job" do
-        job = Api::Job.create! valid_attributes
+      it "assigns the job as @job" do
+        job = Job.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        Api::Job.any_instance.stub(:save).and_return(false)
-        put :update, {:id => job.to_param, :api_job => {  }}, valid_session
-        assigns(:api_job).should eq(job)
-      end
-
-      it "re-renders the 'edit' template" do
-        job = Api::Job.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Api::Job.any_instance.stub(:save).and_return(false)
-        put :update, {:id => job.to_param, :api_job => {  }}, valid_session
-        response.should render_template("edit")
+        Job.any_instance.stub(:save).and_return(false)
+        put :update, {:id => job.to_param, :job => {  }}, valid_session
+        assigns(:job).should eq(job)
       end
     end
   end
 
   describe "DELETE destroy" do
-    it "destroys the requested api_job" do
-      job = Api::Job.create! valid_attributes
+    it "destroys the requested job" do
+      job = Job.create! valid_attributes
       expect {
         delete :destroy, {:id => job.to_param}, valid_session
-      }.to change(Api::Job, :count).by(-1)
-    end
-
-    it "redirects to the api_jobs list" do
-      job = Api::Job.create! valid_attributes
-      delete :destroy, {:id => job.to_param}, valid_session
-      response.should redirect_to(api_jobs_url)
+      }.to change(Job, :count).by(-1)
     end
   end
 
