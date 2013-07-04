@@ -1,18 +1,13 @@
 {{#each controller itemController="plan"}}
 	<tr>
 		<td>
-			{{#if isEditing}}
-				{{view Ember.TextField valueBinding="planNum" classNames="short"}}
-			{{else}}
-				{{planNum}}
-			{{/if}}
+			{{planNum}}
 		</td>
 		<td>
-			{{#if isEditing}}
-				{{view Ember.TextField valueBinding="planName"}}
-			{{else}}
-				{{planName}}
-			{{/if}}
+			{{planName}}
+		</td>
+		<td>
+
 		</td>
 		<td><a href="/api/download/{{unbound id}}">{{filename}}</a></td>
 		<td>

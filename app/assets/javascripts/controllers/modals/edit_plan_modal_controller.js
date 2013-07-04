@@ -1,11 +1,12 @@
 PlanSource.EditPlanController = Ember.ObjectController.extend({
 
 	editPlan : function(){
-		var container = $("#edit-job-name"),
-    		name = container.val();
-    if(!name || name == "")
-    	return;
-    this.get("model").set("name", name);
+		var name = $("#edit-plan-name").val(),
+    		num = $("#edit-plan-num").val();
+    if(name && name != "")
+    	this.get("model").set("planName", name);
+    if(num && num != "")
+    	this.get("model").set("planNum", num);
 		this.get("model").save();
 		this.send("close");
 	},

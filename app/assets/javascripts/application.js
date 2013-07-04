@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require moment
 
 $(document).ready(function(){
 	var xhr2 = ( window.FormData !== undefined );
