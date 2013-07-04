@@ -29,7 +29,6 @@
 #
 
 class User < ActiveRecord::Base
-  rolify
 
   has_many :jobs
   has_many :assignments
@@ -40,5 +39,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :role_ids
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+
+  def manager?
+  	self.class == Manager
+  end
+
+  def viewer?
+  	self.class == Viewer
+  end
 end
