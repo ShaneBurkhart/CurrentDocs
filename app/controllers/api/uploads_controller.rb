@@ -4,12 +4,15 @@ class Api::UploadsController < ApplicationController
 	def create
 		begin
 			u = params[:file]
+			plan = Plan.find(params[:plan_id]).update_attributes(:filename => u.original_filename)
 			File.open(Rails.root.join("public", "_files", params[:plan_id]), 'w') do |file|
 			  file.write(u.read)
+			  file.close
 			end
-			plan = Plan.find(params[:plan_id]).update_attributes(:filename => u.original_filename)
+			puts "Saved File"
 			render :text => "Good one"
 		rescue Exception => e
+			puts "Upload error"
 			render :text => e.to_s
 		end
 	end

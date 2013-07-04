@@ -1,5 +1,7 @@
 PlanSource.EditPlanController = Ember.ObjectController.extend({
 
+	job : {},
+
 	editPlan : function(){
 		var name = $("#edit-plan-name").val(),
     		num = $("#edit-plan-num").val();

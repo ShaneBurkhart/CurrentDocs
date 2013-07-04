@@ -30,11 +30,12 @@ class Api::JobsController < ApplicationController
   end
 
   def update
-    if can? :update, Job
-      job = Job.find(params[:id])
-      job.update_attributes(params["job"])
-      render :json => {:job => job}
+    if can?(:update, Job)
+      job = current_user.jobs.find(params[:id])
+      job.update_attributes(name: params[:job][:name]) unless !job
     end
+    job = job || {}
+    render :json => {:job => job}
   end
 
   def destroy

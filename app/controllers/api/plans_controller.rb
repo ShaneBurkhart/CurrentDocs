@@ -21,6 +21,7 @@ class Api::PlansController < ApplicationController
 
   def create
     if can? :create, Plan
+      params["plan"].delete "updated_at"
       params["plan"][:plan_num] = next_plan_num(params["plan"][:job_id])
       plan = Plan.create(params["plan"])
       render :json => {:plan => plan}
@@ -32,8 +33,13 @@ class Api::PlansController < ApplicationController
   def update
     if can? :update, Plan
       plan = Plan.find(params[:id])
+      if plan.job.user.id != current_user.id
+        render :text => "No permission"
+        return
+      end
       plan.set_plan_num params["plan"]["plan_num"]
       params["plan"].delete "plan_num"
+      params["plan"].delete "updated_at"
       plan.update_attributes(params["plan"])
       render :json => {:plan => plan}
     else
@@ -92,7 +98,7 @@ class Api::PlansController < ApplicationController
       return {}
     end
 
-    def user_not_there! 
+    def user_not_there!
       render :text => "No user currently signed in" unless user_signed_in?
     end
 end

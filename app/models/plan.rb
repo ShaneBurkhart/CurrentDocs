@@ -75,7 +75,7 @@ class Plan < ActiveRecord::Base
 			p = Plan.find_all_by_job_id(self.job_id)
 	  	p.each do |plan|
 	  		if(plan.id == self.id)
-	  			return
+	  			next
 	  		end
   			if(plan.plan_num == self.plan_num)
   				return true
@@ -88,7 +88,7 @@ class Plan < ActiveRecord::Base
 			p = Plan.find_all_by_job_id(self.job_id)
 	  	p.each do |plan|
 	  		if(plan.id == self.id)
-	  			return
+	  			next
 	  		end
   			if(plan.plan_num == self.plan_num)
   				errors.add(:plan_num, 'already exists')
@@ -101,7 +101,7 @@ class Plan < ActiveRecord::Base
 	  	p = Plan.find_all_by_job_id(self.job_id)
 	  	p.each do |plan|
 	  		if(plan.id == self.id)
-	  			return
+	  			next
 	  		end
   			if(plan.plan_name == self.plan_name)
   				errors.add(:plan_name, 'already exists')
