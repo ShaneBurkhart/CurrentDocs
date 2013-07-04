@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require uploadify
 
 $(document).ready(function(){
 	var xhr2 = ( window.FormData !== undefined );

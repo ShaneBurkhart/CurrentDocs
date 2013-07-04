@@ -2,15 +2,15 @@
 	<div class="overlay"></div>
 	<div class="dialog box box-border">
 		<div class="header">
-			<p class="title">Edit your job.</p>
+			<p class="title">Enter a plan name.</p>
 		</div>
 		<div class="body">
-			<p>Enter a new name for this job.</p>
-			{{ view PlanSource.TextField placeholder="Job name" focus=true id="edit-job-name" modelAttr="name" }}
+			<p>Enter a name for your new plan.</p>
+			{{ view PlanSource.TextField placeholder="Plan name" focus=true id="new-plan-name" }}
 		</div>
 		<div class="footer">
 			<div class="buttons">
-				<a class="button button-blue" {{action "editJob" target=controller}} >Change</a>
+				<a class="button button-blue" {{action "addPlan" target=controller}} >Create</a>
 				<a class="button" {{action "close"}}>Cancel</a>
 			</div>
 		</div>

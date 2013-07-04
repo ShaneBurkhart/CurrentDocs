@@ -1,6 +1,6 @@
 <h2>{{name}}</h2>
 <p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
-<p>{{view "PlanSource.AddPlanView"}}</p>
+<a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
 <table class="table table-hover">
 	<thead>
 		<th>#</th>
@@ -13,4 +13,4 @@
 	{{outlet}}
 
 	</tbody>
-</table>	
+</table>

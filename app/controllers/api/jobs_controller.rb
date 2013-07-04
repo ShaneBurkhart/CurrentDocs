@@ -30,8 +30,10 @@ class Api::JobsController < ApplicationController
   end
 
   def update
-    if can? :update
-      Job.update_attributes(params["job"])
+    if can? :update, Job
+      job = Job.find(params[:id])
+      job.update_attributes(params["job"])
+      render :json => {:job => job}
     end
   end
 
@@ -70,7 +72,7 @@ class Api::JobsController < ApplicationController
       job[:plan_ids] = ids
     end
 
-    def user_not_there! 
+    def user_not_there!
       render :text => "No user currently signed in" unless user_signed_in?
     end
 end

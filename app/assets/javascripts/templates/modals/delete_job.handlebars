@@ -1,20 +1,17 @@
-<a {{action show target=view bubbles=false}}>Delete</a>
-{{#if view.isShowing}}
-	<div class="modal-wrapper">
-		<div class="overlay"></div>
-		<div class="dialog box box-border">
-			<div class="header">
-				<p class="title">Are you sure?</p>
-			</div>
-			<div class="body">
-				<p>Are you sure you want to delete ###Job Name?</p>
-			</div>
-			<div class="footer">
-				<div class="buttons">
-					<a class="button button-blue" {{action deleteJob target=view bubbles=false}} >Delete</a>
-					<a class="button" {{action close target=view bubbles=false}}>Cancel</a>
-				</div>
+<div class="modal-wrapper">
+	<div class="overlay"></div>
+	<div class="dialog box box-border">
+		<div class="header">
+			<p class="title">Are you sure?</p>
+		</div>
+		<div class="body">
+			<p>Are you sure you want to delete ###Job Name?</p>
+		</div>
+		<div class="footer">
+			<div class="buttons">
+				<a class="button button-blue" {{action "deleteJob" target=controller}} >Delete</a>
+				<a class="button" {{action "close"}}>Cancel</a>
 			</div>
 		</div>
 	</div>
-{{/if}}
+</div>

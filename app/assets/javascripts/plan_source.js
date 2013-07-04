@@ -55,7 +55,7 @@ $(document).ready(function(){
             $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
 		});
 		$(this).val("");
-	});	
+	});
 });
 
 
