@@ -18,6 +18,20 @@ class Plan < ActiveRecord::Base
   #validate :check_for_duplicate_plan_num
   before_destroy :delete_file, :delete_plan_num
 
+  def self.next_plan_num(job_id)
+    greatest = 0
+    begin
+      Job.find(job_id).plans.each do |plan|
+        if plan.plan_num >= greatest
+          greatest = plan.plan_num
+        end
+      end
+      return greatest + 1
+    rescue
+      return greatest
+    end
+  end
+
   def delete_file
   	path = Rails.root.join("public", "_files", self.id.to_s)
   	return unless File.exists?(path)

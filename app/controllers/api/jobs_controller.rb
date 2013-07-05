@@ -9,7 +9,7 @@ class Api::JobsController < ApplicationController
       end
       render :json => {:jobs => @jobs, :plans => Job.get_plans_from_jobs(@jobs)}
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
@@ -23,7 +23,7 @@ class Api::JobsController < ApplicationController
         render :json => {:job => {}}
       end
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
@@ -36,10 +36,10 @@ class Api::JobsController < ApplicationController
         @job.add_plan_ids!
         render :json => {:job => @job, :plans => @job.plans}
       else
-        render :text => "You don't have permission to do that"
+        render_no_permission
       end
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
@@ -49,7 +49,7 @@ class Api::JobsController < ApplicationController
       @job.update_attributes(name: params[:job][:name]) unless (!@job || !current_user.is_my_job(@job))
       render :json => {job: @job, plans: @job.plans}
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
@@ -64,15 +64,19 @@ class Api::JobsController < ApplicationController
           render :text => "No job"
         end
       else
-        render :text => "You don't have permission to do that"
+        render_no_permission
       end
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
   private
     def user_not_there!
-      render :text => "No user currently signed in" unless user_signed_in?
+      render text: "No user signed in" unless user_signed_in?
+    end
+
+    def render_no_permission
+      render :text => "You don't have permission to do that"
     end
 end

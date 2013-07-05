@@ -2,5 +2,8 @@
 
 FactoryGirl.define do
   factory :job do
+  	id 1
+  	name "Test Job"
+  	user_id 1
   end
 end

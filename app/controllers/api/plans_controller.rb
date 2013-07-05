@@ -2,103 +2,80 @@ class Api::PlansController < ApplicationController
 	before_filter :user_not_there!
 
   def index
-    begin
-      plans = current_user.jobs.find(params[:job_id]).plans
-    rescue
-      plans = []
+    if can? :read, Plan
+      @plans = Job.get_plans_from_jobs current_user.jobs
+      render :json => {:plans => @plans}
+    else
+      render_no_permission
     end
-    render :json => {:plans => plans}
   end
 
   def show
-    begin
-      plan = find_plan(params[:id])
-    rescue Exception => e
-      plan = {}
+    if can? :read, Plan
+      @plan = Plan.find(params[:id])
+      if @plan.job.user.id == current_user.id
+        render :json => {:plan => @plan}
+      else
+        render_no_permission
+      end
+    else
+      render_no_permission
     end
-    render :json => {:plan => plan}
   end
 
   def create
     if can? :create, Plan
-      params["plan"].delete "updated_at"
-      params["plan"][:plan_num] = next_plan_num(params["plan"][:job_id])
-      plan = Plan.create(params["plan"])
-      render :json => {:plan => plan}
+      @plan = Plan.find_or_create_by_plan_name(params["plan"][:plan_name])
+      if !@plan.id
+        params["plan"].delete "updated_at"
+        params["plan"][:plan_num] = Plan.next_plan_num(params["plan"][:job_id])
+        @plan.update_attributes(params["plan"])
+      end
+      render :json => {:plan => @plan}
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
   def update
     if can? :update, Plan
-      plan = Plan.find(params[:id])
-      if plan.job.user.id != current_user.id
-        render :text => "No permission"
-        return
+      @plan = Plan.find(params[:id])
+      if @plan.job.user.id == current_user.id
+        if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].is_a?(Numeric)
+          @plan.set_plan_num params["plan"]["plan_num"]
+          params["plan"].delete "plan_num"
+        end
+        params["plan"].delete "updated_at"
+        @plan.update_attributes(params["plan"])
+        render :json => {:plan => @plan}
+      else
+        render_no_permission
       end
-      plan.set_plan_num params["plan"]["plan_num"]
-      params["plan"].delete "plan_num"
-      params["plan"].delete "updated_at"
-      plan.update_attributes(params["plan"])
-      render :json => {:plan => plan}
     else
-      render :text => "You don't have permission to do that"
+      render_no_permission
     end
   end
 
   def destroy
-    begin
-      plan = Plan.find(params[:id])
-      if !plan
-        render :text => "No job with that index"
-      end
-      #Check to make sure its the users
-      if plan.job.user.id != current_user.id
-        render :text => "You do not have permission to do that"
-      end
-      if can? :destroy, Plan
-        plan.destroy
-        render :json => nil, :status => :ok
+    if can? :destroy, Plan
+      @plan = Plan.find(params[:id])
+      if @plan.job.user.id == current_user.id
+        @plan.destroy
+        render json: {plan: @plan}
       else
-        render :text => "You do not have permission to do that"
+        render_no_permission
       end
-    rescue Exception => e
-      render :text => e.to_s, :status => :ok
+    else
+      render_no_permission
     end
   end
 
   private
-
-    def next_plan_num(job_id)
-      greatest = 0
-      begin
-        Job.find(job_id).plans.each do |plan|
-          if plan.plan_num >= greatest
-            greatest = plan.plan_num
-          end
-        end
-        return greatest + 1
-      rescue
-        return greatest
-      end
-    end
-
-    def find_plan(plan_id)
-      current_user.jobs.each do |job|
-        begin
-          plan = job.plans.find(plan_id)
-        rescue
-          next
-        end
-        if(!plan.nil?)
-          return plan
-        end
-      end
-      return {}
-    end
-
     def user_not_there!
-      render :text => "No user currently signed in" unless user_signed_in?
+      render text: "No user signed in" unless user_signed_in?
+    end
+
+    def render_no_permission
+      render :text => "You don't have permission to do that"
     end
 end

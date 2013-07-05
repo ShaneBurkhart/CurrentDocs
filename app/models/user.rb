@@ -61,4 +61,5 @@ class User < ActiveRecord::Base
   def is_my_plan(plan)
     plan.job.user.id == self.id
   end
+
 end
