@@ -12,6 +12,8 @@
 class Job < ActiveRecord::Base
 	belongs_to :user
 	has_many :plans
+  has_many :shares
+  has_many :shared_users, through: :shares, source: :user
 	has_many :assignments
   attr_accessible :name, :user_id, :plan_ids
   validates :user_id, presence: true

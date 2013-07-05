@@ -8,6 +8,7 @@
 #  job_id     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  plan_num   :integer
 #
 
 require 'spec_helper'

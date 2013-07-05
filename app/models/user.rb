@@ -26,11 +26,14 @@
 #  invitation_limit       :integer
 #  invited_by_id          :integer
 #  invited_by_type        :string(255)
+#  type                   :string(255)
 #
 
 class User < ActiveRecord::Base
 
   has_many :jobs
+  has_many :shares
+  has_many :shared_jobs, through: :shares, source: :job
   has_many :assignments
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -59,7 +62,18 @@ class User < ActiveRecord::Base
   end
 
   def is_my_plan(plan)
-    plan.job.user.id == self.id
+    is_my_job plan.job
+  end
+
+  def is_shared_job(job)
+    self.shared_jobs.each do |j|
+      return true unless j != job
+    end
+    false
+  end
+
+  def is_shared_plan(plan)
+    is_shared_job plan.job
   end
 
 end

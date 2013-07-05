@@ -3,7 +3,7 @@ class Api::JobsController < ApplicationController
 
   def index
     if can? :read, Job
-      @jobs = current_user.jobs
+      @jobs = current_user.jobs + current_user.shared_jobs
       @jobs.each do |job|
         job.add_plan_ids!
       end
@@ -16,7 +16,7 @@ class Api::JobsController < ApplicationController
   def show
     if can? :read, Job
       @job = Job.find(params[:id])
-      if current_user.is_my_job @job
+      if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
         @job.add_plan_ids!
         render :json => {:job => @job, :plans => @job.plans}
       else
@@ -32,7 +32,7 @@ class Api::JobsController < ApplicationController
       @job = Job.find_or_create_by_name(params["job"]["name"])
       @job.user = current_user unless @job.user
       @job.save
-      if @job.user == current_user
+      if current_user.is_my_job @job
         @job.add_plan_ids!
         render :json => {:job => @job, :plans => @job.plans}
       else
