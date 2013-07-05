@@ -20,36 +20,33 @@ require 'spec_helper'
 
 describe Api::JobsController do
 
+
+  before(:each) do
+    @manager = FactoryGirl.create :manager
+    sign_in @manager
+    Job.delete_all
+  end
   # This should return the minimal set of attributes required to create a valid
   # Api::Job. As you add validations to Api::Job, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) { {
     name: "Job Name",
-    user_id: 1
+    user_id: @manager.id
   } }
 
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # Api::JobsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
-
-  before(:each) do
-    sign_in FactoryGirl.create :manager
-  end
-
   describe "GET index" do
-    it "assigns all jobs as @jobs" do
+    it "should output jobs as json" do
       job = Job.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:jobs).should eq([job])
+      get :index, {}
+      response.body.should == {jobs: [job], plans: Job.get_plans_from_jobs([job])}.to_json
     end
   end
 
   describe "GET show" do
-    it "assigns the requested job as @job" do
+    it "should output json for job" do
       job = Job.create! valid_attributes
-      get :show, {:id => job.to_param}, valid_session
-      assigns(:job).should eq(job)
+      get :show, {:id => job.to_param}
+      response.body.should == {job: job, plans: job.plans}.to_json
     end
   end
 
@@ -57,31 +54,22 @@ describe Api::JobsController do
     describe "with valid params" do
       it "creates a new Job" do
         expect {
-          post :create, {:job => valid_attributes}, valid_session
+          post :create, {:job => valid_attributes}
         }.to change(Job, :count).by(1)
       end
 
-      it "can only be created if manager is sign_in" do
-        sign_out current_user
+      it "can not be created by viewer" do
+        sign_out :user
         sign_in FactoryGirl.create :viewer
         expect {
-          post :create, {:job => valid_attributes}, valid_session
+          post :create, {:job => valid_attributes}
         }.to change(Job, :count).by(0)
       end
 
-      it "assigns a newly created job as @job" do
-        post :create, {:job => valid_attributes}, valid_session
-        assigns(:job).should be_a(Job)
-        assigns(:job).should be_persisted
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved job as @job" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Job.any_instance.stub(:save).and_return(false)
-        post :create, {:job => {  }}, valid_session
-        assigns(:job).should be_a_new(Job)
+      it "should output new job as JSON" do
+        job = Job.create! valid_attributes
+        post :create, {:job => valid_attributes}
+        response.body.should == {job: job, plans: job.plans}.to_json
       end
     end
   end
@@ -89,19 +77,24 @@ describe Api::JobsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested job" do
+        update_attr = {name: "Updated Job"}
         job = Job.create! valid_attributes
-        # Assuming there are no other jobs in the database, this
-        # specifies that the Api::Job created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Job.any_instance.should_receive(:update_attributes).with({ "these" => "params" })
-        put :update, {:id => job.to_param, :job => { "these" => "params" }}, valid_session
+        put :update, {:id => job.to_param, :job => update_attr}
+        response.body.should have_content update_attr[:name]
       end
 
-      it "assigns the requested job as @job" do
+      it "should output updated job as JSON" do
         job = Job.create! valid_attributes
-        put :update, {:id => job.to_param, :job => valid_attributes}, valid_session
-        assigns(:job).should eq(job)
+        put :update, {:id => job.to_param, :job => valid_attributes}
+        response.body.should == {job: job, plans: job.plans}.to_json
+      end
+
+      it "can not be updated by viewer" do
+        job = Job.create! valid_attributes
+        sign_out :user
+        sign_in FactoryGirl.create :viewer
+        put :update, {:id => job.to_param, :job => valid_attributes}
+        response.body.should == "You don't have permission to do that"
       end
     end
 
@@ -110,7 +103,7 @@ describe Api::JobsController do
         job = Job.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Job.any_instance.stub(:save).and_return(false)
-        put :update, {:id => job.to_param, :job => {  }}, valid_session
+        put :update, {:id => job.to_param, :job => {  }}
         assigns(:job).should eq(job)
       end
     end
@@ -120,7 +113,7 @@ describe Api::JobsController do
     it "destroys the requested job" do
       job = Job.create! valid_attributes
       expect {
-        delete :destroy, {:id => job.to_param}, valid_session
+        delete :destroy, {:id => job.to_param}
       }.to change(Job, :count).by(-1)
     end
   end

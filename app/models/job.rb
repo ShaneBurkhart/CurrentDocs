@@ -13,7 +13,7 @@ class Job < ActiveRecord::Base
 	belongs_to :user
 	has_many :plans
 	has_many :assignments
-  attr_accessible :name, :user_id
+  attr_accessible :name, :user_id, :plan_ids
   validates :user_id, presence: true
   validates :name, presence: true#, uniqueness: true
   validate :check_for_dubplicate_name_for_single_user
@@ -29,10 +29,10 @@ class Job < ActiveRecord::Base
 
   def add_plan_ids!
   	ids = []
-    job.plans.each do |plan|
+    self.plans.each do |plan|
       ids[plan.id]
     end
-    job[:plan_ids] = ids
+    self.plan_ids = ids
   end
 
 	private

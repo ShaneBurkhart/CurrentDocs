@@ -14,10 +14,10 @@ require 'spec_helper'
 
 describe Plan do
 
-	before do
+	before(:each) do
 		@plan = Plan.create(plan_num: 1, plan_name: "Page", filename: "file.pdf", job_id: 1)
 	end
-  
+
   it "should respond to job" do
   	@plan.should respond_to :job
   end
@@ -48,11 +48,6 @@ describe Plan do
     @plan.job_id = nil
     @plan.should_not be_valid
   end
-
-  it "should not have duplicate plan_num" do
-    @two = Plan.new(plan_num: 1, plan_name: "Test", filename: "file.pdf", job_id: 1)
-    @two.should_not be_valid
-  end  
 
   it "should not have duplicate plan_name for one job" do
   	@one = Plan.new(plan_name: "Page", filename: "file.php", job_id: 1)
