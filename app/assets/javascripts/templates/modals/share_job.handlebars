@@ -2,14 +2,15 @@
 	<div class="overlay"></div>
 	<div class="dialog box box-border">
 		<div class="header">
-			<p class="title">Are you sure?</p>
+			<p class="title">Enter an email to share with.</p>
 		</div>
 		<div class="body">
-			<p>Are you sure you want to delete {{model.name}}?</p>
+			<p>Enter an email to share {{model.name}} with.</p>
+			{{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" }}
 		</div>
 		<div class="footer">
 			<div class="buttons">
-				<a class="button button-blue" {{action "deleteJob" target=controller}} >Delete</a>
+				<a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
 				<a class="button" {{action "close"}}>Cancel</a>
 			</div>
 		</div>

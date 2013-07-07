@@ -9,6 +9,11 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 			this.render("modals/add_job", {into : "jobs", outlet : "modal", controller : "add_job"});
 		},
 
+		openShareJobModal : function(model){
+			this.controllerFor("share_job").set("model", model);
+			this.render("modals/share_job", {into : "jobs", outlet : "modal", controller : "share_job"});
+		},
+
 		openDeleteJobModal : function(model){
 			this.controllerFor("delete_job").set("model", model);
 			this.render("modals/delete_job", {into : "jobs", outlet : "modal", controller : "delete_job"});
