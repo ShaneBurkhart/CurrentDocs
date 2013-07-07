@@ -19,14 +19,6 @@ describe Api::PlansController do
     plan_num: 1
   } }
 
-  describe "GET index" do
-    it "should output plans as json" do
-      plan = Plan.create! valid_attributes
-      get :index, {}
-      response.body.should == {plans: [plan]}.to_json
-    end
-  end
-
   describe "GET show" do
     it "should output json for plsn" do
       plan = Plan.create! valid_attributes

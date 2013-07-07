@@ -1,15 +1,6 @@
 class Api::PlansController < ApplicationController
 	before_filter :user_not_there!
 
-  def index
-    if can? :read, Plan
-      @plans = Job.get_plans_from_jobs current_user.jobs
-      render :json => {:plans => @plans}
-    else
-      render_no_permission
-    end
-  end
-
   def show
     if can? :read, Plan
       @plan = Plan.find(params[:id])

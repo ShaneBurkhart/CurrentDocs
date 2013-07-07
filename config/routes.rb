@@ -8,7 +8,7 @@ PlanSource::Application.routes.draw do
 
   namespace :api do
     resources :jobs, except: ["new", "edit"]
-    resources :plans, except: ["new", "edit"]
+    resources :plans, except: ["new", "edit", "index"]
     resources :users, except: ["new", "edit"]
     resources :shares, only: ["create", "update", "destroy"]
     resource :upload, only: ["create"]
