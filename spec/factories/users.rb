@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :manager do
-    id 1
     name 'Manager'
     email 'manager@example.com'
     password 'password'

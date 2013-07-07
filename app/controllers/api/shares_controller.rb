@@ -1,40 +1,20 @@
 class Api::SharesController < ApplicationController
   before_filter :user_not_there!
 
-  def index
-    if can? :read, Job
-      @jobs = current_user.jobs + current_user.shared_jobs
-      @jobs.each do |job|
-        job.plan_ids!
-      end
-      render :json => {:jobs => @jobs, :plans => Job.get_plans_from_jobs(@jobs)}
-    else
-      render_no_permission
-    end
-  end
-
-  def show
-    if can? :read, Job
-      @job = Job.find(params[:id])
-      if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
-        @job.plan_ids!
-        render :json => {:job => @job, :plans => @job.plans}
-      else
-        render :json => {:job => {}}
-      end
-    else
-      render_no_permission
-    end
-  end
-
   def create
-    if can? :create, @job
-      @job = Job.find_or_create_by_name(params["job"]["name"])
-      @job.user = current_user unless @job.user
-      @job.save
-      if current_user.is_my_job @job
-        @job.plan_ids!
-        render :json => {:job => @job, :plans => @job.plans}
+    if can? :create, Share
+      if current_user.is_my_job Job.find(params["share"]["job_id"])
+        @user = User.find_by_email params["share"]["email"]
+        if @user.nil?
+          @user = User.new_guest_user params["share"]
+          guest = true
+          @user.save
+        end
+        @share = Share.new job_id: params["share"]["job_id"], user_id: @user.id
+        if @share.save
+          @user.send_share_notification @share, guest
+        end
+        render json: {share: @share}
       else
         render_no_permission
       end
@@ -43,11 +23,11 @@ class Api::SharesController < ApplicationController
     end
   end
 
-  def update
-    if can? :update, Job
-      @job = Job.find(params[:id])
-      @job.update_attributes(name: params[:job][:name]) unless (!@job || !current_user.is_my_job(@job))
-      render :json => {job: @job, plans: @job.plans}
+  def update #accepts shares
+    if can? :update, Share
+      @share = Share.find(params[:id])
+      @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
+      render :json => {share: @share}
     else
       render_no_permission
     end
@@ -55,14 +35,10 @@ class Api::SharesController < ApplicationController
 
   def destroy
     if can? :destroy, Job
-      @job = Job.find(params[:id])
-      if current_user.is_my_job @job
-        if @job
-          @job.destroy
-          render :json => {job: @job}
-        else
-          render :text => "No job"
-        end
+      @share = Share.find(params[:id])
+      if current_user.is_my_share @share
+        @share.destroy
+        render json: {share: @share}
       else
         render_no_permission
       end

@@ -7,6 +7,8 @@ class Ability
      can :manage, :all
    elsif user.viewer?
      can :read, Job
+     can :update, Share
+     can :destroy, Share
    end
     # Define abilities for the passed in user here. For example:
     #

@@ -43,7 +43,21 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password,
-   :password_confirmation, :remember_me, :type
+   :password_confirmation, :remember_me, :type, :guest
+
+  def self.new_guest_user(share_param)
+    pass = ('a'..'z').to_a.shuffle[0,8].join
+    Viewer.new name: "New User", email: share_param["email"],
+      password: pass, password_confirmation: pass
+  end
+
+  def send_share_notification(share, guest)
+    if guest
+      puts "Guest User Email"
+    else
+      puts "User Email"
+    end
+  end
 
   def manager?
   	self.class == Manager
@@ -63,6 +77,14 @@ class User < ActiveRecord::Base
 
   def is_my_plan(plan)
     is_my_job plan.job
+  end
+
+  def is_my_share(share)
+    is_being_shared(share) || is_my_job(share.job)
+  end
+
+  def is_being_shared(share)
+    share.user.id == self.id
   end
 
   def is_shared_job(job)

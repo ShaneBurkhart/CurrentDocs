@@ -27,10 +27,7 @@ class Api::PlansController < ApplicationController
     if can? :create, Plan
       params["plan"].delete "updated_at"
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
-      @plan = Plan.new params["plan"]
-      if @plan.errors
-        puts @plan.errors.full_messages.to_sentence
-      end
+      @plan = Plan.create params["plan"]
       render :json => {:plan => @plan}
     else
       render_no_permission
@@ -40,7 +37,7 @@ class Api::PlansController < ApplicationController
   def update
     if can? :update, Plan
       @plan = Plan.find(params[:id])
-      if @plan.job.user.id == current_user.id
+      if current_user.is_my_plan @plan
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].is_a?(Numeric)
           @plan.set_plan_num params["plan"]["plan_num"]
           params["plan"].delete "plan_num"
@@ -59,7 +56,7 @@ class Api::PlansController < ApplicationController
   def destroy
     if can? :destroy, Plan
       @plan = Plan.find(params[:id])
-      if @plan.job.user.id == current_user.id
+      if current_user.is_my_plan @plan
         @plan.destroy
         render json: {plan: @plan}
       else

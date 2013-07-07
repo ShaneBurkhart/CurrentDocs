@@ -6,7 +6,7 @@ describe Api::PlansController do
 		Plan.delete_all
 		Job.delete_all
     @manager = FactoryGirl.create :manager
-    @job = FactoryGirl.create :job
+    @job = Job.create! name: "Jobster", user_id: @manager.id
     sign_in @manager
   end
   # This should return the minimal set of attributes required to create a valid
@@ -15,7 +15,7 @@ describe Api::PlansController do
   let(:valid_attributes) { {
     plan_name: "Plan Name",
     filename: "file.pdf",
-    job_id: 1,
+    job_id: @job.id,
     plan_num: 1
   } }
 
