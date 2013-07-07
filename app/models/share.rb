@@ -13,5 +13,6 @@
 class Share < ActiveRecord::Base
 	belongs_to :job
 	belongs_to :user
-  attr_accessible :accepted, :job_id, :user_id
+  attr_accessible :accepted, :job_id, :user_id #invited user
+  #job.user is the inviter
 end
