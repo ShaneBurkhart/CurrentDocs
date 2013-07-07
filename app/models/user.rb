@@ -52,11 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def send_share_notification(share, guest)
-    if guest
-      puts "Guest User Email"
-    else
-      puts "User Email"
-    end
+    UserMailer.share_notification(share.user, share, guest).deliver
   end
 
   def manager?
