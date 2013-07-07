@@ -25,11 +25,11 @@ class Api::PlansController < ApplicationController
 
   def create
     if can? :create, Plan
-      @plan = Plan.find_or_create_by_plan_name(params["plan"][:plan_name])
-      if !@plan.id
-        params["plan"].delete "updated_at"
-        params["plan"][:plan_num] = Plan.next_plan_num(params["plan"][:job_id])
-        @plan.update_attributes(params["plan"])
+      params["plan"].delete "updated_at"
+      params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
+      @plan = Plan.new params["plan"]
+      if @plan.errors
+        puts @plan.errors.full_messages.to_sentence
       end
       render :json => {:plan => @plan}
     else

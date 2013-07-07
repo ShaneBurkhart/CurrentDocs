@@ -38,6 +38,7 @@ describe Api::JobsController do
     it "should output jobs as json" do
       job = Job.create! valid_attributes
       get :index, {}
+      job.plan_ids!
       response.body.should == {jobs: [job], plans: Job.get_plans_from_jobs([job])}.to_json
     end
   end
@@ -46,6 +47,7 @@ describe Api::JobsController do
     it "should output json for job" do
       job = Job.create! valid_attributes
       get :show, {:id => job.to_param}
+      job.plan_ids!
       response.body.should == {job: job, plans: job.plans}.to_json
     end
   end
@@ -69,6 +71,7 @@ describe Api::JobsController do
       it "should output new job as JSON" do
         job = Job.create! valid_attributes
         post :create, {:job => valid_attributes}
+        job.plan_ids!
         response.body.should == {job: job, plans: job.plans}.to_json
       end
     end
@@ -86,6 +89,7 @@ describe Api::JobsController do
       it "should output updated job as JSON" do
         job = Job.create! valid_attributes
         put :update, {:id => job.to_param, :job => valid_attributes}
+        job.plan_ids!
         response.body.should == {job: job, plans: job.plans}.to_json
       end
 

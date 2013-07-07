@@ -37,10 +37,11 @@ describe Api::PlansController do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new plan" do
+      it "creates a new plan and outputs JSON" do
         expect {
           post :create, {:plan => valid_attributes}
         }.to change(Plan, :count).by(1)
+        response.body.should == {plan: Plan.find_by_plan_name(valid_attributes[:plan_name])}.to_json
       end
 
       it "can not be created by viewer" do
@@ -49,12 +50,6 @@ describe Api::PlansController do
         expect {
           post :create, {:plan => valid_attributes}
         }.to change(Plan, :count).by(0)
-      end
-
-      it "should output new plan as JSON" do
-        plan = Plan.create! valid_attributes
-        post :create, {:plan => valid_attributes}
-        response.body.should == {plan: plan}.to_json
       end
     end
   end

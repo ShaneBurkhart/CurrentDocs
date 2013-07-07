@@ -29,10 +29,10 @@ class Job < ActiveRecord::Base
     plans
   end
 
-  def add_plan_ids!
+  def plan_ids!
   	ids = []
     self.plans.each do |plan|
-      ids[plan.id]
+      ids << plan.id
     end
     self.plan_ids = ids
   end

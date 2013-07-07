@@ -5,7 +5,7 @@ class Api::JobsController < ApplicationController
     if can? :read, Job
       @jobs = current_user.jobs + current_user.shared_jobs
       @jobs.each do |job|
-        job.add_plan_ids!
+        job.plan_ids!
       end
       render :json => {:jobs => @jobs, :plans => Job.get_plans_from_jobs(@jobs)}
     else
@@ -17,7 +17,7 @@ class Api::JobsController < ApplicationController
     if can? :read, Job
       @job = Job.find(params[:id])
       if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
-        @job.add_plan_ids!
+        @job.plan_ids!
         render :json => {:job => @job, :plans => @job.plans}
       else
         render :json => {:job => {}}
@@ -33,7 +33,7 @@ class Api::JobsController < ApplicationController
       @job.user = current_user unless @job.user
       @job.save
       if current_user.is_my_job @job
-        @job.add_plan_ids!
+        @job.plan_ids!
         render :json => {:job => @job, :plans => @job.plans}
       else
         render_no_permission
