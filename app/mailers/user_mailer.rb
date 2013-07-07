@@ -6,7 +6,8 @@ class UserMailer < ActionMailer::Base
   	@user = user
   	@is_guest = is_guest
   	@name = @share.job.user.name
+  	@accept_url = "http://plansource.heroku.com/api/share/#{@share.id}"
   	@subject = "Plan Source - #{@name} has shared a job with you!"
-  	mail(to: @guest, subject: @subject)
+  	mail(to: @share.user.email, subject: @subject)
   end
 end

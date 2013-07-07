@@ -10,7 +10,7 @@ PlanSource::Application.routes.draw do
     resources :jobs, except: ["new", "edit"]
     resources :plans, except: ["new", "edit", "index"]
     resources :users, except: ["new", "edit"]
-    resources :shares, only: ["create", "update", "destroy"]
+    resources :shares, only: ["create", "update", "destroy", "show"]
     resource :upload, only: ["create"]
     match "/download/:id" => "downloads#download"
   end

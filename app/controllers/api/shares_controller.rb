@@ -1,5 +1,10 @@
 class Api::SharesController < ApplicationController
-  before_filter :user_not_there!
+  before_filter :user_not_there!, except: ["show"]
+  before_filter :authenticate_user!, only: ["show"]
+
+  def show
+    render text: "Some Text"
+  end
 
   def create
     if can? :create, Share
