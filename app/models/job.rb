@@ -34,7 +34,7 @@ class Job < ActiveRecord::Base
     self.plans.each do |plan|
       ids << plan.id
     end
-    self.plan_ids = ids
+    self[:plan_ids] = ids
   end
 
 	private
