@@ -10,10 +10,10 @@
 			<p>Users that are currently being shared.</p>
 			<div class="scroller-medium">
 				<table class="table">
-					{{#each model.sharedUsers}}
+					{{#each model.shares itemController="share"}}
 						<tr>
-							<td>{{name}}</td>
-							<td><a href="#">Unshare</a></td>
+							<td>{{user.name}}</td>
+							<td><a {{action "deleteShare"}}>Unshare</a></td>
 						</tr>
 					{{/each}}
 				</table>
