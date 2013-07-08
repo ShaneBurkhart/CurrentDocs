@@ -7,6 +7,17 @@
 		<div class="body">
 			<p>Enter an email to share {{model.name}} with.</p>
 			{{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" }}
+			<p>Users that are currently being shared.</p>
+			<div class="scroller-medium">
+				<table class="table">
+					{{#each model.sharedUsers}}
+						<tr>
+							<td>{{name}}</td>
+							<td><a href="#">Unshare</a></td>
+						</tr>
+					{{/each}}
+				</table>
+			</div>
 		</div>
 		<div class="footer">
 			<div class="buttons">

@@ -35,8 +35,6 @@ class Api::SharesController < ApplicationController
         render_no_permission
       end
     else
-      puts current_user.viewer?
-      puts current_user.manager?
       render_no_permission
     end
   end

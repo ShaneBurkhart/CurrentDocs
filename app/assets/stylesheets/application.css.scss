@@ -148,6 +148,18 @@ iframe{
   }
 }
 
+.scroller-medium{
+  height:100px;
+  overflow-x:hidden;
+  overflow-y:scroll;
+  margin-bottom: 15px;
+  border:1px solid #aaa;
+  table{
+    margin-bottom: 0;
+    background-color: #fbfbfb;
+  }
+}
+
 body{
   padding-top: 30px;
 }

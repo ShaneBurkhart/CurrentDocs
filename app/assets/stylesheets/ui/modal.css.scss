@@ -20,19 +20,19 @@ $width: 690px;
 		z-index:20;
 		overflow-x: hidden;
 		overflow-y: hidden;
-		opacity:.6; /* Sets opacity so it's partly transparent */ 
-		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /* IE transparency */ 
+		opacity:.6; /* Sets opacity so it's partly transparent */
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)"; /* IE transparency */
 		filter:alpha(opacity=60); /* More IE transparency */
 	}
 
 	.dialog{
-		opacity:1; /* Sets opacity so it's partly transparent */ 
-		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; /* IE transparency */ 
+		opacity:1; /* Sets opacity so it's partly transparent */
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; /* IE transparency */
 		filter:alpha(opacity=100); /* More IE transparency */
 		width: $width;
 		z-index:21;
 		position: relative;
-		top:38%;
+		top:30%;
 		margin:0 auto;
 
 		.header{

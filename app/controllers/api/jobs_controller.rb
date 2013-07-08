@@ -4,7 +4,7 @@ class Api::JobsController < ApplicationController
   def index
     if can? :read, Job
       @jobs = current_user.jobs + current_user.shared_jobs
-      render :json => {:jobs => @jobs}, include: [:plans, :user]
+      render :json => {:jobs => @jobs}, include: [:plans, :user, :shared_users]
     else
       render_no_permission
     end
@@ -14,7 +14,7 @@ class Api::JobsController < ApplicationController
     if can? :read, Job
       @job = Job.find(params[:id])
       if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
-        render :json => {:job => @job}, include: [:plans, :user]
+        render :json => {:job => @job}, include: [:plans, :user, :shared_users]
       else
         render :json => {:job => {}}
       end
@@ -31,7 +31,7 @@ class Api::JobsController < ApplicationController
         @job.save
       end
       if current_user.is_my_job @job
-        render :json => {:job => @job}, include: [:plans, :user]
+        render :json => {:job => @job}, include: [:plans, :user, :shared_users]
       else
         render_no_permission
       end
@@ -44,7 +44,7 @@ class Api::JobsController < ApplicationController
     if can? :update, Job
       @job = Job.find(params[:id])
       @job.update_attributes(name: params[:job][:name]) unless (!@job || !current_user.is_my_job(@job))
-      render :json => {job: @job}, include: [:plans, :user]
+      render :json => {job: @job}, include: [:plans, :user, :shared_users]
     else
       render_no_permission
     end
