@@ -10,19 +10,11 @@
 		{{#each controller itemController="jobItem"}}
 			{{#linkTo "job" this tagName="tr" classNames="job"}}
 				<td>
-					{{#if isEditing}}
-						{{view Ember.TextField valueBinding="name"}}
-					{{else}}
-						{{name}}
-					{{/if}}
+					{{name}}
 				</td>
 				<td>
-					{{#if isMe}}
-						Me
-					{{else}}
-						{{user.name}}
-					{{/if}}
-					</td>
+					{{username this}}
+				</td>
 				<td>
 					<ul class="controls pull-right unstyled">
 						<li><a {{action "openShareJobModal" this bubbles=false}}>Share</a></li>

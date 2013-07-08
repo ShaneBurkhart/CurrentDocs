@@ -19,24 +19,5 @@
 
 <script type="text/javascript">
 	user = "<%= current_user.name %>";
-</script>
-
-
-
-<script type="text/x-handlebars" id="add_job_view">
-	{{#if view.isAdding}}
-		<input type="text" id="new-job-name" placeholder="Enter a job name" autofocus>
-		<span class="muted">Press enter to add</span>
-	{{else}}
-		<a href="" class="btn btn-success btn-long" {{action "add" target="view"}}>+ Add Job</a>
-	{{/if}}
-</script>
-
-<script type="text/x-handlebars" id="add_plan_view">
-	{{#if view.isAdding}}
-		<input type="text" id="new-plan-name" placeholder="Enter a plan name" autofocus>
-		<span class="muted">Press enter to add</span>
-	{{else}}
-		<a href="" class="btn btn-success btn-long" {{action "add" target="view"}}>+ Add Plan</a>
-	{{/if}}
+	user_id = "<%= current_user.id %>";
 </script>
