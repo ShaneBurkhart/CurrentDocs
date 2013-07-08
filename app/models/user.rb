@@ -67,6 +67,11 @@ class User < ActiveRecord::Base
     self.class == Admin
   end
 
+  def is_my_token(token)
+    share = Share.find_by_token(token)
+    return !share.nil? || share.user.id == self.id
+  end
+
   def is_my_job(job)
     job.user.id == self.id
   end

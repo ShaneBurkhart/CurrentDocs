@@ -3,7 +3,18 @@ class Api::SharesController < ApplicationController
   before_filter :authenticate_user!, only: ["show"]
 
   def show
-    render text: "Some Text"
+    if can? :update, Share
+      if params["token"] && current_user.is_my_token(params["token"])
+        @share = Share.find_by_token(params["token"])
+        @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
+        flash[:notice] = "You have accepted #{@share.job.name}!"
+        redirect_to app_path
+      else
+        render_no_permission
+      end
+    else
+      render_no_permission
+    end
   end
 
   def create
@@ -24,6 +35,8 @@ class Api::SharesController < ApplicationController
         render_no_permission
       end
     else
+      puts current_user.viewer?
+      puts current_user.manager?
       render_no_permission
     end
   end
@@ -53,6 +66,7 @@ class Api::SharesController < ApplicationController
   end
 
   private
+
     def user_not_there!
       render text: "No user signed in" unless user_signed_in?
     end
