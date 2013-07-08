@@ -8,7 +8,7 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
     $.post("/api/shares",
     	{"share" : {"job_id" : this.get("model").get("id"), "email" : email}},
     	function(data){
-    		alert("Shared");
+    		PlanSource.Job.find();
     	},
     	"json");
 		this.send("close");
