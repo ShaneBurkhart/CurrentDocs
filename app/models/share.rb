@@ -18,7 +18,15 @@ class Share < ActiveRecord::Base
   #job.user is the inviter
   before_create :generate_token
 
+  validates :token, uniqueness: true
+  validates :job_id, :user_id, presence: true
+  validate :check_existance
+
   private
+
+  	def check_existance
+			errors.add(:job_id, 'Share already exists') unless Share.find_by_job_id_and_user_id(self.job_id, self.user_id).nil?
+  	end
 
 	  def generate_token
 	    self.token = loop do

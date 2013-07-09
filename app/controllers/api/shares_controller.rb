@@ -26,6 +26,10 @@ class Api::SharesController < ApplicationController
           guest = true
           @user.save
         end
+        if current_user == @user
+          render_no_permission
+          return
+        end
         @share = Share.new job_id: params["share"]["job_id"], user_id: @user.id
         if @share.save
           @user.send_share_notification @share, guest

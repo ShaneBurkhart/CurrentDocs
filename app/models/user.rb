@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
 
   def is_my_token(token)
     share = Share.find_by_token(token)
-    return !share.nil? || share.user.id == self.id
+    return !share.nil? || is_my_share(share)
   end
 
   def is_my_job(job)
