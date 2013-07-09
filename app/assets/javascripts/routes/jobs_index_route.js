@@ -22,6 +22,11 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 		openEditJobModal : function(model){
 			this.controllerFor("edit_job").set("model", model);
 			this.render("modals/edit_job", {into : "jobs", outlet : "modal", controller : "edit_job"});
+		},
+
+		openUnshareJobModal : function(model){
+			this.controllerFor("unshare_job").set("model", model);
+			this.render("modals/unshare_job", {into : "jobs", outlet : "modal", controller : "unshare_job"});
 		}
 	},
 

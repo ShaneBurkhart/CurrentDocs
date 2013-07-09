@@ -7,7 +7,7 @@
 			<th class="pull-right">Controls</th>
 	</thead>
 	<tbody>
-		{{#each controller}}
+		{{#each controller itemController="jobItem"}}
 			{{#linkTo "job" this tagName="tr" classNames="job"}}
 				<td>
 					{{name}}
@@ -17,9 +17,13 @@
 				</td>
 				<td>
 					<ul class="controls pull-right unstyled">
-						<li><a {{action "openShareJobModal" this bubbles=false}}>Share</a></li>
-						<li><a {{action "openEditJobModal" this bubbles=false}}>Edit</a></li>
-						<li><a {{action "openDeleteJobModal" this bubbles=false}}>Delete</a></li>
+						{{#if isShared}}
+							<li><a {{action "openShareJobModal" this bubbles=false}}>Share</a></li>
+							<li><a {{action "openEditJobModal" this bubbles=false}}>Edit</a></li>
+							<li><a {{action "openDeleteJobModal" this bubbles=false}}>Delete</a></li>
+						{{else}}
+							<li><a {{action "openUnshareJobModal" this bubbles=false}}>Unshare</a></li>
+						{{/if}}
 					</ul>
 				</td>
 			{{/linkTo}}
