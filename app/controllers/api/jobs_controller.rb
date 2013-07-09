@@ -25,12 +25,15 @@ class Api::JobsController < ApplicationController
 
   def create
     if can? :create, Job
-      @job = Job.find_or_create_by_name(params["job"]["name"])
-      if @job.new_record?
-        @job.user_id = current_user.id
-        @job.save
+      @job = Job.create(name: params["job"]["name"], user_id: current_user.id)
+      if !@job.save
+        @job = Job.find_by_name_and_user_id(params["job"]["name"], current_user.id)
+        if @job.nil? or !current_user.is_my_job @job
+          render_no_permission
+          return
+        end
       end
-      if current_user.is_my_job @job
+      if
         render :json => {:job => @job}, include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}]
       else
         render_no_permission
