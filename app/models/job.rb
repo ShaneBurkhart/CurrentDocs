@@ -20,6 +20,7 @@ class Job < ActiveRecord::Base
   validates :name, presence: true#, uniqueness: true
   validate :check_for_dubplicate_name_for_single_user
 
+
 	private
 
 	  def check_for_dubplicate_name_for_single_user

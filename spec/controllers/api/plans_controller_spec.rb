@@ -23,7 +23,7 @@ describe Api::PlansController do
     it "should output json for plsn" do
       plan = Plan.create! valid_attributes
       get :show, {:id => plan.to_param}
-      response.body.should == {plan: plan}.to_json
+      response.body.should have_content(plan.to_json)
     end
   end
 
@@ -33,7 +33,7 @@ describe Api::PlansController do
         expect {
           post :create, {:plan => valid_attributes}
         }.to change(Plan, :count).by(1)
-        response.body.should == {plan: Plan.find_by_plan_name(valid_attributes[:plan_name])}.to_json
+        response.body.should have_content(Plan.find_by_plan_name(valid_attributes[:plan_name]).to_json)
       end
 
       it "can not be created by viewer" do
@@ -58,7 +58,7 @@ describe Api::PlansController do
       it "should output updated plan as JSON" do
         plan = Plan.create! valid_attributes
         put :update, {:id => plan.to_param, :plan => valid_attributes}
-        response.body.should == {plan: plan}.to_json
+        response.body.should have_content(plan.to_json)
       end
 
       it "can not be updated by viewer" do

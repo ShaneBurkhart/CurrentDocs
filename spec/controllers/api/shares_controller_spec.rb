@@ -42,7 +42,7 @@ describe Api::SharesController do
         expect {
           post :create, {:share => valid_attributes}
         }.to change(Share, :count).by(1)
-        response.body.should == {share: Share.find_by_user_id(@viewer.id)}.to_json
+        response.body.should == Share.find_by_user_id(@viewer.id).to_json
       end
 
       it "creates a new share as guest user" do
@@ -50,7 +50,7 @@ describe Api::SharesController do
         expect {
           post :create, {:share => {job_id: @job.id, email: email}}
         }.to change(Share, :count).by(1)
-        response.body.should == {share: Share.find_by_user_id(User.find_by_email(email).id)}.to_json
+        response.body.should == Share.find_by_user_id(User.find_by_email(email).id).to_json
       end
 
       it "can not be created by viewer" do

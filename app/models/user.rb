@@ -42,17 +42,22 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password,
+  attr_accessible :first_name, :last_name, :email, :password,
    :password_confirmation, :remember_me, :type, :guest
 
   def self.new_guest_user(share_param)
     pass = ('a'..'z').to_a.shuffle[0,8].join
-    Viewer.new name: "New User", email: share_param["email"],
+    Viewer.new first_name: "New", last_name: "User",
+      email: share_param["email"],
       password: pass, password_confirmation: pass
   end
 
   def send_share_notification(share, guest)
     UserMailer.share_notification(share.user, share, guest).deliver
+  end
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
   end
 
   def manager?

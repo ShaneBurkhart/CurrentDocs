@@ -38,7 +38,7 @@ describe Api::JobsController do
     it "should output jobs as json" do
       job = Job.create! valid_attributes
       get :index, {}
-      response.body.should == {jobs: [job]}.to_json(include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}])
+      response.body.should have_content(job.to_json)
     end
   end
 
@@ -46,7 +46,7 @@ describe Api::JobsController do
     it "should output json for job" do
       job = Job.create! valid_attributes
       get :show, {:id => job.to_param}
-      response.body.should == {job: job}.to_json(include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}])
+      response.body.should have_content(job.to_json)
     end
   end
 
@@ -69,7 +69,7 @@ describe Api::JobsController do
       it "should output new job as JSON" do
         job = Job.create! valid_attributes
         post :create, {:job => valid_attributes}
-        response.body.should == {job: job}.to_json(include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}])
+        response.body.should have_content(job.to_json)
       end
     end
   end
@@ -86,7 +86,7 @@ describe Api::JobsController do
       it "should output updated job as JSON" do
         job = Job.create! valid_attributes
         put :update, {:id => job.to_param, :job => valid_attributes}
-        response.body.should == {job: job}.to_json(include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}])
+        response.body.should have_content(job.to_json)
       end
 
       it "can not be updated by viewer" do
