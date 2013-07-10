@@ -9,7 +9,7 @@
 				  <%= f.input :type, :collection => ["Viewer", "Manager"],
 				    :as => :radio_buttons, :required => true, :checked => "Viewer" %>
 				  <%= f.input :first_name, :autofocus => true, :required => true %>
-				  <%= f.input :last_name, :autofocus => true, :required => true %>
+				  <%= f.input :last_name, :required => true %>
 				  <%= f.input :email, :required => true %>
 				  <%= f.input :password, :required => true %>
 				  <%= f.input :password_confirmation, :required => true %>
