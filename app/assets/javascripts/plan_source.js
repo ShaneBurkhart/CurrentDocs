@@ -19,11 +19,6 @@ PlanSource = Ember.Application.create({
 Ember.Handlebars.registerBoundHelper("date", function(date){
     return moment(date).fromNow();
 });
-Ember.Handlebars.registerBoundHelper("username", function(model){
-    if(model.get("user"))
-        return model.get('user').get('id') == user_id ? "Me" : model.get("user").get("name");
-});
-
 $.fn.upload = function(remote, successFn, progressFn) {
     return this.each(function() {
 
