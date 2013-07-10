@@ -45,6 +45,13 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password,
    :password_confirmation, :remember_me, :type, :guest
 
+  validates :type, presence: true
+  before_validation :check_type
+
+  def check_type
+    self.type = self.type || "Viewer"
+  end
+
   def self.new_guest_user(share_param)
     pass = ('a'..'z').to_a.shuffle[0,8].join
     Viewer.new first_name: "New", last_name: "User",
