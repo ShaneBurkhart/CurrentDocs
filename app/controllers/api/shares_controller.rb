@@ -34,7 +34,7 @@ class Api::SharesController < ApplicationController
         if @share.save
           @user.send_share_notification @share, guest
         end
-        render json: {share: @share}
+        render json: @share
       else
         render_no_permission
       end
@@ -47,7 +47,7 @@ class Api::SharesController < ApplicationController
     if can? :update, Share
       @share = Share.find(params[:id])
       @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
-      render :json => {share: @share}
+      render json: @share
     else
       render_no_permission
     end
@@ -58,7 +58,7 @@ class Api::SharesController < ApplicationController
       @share = Share.find(params[:id])
       if current_user.is_my_share @share
         @share.destroy
-        render json: {share: @share}
+        render json: {}
       else
         render_no_permission
       end
