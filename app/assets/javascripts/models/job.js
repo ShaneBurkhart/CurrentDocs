@@ -1,6 +1,10 @@
 PlanSource.Job = DS.Model.extend({
 	name : DS.attr("string"),
-	user : DS.belongsTo("PlanSource.User", {embedded : "load"}),
-	plans : DS.hasMany("PlanSource.Plan", {embedded : "load"}),
-	shares : DS.hasMany("PlanSource.Share", {embedded : "load"})
+	user : DS.belongsTo("PlanSource.User"),
+	plans : DS.hasMany("PlanSource.Plan"),
+	shares : DS.hasMany("PlanSource.Share"),
+
+	becameInvalid : function(data){
+		this.deleteRecord();
+  }
 });

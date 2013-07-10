@@ -4,7 +4,7 @@ class Api::JobsController < ApplicationController
   def index
     if can? :read, Job
       @jobs = current_user.jobs + current_user.shared_jobs
-      render :json => {:jobs => @jobs}, include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}]
+      render json: @jobs
     else
       render_no_permission
     end
@@ -14,9 +14,9 @@ class Api::JobsController < ApplicationController
     if can? :read, Job
       @job = Job.find(params[:id])
       if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
-        render :json => {:job => @job}, include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}]
+        render json: @job
       else
-        render :json => {:job => {}}
+        render json: {job: {}}
       end
     else
       render_no_permission
@@ -25,16 +25,13 @@ class Api::JobsController < ApplicationController
 
   def create
     if can? :create, Job
-      @job = Job.create(name: params["job"]["name"], user_id: current_user.id)
+      @job = Job.new(name: params["job"]["name"], user_id: current_user.id)
       if !@job.save
-        @job = Job.find_by_name_and_user_id(params["job"]["name"], current_user.id)
-        if @job.nil? or !current_user.is_my_job @job
-          render_no_permission
-          return
-        end
+        render json: @job
+        return
       end
       if
-        render :json => {:job => @job}, include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}]
+        render json: @job
       else
         render_no_permission
       end
@@ -47,7 +44,7 @@ class Api::JobsController < ApplicationController
     if can? :update, Job
       @job = Job.find(params[:id])
       @job.update_attributes(name: params[:job][:name]) unless (!@job || !current_user.is_my_job(@job))
-      render :json => {job: @job}, include: [:plans, :user, :shares => {except: :token, include: [:user, :job]}]
+      render json: @job
     else
       render_no_permission
     end
@@ -59,7 +56,7 @@ class Api::JobsController < ApplicationController
       if current_user.is_my_job @job
         if @job
           @job.destroy
-          render :json => {job: {}}
+          render json: {job: {}}
         else
           render :text => "No job"
         end

@@ -32,3 +32,4 @@ gem 'ember-rails'
 gem 'ember-source', '1.0.0.rc5' # or the version you need
 gem 'handlebars-source', '1.0.0.rc4' # or the version you need
 gem 'momentjs-rails'
+gem 'active_model_serializers'

@@ -203,6 +203,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  active_model_serializers
   annotate
   better_errors (>= 0.7.2)
   binding_of_caller (>= 0.7.1)

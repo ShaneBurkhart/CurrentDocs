@@ -5,7 +5,7 @@ class Api::PlansController < ApplicationController
     if can? :read, Plan
       @plan = Plan.find(params[:id])
       if @plan.job.user.id == current_user.id
-        render :json => {:plan => @plan}
+        render json: @plan
       else
         render_no_permission
       end
@@ -19,7 +19,7 @@ class Api::PlansController < ApplicationController
       params["plan"].delete "updated_at"
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
       @plan = Plan.create params["plan"]
-      render :json => {:plan => @plan}
+      render json: @plan
     else
       render_no_permission
     end
@@ -35,7 +35,7 @@ class Api::PlansController < ApplicationController
         end
         params["plan"].delete "updated_at"
         @plan.update_attributes(params["plan"])
-        render :json => {:plan => @plan}
+        render json: @plan
       else
         render_no_permission
       end
@@ -49,7 +49,7 @@ class Api::PlansController < ApplicationController
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         @plan.destroy
-        render json: {plan: @plan}
+        render json: @plan
       else
         render_no_permission
       end

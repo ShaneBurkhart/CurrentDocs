@@ -1,0 +1,2 @@
+class ManagerSerializer < UserSerializer
+end
