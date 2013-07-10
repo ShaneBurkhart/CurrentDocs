@@ -49,7 +49,7 @@ class Api::PlansController < ApplicationController
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         @plan.destroy
-        render json: @plan
+        render json: {}
       else
         render_no_permission
       end

@@ -56,7 +56,7 @@ class Api::JobsController < ApplicationController
       if current_user.is_my_job @job
         if @job
           @job.destroy
-          render json: {job: {}}
+          render json: {}
         else
           render :text => "No job"
         end
