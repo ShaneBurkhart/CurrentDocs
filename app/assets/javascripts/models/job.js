@@ -23,6 +23,8 @@ PlanSource.Job = DS.Model.extend({
   }.property("isShared"),
 
 	becameInvalid : function(data){
-		this.deleteRecord();
+    console.log("Some");
+		this.transaction.rollback();
+    model.send('becameValid');
   }
 });

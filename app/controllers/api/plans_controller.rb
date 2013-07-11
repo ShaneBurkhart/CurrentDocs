@@ -18,8 +18,12 @@ class Api::PlansController < ApplicationController
     if can? :create, Plan
       params["plan"].delete "updated_at"
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
-      @plan = Plan.create params["plan"]
-      render json: @plan
+      @plan = Plan.new params["plan"]
+      if @plan.save
+        render json: @plan
+      else
+        render json: {}
+      end
     else
       render_no_permission
     end

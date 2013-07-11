@@ -17,7 +17,10 @@ PlanSource = Ember.Application.create({
 });
 
 Ember.Handlebars.registerBoundHelper("date", function(date){
-    return moment(date).fromNow();
+    if(date)
+        return moment(date).fromNow();
+    else
+        return "";
 });
 Handlebars.registerHelper('manager', function(options) {
     if(PlanSource._user_type == "Manager")
