@@ -1,5 +1,7 @@
 <h2>My Jobs</h2>
-<a href="#" {{action "openAddJobModal"}} class="button button-green">+ Add Job</a>
+{{#manager}}
+	<a href="#" {{action "openAddJobModal"}} class="button button-green">+ Add Job</a>
+{{/manager}}
 <table class="table table-hover">
 	<thead>
 		<th>Job Name</th>
@@ -30,7 +32,11 @@
 			{{else}}
 			<tr>
 				<td>
-					<p>You don't have any jobs.</p>
+					{{#manager}}
+						<p>You need to add a job to view and share.</p>
+					{{else}}
+						<p>You are a viewer.  You need someone to share jobs/plans with you to view.</p>
+					{{/manager}}
 				</td>
 				<td></td>
 				<td></td>
