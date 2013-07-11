@@ -12,8 +12,15 @@
 				<table class="table">
 					{{#each model.shares itemController="share"}}
 						<tr>
-							<td>{{user.name}}</td>
+							<td>{{user.fullName}}</td>
 							<td>{{user.email}}</td>
+							<td>
+								{{#if accepted}}
+									Shared
+								{{else}}
+									Pending...
+								{{/if}}
+							</td>
 							<td><a {{action "deleteShare"}}>Unshare</a></td>
 						</tr>
 					{{/each}}

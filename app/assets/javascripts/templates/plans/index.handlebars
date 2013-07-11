@@ -21,7 +21,11 @@
 	{{else}}
 		<tr>
 			<td>
-				<p>There aren't any plans in this job.</p>
+				{{#manager}}
+					<p>You need to add a plan to your job.</p>
+				{{else}}
+					<p>The owner of this plan has not added any plans.</p>
+				{{/manager}}
 			</td>
 			<td></td>
 			<td></td>
