@@ -15,6 +15,10 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 		this.send("close");
 	},
 
+    removeShare : function(share){
+        this.get("model").get("shares").removeObject(share);
+    },
+
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.shareJob();

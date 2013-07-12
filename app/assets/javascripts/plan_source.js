@@ -61,7 +61,6 @@ $(document).ready(function(){
 			return;
 		var plan_id = $("#plan_id").val();
 		$("#plan_source_upload_form").upload("/api/upload", function(){
-			PlanSource.Plan.find(plan_id).reload();
             $(".loading").slideUp(75);
 		}, function(p){
             $(".loading").slideDown(75);
