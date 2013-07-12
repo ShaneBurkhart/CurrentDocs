@@ -6,6 +6,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 		},
 
 		openAddJobModal : function(){
+			this.controllerFor("add_job").set("parent", this.get("controller"));
 			this.render("modals/add_job", {into : "jobs", outlet : "modal", controller : "add_job"});
 		},
 
@@ -16,6 +17,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 
 		openDeleteJobModal : function(model){
 			this.controllerFor("delete_job").set("model", model);
+			this.controllerFor("delete_job").set("parent", this.get("controller"));
 			this.render("modals/delete_job", {into : "jobs", outlet : "modal", controller : "delete_job"});
 		},
 

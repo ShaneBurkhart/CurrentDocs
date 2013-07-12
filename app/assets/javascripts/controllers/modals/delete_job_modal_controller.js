@@ -1,8 +1,8 @@
 PlanSource.DeleteJobController = Ember.ObjectController.extend({
 
 	deleteJob : function(){
-		this.get("model").deleteRecord();
-		this.get("model").save();
+		var job = this.get("model");
+		this.get("parent").removeJob(job);
 		this.send("close");
 	},
 

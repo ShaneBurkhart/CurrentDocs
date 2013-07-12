@@ -1,12 +1,14 @@
 PlanSource.AddJobController = Ember.ObjectController.extend({
 
+	content : {},
+
 	addJob : function(){
 		var container = $("#new-job-name"),
     		name = container.val();
     if(!name || name == "")
     	return;
-    var job = PlanSource.Job.createRecord({"name" : name});
-		job.save();
+    var job = PlanSource.Job.create({"name" : name});
+		this.get("parent").addJob(job);
 		this.send("close");
 	},
 

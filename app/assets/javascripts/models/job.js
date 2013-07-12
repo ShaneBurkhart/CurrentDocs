@@ -1,17 +1,31 @@
 PlanSource.Job = Ember.Object.extend({
 
   init : function(){
-    this.set("user", PlanSource.User.create(this.get("user")));
-    var plans = Em.A();
-    this.get("plans").forEach(function(plan){
-      plans.pushObject(PlanSource.Plan.create(plan));
-    });
-    this.set("plans", plans);
-    var shares = Em.A();
-    this.get("shares").forEach(function(share){
-      shares.pushObject(PlanSource.Share.create(share));
-    });
-    this.set("shares", shares);
+    this.setProperties(this.getProperties("user", "plans", "shares"));
+  },
+
+  setProperties : function(hash){
+    if(hash.user){
+      this.set("user", PlanSource.User.create(hash.user));
+      delete hash.user
+    }
+    if(hash.plans){
+      var plans = Em.A();
+      hash.plans.forEach(function(plan){
+        plans.pushObject(PlanSource.Plan.create(plan));
+      });
+      this.set("plans", plans);
+      delete hash.plans
+    }
+    if(hash.shares){
+      var shares = Em.A();
+      hash.shares.forEach(function(share){
+        shares.pushObject(PlanSource.Share.create(share));
+      });
+      this.set("shares", shares);
+      delete hash.shares
+    }
+    Ember.setProperties(this, hash);
   },
 
 	username : function(){
@@ -34,7 +48,6 @@ PlanSource.Job = Ember.Object.extend({
 
   deleteRecord : function(){
     this.destroy();
-    console.log("Destroyed Job");
   },
 
   save : function(){
@@ -42,8 +55,26 @@ PlanSource.Job = Ember.Object.extend({
       console.log("Save: Destroying");
       return this._deleteRequest();
     }else{
-      console.log("Save: Updating");
+      if(this.get("id")) ///Not news
+        this._updateRequest();
+      else
+        this._createRequest();
     }
+  },
+
+  _createRequest : function(){
+    var self = this;
+    return Em.Deferred.promise(function(p){
+      p.resolve($.ajax({
+            url: PlanSource.Job.url(self.get("id")),
+            type: 'POST',
+            data : { job : self.getProperties("name")}
+        }).then(function(data){
+          console.log(data.job);
+          self.setProperties(data.job);
+        })
+      );
+    });
   },
 
   _deleteRequest : function(){
@@ -53,7 +84,7 @@ PlanSource.Job = Ember.Object.extend({
             url: PlanSource.Job.url(self.get("id")),
             type: 'DELETE'
         }).then(function(data){
-          console.log(data);
+          console.log("Destroyed Job Save");
         })
       );
     });
