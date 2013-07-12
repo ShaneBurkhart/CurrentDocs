@@ -1,6 +1,4 @@
-PlanSource.Share = DS.Model.extend({
-	user : DS.belongsTo("PlanSource.User"),
-	job : DS.belongsTo("PlanSource.Job"),
+PlanSource.Share = Ember.Object.extend({
 
 	didDelete : function(){
 		PlanSource.Job.find();

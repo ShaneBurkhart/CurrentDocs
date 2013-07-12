@@ -1,5 +1,19 @@
 PlanSource.Job = Ember.Object.extend({
 
+  init : function(){
+    this.set("user", PlanSource.User.create(this.get("user")));
+    var plans = Em.A();
+    this.get("plans").forEach(function(plan){
+      plans.pushObject(PlanSource.Plan.create(plan));
+    });
+    this.set("plans", plans);
+    var shares = Em.A();
+    this.get("shares").forEach(function(share){
+      shares.pushObject(PlanSource.Share.create(share));
+    });
+    this.set("shares", shares);
+  },
+
 	username : function(){
 		if(this.get("user"))
     	return this.get('user').get('id') == user_id ? "Me" : this.get("user").get("fullName");
