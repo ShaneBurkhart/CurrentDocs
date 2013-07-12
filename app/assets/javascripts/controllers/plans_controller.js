@@ -15,5 +15,13 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 		this.get("content").removeObject(plan);
 		plan.deleteRecord();
 		plan.save();
+	},
+
+	updatePlans : function(){
+		var self = this;
+		PlanSource.Job.find(this.get("job").get("id")).then(function(job){
+			self.set("content", job.get("plans"))
+		});
 	}
+
 });

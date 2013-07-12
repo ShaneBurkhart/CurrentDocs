@@ -28,6 +28,7 @@ PlanSource.JobRoute = Ember.Route.extend({
 	setupController: function(controller, model) {
 		controller.set("model", model);
     this.controllerFor('plans').set('content', model.get("plans"));
+    this.controllerFor('plans').set('job', model);
   },
 
 	renderTemplate : function(){

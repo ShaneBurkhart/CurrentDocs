@@ -12,6 +12,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 
 		openShareJobModal : function(model){
 			this.controllerFor("share_job").set("model", model);
+			this.controllerFor("share_job").set("parent", this.get("controller"));
 			this.render("modals/share_job", {into : "jobs", outlet : "modal", controller : "share_job"});
 		},
 

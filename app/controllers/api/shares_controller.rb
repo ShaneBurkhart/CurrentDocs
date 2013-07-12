@@ -19,7 +19,7 @@ class Api::SharesController < ApplicationController
 
   def create
     if can? :create, Share
-      if current_user.is_my_job Job.find(params["share"]["job_id"])
+      if current_user.is_my_job Job.find(params["share"]["job_id"].to_i)
         @user = User.find_by_email params["share"]["email"]
         if @user.nil?
           @user = User.new_guest_user params["share"]
