@@ -29,10 +29,11 @@ Handlebars.registerHelper('manager', function(options) {
         return options.inverse(this);
 });
 
-$.fn.upload = function(remote, successFn, progressFn) {
+$.fn.upload = function(plan_id, remote, successFn, progressFn) {
     return this.each(function() {
 
         var formData = new FormData(this);
+        formData.append("plan_id", plan_id);
 
         $.ajax({
             url: remote,
@@ -55,7 +56,7 @@ $.fn.upload = function(remote, successFn, progressFn) {
     });
 }
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 	$("#file").change(function(){
 		if(!$(this).val() || $(this).val() == "")
 			return;
@@ -69,7 +70,7 @@ $(document).ready(function(){
 		$(this).val("");
 	});
 });
-
+*/
 
 PlanSource.download = function(plan_id){
     if(plan_id)

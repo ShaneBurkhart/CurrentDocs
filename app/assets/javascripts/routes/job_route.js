@@ -10,6 +10,12 @@ PlanSource.JobRoute = Ember.Route.extend({
 			this.render("modals/add_plan", {into : "jobs", outlet : "modal", controller : "add_plan"});
 		},
 
+		openUploadPlanModal : function(model){
+			this.controllerFor("upload_plan").set("model", model);
+			this.controllerFor("upload_plan").set("parent", this.controllerFor("plans"));
+			this.render("modals/upload_plan", {into : "jobs", outlet : "modal", controller : "upload_plan"});
+		},
+
 		openDeletePlanModal : function(model){
 			console.log(model);
 			this.controllerFor("delete_plan").set("model", model);
