@@ -39,8 +39,12 @@ class Api::JobsController < ApplicationController
   def update
     if can? :update, Job
       @job = Job.find(params[:id])
-      @job.update_attributes(name: params[:job][:name]) unless (!@job || !current_user.is_my_job(@job))
-      render json: @job
+      if !@job || !current_user.is_my_job(@job)
+        @job.update_attributes(name: params[:job][:name])
+        render json: @job
+      else
+        render json: @job
+      end
     else
       render_no_permission
     end
