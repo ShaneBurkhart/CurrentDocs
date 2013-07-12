@@ -2,6 +2,8 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 	sortProperties: ['sorter'],
   sortAscending: true,
 
+  content : null,
+
   removeJob : function(job){
   	this.get("content").removeObject(job);
   	job.deleteRecord();
@@ -19,7 +21,8 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 
   updateJobs : function(){
     PlanSource.Job.findAll().then(function(jobs){
-      this.set("content", jobs);
+      this.set("content", jobs)
+      console.log("Test");
     });
   }
 });
