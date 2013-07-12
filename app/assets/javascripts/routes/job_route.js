@@ -6,18 +6,21 @@ PlanSource.JobRoute = Ember.Route.extend({
 
 		openAddPlanModal : function(){
 			this.controllerFor("add_plan").set("model", this.get("controller").get("model"));
+			this.controllerFor("add_plan").set("parent", this.controllerFor("plans"));
 			this.render("modals/add_plan", {into : "jobs", outlet : "modal", controller : "add_plan"});
 		},
 
 		openDeletePlanModal : function(model){
 			console.log(model);
 			this.controllerFor("delete_plan").set("model", model);
+			this.controllerFor("delete_plan").set("parent", this.controllerFor("plans"));
 			this.render("modals/delete_plan", {into : "jobs", outlet : "modal", controller : "delete_plan"});
 		},
 
 		openEditPlanModal : function(model){
 			this.controllerFor("edit_plan").set("model", model);
 			this.controllerFor("edit_plan").set("job", this.get("controller").get("model"));
+			this.controllerFor("edit_plan").set("parent", this.controllerFor("plans"));
 			this.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
 		}
 	},

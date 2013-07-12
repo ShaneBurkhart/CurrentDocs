@@ -52,13 +52,12 @@ PlanSource.Job = Ember.Object.extend({
 
   save : function(){
     if(this.get("isDestroyed") || this.get("isDestroying")){
-      console.log("Save: Destroying");
       return this._deleteRequest();
     }else{
       if(this.get("id")) ///Not news
-        this._updateRequest();
+        return this._updateRequest();
       else
-        this._createRequest();
+        return this._createRequest();
     }
   },
 
@@ -69,8 +68,12 @@ PlanSource.Job = Ember.Object.extend({
             url: PlanSource.Job.url(),
             type: 'POST',
             data : { job : self.getProperties("name")}
-        }).then(function(data){
-          self.setProperties(data.job);
+        }).then(function(data, t, xhr){
+          if(!$.isEmptyObject(data)){
+            self.setProperties(data.job);
+            return true;
+          }else
+            return false;
         })
       );
     });

@@ -27,7 +27,7 @@ class Api::JobsController < ApplicationController
     if can? :create, Job
       @job = Job.new(name: params["job"]["name"], user_id: current_user.id)
       if !@job.save
-        render json: {}, status: :unprocessable_entity
+        render json: {}
         return
       end
       render json: @job
