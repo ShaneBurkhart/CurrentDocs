@@ -1,5 +1,5 @@
 PlanSource.PlansController = Ember.ArrayController.extend({
-	sortProperties: ['planNum'],
+	sortProperties: ['plan_num'],
   sortAscending: true,
 
   addPlan : function(plan){
@@ -12,6 +12,8 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	},
 
 	removePlan : function(plan){
-
+		this.get("content").removeObject(plan);
+		plan.deleteRecord();
+		plan.save();
 	}
 });

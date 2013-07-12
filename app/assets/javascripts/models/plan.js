@@ -42,9 +42,9 @@ PlanSource.Plan = Ember.Object.extend({
       p.resolve($.ajax({
             url: PlanSource.Plan.url(self.get("id")),
             type: 'PUT',
-            data : { job : self.getProperties("name")}
+            data : { plan : self.getProperties("plan_name", "plan_num")}
         }).then(function(data){
-          self.setProperties(data.job);
+          self.setProperties(data.plan);
         })
       );
     });

@@ -1,8 +1,7 @@
 PlanSource.DeletePlanController = Ember.ObjectController.extend({
 
 	deletePlan : function(){
-		this.get("model").deleteRecord();
-		this.get("model").save();
+		this.get("parent").removePlan(this.get("model"));
 		this.send("close");
 	},
 

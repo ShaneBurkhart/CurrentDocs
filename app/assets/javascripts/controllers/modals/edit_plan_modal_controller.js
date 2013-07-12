@@ -6,9 +6,9 @@ PlanSource.EditPlanController = Ember.ObjectController.extend({
 		var name = $("#edit-plan-name").val(),
     		num = $("#edit-plan-num").val();
     if(name && name != "")
-    	this.get("model").set("planName", name);
+    	this.get("model").set("plan_name", name);
     if(num && num != "")
-    	this.get("model").set("planNum", num);
+    	this.get("model").set("plan_num", num);
 		this.get("model").save();
 		this.send("close");
 	},
