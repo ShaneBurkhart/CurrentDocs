@@ -33,8 +33,8 @@ class Api::PlansController < ApplicationController
     if can? :update, Plan
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
-        if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].is_a?(Numeric)
-          @plan.set_plan_num params["plan"]["plan_num"]
+        if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
+          @plan.set_plan_num params["plan"]["plan_num"].to_i
           params["plan"].delete "plan_num"
         end
         params["plan"].delete "updated_at"

@@ -73,17 +73,7 @@ class Plan < ActiveRecord::Base
 		private
 
 		def highest_plan_num
-			greatest = 1
-      begin
-        Plan.find_all_by_job_id(self.job_id).each do |plan|
-          if plan.plan_num >= greatest
-            greatest = plan.plan_num
-          end
-        end
-        return greatest
-      rescue
-        return greatest
-      end
+      return self.job.plans.count
 		end
 
 		def plan_num_exists?
