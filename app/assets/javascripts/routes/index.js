@@ -1,7 +1,8 @@
 PlanSource.IndexRoute = Ember.Route.extend({
 
 	redirect : function(){
-		this.transitionTo("jobs");
+		console.log("Something");
+		//this.transitionTo("jobs");
 	}
 
 });

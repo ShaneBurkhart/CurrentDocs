@@ -30,7 +30,34 @@ PlanSource.Job = Ember.Object.extend({
 
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
   	return this.get("isShared") == false ? 0 : 1;
-  }.property("isShared")
+  }.property("isShared"),
+
+  deleteRecord : function(){
+    this.destroy();
+    console.log("Destroyed Job");
+  },
+
+  save : function(){
+    if(this.get("isDestroyed") || this.get("isDestroying")){
+      console.log("Save: Destroying");
+      return this._deleteRequest();
+    }else{
+      console.log("Save: Updating");
+    }
+  },
+
+  _deleteRequest : function(){
+    var self = this;
+    return Em.Deferred.promise(function(p){
+      p.resolve($.ajax({
+            url: PlanSource.Job.url(self.get("id")),
+            type: 'DELETE'
+        }).then(function(data){
+          console.log(data);
+        })
+      );
+    });
+  }
 
 });
 
@@ -53,6 +80,15 @@ PlanSource.Job.reopenClass({
           jobs.pushObject(PlanSource.Job.create(job));
         });
         return jobs;
+      }));
+    });
+  },
+
+  find : function(id){
+    if(!id) return PlanSource.Job.findAll();
+    return Em.Deferred.promise(function(p){
+      p.resolve($.get(PlanSource.Job.url(id)).then(function(data){
+        return PlanSource.Job.create(data.job);
       }));
     });
   }

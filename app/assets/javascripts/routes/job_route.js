@@ -35,8 +35,8 @@ PlanSource.JobRoute = Ember.Route.extend({
 		});
 	},
 
-	model : function(){
-		//return PlanSource.Job.findAll()
+	model : function(param){
+		return PlanSource.Job.find(param.job_id);
 	}
 
 });
