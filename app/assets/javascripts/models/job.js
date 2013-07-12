@@ -1,8 +1,4 @@
-PlanSource.Job = DS.Model.extend({
-	name : DS.attr("string"),
-	user : DS.belongsTo("PlanSource.User"),
-	plans : DS.hasMany("PlanSource.Plan"),
-	shares : DS.hasMany("PlanSource.Share"),
+PlanSource.Job = Ember.Object.extend({
 
 	username : function(){
 		if(this.get("user"))
@@ -20,11 +16,31 @@ PlanSource.Job = DS.Model.extend({
 
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
   	return this.get("isShared") == false ? 0 : 1;
-  }.property("isShared"),
+  }.property("isShared")
 
-	becameInvalid : function(data){
-    console.log("Some");
-		this.transaction.rollback();
-    model.send('becameValid');
+});
+
+PlanSource.Job.reopenClass({
+  baseUrl : "/api/jobs",
+
+  url : function(id){
+    var pathArray = window.location.href.split( '/' ),
+      host = pathArray[2],
+      u = "http://" + host + PlanSource.Job.baseUrl;
+    if(id) return u + "/" + id;
+    return u;
+  },
+
+  findAll : function(){
+    return Em.Deferred.promise(function(p){
+      p.resolve($.get(PlanSource.Job.url()).then(function(data){
+        var jobs = Em.A();
+        data.jobs.forEach(function(job){
+          jobs.pushObject(PlanSource.Job.create(job));
+        });
+        return jobs;
+      }));
+    });
   }
+
 });

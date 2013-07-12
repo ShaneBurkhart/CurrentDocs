@@ -33,6 +33,10 @@ PlanSource.JobRoute = Ember.Route.extend({
 			into : "job.index",
 			controller : "plans"
 		});
+	},
+
+	model : function(){
+		//return PlanSource.Job.findAll()
 	}
 
 });
