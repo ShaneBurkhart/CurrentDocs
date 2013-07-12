@@ -66,11 +66,24 @@ PlanSource.Job = Ember.Object.extend({
     var self = this;
     return Em.Deferred.promise(function(p){
       p.resolve($.ajax({
-            url: PlanSource.Job.url(self.get("id")),
+            url: PlanSource.Job.url(),
             type: 'POST',
             data : { job : self.getProperties("name")}
         }).then(function(data){
-          console.log(data.job);
+          self.setProperties(data.job);
+        })
+      );
+    });
+  },
+
+  _updateRequest : function(){
+    var self = this;
+    return Em.Deferred.promise(function(p){
+      p.resolve($.ajax({
+            url: PlanSource.Job.url(self.get("id")),
+            type: 'PUT',
+            data : { job : self.getProperties("name")}
+        }).then(function(data){
           self.setProperties(data.job);
         })
       );
@@ -84,7 +97,7 @@ PlanSource.Job = Ember.Object.extend({
             url: PlanSource.Job.url(self.get("id")),
             type: 'DELETE'
         }).then(function(data){
-          console.log("Destroyed Job Save");
+
         })
       );
     });
