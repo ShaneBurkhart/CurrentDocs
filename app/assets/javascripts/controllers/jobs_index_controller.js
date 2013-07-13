@@ -18,9 +18,9 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
   },
 
   updateJobs : function(){
+    var self = this;
     PlanSource.Job.findAll().then(function(jobs){
-      this.set("content", jobs)
-      console.log("Test");
+      self.set("content", jobs);
     });
   }
 });
