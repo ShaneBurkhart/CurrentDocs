@@ -9,12 +9,13 @@ PlanSource.UploadPlanController = Ember.ObjectController.extend({
 		if(parts[parts.length - 1].toLowerCase() != "pdf")
 			return;
 		var plan_id = this.get("id");
-		$("#plan_source_upload_form").upload(plan_id, "/api/upload", function(){
+		$("#plan_id").val(plan_id);
+		$("#plan_source_upload_form").upload("/api/upload", function(){
        $(".loading").slideUp(75);
+       self.get("parent").updatePlans();
 		}, function(p){
       $(".loading").slideDown(75);
       $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
-      self.get("parent").updatePlans();
 		});
 		file.val("");
 		this.send("close");

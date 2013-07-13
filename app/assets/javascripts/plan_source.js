@@ -29,11 +29,10 @@ Handlebars.registerHelper('manager', function(options) {
 		return options.inverse(this);
 });
 
-$.fn.upload = function(plan_id, remote, successFn, progressFn) {
+$.fn.upload = function(remote, successFn, progressFn) {
 	return this.each(function() {
 
 		var formData = new FormData(this);
-		formData.append("plan_id", plan_id);
 
 		$.ajax({
 			url: remote,
