@@ -27,7 +27,7 @@ class Api::SharesController < ApplicationController
           @user.save
         end
         if current_user == @user
-          render_no_permission
+          render json: {error: "You can't share with yourself!"}
           return
         end
         @share = Share.new job_id: params["share"]["job_id"], user_id: @user.id
@@ -70,10 +70,10 @@ class Api::SharesController < ApplicationController
   private
 
     def user_not_there!
-      render text: "No user signed in" unless user_signed_in?
+      render json: {error: "No user signed in"} unless user_signed_in?
     end
 
     def render_no_permission
-      render :text => "You don't have permission to do that"
+      render :json => {error: "You don't have permission to do that"}
     end
 end
