@@ -35,7 +35,6 @@ class User < ActiveRecord::Base
   has_many :jobs
   has_many :shares
   has_many :shared_jobs, through: :shares, source: :job
-  has_many :assignments
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable :confirmable,
@@ -48,6 +47,9 @@ class User < ActiveRecord::Base
 
   validates :type, presence: true
   before_validation :check_type
+
+  before_destroy :destroy_shares
+  before_destroy :destroy_jobs
 
   def check_type
     self.type = self.type || "Viewer"
@@ -112,4 +114,17 @@ class User < ActiveRecord::Base
     is_shared_job plan.job
   end
 
+  private
+
+    def destroy_shares
+      self.shares.each do |share|
+        share.destroy
+      end
+    end
+
+    def destroy_jobs
+      self.jobs.each do |job|
+        job.destroy
+      end
+    end
 end

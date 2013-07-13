@@ -4,7 +4,7 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 		var self = this;
 		var container = $("#share-email"),
 		email = container.val();
-		if(!email || email == "" || !email.match(/\A\S+@\S+\.\S+\z/)){
+		if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)){
 			this.error("Not a valid email.");
 			return;
 		}
@@ -44,6 +44,7 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 	error : function(error){
 		var control = $(".control-group"),
 		text = control.find(".help-inline");
+		control.removeClass("info")
 		control.addClass("error");
 		text.text(error);
 	},
@@ -51,6 +52,7 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 	info : function(info){
 		var control = $(".control-group"),
 		text = control.find(".help-inline");
+		control.removeClass("error")
 		control.addClass("info");
 		text.text(info);
 	}
