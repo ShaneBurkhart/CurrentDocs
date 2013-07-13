@@ -2,8 +2,6 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 	sortProperties: ['sorter'],
   sortAscending: true,
 
-  content : null,
-
   removeJob : function(job){
   	this.get("content").removeObject(job);
   	job.deleteRecord();

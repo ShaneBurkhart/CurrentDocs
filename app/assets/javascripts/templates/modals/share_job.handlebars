@@ -6,7 +6,7 @@
 		</div>
 		<div class="body">
 			<p>Enter an email to share {{model.name}} with.</p>
-			{{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" }}
+			{{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" autocomplete=true }}
 			<p>Users that are currently being shared.</p>
 			<div class="scroller-medium">
 				<table class="table">
