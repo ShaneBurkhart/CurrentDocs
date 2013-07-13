@@ -8,6 +8,7 @@
 #  accepted   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  token      :string(255)
 #
 
 class Share < ActiveRecord::Base

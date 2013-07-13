@@ -4,13 +4,14 @@ class Api::UploadsController < ApplicationController
 	def create
 		u = params[:file]
 		plan = Plan.find(params[:plan_id])
-		plan.update_attributes(:filename => u.original_filename)
-		File.open(Rails.root.join("public", "_files", plan.id.to_s), 'wb') do |file|
-			file.write(u.read)
-			file.close
+		plan.plan = u
+		if plan.save
+			puts "Saved File"
+			render :text => "Good one"
+		else
+			puts "Didn't Saved File"
+			render :text => "Bad one"
 		end
-		puts "Saved File"
-		render :text => "Good one"
 	end
 
 	private

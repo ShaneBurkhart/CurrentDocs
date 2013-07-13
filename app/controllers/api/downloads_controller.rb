@@ -7,7 +7,7 @@ class Api::DownloadsController < ApplicationController
 			render :text => "No File Exists!!"
 			return
 		end
-		f = Rails.root.join("public", "_files", plan.id.to_s)
+		f = plan.plan.path
 		send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end
 

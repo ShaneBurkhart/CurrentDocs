@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130707235012) do
+ActiveRecord::Schema.define(:version => 20130713231335) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -31,9 +31,13 @@ ActiveRecord::Schema.define(:version => 20130707235012) do
     t.string   "plan_name"
     t.string   "filename"
     t.integer  "job_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.integer  "plan_num"
+    t.string   "plan_file_name"
+    t.string   "plan_content_type"
+    t.integer  "plan_file_size"
+    t.datetime "plan_updated_at"
   end
 
   create_table "shares", :force => true do |t|

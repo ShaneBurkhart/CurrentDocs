@@ -2,21 +2,25 @@
 #
 # Table name: plans
 #
-#  id         :integer          not null, primary key
-#  plan_name  :string(255)
-#  filename   :string(255)
-#  job_id     :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  plan_num   :integer
+#  id                :integer          not null, primary key
+#  plan_name         :string(255)
+#  filename          :string(255)
+#  job_id            :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  plan_num          :integer
+#  plan_file_name    :string(255)
+#  plan_content_type :string(255)
+#  plan_file_size    :integer
+#  plan_updated_at   :datetime
 #
 
 class Plan < ActiveRecord::Base
 	belongs_to :job
-  attr_accessible :filename, :job_id, :plan_name, :plan_num
+	has_attached_file :plan
+  attr_accessible :job_id, :plan_name, :plan_num
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
-  #validate :check_for_duplicate_plan_num
   before_destroy :delete_file, :delete_plan_num
 
   def self.next_plan_num(job_id)
