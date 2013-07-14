@@ -14,7 +14,7 @@
 class Share < ActiveRecord::Base
 	belongs_to :job
 	belongs_to :user
-  attr_accessible :accepted, :job_id, :user_id, #invited user
+  attr_accessible :job_id, :user_id, #invited user
   	:token
   #job.user is the inviter
   before_create :generate_token

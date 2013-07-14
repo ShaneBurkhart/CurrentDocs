@@ -11,7 +11,8 @@ PlanSource::Application.routes.draw do
     resources :plans, except: ["new", "edit", "index"]
     #resources :users, except: ["new", "edit"]
     match "/autocomplete" => "users#autocomplete"
-    resources :shares, only: ["create", "update", "destroy", "show"]
+    #resources :shares, only: ["create", "update", "destroy", "show"]
+    resources :shares, only: ["create", "destroy"]
     resource :upload, only: ["create"]
     match "/download/:id" => "downloads#download"
   end
