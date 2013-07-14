@@ -12,9 +12,12 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	},
 
 	removePlan : function(plan){
+		var self = this;
 		this.get("content").removeObject(plan);
 		plan.deleteRecord();
-		plan.save();
+		plan.save().then(function(){
+			self.updatePlans();
+		});
 	},
 
 	updatePlans : function(){
