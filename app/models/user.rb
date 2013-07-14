@@ -51,10 +51,6 @@ class User < ActiveRecord::Base
   before_destroy :destroy_shares
   before_destroy :destroy_jobs
 
-  def check_type
-    self.type = self.type || "Viewer"
-  end
-
   def self.new_guest_user(share_param)
     pass = ('a'..'z').to_a.shuffle[0,8].join
     Viewer.new first_name: "New", last_name: "User",
@@ -126,5 +122,10 @@ class User < ActiveRecord::Base
       self.jobs.each do |job|
         job.destroy
       end
+    end
+
+    def check_type
+      self.type = self.type || "Viewer"
+      errors.add(:type, 'Not a valid type') unless self.type == "Manager" || self.type == "Viewer"
     end
 end
