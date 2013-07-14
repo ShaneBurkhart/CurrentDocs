@@ -18,9 +18,10 @@
 class Plan < ActiveRecord::Base
 	belongs_to :job
 	has_attached_file :plan
-  attr_accessible :job_id, :plan_name, :plan_num
+  attr_accessible :job_id, :plan_name, :plan_num, :page_size
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
+  validate :valid_page_size
   before_destroy :delete_file, :delete_plan_num
 
   def self.next_plan_num(job_id)
@@ -85,6 +86,15 @@ class Plan < ActiveRecord::Base
 	end
 
 		private
+
+		def valid_page_size
+			if self.page_size
+				Plan.page_sizes.each do |size|
+					return unless size != self.page_size
+				end
+				errors.add(:page_size, 'Not a valid size')
+			end
+		end
 
 		def highest_plan_num
       return self.job.plans.count
