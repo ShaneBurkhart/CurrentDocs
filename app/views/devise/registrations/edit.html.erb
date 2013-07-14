@@ -6,10 +6,6 @@
 				<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
 				  <%= f.error_notification %>
 				  <%= display_base_errors resource %>
-				  <% if current_user.viewer? %>
-				  	<%= f.input :type, :collection => ["Viewer", "Manager"],
-				    :as => :radio_buttons, :required => true, :checked => "Viewer" %>
-				   <% end %>
 				  <%= f.input :first_name, :autofocus => true %>
 				  <%= f.input :last_name %>
 				  <%= f.input :email, :required => true %>
