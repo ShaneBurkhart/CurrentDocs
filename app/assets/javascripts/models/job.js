@@ -120,15 +120,16 @@ PlanSource.Job.reopenClass({
   },
 
   findAll : function(){
-    return Em.Deferred.promise(function(p){
+    var jobs = Em.A();
+    Em.Deferred.promise(function(p){
       p.resolve($.get(PlanSource.Job.url()).then(function(data){
-        var jobs = Em.A();
         data.jobs.forEach(function(job){
           jobs.pushObject(PlanSource.Job.create(job));
         });
         return jobs;
       }));
     });
+    return jobs;
   },
 
   find : function(id){
