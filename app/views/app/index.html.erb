@@ -16,4 +16,5 @@
 	user = "<%= current_user.full_name %>";
 	user_id = "<%= current_user.id %>";
 	PlanSource._user_type = "<%= current_user.type %>"
+	PlanSource.page_sizes = <%= Plan.page_sizes.to_json.html_safe %>
 </script>

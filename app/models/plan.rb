@@ -74,6 +74,16 @@ class Plan < ActiveRecord::Base
   	end
 	end
 
+	def self.page_sizes
+		[
+			"A - 8.5\"x11\"",
+			"B - 11\"x17\"",
+			"C - 17\"x22\"",
+			"D - 22\"x34\"",
+			"E - 34\"x44\""
+		]
+	end
+
 		private
 
 		def highest_plan_num
