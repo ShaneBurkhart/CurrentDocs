@@ -30,9 +30,14 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	},
 
 	planExists : function(new_plan){
+		var name;
+		if (typeof new_plan == 'string' || new_plan instanceof String)
+			name = new_plan;
+		else
+			name = new_plan.get("plan_name");
     for(var i = 0 ; i < this.get("content").length ; i++){
       var plan = this.get("content")[i];
-      if(plan.get("plan_name") == new_plan.get("plan_name"))
+      if(plan.get("plan_name") == name)
         return true;
     }
     return false;
