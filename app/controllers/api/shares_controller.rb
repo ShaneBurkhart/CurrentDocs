@@ -33,8 +33,10 @@ class Api::SharesController < ApplicationController
         @share = Share.new job_id: params["share"]["job_id"], user_id: @user.id
         if @share.save
           @user.send_share_notification @share, guest
+          render json: @share
+        else
+          render json: {error: "Share already exists!"}
         end
-        render json: @share
       else
         render_no_permission
       end

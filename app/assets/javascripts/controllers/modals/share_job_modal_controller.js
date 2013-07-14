@@ -1,11 +1,13 @@
-PlanSource.ShareJobController = Ember.ObjectController.extend({
+PlanSource.ShareJobController = PlanSource.ModalController.extend({
 
 	shareJob : function(){
 		var self = this;
 		var container = $("#share-email"),
 		email = container.val();
+		this.clearAllErrors();
+		this.clearAllInfo();
 		if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)){
-			this.error("Not a valid email.");
+			this.error("#share-email", "Not a valid email.");
 			return;
 		}
 		$.post("/api/shares", {
@@ -15,12 +17,12 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 				if(data.share && data.share.id){
 					self.get("shares").pushObject(PlanSource.Share.create(data.share));
 					self.get("parent").updateJobs();
-					self.info("Succesfully shared with " + data.share.user.email);
+					self.info("#share-email", "Succesfully shared with " + data.share.user.email);
 				}else{
 					if(data.error)
-						self.error(data.error);
+						self.error("#share-email", data.error);
 					else
-						self.error("An error occured when sharing with " + email);
+						self.error("#share-email", "An error occured when sharing with " + email);
 				}
 			},
 			"json"
@@ -39,22 +41,6 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.shareJob();
-	},
-
-	error : function(error){
-		var control = $(".control-group"),
-		text = control.find(".help-inline");
-		control.removeClass("info")
-		control.addClass("error");
-		text.text(error);
-	},
-
-	info : function(info){
-		var control = $(".control-group"),
-		text = control.find(".help-inline");
-		control.removeClass("error")
-		control.addClass("info");
-		text.text(info);
 	}
 
 });

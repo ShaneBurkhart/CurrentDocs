@@ -1,29 +1,25 @@
-PlanSource.AddJobController = Ember.ObjectController.extend({
+PlanSource.AddJobController = PlanSource.ModalController.extend({
 
 	content : {},
 
 	addJob : function(){
 		var container = $("#new-job-name"),
     		name = container.val();
-    if(!name || name == "")
+    this.clearAllErrors();
+    if(!name || name == ""){
+    	this.error("#new-job-name", "You need to enter a name!");
     	return;
+    }
     var job = PlanSource.Job.create({"name" : name});
 		if(this.get("parent").addJob(job))
 			this.send("close");
 		else
-			this.jobError("The job already exists!");
+			this.error("#new-job-name", "The job already exists!");
 	},
 
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.addJob();
-	},
-
-	jobError : function(error){
-		var text = $("#new-job-name").siblings(".help-inline"),
-			cont = text.parent().parent();
-		cont.addClass("error");
-		text.text(error);
 	}
 
 });

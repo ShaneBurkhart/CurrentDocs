@@ -1,4 +1,4 @@
-PlanSource.EditPlanController = Ember.ObjectController.extend({
+PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	job : {},
 
@@ -6,12 +6,14 @@ PlanSource.EditPlanController = Ember.ObjectController.extend({
 		var self = this;
 		var name = $("#edit-plan-name").val(),
     		num = $("#edit-plan-num").val();
+    this.clearAllErrors();
+    this.clearAllInfo();
     if(!num.match(/^(0|[1-9]\d*)$/)){
-    	this.planError("That is not a valid plan number!");
+    	this.error("#edit-plan-name", "That is not a valid plan number!");
     	return;
     }
     if(name != this.get("plan_name") && this.get("parent").planExists(name)){
-    	this.planError("That plan name already exists!");
+    	this.error("#edit-plan-name", "That plan name already exists!");
     	return;
     }
     if(name && name != "")
@@ -27,13 +29,6 @@ PlanSource.EditPlanController = Ember.ObjectController.extend({
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.editPlan();
-	},
-
-	planError : function(error){
-		var text = $("#edit-plan-name").siblings(".help-inline"),
-			cont = text.parent().parent();
-		cont.addClass("error");
-		text.text(error);
 	}
 
 

@@ -1,4 +1,4 @@
 class ShareSerializer < ActiveModel::Serializer
-  attributes :id, :accepted
+  attributes :id
   has_one :user
 end

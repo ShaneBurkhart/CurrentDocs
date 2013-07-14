@@ -21,9 +21,14 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
   },
 
   jobExists : function(new_job){
+    var name;
+    if (typeof new_job == 'string' || new_job instanceof String)
+      name = new_job;
+    else
+      name = new_job.get("name");
     for(var i = 0 ; i < this.get("content").length ; i++){
       var job = this.get("content")[i];
-      if(job.get("name") == new_job.get("name"))
+      if(job.get("name") == name)
         return true;
     }
     return false;
@@ -31,8 +36,6 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 
   updateJobs : function(){
     var self = this;
-    PlanSource.Job.findAll().then(function(jobs){
-      self.set("content", jobs);
-    });
+    self.set("content", PlanSource.Job.findAll());
   }
 });
