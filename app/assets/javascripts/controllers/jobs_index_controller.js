@@ -9,13 +9,24 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 		job.save();
   },
 
-  addJob : function(job){
+  addJob : function(new_job){
+    if(this.jobExists(new_job)) return false;
     var self = this;
-  	this.get("content").pushObject(job);
-  	job.save().then(function(data){
+  	this.get("content").pushObject(new_job);
+  	new_job.save().then(function(data){
       if(data == false)
-        self.get("content").removeObject(job);
+        self.get("content").removeObject(new_job);
     });
+    return true;
+  },
+
+  jobExists : function(new_job){
+    for(var i = 0 ; i < this.get("content").length ; i++){
+      var job = this.get("content")[i];
+      if(job.get("name") == new_job.get("name"))
+        return true;
+    }
+    return false;
   },
 
   updateJobs : function(){
