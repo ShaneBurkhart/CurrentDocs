@@ -8,7 +8,23 @@
 			<p>Select a file to upload.</p>
 			<form enctype="multipart/form-data" id="plan_source_upload_form">
 				<input type="hidden" name="plan_id" id="plan_id">
-				<input type="file" name="file" id="file">
+				<div class="control-group">
+					<div class="controls">
+						<select name="page_size" id="page_size">
+							<option>Select Size</option>
+							{{#each pageSizes}}
+								<option>{{this}}</option>
+							{{/each}}
+						</select>
+						<span class="help-inline"></span>
+					</div>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<input type="file" name="file" id="file">
+						<span class="help-inline"></span>
+					</div>
+				</div>
 			</form>
 		</div>
 		<div class="footer">
