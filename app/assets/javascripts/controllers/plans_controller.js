@@ -3,12 +3,14 @@ PlanSource.PlansController = Ember.ArrayController.extend({
   sortAscending: true,
 
   addPlan : function(plan){
+  	if(this.planExists(plan)) return false;
   	var self = this;
 		this.get("content").pushObject(plan);
 		plan.save().then(function(data){
       if(data == false)
         self.get("content").removeObject(plan);
     });
+    return true;
 	},
 
 	removePlan : function(plan){
@@ -25,6 +27,15 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 		PlanSource.Job.find(this.get("job").get("id")).then(function(job){
 			self.set("content", job.get("plans"))
 		});
-	}
+	},
+
+	planExists : function(new_plan){
+    for(var i = 0 ; i < this.get("content").length ; i++){
+      var plan = this.get("content")[i];
+      if(plan.get("plan_name") == new_plan.get("plan_name"))
+        return true;
+    }
+    return false;
+  }
 
 });

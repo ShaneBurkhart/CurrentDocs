@@ -6,7 +6,12 @@
 		</div>
 		<div class="body">
 			<p>Enter a name for your new plan.</p>
-			{{ view PlanSource.TextField placeholder="Plan name" focus=true id="new-plan-name" }}
+			<div class="control-group">
+				<div class="controls">
+					{{ view PlanSource.TextField placeholder="Plan name" focus=true id="new-plan-name" }}
+					<span class="help-inline"></span>
+				</div>
+			</div>
 		</div>
 		<div class="footer">
 			<div class="buttons">
