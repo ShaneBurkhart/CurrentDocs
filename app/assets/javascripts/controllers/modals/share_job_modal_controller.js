@@ -30,7 +30,7 @@ PlanSource.ShareJobController = Ember.ObjectController.extend({
 
 	numShares : function(){
 		return this.get("shares").length;
-	}.property("shares"),
+	}.property("shares.@each"),
 
 	removeShare : function(share){
 		this.get("model").get("shares").removeObject(share);
