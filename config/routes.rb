@@ -4,7 +4,6 @@ PlanSource::Application.routes.draw do
   end
   root :to => "home#index"
   devise_for :users
-  resources :users, only: ["index", "show"]
 
   namespace :api do
     resources :jobs, except: ["new", "edit"]

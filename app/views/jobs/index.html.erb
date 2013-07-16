@@ -1,7 +1,0 @@
-<h1>Your Jobs</h1>
-<% if(can? :create, Job) %>
-	<%= link_to "Create Job", create_job_path %>
-<% end %>
-<% @jobs.each do |job| %>
-	<%= link_to job.name %>
-<% end %>
