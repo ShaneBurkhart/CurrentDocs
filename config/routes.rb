@@ -13,6 +13,7 @@ PlanSource::Application.routes.draw do
     #resources :shares, only: ["create", "update", "destroy", "show"]
     resources :shares, only: ["create", "destroy"]
     resource :upload, only: ["create"]
+    resource :token, only: ["create"] #only retrieve token
     match "/download/:id" => "downloads#download"
   end
 

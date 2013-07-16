@@ -3,7 +3,7 @@ class Api::SharesController < ApplicationController
   before_filter :authenticate_user!, only: ["show"]
 =begin
   def show
-    if can? :update, Share
+    if user.can? :update, Share
       if params["token"] && current_user.is_my_token(params["token"])
         @share = Share.find_by_token(params["token"])
         @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
@@ -18,7 +18,7 @@ class Api::SharesController < ApplicationController
   end
 =end
   def create
-    if can? :create, Share
+    if user.can? :create, Share
       if current_user.is_my_job Job.find(params["share"]["job_id"].to_i)
         @user = User.find_by_email params["share"]["email"]
         if @user.nil?
@@ -46,7 +46,7 @@ class Api::SharesController < ApplicationController
   end
 =begin
   def update #accepts shares
-    if can? :update, Share
+    if user.can? :update, Share
       @share = Share.find(params[:id])
       @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
       render json: @share
@@ -56,7 +56,7 @@ class Api::SharesController < ApplicationController
   end
 =end
   def destroy
-    if can? :destroy, Job
+    if user.can? :destroy, Job
       @share = Share.find(params[:id])
       if current_user.is_my_share @share
         @share.destroy
@@ -71,8 +71,12 @@ class Api::SharesController < ApplicationController
 
   private
 
+    def user
+      current_user || User.find_by_authentication_token(params[:token])
+    end
+
     def user_not_there!
-      render json: {error: "No user signed in"} unless user_signed_in?
+      render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
     end
 
     def render_no_permission

@@ -2,7 +2,7 @@ class Api::PlansController < ApplicationController
 	before_filter :user_not_there!
 
   def show
-    if can? :read, Plan
+    if user.can? :read, Plan
       @plan = Plan.find(params[:id])
       if @plan.job.user.id == current_user.id
         render json: @plan
@@ -15,7 +15,7 @@ class Api::PlansController < ApplicationController
   end
 
   def create
-    if can? :create, Plan
+    if user.can? :create, Plan
       params["plan"].delete "updated_at"
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
       @plan = Plan.new params["plan"]
@@ -30,7 +30,7 @@ class Api::PlansController < ApplicationController
   end
 
   def update
-    if can? :update, Plan
+    if user.can? :update, Plan
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
@@ -49,7 +49,7 @@ class Api::PlansController < ApplicationController
   end
 
   def destroy
-    if can? :destroy, Plan
+    if user.can? :destroy, Plan
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         @plan.destroy
@@ -63,8 +63,13 @@ class Api::PlansController < ApplicationController
   end
 
   private
+
+    def user
+      current_user || User.find_by_authentication_token(params[:token])
+    end
+
     def user_not_there!
-      render text: "No user signed in" unless user_signed_in?
+      render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
     end
 
     def render_no_permission

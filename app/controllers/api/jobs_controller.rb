@@ -2,8 +2,8 @@ class Api::JobsController < ApplicationController
   before_filter :user_not_there!
 
   def index
-    if can? :read, Job
-      @jobs = current_user.jobs + current_user.shared_jobs
+    if user.can? :read, Job
+      @jobs = user.jobs + user.shared_jobs
       render json: @jobs
     else
       render_no_permission
@@ -11,9 +11,9 @@ class Api::JobsController < ApplicationController
   end
 
   def show
-    if can? :read, Job
+    if user.can? :read, Job
       @job = Job.find(params[:id])
-      if current_user.is_my_job(@job) || current_user.is_shared_job(@job)
+      if user.is_my_job(@job) || user.is_shared_job(@job)
         render json: @job
       else
         render json: {job: {}}
@@ -24,8 +24,8 @@ class Api::JobsController < ApplicationController
   end
 
   def create
-    if can? :create, Job
-      @job = Job.new(name: params["job"]["name"], user_id: current_user.id)
+    if user.can? :create, Job
+      @job = Job.new(name: params["job"]["name"], user_id: user.id)
       if !@job.save
         render json: {}
         return
@@ -37,9 +37,9 @@ class Api::JobsController < ApplicationController
   end
 
   def update
-    if can? :update, Job
+    if user.can? :update, Job
       @job = Job.find(params[:id])
-      if @job && current_user.is_my_job(@job)
+      if @job && user.is_my_job(@job)
         @job.name = params[:job][:name]
         @job.update_attributes params[:job]
         render json: @job
@@ -52,9 +52,9 @@ class Api::JobsController < ApplicationController
   end
 
   def destroy
-    if can? :destroy, Job
+    if user.can? user, :destroy, Job
       @job = Job.find(params[:id])
-      if current_user.is_my_job @job
+      if user.is_my_job @job
         if @job
           @job.destroy
           render json: {}
@@ -70,8 +70,13 @@ class Api::JobsController < ApplicationController
   end
 
   private
+
+    def user
+      current_user || User.find_by_authentication_token(params[:token])
+    end
+
     def user_not_there!
-      render text: "No user signed in" unless user_signed_in?
+      render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
     end
 
     def render_no_permission

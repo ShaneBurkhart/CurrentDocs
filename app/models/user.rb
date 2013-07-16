@@ -36,10 +36,11 @@ class User < ActiveRecord::Base
   has_many :shares
   has_many :shared_jobs, through: :shares, source: :job
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
+  # , :confirmable,
   # :lockable, :timeoutable and :omniauthable :confirmable,
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :token_authenticatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name, :last_name, :email, :password,
@@ -50,6 +51,13 @@ class User < ActiveRecord::Base
 
   before_destroy :destroy_shares
   before_destroy :destroy_jobs
+
+  before_save :ensure_authentication_token!
+
+  delegate :can?, :cannot?, :to => :ability
+  def ability
+    @ability ||= Ability.new(self)
+  end
 
   def self.new_guest_user(share_param)
     pass = ('a'..'z').to_a.shuffle[0,8].join
