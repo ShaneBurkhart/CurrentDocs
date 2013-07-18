@@ -66,14 +66,7 @@ PlanSource::Application.configure do
   config.action_mailer.default_url_options = { :host => 'plansource.io' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
-  ActionMailer::Base.smtp_settings = {
-    :address => "smtp.sendgrid.net",
-    :port => 25,
-    :domain => "plansource.io",
-    :authentication => :plain,
-    :user_name => "app16995661@heroku.com",
-    :password => ENV["SEND_GRID_PASSWORD"]
-  }
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
