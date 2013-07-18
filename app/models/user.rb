@@ -37,8 +37,8 @@ class User < ActiveRecord::Base
   has_many :shared_jobs, through: :shares, source: :job
   # Include default devise modules. Others available are:
   # , :confirmable,
-  # :lockable, :timeoutable and :omniauthable :confirmable,
-  devise :invitable, :database_authenticatable, :registerable,
+  # :lockable, :timeoutable and :omniauthable :confirmable,:invitable,
+  devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable
 
