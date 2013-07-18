@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  include SendGrid
   default from: "shaneburkhart@gmail.com"
 
   def share_notification(user, share, is_guest)
