@@ -76,10 +76,8 @@ PlanSource::Application.configure do
     port: 587,
     domain: "plansource.io",
     authentication: "plain",
-    enable_starttls_auto: false,
     user_name: ENV["GMAIL_USERNAME"],
-    password: ENV["GMAIL_PASSWORD"],
-    authentication: :plain
+    password: ENV["GMAIL_PASSWORD"]
   }
 
 
