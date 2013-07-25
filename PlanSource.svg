@@ -1,0 +1,2809 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1333"
+   height="1052.3622"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="PlanSource.svg">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4692"
+       inkscape:collect="always">
+      <stop
+         id="stop4694"
+         offset="0"
+         style="stop-color:#ef5f01;stop-opacity:1" />
+      <stop
+         id="stop4696"
+         offset="1"
+         style="stop-color:#ff6c0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4631"
+       inkscape:collect="always">
+      <stop
+         id="stop4633"
+         offset="0"
+         style="stop-color:#48b803;stop-opacity:1" />
+      <stop
+         id="stop4635"
+         offset="1"
+         style="stop-color:#4cc602;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3937">
+      <stop
+         style="stop-color:#ad05ad;stop-opacity:1"
+         offset="0"
+         id="stop3939" />
+      <stop
+         style="stop-color:#be00be;stop-opacity:1"
+         offset="1"
+         id="stop3941" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3923"
+       inkscape:collect="always">
+      <stop
+         id="stop3925"
+         offset="0"
+         style="stop-color:#c002c0;stop-opacity:1" />
+      <stop
+         id="stop3927"
+         offset="1"
+         style="stop-color:#d400d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3909"
+       inkscape:collect="always">
+      <stop
+         id="stop3911"
+         offset="0"
+         style="stop-color:#db5501;stop-opacity:1" />
+      <stop
+         id="stop3913"
+         offset="1"
+         style="stop-color:#f56201;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3895">
+      <stop
+         style="stop-color:#ee5e00;stop-opacity:1"
+         offset="0"
+         id="stop3897" />
+      <stop
+         style="stop-color:#ff6c0b;stop-opacity:1"
+         offset="1"
+         id="stop3899" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3881">
+      <stop
+         style="stop-color:#079fcf;stop-opacity:1"
+         offset="0"
+         id="stop3883" />
+      <stop
+         style="stop-color:#01b2e3;stop-opacity:1"
+         offset="1"
+         id="stop3885" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3099"
+       inkscape:collect="always">
+      <stop
+         id="stop3101"
+         offset="0"
+         style="stop-color:#bc2020;stop-opacity:1" />
+      <stop
+         id="stop3103"
+         offset="1"
+         style="stop-color:#dc1818;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3872">
+      <stop
+         style="stop-color:#48b703;stop-opacity:1"
+         offset="0"
+         id="stop3874" />
+      <stop
+         style="stop-color:#4cc602;stop-opacity:1"
+         offset="1"
+         id="stop3876" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter3879"
+       x="-0.0062606551"
+       width="1.0125213"
+       y="-0.14411356"
+       height="1.2882271">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.5303481"
+         id="feGaussianBlur3881" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3908">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.3571429"
+         id="feGaussianBlur3910" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3976">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.3571429"
+         id="feGaussianBlur3978" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3980">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.3571429"
+         id="feGaussianBlur3982" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3984">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="3.3571429"
+         id="feGaussianBlur3986" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4205">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.8161478"
+         id="feGaussianBlur4207" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter4229">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.8161478"
+         id="feGaussianBlur4231" />
+    </filter>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3133">
+      <rect
+         style="fill:#999999;fill-opacity:1;stroke:none"
+         id="rect3135"
+         width="181.28616"
+         height="79.285713"
+         x="-547.3576"
+         y="85.933609"
+         rx="10"
+         ry="10"
+         transform="scale(-1,1)" />
+    </clipPath>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3872"
+       id="radialGradient3878"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1022.9833,377.38476)"
+       gradientUnits="userSpaceOnUse" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3099"
+       id="radialGradient3097"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1018.2296,249.52762)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient3879"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1018.2296,310.95619)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3895"
+       id="radialGradient3893"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1018.2296,184.52762)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3909"
+       id="radialGradient3907"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,783.2296,184.52762)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3923"
+       id="radialGradient3921"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1018.2296,124.52762)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3937"
+       id="radialGradient3935"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,784.65817,124.52762)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3872"
+       id="radialGradient4454"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1835.8404,260.2419)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3872"
+       id="radialGradient4461"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1835.8404,260.2419)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4469"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1458.2296,-26.186668)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4476"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4491"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4501"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4511"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4519"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1009.9414,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4595"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4597"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4599"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1009.9414,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4612"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4614"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1009.9414,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4639"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4641"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1009.9414,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4654"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4656"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1009.9414,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4661"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1118.7607,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4666"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1005.6237,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3872"
+       id="radialGradient4172"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.17438087,-3.7999812,4.1182704e-7,1835.8404,260.2419)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4174"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,896.80435,-8.3905222)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4176"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1005.6237,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4178"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1118.7607,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3881"
+       id="radialGradient4180"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,1645.9524,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4631"
+       id="radialGradient4182"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,3213.3752,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4692"
+       id="radialGradient4234"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0,0.14971969,-2.1246486,3.5358589e-7,2690.2242,-12.502922)"
+       cx="798.04761"
+       cy="311.28693"
+       fx="798.04761"
+       fy="311.28693"
+       r="93.36734" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.9195959"
+     inkscape:cx="-293.736"
+     inkscape:cy="1270.927"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1003"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none"
+       id="rect3509"
+       width="16"
+       height="16.000002"
+       x="-331.20615"
+       y="-265.92081"
+       inkscape:export-filename="C:\Users\Shane\Desktop\PlanSource\public\favicon.ico.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       style="fill:#cccccc;fill-opacity:1;stroke:none"
+       id="rect2985"
+       width="970"
+       height="425.71429"
+       x="181.5"
+       y="-181.92354" />
+    <rect
+       style="fill:#f2f2f2;fill-opacity:1;stroke:none"
+       id="rect2987"
+       width="1341.483"
+       height="1197.0676"
+       x="0"
+       y="-10.377767" />
+    <rect
+       y="92.657791"
+       x="0"
+       height="1094.0321"
+       width="1341.483"
+       id="rect4251"
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:url(#radialGradient3878);fill-opacity:1;stroke:none"
+       id="rect4031"
+       width="186.73468"
+       height="42.857136"
+       x="-250.43874"
+       y="481.79395" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-231.65395"
+       y="511.47067"
+       id="text4033"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4035"
+         x="-231.65395"
+         y="511.47067">Start For Free!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="206.06273"
+       y="450.99652"
+       id="text4056"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4058"
+         x="206.06273"
+         y="450.99652">Send Plans Fast!</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4060"
+       y="450.99652"
+       x="534.63416"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="450.99652"
+         x="534.63416"
+         id="tspan4062"
+         sodipodi:role="line">Mobile Viewing</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="860.34845"
+       y="450.99652"
+       id="text4064"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4066"
+         x="860.34845"
+         y="450.99652">Quick, Easy Printing!</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4068"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(-6.1150055,-175.77376)"><flowRegion
+         id="flowRegion4070"><rect
+           id="rect4072"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4074">Send plans to jobsites at the speed of light! Simply upload and share plans with anyone. Joining is easy and free!</flowPara></flowRoot>    <flowRoot
+       transform="translate(323.25623,-175.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot4076"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4078"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect4080" /></flowRegion><flowPara
+         id="flowPara4092">Quickly view all of your plans with our Android and iPhone apps. Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office.</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4084"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(648.25958,-175.77376)"><flowRegion
+         id="flowRegion4086"><rect
+           id="rect4088"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4090">Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease. Our prices make us an affordable alternative.</flowPara></flowRoot>    <g
+       id="g4116"
+       transform="translate(-3.1717788,-244.81076)">
+      <g
+         id="g4108"
+         transform="matrix(0.83333332,0,0,0.83333332,-242.1054,447.02779)">
+        <rect
+           ry="6"
+           rx="6"
+           y="442.93362"
+           x="542.85712"
+           height="30.857138"
+           width="134.44896"
+           id="rect4110"
+           style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text4112"
+           y="464.30084"
+           x="574.07654"
+           style="font-size:16.60398293px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           xml:space="preserve"><tspan
+             y="464.30084"
+             x="574.07654"
+             id="tspan4114"
+             sodipodi:role="line">Join Now</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="translate(338.36886,-168.03917)"
+       id="g4144">
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+         id="rect4146"
+         width="112.04079"
+         height="25.714281"
+         x="523.28149"
+         y="756.54016"
+         rx="5"
+         ry="5" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="546.89252"
+         y="774.34613"
+         id="text4148"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4150"
+           x="546.89252"
+           y="774.34613">Get Prices</tspan></text>
+    </g>
+    <rect
+       style="fill:#00c6f8;fill-opacity:1;stroke:none"
+       id="rect3905"
+       width="51.51778"
+       height="73.741135"
+       x="-103.03556"
+       y="89.686806"
+       rx="10"
+       ry="10" />
+    <rect
+       y="353.9368"
+       x="-255.1924"
+       height="42.857136"
+       width="186.73468"
+       id="rect3091"
+       style="fill:url(#radialGradient3097);fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3093"
+       y="383.61353"
+       x="-236.40764"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="383.61353"
+         x="-236.40764"
+         id="tspan3095"
+         sodipodi:role="line">Start For Free!</tspan></text>
+    <rect
+       style="fill:url(#radialGradient3879);fill-opacity:1;stroke:none"
+       id="rect3873"
+       width="186.73468"
+       height="42.857136"
+       x="-255.1924"
+       y="415.36536" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-236.40764"
+       y="445.04208"
+       id="text3875"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3877"
+         x="-236.40764"
+         y="445.04208">Start For Free!</tspan></text>
+    <rect
+       style="fill:url(#radialGradient3893);fill-opacity:1;stroke:none"
+       id="rect3887"
+       width="186.73468"
+       height="42.857136"
+       x="-255.1924"
+       y="288.9368" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-236.40764"
+       y="318.61353"
+       id="text3889"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3891"
+         x="-236.40764"
+         y="318.61353">Start For Free!</tspan></text>
+    <rect
+       y="288.9368"
+       x="-490.19241"
+       height="42.857136"
+       width="186.73468"
+       id="rect3901"
+       style="fill:url(#radialGradient3907);fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3903"
+       y="318.61353"
+       x="-471.40765"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="318.61353"
+         x="-471.40765"
+         id="tspan3905"
+         sodipodi:role="line">Start For Free!</tspan></text>
+    <rect
+       y="228.9368"
+       x="-255.1924"
+       height="42.857136"
+       width="186.73468"
+       id="rect3915"
+       style="fill:url(#radialGradient3921);fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3917"
+       y="258.61353"
+       x="-236.40764"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="258.61353"
+         x="-236.40764"
+         id="tspan3919"
+         sodipodi:role="line">Start For Free!</tspan></text>
+    <rect
+       style="fill:url(#radialGradient3935);fill-opacity:1;stroke:none"
+       id="rect3929"
+       width="186.73468"
+       height="42.857136"
+       x="-488.76382"
+       y="228.9368" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="-469.97906"
+       y="258.61353"
+       id="text3931"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3933"
+         x="-469.97906"
+         y="258.61353">Start For Free!</tspan></text>
+    <rect
+       y="-10.377767"
+       x="2882.6414"
+       height="1197.0676"
+       width="1341.483"
+       id="rect4111"
+       style="fill:#f2f2f2;fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4113"
+       y="46.588428"
+       x="3061.2312"
+       style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="46.588428"
+         x="3061.2312"
+         id="tspan4115"
+         sodipodi:role="line">PlanSource</tspan></text>
+    <rect
+       y="71.968864"
+       x="3064.1414"
+       height="42.139236"
+       width="970"
+       id="rect4117"
+       style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3879)"
+       rx="10"
+       ry="10" />
+    <rect
+       ry="10"
+       rx="10"
+       style="fill:#808080;fill-opacity:1;stroke:none"
+       id="rect4119"
+       width="970"
+       height="42.139236"
+       x="3064.1414"
+       y="69.968864" />
+    <rect
+       transform="translate(2882.6414,-34.345187)"
+       clip-path="url(#clipPath3133)"
+       y="104.31405"
+       x="181.5"
+       height="42.139236"
+       width="970"
+       id="rect4121"
+       style="fill:#00c6f8;fill-opacity:1;stroke:none"
+       rx="10"
+       ry="10" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4123"
+       y="96.214264"
+       x="3317.2786"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         id="tspan4125"
+         y="96.214264"
+         x="3317.2786"
+         sodipodi:role="line">Blog</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4127"
+       y="96.214264"
+       x="3119.7842"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         id="tspan4129"
+         y="96.214264"
+         x="3119.7842"
+         sodipodi:role="line">About</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4131"
+       y="96.214264"
+       x="3500.3198"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="96.214264"
+         x="3500.3198"
+         id="tspan4133"
+         sodipodi:role="line">Login</tspan><tspan
+         id="tspan4135"
+         y="121.21426"
+         x="3500.3198"
+         sodipodi:role="line" /></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4137"
+       y="96.214264"
+       x="3908.3555"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="96.214264"
+         x="3908.3555"
+         id="tspan4139"
+         sodipodi:role="line">Sign Up</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4141"
+       y="96.214264"
+       x="3693.3708"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="96.214264"
+         x="3693.3708"
+         id="tspan4143"
+         sodipodi:role="line">Printing</tspan></text>
+    <rect
+       y="69.968864"
+       x="3247.0383"
+       height="42.139236"
+       width="2"
+       id="rect4145"
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none"
+       id="rect4147"
+       width="2"
+       height="42.139236"
+       x="3430.1479"
+       y="69.968864" />
+    <rect
+       y="69.968864"
+       x="3623.1208"
+       height="42.139236"
+       width="2"
+       id="rect4149"
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none"
+       id="rect4151"
+       width="2"
+       height="42.139236"
+       x="3837.373"
+       y="69.968864" />
+    <g
+       transform="matrix(1,0,0,0.84207434,2882.6414,-10.637462)"
+       id="g4153">
+      <rect
+         y="183.50504"
+         x="181.5"
+         height="372.85715"
+         width="970"
+         id="rect4155"
+         style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3908)" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         id="rect4157"
+         width="970"
+         height="372.85715"
+         x="181.5"
+         y="179.50504" />
+    </g>
+    <g
+       transform="matrix(1,0,0,0.68782137,2882.6414,75.743313)"
+       id="g4159">
+      <g
+         id="g4161">
+        <rect
+           y="584.93359"
+           x="181.5"
+           height="372.85715"
+           width="310"
+           id="rect4163"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3976)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4165"
+           width="310"
+           height="372.85715"
+           x="181.5"
+           y="578.93359" />
+      </g>
+      <g
+         id="g4167">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3980)"
+           id="rect4169"
+           width="310"
+           height="372.85715"
+           x="841.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="841.5"
+           height="372.85715"
+           width="310"
+           id="rect4171"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g4173">
+        <rect
+           y="584.93359"
+           x="511.5"
+           height="372.85715"
+           width="310"
+           id="rect4175"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3984)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4177"
+           width="310"
+           height="372.85715"
+           x="511.5"
+           y="578.93359" />
+      </g>
+    </g>
+    <flowRoot
+       transform="translate(2982.4168,-30.568243)"
+       style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       id="flowRoot4179"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4181"><rect
+           style="font-size:56px"
+           y="229.50504"
+           x="278.57144"
+           height="142.85715"
+           width="772.85712"
+           id="rect4183" /></flowRegion><flowPara
+         id="flowPara4185">Outdated Plans Suck!</flowPara></flowRoot>    <flowRoot
+       transform="translate(3177.8372,-26.282529)"
+       style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       id="flowRoot4187"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4189"><rect
+           style="font-size:22px"
+           y="305.21933"
+           x="-74.285713"
+           height="205.71428"
+           width="890"
+           id="rect4192" /></flowRegion><flowPara
+         style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans"
+         id="flowPara4194">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>    <text
+       sodipodi:linespacing="125%"
+       id="text4196"
+       y="520.99652"
+       x="3088.7041"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="3088.7041"
+         id="tspan4198"
+         sodipodi:role="line">Send Plans Fast!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3417.2756"
+       y="520.99652"
+       id="text4200"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4202"
+         x="3417.2756"
+         y="520.99652">Mobile Viewing</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4204"
+       y="520.99652"
+       x="3742.9897"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="3742.9897"
+         id="tspan4206"
+         sodipodi:role="line">Quick, Easy Printing!</tspan></text>
+    <flowRoot
+       transform="translate(2876.5264,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot4208"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4210"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect4212" /></flowRegion><flowPara
+         id="flowPara4214">Send plans to jobsites at the speed of light! Simply upload and share plans with anyone. Joining is easy and free!</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4216"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(3205.8976,-105.77376)"><flowRegion
+         id="flowRegion4218"><rect
+           id="rect4220"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4222">Quickly view all of your plans with our Android and iPhone apps. Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office.</flowPara></flowRoot>    <flowRoot
+       transform="translate(3530.901,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot4224"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4226"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect4228" /></flowRegion><flowPara
+         id="flowPara4230">Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease. Our prices make us an affordable alternative.</flowPara></flowRoot>    <g
+       transform="translate(2879.4696,-174.81076)"
+       id="g4232">
+      <g
+         transform="matrix(0.83333332,0,0,0.83333332,-242.1054,447.02779)"
+         id="g4234">
+        <rect
+           style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+           id="rect4236"
+           width="134.44896"
+           height="30.857138"
+           x="542.85712"
+           y="442.93362"
+           rx="6"
+           ry="6" />
+        <text
+           xml:space="preserve"
+           style="font-size:16.60398293px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           x="574.07654"
+           y="464.30084"
+           id="text4238"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4240"
+             x="574.07654"
+             y="464.30084">Join Now</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="translate(2895.7411,-98.039168)"
+       id="g4242">
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+         id="rect4244"
+         width="112.04079"
+         height="25.714281"
+         x="523.28149"
+         y="756.54016"
+         rx="5"
+         ry="5" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="543.6698"
+         y="774.34613"
+         id="text4246"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4248"
+           x="543.6698"
+           y="774.34613">Learn More</tspan></text>
+    </g>
+    <g
+       id="g4250"
+       transform="translate(3221.0103,-98.039168)">
+      <rect
+         ry="5"
+         rx="5"
+         y="756.54016"
+         x="523.28149"
+         height="25.714281"
+         width="112.04079"
+         id="rect4252"
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4254"
+         y="774.34613"
+         x="546.89252"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="774.34613"
+           x="546.89252"
+           id="tspan4256"
+           sodipodi:role="line">Get Prices</tspan></text>
+    </g>
+    <g
+       transform="translate(2882.6414,-108.6309)"
+       id="g4258">
+      <g
+         id="g4260">
+        <rect
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4229)"
+           id="rect4262"
+           width="470"
+           height="256.45911"
+           x="181.5"
+           y="869.43427" />
+        <rect
+           y="865.43427"
+           x="181.5"
+           height="256.45911"
+           width="470"
+           id="rect4264"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g4266">
+        <rect
+           y="869.43427"
+           x="681.5"
+           height="256.45911"
+           width="470"
+           id="rect4268"
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4205)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4270"
+           width="470"
+           height="256.45911"
+           x="681.5"
+           y="865.43427" />
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3088.7041"
+       y="798.1394"
+       id="text4272"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4274"
+         x="3088.7041"
+         y="798.1394">Browser Compatibility</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4276"
+       y="798.1394"
+       x="3597.2754"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="798.1394"
+         x="3597.2754"
+         id="tspan4278"
+         sodipodi:role="line">Recent Activity</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3061.2312"
+       y="46.588428"
+       id="text4280"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4282"
+         x="3061.2312"
+         y="46.588428">PlanSource</tspan></text>
+    <rect
+       ry="10"
+       rx="10"
+       style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3879)"
+       id="rect4284"
+       width="970"
+       height="42.139236"
+       x="3064.1414"
+       y="71.968864" />
+    <rect
+       y="69.968864"
+       x="3064.1414"
+       height="42.139236"
+       width="970"
+       id="rect4286"
+       style="fill:#808080;fill-opacity:1;stroke:none"
+       rx="10"
+       ry="10" />
+    <rect
+       ry="10"
+       rx="10"
+       style="fill:#00c6f8;fill-opacity:1;stroke:none"
+       id="rect4288"
+       width="970"
+       height="42.139236"
+       x="181.5"
+       y="104.31405"
+       clip-path="url(#clipPath3133)"
+       transform="translate(2882.6414,-34.345187)" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3317.2786"
+       y="96.214264"
+       id="text4290"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="3317.2786"
+         y="96.214264"
+         id="tspan4292">Blog</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3119.7842"
+       y="96.214264"
+       id="text4294"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="3119.7842"
+         y="96.214264"
+         id="tspan4296">About</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3500.3198"
+       y="96.214264"
+       id="text4298"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4300"
+         x="3500.3198"
+         y="96.214264">Login</tspan><tspan
+         sodipodi:role="line"
+         x="3500.3198"
+         y="121.21426"
+         id="tspan4302" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3908.3555"
+       y="96.214264"
+       id="text4304"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4306"
+         x="3908.3555"
+         y="96.214264">Sign Up</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3693.3708"
+       y="96.214264"
+       id="text4308"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4310"
+         x="3693.3708"
+         y="96.214264">Printing</tspan></text>
+    <rect
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none"
+       id="rect4312"
+       width="2"
+       height="42.139236"
+       x="3247.0383"
+       y="69.968864" />
+    <rect
+       y="69.968864"
+       x="3430.1479"
+       height="42.139236"
+       width="2"
+       id="rect4314"
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none"
+       id="rect4316"
+       width="2"
+       height="42.139236"
+       x="3623.1208"
+       y="69.968864" />
+    <rect
+       y="69.968864"
+       x="3837.373"
+       height="42.139236"
+       width="2"
+       id="rect4318"
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none" />
+    <g
+       id="g4320"
+       transform="matrix(1,0,0,0.84207434,2882.6414,-10.637462)">
+      <rect
+         style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3908)"
+         id="rect4322"
+         width="970"
+         height="372.85715"
+         x="181.5"
+         y="183.50504" />
+      <rect
+         y="179.50504"
+         x="181.5"
+         height="372.85715"
+         width="970"
+         id="rect4324"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       id="g4326"
+       transform="matrix(1,0,0,0.68782137,2882.6414,75.743313)">
+      <g
+         id="g4328">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3976)"
+           id="rect4330"
+           width="310"
+           height="372.85715"
+           x="181.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="181.5"
+           height="372.85715"
+           width="310"
+           id="rect4332"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g4334">
+        <rect
+           y="584.93359"
+           x="841.5"
+           height="372.85715"
+           width="310"
+           id="rect4336"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3980)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4338"
+           width="310"
+           height="372.85715"
+           x="841.5"
+           y="578.93359" />
+      </g>
+      <g
+         id="g4340">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3984)"
+           id="rect4342"
+           width="310"
+           height="372.85715"
+           x="511.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="511.5"
+           height="372.85715"
+           width="310"
+           id="rect4344"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4346"
+       style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       transform="translate(2982.4168,-30.568243)"><flowRegion
+         id="flowRegion4348"><rect
+           id="rect4350"
+           width="772.85712"
+           height="142.85715"
+           x="278.57144"
+           y="229.50504"
+           style="font-size:56px" /></flowRegion><flowPara
+         id="flowPara4352">Outdated Plans Suck!</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4354"
+       style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       transform="translate(3177.8372,-26.282529)"><flowRegion
+         id="flowRegion4356"><rect
+           id="rect4358"
+           width="890"
+           height="205.71428"
+           x="-74.285713"
+           y="305.21933"
+           style="font-size:22px" /></flowRegion><flowPara
+         id="flowPara4360"
+         style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3088.7041"
+       y="520.99652"
+       id="text4362"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4364"
+         x="3088.7041"
+         y="520.99652">Send Plans Fast!</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4366"
+       y="520.99652"
+       x="3417.2756"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="3417.2756"
+         id="tspan4368"
+         sodipodi:role="line">Mobile Viewing</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3742.9897"
+       y="520.99652"
+       id="text4370"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4372"
+         x="3742.9897"
+         y="520.99652">Quick, Easy Printing!</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4374"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(2876.5264,-105.77376)"><flowRegion
+         id="flowRegion4376"><rect
+           id="rect4378"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4380">Send plans to jobsites at the speed of light! Simply upload and share plans with anyone. Joining is easy and free!</flowPara></flowRoot>    <flowRoot
+       transform="translate(3205.8976,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot4382"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4384"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect4386" /></flowRegion><flowPara
+         id="flowPara4388">Quickly view all of your plans with our Android and iPhone apps. Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office.</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4390"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(3530.901,-105.77376)"><flowRegion
+         id="flowRegion4392"><rect
+           id="rect4394"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4396">Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease. Our prices make us an affordable alternative.</flowPara></flowRoot>    <g
+       id="g4398"
+       transform="translate(2879.4696,-174.81076)">
+      <g
+         id="g4400"
+         transform="matrix(0.83333332,0,0,0.83333332,-242.1054,447.02779)">
+        <rect
+           ry="6"
+           rx="6"
+           y="442.93362"
+           x="542.85712"
+           height="30.857138"
+           width="134.44896"
+           id="rect4402"
+           style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text4404"
+           y="464.30084"
+           x="574.07654"
+           style="font-size:16.60398293px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           xml:space="preserve"><tspan
+             y="464.30084"
+             x="574.07654"
+             id="tspan4406"
+             sodipodi:role="line">Join Now</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4408"
+       transform="translate(2895.7411,-98.039168)">
+      <rect
+         ry="5"
+         rx="5"
+         y="756.54016"
+         x="523.28149"
+         height="25.714281"
+         width="112.04079"
+         id="rect4410"
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4412"
+         y="774.34613"
+         x="543.6698"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="774.34613"
+           x="543.6698"
+           id="tspan4414"
+           sodipodi:role="line">Learn More</tspan></text>
+    </g>
+    <g
+       transform="translate(3221.0103,-98.039168)"
+       id="g4416">
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+         id="rect4418"
+         width="112.04079"
+         height="25.714281"
+         x="523.28149"
+         y="756.54016"
+         rx="5"
+         ry="5" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="546.89252"
+         y="774.34613"
+         id="text4420"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4422"
+           x="546.89252"
+           y="774.34613">Get Prices</tspan></text>
+    </g>
+    <g
+       id="g4424"
+       transform="translate(2882.6414,-108.6309)">
+      <g
+         id="g4426">
+        <rect
+           y="869.43427"
+           x="181.5"
+           height="256.45911"
+           width="470"
+           id="rect4428"
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4229)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4430"
+           width="470"
+           height="256.45911"
+           x="181.5"
+           y="865.43427" />
+      </g>
+      <g
+         id="g4432">
+        <rect
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4205)"
+           id="rect4434"
+           width="470"
+           height="256.45911"
+           x="681.5"
+           y="869.43427" />
+        <rect
+           y="865.43427"
+           x="681.5"
+           height="256.45911"
+           width="470"
+           id="rect4436"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4438"
+       y="798.1394"
+       x="3088.7041"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="798.1394"
+         x="3088.7041"
+         id="tspan4440"
+         sodipodi:role="line">Browser Compatibility</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="3597.2754"
+       y="798.1394"
+       id="text4442"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4444"
+         x="3597.2754"
+         y="798.1394">Recent Activity</tspan></text>
+    <g
+       id="g4257"
+       transform="translate(0,17.142857)">
+      <flowRoot
+         transform="translate(99.775391,-104.85396)"
+         style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         id="flowRoot4015"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4017"><rect
+             style="font-size:56px"
+             y="229.50504"
+             x="278.57144"
+             height="142.85715"
+             width="772.85712"
+             id="rect4019" /></flowRegion><flowPara
+           id="flowPara4021">Outdated Plans Suck!</flowPara></flowRoot>      <flowRoot
+         transform="translate(295.1958,-100.56825)"
+         style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         id="flowRoot4023"
+         xml:space="preserve"><flowRegion
+           id="flowRegion4025"><rect
+             style="font-size:22px"
+             y="305.21933"
+             x="-74.285713"
+             height="205.71428"
+             width="890"
+             id="rect4027" /></flowRegion><flowPara
+           style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans"
+           id="flowPara4029">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4009"
+         style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         transform="translate(99.775391,-104.85396)"><flowRegion
+           id="flowRegion4011"><rect
+             id="rect4013"
+             width="772.85712"
+             height="142.85715"
+             x="278.57144"
+             y="229.50504"
+             style="font-size:56px" /></flowRegion><flowPara
+           id="flowPara4015">Outdated Plans Suck!</flowPara></flowRoot>      <flowRoot
+         xml:space="preserve"
+         id="flowRoot4017"
+         style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         transform="translate(295.1958,-100.56825)"><flowRegion
+           id="flowRegion4019"><rect
+             id="rect4021"
+             width="890"
+             height="205.71428"
+             x="-74.285713"
+             y="305.21933"
+             style="font-size:22px" /></flowRegion><flowPara
+           id="flowPara4023"
+           style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>      <g
+         transform="translate(10.714264,-87.142858)"
+         id="g4456">
+        <rect
+           y="364.65109"
+           x="562.4184"
+           height="42.857136"
+           width="186.73468"
+           id="rect4448"
+           style="fill:url(#radialGradient4461);fill-opacity:1;stroke:none" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text4450"
+           y="394.32782"
+           x="581.20319"
+           style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           xml:space="preserve"><tspan
+             y="394.32782"
+             x="581.20319"
+             id="tspan4452"
+             sodipodi:role="line">Start For Free!</tspan></text>
+      </g>
+    </g>
+    <rect
+       style="fill:url(#radialGradient4234);fill-opacity:1;stroke:none"
+       id="rect4166"
+       width="104.40725"
+       height="36.796219"
+       x="1978.2274"
+       y="77.140556" />
+    <text
+       xml:space="preserve"
+       style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="2009.2565"
+       y="102.19093"
+       id="text4168"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4170"
+         x="2009.2565"
+         y="102.19093">Apps</tspan></text>
+    <rect
+       y="-10.377767"
+       x="1454.2858"
+       height="1197.0676"
+       width="1341.483"
+       id="rect3841"
+       style="fill:#f2f2f2;fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3843"
+       y="46.588428"
+       x="1632.8756"
+       style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="46.588428"
+         x="1632.8756"
+         id="tspan3845"
+         sodipodi:role="line">PlanSource</tspan></text>
+    <g
+       transform="matrix(1,0,0,0.84207434,1454.2857,-10.637462)"
+       id="g3847">
+      <rect
+         y="183.50504"
+         x="181.5"
+         height="372.85715"
+         width="970"
+         id="rect3849"
+         style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3908)" />
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         id="rect3851"
+         width="970"
+         height="372.85715"
+         x="181.5"
+         y="179.50504" />
+    </g>
+    <g
+       transform="matrix(1,0,0,0.68782137,1454.2857,75.743313)"
+       id="g3853">
+      <g
+         id="g3855">
+        <rect
+           y="584.93359"
+           x="181.5"
+           height="372.85715"
+           width="310"
+           id="rect3857"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3976)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect3859"
+           width="310"
+           height="372.85715"
+           x="181.5"
+           y="578.93359" />
+      </g>
+      <g
+         id="g3861">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3980)"
+           id="rect3863"
+           width="310"
+           height="372.85715"
+           x="841.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="841.5"
+           height="372.85715"
+           width="310"
+           id="rect3865"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g3867">
+        <rect
+           y="584.93359"
+           x="511.5"
+           height="372.85715"
+           width="310"
+           id="rect3869"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3984)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect3871"
+           width="310"
+           height="372.85715"
+           x="511.5"
+           y="578.93359" />
+      </g>
+    </g>
+    <flowRoot
+       transform="translate(1554.0611,-30.568243)"
+       style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       id="flowRoot3873"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3875"><rect
+           style="font-size:56px"
+           y="229.50504"
+           x="278.57144"
+           height="142.85715"
+           width="772.85712"
+           id="rect3877" /></flowRegion><flowPara
+         id="flowPara3879">Outdated Plans Suck!</flowPara></flowRoot>    <flowRoot
+       transform="translate(1749.4815,-26.282529)"
+       style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       id="flowRoot3881"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3883"><rect
+           style="font-size:22px"
+           y="305.21933"
+           x="-74.285713"
+           height="205.71428"
+           width="890"
+           id="rect3885" /></flowRegion><flowPara
+         style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans"
+         id="flowPara3887">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>    <text
+       sodipodi:linespacing="125%"
+       id="text3890"
+       y="520.99652"
+       x="1660.3484"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="1660.3484"
+         id="tspan3892"
+         sodipodi:role="line">Send Plans Fast!</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="1988.9199"
+       y="520.99652"
+       id="text3894"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3896"
+         x="1988.9199"
+         y="520.99652">Mobile Viewing</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3898"
+       y="520.99652"
+       x="2314.6343"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="2314.6343"
+         id="tspan3900"
+         sodipodi:role="line">Quick, Easy Printing!</tspan></text>
+    <flowRoot
+       transform="translate(1448.1707,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot3902"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3904"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect3907" /></flowRegion><flowPara
+         id="flowPara3909">Send plans to jobsites at the speed of light! Simply upload and share plans with anyone. Joining is easy and free!</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3911"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(1777.5419,-105.77376)"><flowRegion
+         id="flowRegion3913"><rect
+           id="rect3916"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara3918">Quickly view all of your plans with our Android and iPhone apps. Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office.</flowPara></flowRoot>    <flowRoot
+       transform="translate(2102.5453,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot3920"
+       xml:space="preserve"><flowRegion
+         id="flowRegion3922"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect3924" /></flowRegion><flowPara
+         id="flowPara3926">Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease. Our prices make us an affordable alternative.</flowPara></flowRoot>    <g
+       transform="translate(1451.1139,-174.81076)"
+       id="g3928">
+      <g
+         transform="matrix(0.83333332,0,0,0.83333332,-242.1054,447.02779)"
+         id="g3930">
+        <rect
+           style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+           id="rect3933"
+           width="134.44896"
+           height="30.857138"
+           x="542.85712"
+           y="442.93362"
+           rx="6"
+           ry="6" />
+        <text
+           xml:space="preserve"
+           style="font-size:16.60398293px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           x="574.07654"
+           y="464.30084"
+           id="text3935"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3937"
+             x="574.07654"
+             y="464.30084">Join Now</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="translate(1467.3854,-98.039168)"
+       id="g3939">
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+         id="rect3941"
+         width="112.04079"
+         height="25.714281"
+         x="523.28149"
+         y="756.54016"
+         rx="5"
+         ry="5" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="543.6698"
+         y="774.34613"
+         id="text3944"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3946"
+           x="543.6698"
+           y="774.34613">Learn More</tspan></text>
+    </g>
+    <g
+       id="g3948"
+       transform="translate(1792.6546,-98.039168)">
+      <rect
+         ry="5"
+         rx="5"
+         y="756.54016"
+         x="523.28149"
+         height="25.714281"
+         width="112.04079"
+         id="rect3950"
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3952"
+         y="774.34613"
+         x="546.89252"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="774.34613"
+           x="546.89252"
+           id="tspan3954"
+           sodipodi:role="line">Get Prices</tspan></text>
+    </g>
+    <g
+       transform="translate(1454.2857,-108.6309)"
+       id="g3956">
+      <g
+         id="g3958">
+        <rect
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4229)"
+           id="rect3960"
+           width="470"
+           height="256.45911"
+           x="181.5"
+           y="869.43427" />
+        <rect
+           y="865.43427"
+           x="181.5"
+           height="256.45911"
+           width="470"
+           id="rect3962"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g3964">
+        <rect
+           y="869.43427"
+           x="681.5"
+           height="256.45911"
+           width="470"
+           id="rect3966"
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4205)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect3968"
+           width="470"
+           height="256.45911"
+           x="681.5"
+           y="865.43427" />
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="1660.3484"
+       y="798.1394"
+       id="text3970"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3972"
+         x="1660.3484"
+         y="798.1394">Browser Compatibility</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3974"
+       y="798.1394"
+       x="2168.9199"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="798.1394"
+         x="2168.9199"
+         id="tspan3976"
+         sodipodi:role="line">Recent Activity</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="1632.8756"
+       y="46.588428"
+       id="text3978"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3980"
+         x="1632.8756"
+         y="46.588428">PlanSource</tspan></text>
+    <g
+       id="g3982"
+       transform="matrix(1,0,0,0.84207434,1454.2857,-10.637462)">
+      <rect
+         style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter3908)"
+         id="rect3984"
+         width="970"
+         height="372.85715"
+         x="181.5"
+         y="183.50504" />
+      <rect
+         y="179.50504"
+         x="181.5"
+         height="372.85715"
+         width="970"
+         id="rect3986"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    </g>
+    <g
+       id="g3990"
+       transform="matrix(1,0,0,0.68782137,1454.2857,75.743313)">
+      <g
+         id="g3993">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3976)"
+           id="rect3996"
+           width="310"
+           height="372.85715"
+           x="181.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="181.5"
+           height="372.85715"
+           width="310"
+           id="rect3998"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+      <g
+         id="g4001">
+        <rect
+           y="584.93359"
+           x="841.5"
+           height="372.85715"
+           width="310"
+           id="rect4003"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3980)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4006"
+           width="310"
+           height="372.85715"
+           x="841.5"
+           y="578.93359" />
+      </g>
+      <g
+         id="g4008">
+        <rect
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;filter:url(#filter3984)"
+           id="rect4010"
+           width="310"
+           height="372.85715"
+           x="511.5"
+           y="584.93359" />
+        <rect
+           y="578.93359"
+           x="511.5"
+           height="372.85715"
+           width="310"
+           id="rect4012"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+    </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4014"
+       style="font-size:56px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       transform="translate(1554.0611,-30.568243)"><flowRegion
+         id="flowRegion4016"><rect
+           id="rect4018"
+           width="772.85712"
+           height="142.85715"
+           x="278.57144"
+           y="229.50504"
+           style="font-size:56px" /></flowRegion><flowPara
+         id="flowPara4020">Outdated Plans Suck!</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4022"
+       style="font-size:22px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       transform="translate(1749.4815,-26.282529)"><flowRegion
+         id="flowRegion4024"><rect
+           id="rect4026"
+           width="890"
+           height="205.71428"
+           x="-74.285713"
+           y="305.21933"
+           style="font-size:22px" /></flowRegion><flowPara
+         id="flowPara4028"
+         style="font-size:22px;font-weight:normal;text-align:center;text-anchor:middle;-inkscape-font-specification:Sans">Getting the most recent plans to the jobsite is tough and expensive. With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</flowPara></flowRoot>    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="1660.3484"
+       y="520.99652"
+       id="text4030"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4032"
+         x="1660.3484"
+         y="520.99652">Send Plans Fast!</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4035"
+       y="520.99652"
+       x="1988.9199"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="520.99652"
+         x="1988.9199"
+         id="tspan4037"
+         sodipodi:role="line">Mobile Viewing</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="2314.6343"
+       y="520.99652"
+       id="text4039"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4041"
+         x="2314.6343"
+         y="520.99652">Quick, Easy Printing!</tspan></text>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4043"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(1448.1707,-105.77376)"><flowRegion
+         id="flowRegion4045"><rect
+           id="rect4047"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4049">Send plans to jobsites at the speed of light! Simply upload and share plans with anyone. Joining is easy and free!</flowPara></flowRoot>    <flowRoot
+       transform="translate(1777.5419,-105.77376)"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="flowRoot4051"
+       xml:space="preserve"><flowRegion
+         id="flowRegion4053"><rect
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans"
+           y="653.79077"
+           x="212.85715"
+           height="225.71428"
+           width="260"
+           id="rect4055" /></flowRegion><flowPara
+         id="flowPara4057">Quickly view all of your plans with our Android and iPhone apps. Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office.</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot4059"
+       style="font-size:16px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(2102.5453,-105.77376)"><flowRegion
+         id="flowRegion4061"><rect
+           id="rect4063"
+           width="260"
+           height="225.71428"
+           x="212.85715"
+           y="653.79077"
+           style="font-size:16px;font-weight:normal;-inkscape-font-specification:Sans" /></flowRegion><flowPara
+         id="flowPara4065">Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease. Our prices make us an affordable alternative.</flowPara></flowRoot>    <g
+       id="g4067"
+       transform="translate(1451.1139,-174.81076)">
+      <g
+         id="g4069"
+         transform="matrix(0.83333332,0,0,0.83333332,-242.1054,447.02779)">
+        <rect
+           ry="6"
+           rx="6"
+           y="442.93362"
+           x="542.85712"
+           height="30.857138"
+           width="134.44896"
+           id="rect4071"
+           style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text4073"
+           y="464.30084"
+           x="574.07654"
+           style="font-size:16.60398293px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+           xml:space="preserve"><tspan
+             y="464.30084"
+             x="574.07654"
+             id="tspan4075"
+             sodipodi:role="line">Join Now</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4077"
+       transform="translate(1467.3854,-98.039168)">
+      <rect
+         ry="5"
+         rx="5"
+         y="756.54016"
+         x="523.28149"
+         height="25.714281"
+         width="112.04079"
+         id="rect4079"
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4081"
+         y="774.34613"
+         x="543.6698"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="774.34613"
+           x="543.6698"
+           id="tspan4083"
+           sodipodi:role="line">Learn More</tspan></text>
+    </g>
+    <g
+       transform="translate(1792.6546,-98.039168)"
+       id="g4085">
+      <rect
+         style="fill:#e6e6e6;fill-opacity:1;stroke:none"
+         id="rect4087"
+         width="112.04079"
+         height="25.714281"
+         x="523.28149"
+         y="756.54016"
+         rx="5"
+         ry="5" />
+      <text
+         xml:space="preserve"
+         style="font-size:13.8366518px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="546.89252"
+         y="774.34613"
+         id="text4089"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4091"
+           x="546.89252"
+           y="774.34613">Get Prices</tspan></text>
+    </g>
+    <g
+       id="g4093"
+       transform="translate(1454.2857,-108.6309)">
+      <g
+         id="g4095">
+        <rect
+           y="869.43427"
+           x="181.5"
+           height="256.45911"
+           width="470"
+           id="rect4097"
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4229)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none"
+           id="rect4099"
+           width="470"
+           height="256.45911"
+           x="181.5"
+           y="865.43427" />
+      </g>
+      <g
+         id="g4101">
+        <rect
+           style="fill:#999999;fill-opacity:1;stroke:none;filter:url(#filter4205)"
+           id="rect4103"
+           width="470"
+           height="256.45911"
+           x="681.5"
+           y="869.43427" />
+        <rect
+           y="865.43427"
+           x="681.5"
+           height="256.45911"
+           width="470"
+           id="rect4105"
+           style="fill:#ffffff;fill-opacity:1;stroke:none" />
+      </g>
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4107"
+       y="798.1394"
+       x="1660.3484"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         y="798.1394"
+         x="1660.3484"
+         id="tspan4109"
+         sodipodi:role="line">Browser Compatibility</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:26px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       x="2168.9199"
+       y="798.1394"
+       id="text4111"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4113"
+         x="2168.9199"
+         y="798.1394">Recent Activity</tspan></text>
+    <g
+       transform="translate(1465,0)"
+       id="g4115">
+      <rect
+         y="364.65109"
+         x="562.4184"
+         height="42.857136"
+         width="186.73468"
+         id="rect4118"
+         style="fill:url(#radialGradient4172);fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4120"
+         y="394.32782"
+         x="581.20319"
+         style="font-size:23.06108856px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="394.32782"
+           x="581.20319"
+           id="tspan4122"
+           sodipodi:role="line">Start For Free!</tspan></text>
+    </g>
+    <g
+       id="g4124"
+       transform="translate(1450.9781,-4.1123996)">
+      <rect
+         y="81.252953"
+         x="184.8076"
+         height="36.796219"
+         width="104.40725"
+         id="rect4127"
+         style="fill:url(#radialGradient4174);fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4129"
+         y="106.30332"
+         x="212.38127"
+         style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="106.30332"
+           x="212.38127"
+           id="tspan4131"
+           sodipodi:role="line">About</tspan></text>
+    </g>
+    <g
+       transform="translate(1572.4736,0)"
+       id="g4133">
+      <rect
+         style="fill:url(#radialGradient4176);fill-opacity:1;stroke:none"
+         id="rect4135"
+         width="104.40725"
+         height="36.796219"
+         x="293.62692"
+         y="77.140556" />
+      <text
+         xml:space="preserve"
+         style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         x="326.84256"
+         y="102.19093"
+         id="text4138"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4140"
+           x="326.84256"
+           y="102.19093">Blog</tspan></text>
+    </g>
+    <g
+       transform="translate(1344.1791,0)"
+       id="g4142">
+      <rect
+         y="77.140556"
+         x="406.76404"
+         height="36.796219"
+         width="104.40725"
+         id="rect4144"
+         style="fill:url(#radialGradient4178);fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4146"
+         y="102.19093"
+         x="426.80432"
+         style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="102.19093"
+           x="426.80432"
+           id="tspan4148"
+           sodipodi:role="line">Printing</tspan></text>
+    </g>
+    <g
+       id="g4150"
+       transform="translate(1454.2857,0)">
+      <rect
+         y="77.140556"
+         x="933.95563"
+         height="36.796219"
+         width="104.40725"
+         id="rect4152"
+         style="fill:url(#radialGradient4180);fill-opacity:1;stroke:none" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text4154"
+         y="102.19093"
+         x="952.47815"
+         style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+         xml:space="preserve"><tspan
+           y="102.19093"
+           x="952.47815"
+           id="tspan4156"
+           sodipodi:role="line">Sign Up</tspan></text>
+    </g>
+    <rect
+       y="77.140556"
+       x="2501.3784"
+       height="36.796219"
+       width="104.40725"
+       id="rect4159"
+       style="fill:url(#radialGradient4182);fill-opacity:1;stroke:none" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text4161"
+       y="102.19093"
+       x="2530.4053"
+       style="font-size:18.89573479px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="102.19093"
+         x="2530.4053"
+         id="tspan4163"
+         sodipodi:role="line">Login</tspan></text>
+    <rect
+       y="-10.377767"
+       x="0"
+       height="26.35335"
+       width="1341.483"
+       id="rect4186"
+       style="fill:#333333;fill-opacity:1;stroke:none" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="181.52119"
+       y="7.0235176"
+       id="text4188"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4190"
+         x="181.52119"
+         y="7.0235176"
+         style="font-weight:bold;-inkscape-font-specification:Sans Bold">About</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4192"
+       y="7.0235176"
+       x="238.88112"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="7.0235176"
+         x="238.88112"
+         id="tspan4194"
+         sodipodi:role="line">Printing</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="306.7005"
+       y="7.0235176"
+       id="text4197"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="306.7005"
+         y="7.0235176"
+         id="tspan4201">Blog</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4205"
+       y="7.0235176"
+       x="354.37836"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         id="tspan4207"
+         y="7.0235176"
+         x="354.37836"
+         sodipodi:role="line">Mobile Apps</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="1122.9414"
+       y="5.8311348"
+       id="text4209"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="1122.9414"
+         y="5.8311348"
+         id="tspan4211">Login</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text4213"
+       y="5.904377"
+       x="1048.8367"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         id="tspan4215"
+         y="5.904377"
+         x="1048.8367"
+         sodipodi:role="line">Sign Up</tspan></text>
+    <g
+       id="g4245"
+       transform="matrix(1.1069338,0,0,1.1069338,-18.439399,-2.3624696)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3802"
+         y="63.157131"
+         x="178.58984"
+         style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+           y="63.157131"
+           x="178.58984"
+           id="tspan3804"
+           sodipodi:role="line">Plans</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:29.37096977px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         x="288.80258"
+         y="63.157131"
+         id="text4241"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4243"
+           x="288.80258"
+           y="63.157131"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#808080;font-family:Cooper Black;-inkscape-font-specification:Cooper Black">ource.io</tspan></text>
+    </g>
+    <rect
+       y="393.48911"
+       x="185.5406"
+       height="1"
+       width="970"
+       id="rect4255"
+       style="fill:#cccccc;fill-opacity:1;stroke:none" />
+    <g
+       transform="matrix(1.1069338,0,0,1.1069338,-635.58226,-155.21961)"
+       id="g5047"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         x="178.58984"
+         y="63.157131"
+         id="text5049"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5051"
+           x="178.58984"
+           y="63.157131"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Cooper Black;-inkscape-font-specification:Cooper Black">Plans</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5053"
+         y="63.157131"
+         x="288.80258"
+         style="font-size:29.37096977px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#808080;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+           y="63.157131"
+           x="288.80258"
+           id="tspan5055"
+           sodipodi:role="line">ource</tspan></text>
+    </g>
+    <g
+       transform="matrix(1.1069338,0,0,1.1069338,-628.57154,-234.69755)"
+       id="g3479"
+       inkscape:export-filename="C:\Users\Shane\Desktop\PlanSource\app\assets\images\logo.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <text
+         xml:space="preserve"
+         style="font-size:40px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         x="178.58984"
+         y="63.157131"
+         id="text3481"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3483"
+           x="178.58984"
+           y="63.157131"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Cooper Black;-inkscape-font-specification:Cooper Black">Plans</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3485"
+         y="63.157131"
+         x="288.80258"
+         style="font-size:29.37096977px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#808080;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+           y="63.157131"
+           x="288.80258"
+           id="tspan3487"
+           sodipodi:role="line">ource.io</tspan></text>
+    </g>
+    <g
+       id="g3505"
+       transform="matrix(0.32631172,0,0,0.32631172,-190.794,-182.24648)">
+      <path
+         d="m -426.4091,-227.49764 0,-11.37201 c -10e-6,-1.47013 -0.1009,-2.40338 -0.30268,-2.79977 -0.20179,-0.39634 -0.74949,-0.71703 -1.6431,-0.96208 -1.29719,-0.37472 -1.94579,-1.02331 -1.94578,-1.94578 -1e-5,-0.64857 0.27385,-1.14582 0.82155,-1.49177 0.5477,-0.34588 1.34042,-0.51884 2.37818,-0.51887 0.34591,3e-5 1.20349,0.0216 2.57275,0.0649 l 1.29719,0 c 2.39258,-0.0144 3.79426,-0.0324 4.20505,-0.0541 0.41077,-0.0216 1.87731,-0.14771 4.39963,-0.37835 0.83595,-0.0865 1.59985,-0.12969 2.2917,-0.12972 2.36374,3e-5 4.46807,0.48287 6.31298,1.44853 3.21412,1.67196 4.82119,4.32398 4.82122,7.95609 -3e-5,2.94031 -1.12426,5.29686 -3.37269,7.06967 -2.11877,1.65753 -4.68431,2.48629 -7.69665,2.48628 -0.76392,1e-5 -1.70078,-0.0504 -2.81058,-0.15134 -0.59095,-0.0432 -0.95849,-0.0649 -1.10261,-0.0649 -0.41799,1e-5 -0.62698,0.23783 -0.62697,0.71345 l 0,0.12972 0.15134,3.54565 c 0.0288,0.69184 0.15493,1.20711 0.37835,1.54581 0.22339,0.33872 0.681,0.68824 1.37285,1.04856 0.93684,0.50447 1.40527,1.05217 1.40529,1.64311 -2e-5,0.90803 -0.69185,1.60707 -2.0755,2.09712 -1.38368,0.49005 -3.34388,0.73507 -5.88059,0.73507 -5.33288,0 -7.99932,-0.91523 -7.99932,-2.74571 0,-0.43239 0.1153,-0.7639 0.34591,-0.99451 0.23061,-0.23061 0.77111,-0.56211 1.62149,-0.99451 0.51887,-0.27385 0.82155,-0.6558 0.90803,-1.14585 0.0865,-0.49005 0.14413,-2.06829 0.17296,-4.73474 z m 9.75053,-14.11773 0,7.35073 c -10e-6,0.56214 0.1225,0.90084 0.36754,1.01613 0.41796,0.20181 0.94404,0.3027 1.57824,0.30268 0.95126,2e-5 1.75119,-0.26663 2.3998,-0.79993 0.93684,-0.76388 1.40527,-2.04666 1.40529,-3.84833 -2e-5,-1.87369 -0.54772,-3.22853 -1.64311,-4.06452 -0.69185,-0.53326 -1.52781,-0.79991 -2.5079,-0.79993 -1.06659,2e-5 -1.59987,0.28108 -1.59986,0.84317 z"
+         style="font-size:44.27735138px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+         id="path3499"
+         inkscape:connector-curvature="0" />
+      <path
+         d="m -391.8615,-238.84803 c 0.72065,2e-5 1.89533,0.15856 3.52403,0.47563 0.33149,0.0577 0.60534,0.0865 0.82155,0.0865 0.24501,2e-5 0.72065,-0.1297 1.42691,-0.38916 0.33149,-0.12969 0.61255,-0.19455 0.84317,-0.19457 0.66299,2e-5 1.33321,0.42521 2.01064,1.27556 0.54769,0.67744 0.9945,1.41972 1.34043,2.22684 0.3459,0.80716 0.51886,1.5062 0.51888,2.09712 -2e-5,0.57655 -0.20181,1.05579 -0.60536,1.43772 -0.40359,0.38197 -0.90805,0.57294 -1.51338,0.57293 -0.50448,1e-5 -0.95489,-0.1225 -1.35124,-0.36754 -0.39638,-0.24501 -1.03416,-0.7855 -1.91335,-1.62149 -0.92246,-0.8936 -1.68636,-1.34041 -2.2917,-1.34042 -0.40358,1e-5 -0.7531,0.14775 -1.04856,0.4432 -0.29548,0.29549 -0.44322,0.64501 -0.44321,1.04856 -1e-5,0.70627 0.67741,1.36927 2.03226,1.98902 2.43582,1.09542 4.30233,2.29172 5.59953,3.58889 1.09539,1.09541 1.64309,2.43584 1.64311,4.02128 -2e-5,2.00344 -0.87923,3.67537 -2.63762,5.0158 -1.5134,1.16747 -3.3655,1.7512 -5.55629,1.7512 -0.56212,0 -1.58546,-0.0937 -3.07001,-0.28106 -1.39809,-0.15854 -2.18361,-0.23781 -2.35656,-0.23781 -0.18738,0 -0.40357,0.0216 -0.64859,0.0649 -0.41799,0.0576 -0.72067,0.0865 -0.90803,0.0865 -0.67743,0 -1.21072,-0.17296 -1.59987,-0.51888 -0.59094,-0.53329 -1.13864,-1.37286 -1.6431,-2.51871 -0.50447,-1.14584 -0.7567,-2.12954 -0.7567,-2.9511 0,-1.32601 0.51888,-1.98901 1.55663,-1.98902 0.40357,1e-5 0.77471,0.13333 1.11342,0.39997 0.33871,0.26665 1.04855,0.9765 2.12955,2.12955 0.59093,0.63418 1.08098,1.07018 1.47015,1.30799 0.38914,0.23783 0.80713,0.35673 1.25394,0.35673 0.47563,0 0.85758,-0.12611 1.14585,-0.37835 0.28826,-0.25222 0.43239,-0.58733 0.4324,-1.00532 -10e-6,-0.64859 -0.55492,-1.23953 -1.66473,-1.77282 -2.32053,-1.13864 -3.99606,-2.31331 -5.0266,-3.52403 -1.03054,-1.2107 -1.54582,-2.60877 -1.54581,-4.19424 -10e-6,-1.71515 0.52608,-3.19251 1.57824,-4.43206 1.49897,-1.7728 3.54564,-2.65921 6.14002,-2.65923 z"
+         style="font-size:44.27735138px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+         id="path3501"
+         inkscape:connector-curvature="0" />
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3490"
+       y="-217.31471"
+       x="-308.8862"
+       style="font-size:32.51171875px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#808080;font-family:Cooper Black;-inkscape-font-specification:Cooper Black"
+         y="-217.31471"
+         x="-308.8862"
+         id="tspan3492"
+         sodipodi:role="line" /></text>
+  </g>
+</svg>

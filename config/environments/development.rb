@@ -21,9 +21,6 @@ PlanSource::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-  config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_key => ENV["POSTMARK_API_KEY"] }
-
   config.ember.variant = :development
 
   # Print deprecation notices to the Rails logger
