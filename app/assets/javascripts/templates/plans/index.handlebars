@@ -4,12 +4,12 @@
 			{{plan_num}}
 		</td>
 		<td>
-			{{plan_name}}
+			<p title="{{unbound plan_name}}">{{truncate plan_name}}</p>
 		</td>
 		<td>
 			{{date updated_at}}
 		</td>
-		<td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
+		<td><a href="/api/download/{{unbound id}}" title="{{plan_file_name}}">{{truncate plan_file_name}}</a></td>
 		<td>
 			<ul class="controls pull-right unstyled">
 				<li><a {{action "openEditPlanModal" this}}>Edit</a></li>
