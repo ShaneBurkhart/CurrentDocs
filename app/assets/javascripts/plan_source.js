@@ -28,6 +28,15 @@ Handlebars.registerHelper('manager', function(options) {
 	else
 		return options.inverse(this);
 });
+Ember.Handlebars.registerBoundHelper ('truncate', function (str) {
+	var len = 35;
+	if(!str) return str;
+  if (str.length > len) {
+    var new_str = str.substr (0, len+1);
+    return new Handlebars.SafeString ( new_str +'...' );
+  }
+  return str;
+});
 
 $.fn.upload = function(remote, successFn, progressFn) {
 	return this.each(function() {
