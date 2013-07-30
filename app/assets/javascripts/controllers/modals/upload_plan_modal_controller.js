@@ -1,6 +1,8 @@
 PlanSource.UploadPlanController = PlanSource.ModalController.extend({
 
 	uploadPlan : function(){
+		if(PlanSource.isUploading)
+			this.error("#file", "A file is already uploading.");
 		var self = this;
 		var file = $("#file");
 		var page_size = $("#page_size");

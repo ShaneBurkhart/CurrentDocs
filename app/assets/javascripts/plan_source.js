@@ -16,6 +16,8 @@ PlanSource = Ember.Application.create({
 	LOG_TRANSITIONS: true
 });
 
+PlanSource.isUploading = false;
+
 Ember.Handlebars.registerBoundHelper("date", function(date){
 	if(date)
 		return moment(date).fromNow();
@@ -42,7 +44,7 @@ $.fn.upload = function(remote, successFn, progressFn) {
 	return this.each(function() {
 
 		var formData = new FormData(this);
-
+		PlanSource.isUploading = true;
 		$.ajax({
 			url: remote,
 			type: 'POST',
@@ -59,6 +61,7 @@ $.fn.upload = function(remote, successFn, progressFn) {
 			processData: false,
 			complete : function(res) {
 				if(successFn) successFn(res);
+				PlanSource.isUploading = false;
 			}
 		});
 	});
