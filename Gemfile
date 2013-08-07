@@ -30,5 +30,6 @@ gem 'handlebars-source', '1.0.0.rc4' # or the version you need
 gem 'momentjs-rails'
 gem 'active_model_serializers'
 gem 'paperclip'
+gem 'aws-sdk'
 gem 'newrelic_rpm'
 gem 'sendgrid'
