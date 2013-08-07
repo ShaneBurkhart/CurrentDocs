@@ -17,7 +17,13 @@
 
 class Plan < ActiveRecord::Base
 	belongs_to :job
-	has_attached_file :plan
+
+	has_attached_file :plan,
+                    :storage => :s3,
+                    :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY_ID'], :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'], :bucket => ENV["AWS_BUCKET"]},
+                    :path => ":attachment/:id/:style.:extension",
+                    :bucket => ENV["AWS_BUCKET"]
+
   attr_accessible :job_id, :plan_name, :plan_num, :page_size
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
