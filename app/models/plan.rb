@@ -20,8 +20,12 @@ class Plan < ActiveRecord::Base
 
 	has_attached_file :plan,
                     :storage => :s3,
-                    :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY_ID'], :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'], :bucket => ENV["AWS_BUCKET"]},
-                    :path => ":attachment/:id/:style.:extension",
+                    :s3_credentials => {
+                      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+                      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+                      :bucket => ENV["AWS_BUCKET"]
+                    },
+                    :path => ":attachment/:id.:extension",
                     :bucket => ENV["AWS_BUCKET"]
 
   attr_accessible :job_id, :plan_name, :plan_num, :page_size
