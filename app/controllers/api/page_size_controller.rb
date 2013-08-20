@@ -17,7 +17,7 @@ class Api::PageSizeController < ApplicationController
         h[key] = 0
       end
     end
-    render json: { page_sizes: h.to_json }
+    render json: { page_sizes: h }
 	end
 
 	private
