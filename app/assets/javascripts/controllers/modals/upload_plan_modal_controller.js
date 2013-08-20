@@ -5,13 +5,8 @@ PlanSource.UploadPlanController = PlanSource.ModalController.extend({
 			this.error("#file", "A file is already uploading.");
 		var self = this;
 		var file = $("#file");
-		var page_size = $("#page_size");
 		this.clearAllErrors();
 		this.clearAllInfo();
-		if(!page_size.val() || page_size.val() == "" || page_size.val() == "Select Size"){
-			this.error("#page_size", "You must select a page size!")
-			return;
-		}
 		if(!file.val() || file.val() == ""){
 			this.error("#file", "You must select a file!")
 			return;
@@ -33,10 +28,6 @@ PlanSource.UploadPlanController = PlanSource.ModalController.extend({
 		file.val("");
 		this.send("close");
 	},
-
-	pageSizes : function(){
-		return PlanSource.page_sizes;
-	}.property(),
 
 	keyPress : function(e){
 		if (e.keyCode == 13)

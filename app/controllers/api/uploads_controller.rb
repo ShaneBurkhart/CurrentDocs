@@ -4,7 +4,7 @@ class Api::UploadsController < ApplicationController
 	def create
 		u = params[:file]
 		plan = Plan.find(params[:plan_id])
-		plan.page_size = params[:page_size]
+		plan.filename = u.original_filename
 		plan.plan = u
 		if plan.save
 			puts "Saved File"

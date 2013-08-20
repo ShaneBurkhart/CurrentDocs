@@ -28,11 +28,24 @@ class Plan < ActiveRecord::Base
                     :path => ":attachment/:id.:extension",
                     :bucket => ENV["AWS_BUCKET"]
 
-  attr_accessible :job_id, :plan_name, :plan_num, :page_size
+  attr_accessible :job_id, :plan_name, :plan_num, :page_size,
+                  :page_sizes, :num_pages
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
-  validate :valid_page_size
   before_destroy :delete_file, :delete_plan_num
+
+  def page_sizes
+    sizes = []
+    return sizes unless self.plan.file?
+    reader = PDF::Reader.new(open(self.plan.url))
+    reader.pages.each do |page|
+      attrs = page.attributes[:MediaBox]
+      width = attrs[2].to_f / 72.0
+      height = attrs[3].to_f / 72.0
+      sizes << [width, height]
+    end
+    sizes
+  end
 
   def self.next_plan_num(job_id)
     greatest = 0
@@ -85,26 +98,7 @@ class Plan < ActiveRecord::Base
   	end
 	end
 
-	def self.page_sizes
-		[
-			"A - 8.5\"x11\"",
-			"B - 11\"x17\"",
-			"C - 17\"x22\"",
-			"D - 22\"x34\"",
-			"E - 34\"x44\""
-		]
-	end
-
 		private
-
-		def valid_page_size
-			if self.page_size
-				Plan.page_sizes.each do |size|
-					return unless size != self.page_size
-				end
-				errors.add(:page_size, 'Not a valid size')
-			end
-		end
 
 		def highest_plan_num
       return self.job.plans.count
