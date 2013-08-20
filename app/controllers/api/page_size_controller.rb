@@ -8,7 +8,16 @@ class Api::PageSizeController < ApplicationController
 			render :text => "No File Exists!!"
 			return
 		end
-    render json: { page_sizes: plan.page_sizes.to_json }
+    h = {}
+    plan.page_sizes.each do |p|
+      key = "#{p[0]} x #{p[1]}"
+      if h[key]
+        h[key] += 1
+      else
+        h[key] = 0
+      end
+    end
+    render json: { page_sizes: h.to_json }
 	end
 
 	private
