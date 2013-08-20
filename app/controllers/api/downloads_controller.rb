@@ -8,7 +8,7 @@ class Api::DownloadsController < ApplicationController
 			return
 		end
 		f = plan.plan.path
-		send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
+		send_file f.to_s, :type => 'application/pdf', :filename => plan.plan_file_name
 	end
 
 end
