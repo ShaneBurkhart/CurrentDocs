@@ -7,8 +7,10 @@ class Api::DownloadsController < ApplicationController
 			render :text => "No File Exists!!"
 			return
 		end
-		f = plan.plan.path
-		send_file f.to_s, :type => 'application/pdf', :filename => plan.plan_file_name
+		data = open(plan.plan.url)
+  	send_data data.read, filename: plan.filename, type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
+		#f = plan.plan.path
+		#send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end
 
 end
