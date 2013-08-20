@@ -8,7 +8,7 @@ class Api::DownloadsController < ApplicationController
 			return
 		end
 		data = open(plan.plan.url)
-  	send_data data.read, filename: plan.filename, type: "application/pdf", disposition: 'inline', stream: 'true', buffer_size: '4096'
+  	send_data data.read, filename: plan.filename, type: "application/pdf", stream: 'true', buffer_size: '4096'
 		#f = plan.plan.path
 		#send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end
