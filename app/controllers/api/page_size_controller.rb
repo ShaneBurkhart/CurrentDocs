@@ -11,7 +11,7 @@ class Api::PageSizeController < ApplicationController
     h = {}
     plan.page_sizes.each do |p|
       width = p[0] % 1 == 0 ? p[0].to_i : p[0]
-      height = p[1] % 1 == 1 ? p[1].to_i : p[1]
+      height = p[1] % 1 == 0 ? p[1].to_i : p[1]
       key = "#{width}\" x #{height}\""
       if h[key]
         h[key] += 1
