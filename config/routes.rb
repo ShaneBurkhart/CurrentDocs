@@ -21,6 +21,7 @@ PlanSource::Application.routes.draw do
 
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
+  get "/print/:job_id" => "prints#purchase"
   match "/app" => "app#index"
 
 end
