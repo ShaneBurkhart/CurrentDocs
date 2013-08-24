@@ -16,6 +16,7 @@ PlanSource::Application.routes.draw do
     resource :token, only: ["create"] #only retrieve token
     match "/download/:id" => "downloads#download"
     match "/page_sizes/:id" => "page_size#page_sizes"
+    post "/charge" => "charges#create"
   end
 
 	match "/mobile" => "mobile#index"

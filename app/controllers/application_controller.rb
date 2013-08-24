@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
   	session[:user_return_to] || app_path
   end
 
+  def user_not_there!
+    render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
+  end
+
 end
