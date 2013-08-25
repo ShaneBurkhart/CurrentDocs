@@ -24,7 +24,7 @@ class Api::ChargesController < ApplicationController
 
     flash[:success] = 'You have successfully ordered prints!'
     respond_to do |format|
-      format.html { redirect_to prints_path }
+      format.html { redirect_to app_path }
       format.json { render json: { amount: @amount, plans: params[:plan_ids] } }
     end
   rescue Stripe::CardError => e
