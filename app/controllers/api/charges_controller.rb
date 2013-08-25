@@ -22,8 +22,9 @@ class Api::ChargesController < ApplicationController
 
     # TODO: Save print in a database or send us an email or send it to print store.
 
+    flash[:success] = 'You have successfully ordered prints!'
     respond_to do |format|
-      format.html # purchase.html.erb
+      format.html { redirect_to prints_path }
       format.json { render json: { amount: @amount, plans: params[:plan_ids] } }
     end
   rescue Stripe::CardError => e
