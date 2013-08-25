@@ -15,7 +15,7 @@
       };
 
       StripeCheckout.open({
-        key:         "<%= 'fakekeyRails.configuration.stripe[:publishable_key]' %>",
+        key:         "<%= Rails.configuration.stripe[:publishable_key] %>",
         amount:      5000,
         currency:    'usd',
         name:        "Contact <%= 'TODO put something here' %>",
