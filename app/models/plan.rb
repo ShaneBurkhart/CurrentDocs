@@ -34,6 +34,17 @@ class Plan < ActiveRecord::Base
   validate :check_for_duplicate_plan_name_in_job
   before_destroy :delete_file, :delete_plan_num
 
+  # cost is in cents
+  def calculate_cost
+    cost = 0
+    # TODO: come up with real cost
+    page_sizes.each do |page|
+      cost += 100
+    end
+
+    return cost
+  end
+
   def page_sizes
     sizes = []
     return sizes unless self.plan.file?

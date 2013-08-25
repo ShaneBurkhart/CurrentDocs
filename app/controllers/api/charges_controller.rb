@@ -3,9 +3,10 @@ class Api::ChargesController < ApplicationController
 
   def create
 
-    # TODO: get prints from params
-    #prints = Plan.find(params[:blah]) #etc
-    @amount = 10 # TODO:  Recalculate amount by sizes here to be secure.  Amount is in cents.
+    @plans = Plan.find(params[:plan_ids])
+
+    # amount is in cents
+    @amount = @plans.map(&:calculate_cost).sum
 
     customer = Stripe::Customer.create(
       :email => user.email,
@@ -15,7 +16,7 @@ class Api::ChargesController < ApplicationController
     charge = Stripe::Charge.create(
       :customer    => customer.id,
       :amount      => @amount,
-      :description => "#{user.full_name} purchasing prints x, y, and z.",
+      :description => "User with ID #{user.id} and email #{user.email} purchased prints of plans with ids: #{params[:plan_ids]}",
       :currency    => 'usd'
     )
 
