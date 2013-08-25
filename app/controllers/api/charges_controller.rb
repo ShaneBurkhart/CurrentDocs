@@ -22,6 +22,10 @@ class Api::ChargesController < ApplicationController
 
     # TODO: Save print in a database or send us an email or send it to print store.
 
+    respond_to do |format|
+      format.html # purchase.html.erb
+      format.json { render json: { amount: @amount, plans: params[:plan_ids] } }
+    end
   rescue Stripe::CardError => e
     flash[:error] = e.message
     redirect_to root_path # TODO: determine error path
