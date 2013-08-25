@@ -48,6 +48,7 @@ class Plan < ActiveRecord::Base
   def page_sizes
     sizes = []
     return sizes unless self.plan.file?
+    puts "The urlllllllllllllllllllllll is: #{self.plan.url}"
     reader = PDF::Reader.new(open(self.plan.url))
     reader.pages.each do |page|
       attrs = page.attributes[:MediaBox]
