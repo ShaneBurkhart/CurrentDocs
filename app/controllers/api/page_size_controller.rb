@@ -2,24 +2,17 @@ class Api::PageSizeController < ApplicationController
 	before_filter :user_not_there!
 
 	def page_sizes
-		begin
-			plan = Plan.find(params[:id])
-		rescue
-			render :text => "No File Exists!!"
-			return
-		end
-    h = {}
-    plan.page_sizes.each do |p|
-      width = p[0] % 1 == 0 ? p[0].to_i : p[0]
-      height = p[1] % 1 == 0 ? p[1].to_i : p[1]
-      key = "#{width}\" x #{height}\""
-      if h[key]
-        h[key] += 1
-      else
-        h[key] = 0
+    plan_ids = params[:plan_ids]
+    price = 0
+    plan_ids.each do |plan_id|
+      begin
+        p = Plan.find(plan_id)
+        price += p.calculate_cost
+      rescue
+        render json: {error: "A file doesn't exist"}, status: 422
       end
     end
-    render json: { page_sizes: h }
+    render json: { price: price }
 	end
 
 end
