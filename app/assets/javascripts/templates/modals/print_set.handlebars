@@ -1,0 +1,26 @@
+<div class="modal-wrapper">
+	<div class="overlay"></div>
+	<div class="dialog box box-border">
+		<div class="header">
+			<p class="title">Select plans for this job's print set.</p>
+		</div>
+		<div class="body">
+			<p>Check the plans you want in the set.</p>
+			<div class="scroller-large">
+				<table class="table">
+					{{#each model.plans}}
+						<tr>
+							<td><label><input type="checkbox" class="print_set_checkbox" data-plan="{{unbound id}}"> {{plan_name}}</label></td>
+						</tr>
+					{{/each}}
+				</table>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="buttons">
+				<a class="button button-blue" {{action "savePrintSet" target=controller}} >Save</a>
+				<a class="button" {{action "close"}}>Cancel</a>
+			</div>
+		</div>
+	</div>
+</div>
