@@ -14,6 +14,7 @@
 class Share < ActiveRecord::Base
 	belongs_to :job
 	belongs_to :user
+  belongs_to :sharer, :class_name => "User", :foreign_key => "sharer_id"
   attr_accessible :job_id, :user_id, #invited user
   	:token
   #job.user is the inviter
