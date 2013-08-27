@@ -16,6 +16,7 @@ class Share < ActiveRecord::Base
 	belongs_to :user
   belongs_to :sharer, :class_name => "User", :foreign_key => "sharer_id"
   attr_accessible :job_id, :user_id, #invited user
+    :sharer_id, #user sharing
   	:token
   #job.user is the inviter
   before_create :generate_token
@@ -27,7 +28,9 @@ class Share < ActiveRecord::Base
   private
 
   	def check_existance
-			errors.add(:job_id, 'Share already exists') unless Share.find_by_job_id_and_user_id(self.job_id, self.user_id).nil?
+      Share.where(job_id: self.job_id, user_id: self.user_id).each do |share|
+        errors.add(:job_id, 'Share already exists') if share.id != self.id
+      end
   	end
 
 	  def generate_token
