@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716222909) do
+ActiveRecord::Schema.define(:version => 20130827040307) do
 
   create_table "jobs", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(:version => 20130716222909) do
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
     t.string   "page_size"
+  end
+
+  create_table "print_sets", :force => true do |t|
+    t.integer  "job_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "shares", :force => true do |t|
