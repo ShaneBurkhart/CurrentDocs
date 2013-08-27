@@ -1,4 +1,4 @@
 class PrintSet < ActiveRecord::Base
-  has_one :job
+  belongs_to :job
   has_many :plans
 end

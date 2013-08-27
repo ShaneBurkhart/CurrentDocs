@@ -14,6 +14,7 @@ class Job < ActiveRecord::Base
 	has_many :plans
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
+  has_one :print_set
   attr_accessible :name, :user_id
   validates :user_id, presence: true
   validates :name, presence: true#, uniqueness: true
