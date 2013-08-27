@@ -15,14 +15,16 @@ class Share < ActiveRecord::Base
 	belongs_to :job
 	belongs_to :user
   belongs_to :sharer, :class_name => "User", :foreign_key => "sharer_id"
-  attr_accessible :job_id, :user_id, #invited user
+  attr_accessible :job_id,
+    :user_id, #invited user
     :sharer_id, #user sharing
-  	:token
+  	:token,
+    :can_reshare
   #job.user is the inviter
   before_create :generate_token
 
   validates :token, uniqueness: true
-  validates :job_id, :user_id, presence: true
+  validates :job_id, :user_id, :sharer_id, presence: true
   validate :check_existance
 
   private

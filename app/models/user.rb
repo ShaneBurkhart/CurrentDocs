@@ -91,6 +91,13 @@ class User < ActiveRecord::Base
     return !share.nil? || is_my_share(share)
   end
 
+  def can_share_job job
+    return true if is_my_job job
+    share = Share.find_by_job_id_and_user_id job.id, self.id
+    return false if share.nil?
+    return true if share.can_reshare
+  end
+
   def is_my_job(job)
     job.user.id == self.id
   end

@@ -19,18 +19,18 @@ class Api::SharesController < ApplicationController
 =end
   def create
     if user.can? :create, Share
-      if current_user.is_my_job Job.find(params["share"]["job_id"].to_i)
+      if user.can_share_job Job.find(params["share"]["job_id"].to_i)
         @user = User.find_by_email params["share"]["email"]
         if @user.nil?
           @user = User.new_guest_user params["share"]
           guest = true
           @user.save
         end
-        if current_user == @user
+        if user == @user
           render json: {error: "You can't share with yourself!"}
           return
         end
-        @share = Share.new job_id: params["share"]["job_id"], user_id: @user.id
+        @share = Share.new sharer_id: user.id, job_id: params["share"]["job_id"], user_id: @user.id
         if @share.save
           @user.send_share_notification @share, guest
           render json: @share
