@@ -43,11 +43,11 @@ ActiveRecord::Schema.define(:version => 20130827232313) do
   create_table "shares", :force => true do |t|
     t.integer  "user_id"
     t.integer  "job_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "token"
     t.integer  "sharer_id"
-    t.boolean  "can_reshare"
+    t.boolean  "can_reshare", :default => false
   end
 
   create_table "users", :force => true do |t|
