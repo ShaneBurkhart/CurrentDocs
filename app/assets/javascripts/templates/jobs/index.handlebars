@@ -25,6 +25,9 @@
 							<li><a {{action "openDeleteJobModal" this bubbles=false}}>Delete</a></li>
 						{{else}}
 							<li>
+								<a {{action "openShareJobModal" this bubbles=false}}>Share</a>
+							</li>
+							<li>
 								<a {{action "openUnshareJobModal" this bubbles=false}}>Unshare</a>
 							</li>
 						{{/unless}}

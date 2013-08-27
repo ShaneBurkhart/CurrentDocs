@@ -24,7 +24,11 @@
 		<tr>
 			<td>
 				{{#manager}}
-					<p>You need to add a plan to your job.</p>
+					{{#unless job.isShared}}
+						<p>You need to add a plan to your job.</p>
+					{{else}}
+						<p>The owner hasn't added any plans.</p>
+					{{/unless}}
 				{{else}}
 					<p>The owner of this plan has not added any plans.</p>
 				{{/manager}}
