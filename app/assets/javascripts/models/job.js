@@ -30,7 +30,7 @@ PlanSource.Job = Ember.Object.extend({
 
 	username : function(){
 		if(this.get("user"))
-    	return this.get('user').get('id') == user_id ? "Me" : this.get("user").get("fullName");
+    	return this.get('user').get('id') == user_id ? "Me" : this.get("user").get("full_name");
     else
     	return "";
 	}.property('user'),
