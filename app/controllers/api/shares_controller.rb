@@ -47,7 +47,7 @@ class Api::SharesController < ApplicationController
 
   def update
     if user.can? :update, Share
-      @share = Share.find(params[:share][:id])
+      @share = Share.find(params[:id])
       if user.id == @share.sharer_id
         @share.can_reshare = params[:share][:can_reshare] == "true" ? true : false;
         if @share.save
