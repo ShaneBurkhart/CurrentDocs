@@ -42,6 +42,17 @@ PlanSource.Job = Ember.Object.extend({
   		return false;
   }.property("user"),
 
+  canReshare : function(){
+    var bool = false;
+    this.get("shares").forEach(function(share){
+      if(share.get("user").get("id") == user_id){
+        bool = share.get("can_reshare");
+        return;
+      }
+    });
+    return bool;
+  }.property("shares.@each"),
+
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
   	return this.get("isShared") == false ? 0 : 1;
   }.property("isShared"),
