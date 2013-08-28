@@ -17,11 +17,20 @@
 			<div class="scroller-medium">
 				<table class="table">
 					{{#each model.shares itemController="share"}}
-						<tr>
-							<td>{{user.full_name}}</td>
-							<td>{{user.email}}</td>
-							<td><a {{action "deleteShare"}}>Unshare</a></td>
-						</tr>
+						{{#if isSharer}}
+							<tr>
+								<td>{{user.full_name}}</td>
+								<td>{{user.email}}</td>
+								<td>
+									{{#if can_reshare}}
+										<a {{action "editCanShare"}}>Can Reshare</a>
+									{{else}}
+										<a {{action "editCanShare"}}>Can't Reshare</a>
+									{{/if}}
+								</td>
+								<td><a {{action "deleteShare"}}>Unshare</a></td>
+							</tr>
+						{{/if}}
 					{{/each}}
 				</table>
 			</div>

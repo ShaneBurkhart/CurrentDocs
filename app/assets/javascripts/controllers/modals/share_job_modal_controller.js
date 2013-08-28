@@ -31,7 +31,11 @@ PlanSource.ShareJobController = PlanSource.ModalController.extend({
 	},
 
 	numShares : function(){
-		return this.get("shares").length;
+		var num = 0;
+		this.get("shares").forEach(function(share){
+			if(share.get("isSharer")) num++;
+		});
+		return num;
 	}.property("shares.@each"),
 
 	removeShare : function(share){

@@ -44,6 +44,22 @@ class Api::SharesController < ApplicationController
       render_no_permission
     end
   end
+
+  def update
+    if user.can? :update, Share
+      @share = Share.find(params[:share][:id])
+      if user.id == @share.sharer_id
+        @share.can_reshare = params[:share][:can_reshare] == "true" ? true : false;
+        if @share.save
+          render json: @share
+        else
+          render json: {error: "Something went wrong!"}
+        end
+      end
+    else
+      render_no_permission
+    end
+  end
 =begin
   def update #accepts shares
     if user.can? :update, Share

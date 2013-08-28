@@ -1,7 +1,7 @@
 PlanSource.Share = Ember.Object.extend({
 
 	init : function(){
-    this.setProperties(this.getProperties("user"));
+    this.setProperties(this.getProperties("user", "sharer"));
   },
 
   setProperties : function(hash){
@@ -9,12 +9,23 @@ PlanSource.Share = Ember.Object.extend({
       this.set("user", PlanSource.User.create(hash.user));
       delete hash.user
     }
+    if(hash.sharer){
+      this.set("sharer", PlanSource.User.create(hash.sharer));
+      delete hash.sharer
+    }
     Ember.setProperties(this, hash);
   },
 
   deleteRecord : function(){
     this.destroy();
   },
+
+  isSharer : function(){
+    if(this.get("sharer"))
+      return this.get("sharer").get("id") == user_id;
+    else
+      return false;
+  }.property("sharer"),
 
   save : function(){
     if(this.get("isDestroyed") || this.get("isDestroying")){
