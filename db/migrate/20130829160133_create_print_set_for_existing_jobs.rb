@@ -2,9 +2,7 @@ class CreatePrintSetForExistingJobs < ActiveRecord::Migration
   def up
     Job.all.each do |job|
       if !job.print_set
-        print = PrintSet.new
-        print.job_id = job.id
-        job.print_set = print
+        job.print_set = PrintSet.new job_id: job.id
         job.save
       end
     end

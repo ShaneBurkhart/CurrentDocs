@@ -17,6 +17,7 @@
 
 class Plan < ActiveRecord::Base
 	belongs_to :job
+  belongs_to :print_set
 	has_attached_file :plan,
                     :storage => :s3,
                     :s3_credentials => {
