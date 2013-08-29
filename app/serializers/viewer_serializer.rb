@@ -1,2 +1,0 @@
-class ViewerSerializer < UserSerializer
-end

@@ -11,19 +11,25 @@
 
 class Job < ActiveRecord::Base
 	belongs_to :user
+  has_one :print_set
 	has_many :plans
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
-  has_one :print_set
   attr_accessible :name, :user_id
   validates :user_id, presence: true
   validates :name, presence: true#, uniqueness: true
   validate :check_for_dubplicate_name_for_single_user
 
+  before_create :default_print_set
+
   before_destroy :destroy_plans
 	before_destroy :destroy_shares
 
 	private
+
+    def default_print_set
+      self.print_set = PrintSet.new job_id: self.id
+    end
 
 		def destroy_shares
 			self.shares.each do |share|
