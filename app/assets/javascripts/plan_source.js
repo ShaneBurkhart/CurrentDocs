@@ -24,6 +24,11 @@ Ember.Handlebars.registerBoundHelper("date", function(date){
 	else
 		return "";
 });
+Ember.Handlebars.registerHelper("isInPrintSet", function(controller, plan, options){
+	console.log(controller);
+	if(controller.isInPrintSet(plan))
+		return options;
+});
 Handlebars.registerHelper('manager', function(options) {
 	if(PlanSource._user_type == "Manager")
 		return options.fn(this);

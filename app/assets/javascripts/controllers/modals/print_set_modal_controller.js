@@ -1,5 +1,14 @@
 PlanSource.PrintSetController = PlanSource.ModalController.extend({
 
+  isInPrintSet : function(plan){
+    var bool = 0;
+    this.get("model").get("print_set").get("plans").forEach(function(inSet){
+      if(plan.get("id") == inSet.get("id"))
+        bool = 1;
+    });
+    return bool == 0 ? false : true;
+  },
+
 	savePrintSet : function(){
     var checked_plans = [];
     $(".print_set_checkbox").each(function(index, checkbox){
