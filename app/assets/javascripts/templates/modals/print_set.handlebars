@@ -9,13 +9,11 @@
 			<div class="scroller-large">
 				<table class="table">
 					{{#with this as parentController}}
-						{{#each model.plans}}
+						{{#each model.plans itemController="print"}}
 							<tr>
 								<td><label><input type="checkbox" class="print_set_checkbox" data-plan="{{unbound id}}"
-								{{#isInPrintSet this.parentController this}}
-									checked
-								{{/isInPrintSet}}
-								> {{plan_name}}</label></td>
+								{{unbound isInPrintSet}}
+								/> {{plan_name}}</label></td>
 							</tr>
 						{{/each}}
 					{{/with}}

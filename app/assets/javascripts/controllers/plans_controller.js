@@ -29,11 +29,6 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 		});
 	},
 
-  savePrintSet : function(checked_plans) {
-    for(var i = 0 ; i < checked_plans.length ; i ++)
-      console.log(checked_plans[i]);
-  },
-
 	planExists : function(new_plan){
 		var name;
 		if (typeof new_plan == 'string' || new_plan instanceof String)

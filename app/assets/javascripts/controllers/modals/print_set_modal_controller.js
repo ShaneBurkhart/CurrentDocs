@@ -7,7 +7,7 @@ PlanSource.PrintSetController = PlanSource.ModalController.extend({
         bool = 1;
     });
     return bool == 0 ? false : true;
-  },
+  }.property(),
 
 	savePrintSet : function(){
     var checked_plans = [];
