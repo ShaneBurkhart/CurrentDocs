@@ -9,7 +9,7 @@
 			<div class="scroller-large">
 				<table class="table">
 					{{#with this as parentController}}
-						{{#each model.plans itemController="print"}}
+						{{#each parent.content itemController="print"}}
 							<tr>
 								<td><label><input type="checkbox" class="print_set_checkbox" data-plan="{{unbound id}}"
 								{{unbound isInPrintSet}}
