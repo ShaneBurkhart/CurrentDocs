@@ -1,14 +1,5 @@
 PlanSource.PrintSetController = PlanSource.ModalController.extend({
 
-  isInPrintSet : function(plan){
-    var bool = 0;
-    this.get("model").get("print_set").get("plans").forEach(function(inSet){
-      if(plan.get("id") == inSet.get("id"))
-        bool = 1;
-    });
-    return bool == 0 ? false : true;
-  }.property(),
-
 	savePrintSet : function(){
     var checked_plans = [];
     $(".print_set_checkbox").each(function(index, checkbox){
@@ -16,7 +7,19 @@ PlanSource.PrintSetController = PlanSource.ModalController.extend({
       if(el.is(":checked"))
         checked_plans.push(el.data("plan"));
     });
-    this.get("parent").savePrintSet(checked_plans)
+    var self = this;
+    $.ajax("api/print_sets/" + this.get("model").get("print_set").get("id"), {
+      type : "PUT",
+      data : {
+        "print_set" : {
+          "plan_ids" : checked_plans
+        }
+      },
+      dataType : "json"
+    }).then(function(data){
+      if(data.print_set)
+        self.get("model").setProperties(data);
+    });
 		this.send("close");
 	},
 

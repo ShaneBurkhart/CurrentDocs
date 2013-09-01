@@ -27,13 +27,14 @@ PlanSource.Job = Ember.Object.extend({
     }
     if(hash.print_set){
       var print_set_plans = Em.A();
+      var self = this;
       hash.print_set.plan_ids.forEach(function(plan_id){
-        this.get("plans").forEach(function(plan){
-          if(plan.get("id") == 10)
+        self.get("plans").forEach(function(plan){
+          if(plan.get("id") == plan_id)
             print_set_plans.pushObject(plan);
         });
       });
-      print_set = PlanSource.PrintSet.create(hash.print_set);
+      var print_set = PlanSource.PrintSet.create(hash.print_set);
       print_set.set("plans", print_set_plans);
       this.set("print_set", print_set);
       delete hash.print_set

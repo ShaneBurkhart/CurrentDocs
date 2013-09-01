@@ -29,7 +29,7 @@ class Plan < ActiveRecord::Base
                     :bucket => ENV["AWS_BUCKET"]
 
   attr_accessible :job_id, :plan_name, :plan_num, :page_size,
-                  :page_sizes, :num_pages
+                  :page_sizes, :num_pages, :print_set_id
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
   before_destroy :delete_file, :delete_plan_num

@@ -32,6 +32,7 @@ PlanSource.JobRoute = Ember.Route.extend({
 
 		openPrintSetModal : function(){
 			this.controllerFor("print_set").set("model", this.get("controller").get("model"));
+			this.controllerFor("print_set").set("jobController", this.controllerFor("job"));
 			this.controllerFor("print_set").set("parent", this.controllerFor("plans"));
 			this.render("modals/print_set", {into : "jobs", outlet : "modal", controller : "print_set"});		}
 	},
