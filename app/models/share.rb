@@ -26,8 +26,14 @@ class Share < ActiveRecord::Base
   validates :token, uniqueness: true
   validates :job_id, :user_id, :sharer_id, presence: true
   validate :check_existance
+  validate :check_share_with_owner
 
   private
+
+    def check_share_with_owner
+      job = Job.find self.job_id
+      errors.add(:user_id, "Share already exists") if job.user.id == user_id
+    end
 
   	def check_existance
       Share.where(job_id: self.job_id, user_id: self.user_id).each do |share|
