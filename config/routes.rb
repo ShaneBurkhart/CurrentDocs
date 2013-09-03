@@ -1,4 +1,6 @@
 PlanSource::Application.routes.draw do
+  get "about/index"
+
   authenticated :user do
     root :to => 'home#index'
   end
@@ -22,6 +24,8 @@ PlanSource::Application.routes.draw do
 
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
+  match "/faq" => "faq#index"
+  match "/about_us" => "about#index"
   get "/print/:job_id" => "prints#purchase"
   match "/app" => "app#index"
 
