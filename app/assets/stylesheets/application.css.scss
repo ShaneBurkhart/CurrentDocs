@@ -21,7 +21,22 @@
 	}
 }
 
+.icon-huge{
+  font-size: 130px;
+}
 
+.front-market-text{
+  margin-top: 90px;
+  h1{
+    font-weight: 700;
+    font-size: 30px;
+    margin: 10px 0;
+  }
+  p{
+    color: #555;
+    font-size: 18px;
+  }
+}
 
 /*Sticky footer*/
 html, body {

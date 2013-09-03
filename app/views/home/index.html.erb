@@ -1,36 +1,88 @@
 <div class="section">
 	<div class="container">
-		<div class="jumbo">
-		  <h1>No More Outdated Plans!</h1>
-		  <p>Getting the most recent plans to the jobsite is tough and expensive.  With PlanSource, we make it easy to upload and view plans anywhere from your mobile device.</p>
-		  <%= link_to "Start For Free!", new_user_registration_path, class: "button button-green button-wide" %>
-	  </div>
-	  <hr>
-	</div>
-</div>
-<div class="section">
-	<div class="container">
 		<div class="row">
-			<div class="span4">
-				<div class="">
-					<h3>Send Plans Fast!</h3>
-					<p>Send plans to jobsites at the speed of light!  Simply upload and share plans with anyone. Joining is easy and free!</p>
-					<%= link_to "Join Now", new_user_registration_path, class: "button" %>
+			<div class="span7">
+				<div class="front-market-text">
+					<h1>Never Have Outdated Plans!</h1>
+					<p>Effortlessly view plans from the jobsite with all of your mobile devices.</p>
 				</div>
 			</div>
-			<div class="span4">
-				<div class="">
-					<h3>Mobile Viewing</h3>
-					<p>Quickly view all of your plans with our Android and iPhone apps.  Mobile devices make it easy to look at plans anywhere, whether that be the jobsite or the office. </p>
-				</div>
-			</div>
-			<div class="span4">
-				<div class="">
-					<h3>Quick, Easy Printing!</h3>
-					<p>Is just viewing plans not enough? No problem! Print and send any file where ever you want with ease.  Our prices make us an affordable alternative.</p>
-					<%= link_to "See Prices", prints_path, class: "button" %>
-				</div>
+			<div class="span4 offset1">
+				<h2>Sign up</h2>
+				<%= simple_form_for(@user, url: user_registration_url, html: {class: "form-vertical"}) do |f| %>
+				  <%= f.input_field :type, :collection => ["Viewer", "Manager"], :as => :select, selected: 1, :required => true, class: "input-block-level" %>
+					<div class="row">
+						<div class="span2">
+							<%= f.input_field :first_name, placeholder: "First", class: "input-block-level" %>
+						</div>
+						<div class="span2">
+							<%= f.input_field :last_name, placeholder: "Last", class: "input-block-level" %>
+						</div>
+					</div>
+					<%= f.input_field :email, placeholder: "Email", class: "input-block-level" %>
+					<%= f.input_field :password, placeholder: "Password", class: "input-block-level" %>
+					<%= f.button :submit, "Sign up", class: "btn-primary btn-block btn-large" %>
+				<% end %>
+				<p class="text-center">Or <%= link_to "Sign In", new_user_session_path %></p>
 			</div>
 		</div>
 	</div>
 </div>
+<hr>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="span10">
+				<h2>View files anywhere.<h2>
+				<p class="lead">Use your mobile device to view plans.  Once plans are downloaded you don't need internet to view.</p>
+			</div>
+			<div class="span2">
+				<i class="icon-download-alt icon-huge"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="span2">
+				<i class="icon-cloud icon-huge"></i>
+			</div>
+			<div class="span10">
+				<h2>Upload all of your plans to the cloud.</h2>
+				<p class="lead">There isn't a limit to how many plans you can upload.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="span10">
+				<h2>Easily share plans.</h2>
+				<p class="lead">Flawlessly share plans with other users.  All you need is their email.  We even support resharing!</p>
+			</div>
+			<div class="span2">
+				<i class="icon-share-alt icon-huge"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+<!--<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="span2">
+				<i class="icon-print icon-huge"></i>
+			</div>
+			<div class="span10">
+				<h2>Upload all of your plans to the cloud.</h2>
+				<p class="lead">There isn't a limit to how many plans you can upload.</p>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+!-->
