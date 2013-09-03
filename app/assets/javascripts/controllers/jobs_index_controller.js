@@ -9,6 +9,15 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
 		job.save();
   },
 
+  removeJobByID : function(job_id){
+    var self = this;
+    this.get("content").forEach(function(job){
+      if(job.get("id") == job_id){
+        self.get("content").removeObject(job);
+      }
+    });
+  },
+
   addJob : function(new_job){
     if(this.jobExists(new_job)) return false;
     var self = this;

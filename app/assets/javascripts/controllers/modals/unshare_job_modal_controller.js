@@ -7,6 +7,7 @@ PlanSource.UnshareJobController = Ember.ObjectController.extend({
 				share.deleteRecord();
 				share.save();
 				self.get("model").deleteRecord();
+				self.get("parent").removeJobByID(share.get("job_id"));
 			}
 		});
 		this.send("close");
