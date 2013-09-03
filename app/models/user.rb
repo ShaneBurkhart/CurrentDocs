@@ -125,6 +125,11 @@ class User < ActiveRecord::Base
     is_shared_job plan.job
   end
 
+  def self.avatar_url email
+    hash = Digest::MD5.hexdigest(email.strip)
+    "http://www.gravatar.com/avatar/#{hash}?s=200&d=mm"
+  end
+
   private
 
     def destroy_shares
