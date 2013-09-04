@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password,
    :password_confirmation, :remember_me, :type, :guest
 
-  validates :type, presence: true
+  validates :type, :first_name, :last_name, presence: true
   before_validation :check_type
 
   before_destroy :destroy_shares
