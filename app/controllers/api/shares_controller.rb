@@ -22,7 +22,8 @@ class Api::SharesController < ApplicationController
       if user.can_share_job Job.find(params["share"]["job_id"].to_i)
         @user = User.find_by_email params["share"]["email"]
         if @user.nil?
-          @user = User.new_guest_user params["share"]
+          pass = ('a'..'z').to_a.shuffle[0,8].join
+          @user = User.new_guest_user params["share"], pass
           guest = true
           @user.save
         end
@@ -32,7 +33,7 @@ class Api::SharesController < ApplicationController
         end
         @share = Share.new sharer_id: user.id, job_id: params["share"]["job_id"], user_id: @user.id
         if @share.save
-          @user.send_share_notification @share, guest
+          @user.send_share_notification @share, guest, pass
           render json: @share
         else
           render json: {error: "Share already exists!"}

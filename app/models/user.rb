@@ -59,15 +59,14 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
-  def self.new_guest_user(share_param)
-    pass = ('a'..'z').to_a.shuffle[0,8].join
+  def self.new_guest_user(share_param, pass)
     Viewer.new first_name: "New", last_name: "User",
       email: share_param["email"],
       password: pass, password_confirmation: pass
   end
 
-  def send_share_notification(share, guest)
-    UserMailer.share_notification(share.user, share, guest).deliver
+  def send_share_notification(share, guest, pass)
+    UserMailer.share_notification(share.user, share, guest, pass).deliver
   end
 
   def full_name
