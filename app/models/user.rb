@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def self.new_guest_user(share_param, pass)
-    Viewer.new first_name: "New", last_name: "User",
+    Manager.new first_name: "New", last_name: "User",
       email: share_param["email"],
       password: pass, password_confirmation: pass
   end
