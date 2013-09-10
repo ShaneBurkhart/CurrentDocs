@@ -12,7 +12,9 @@
   <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
   <td>
     <ul class="controls pull-right unstyled">
-      <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+      {{#if hasPlan}}
+        <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+      {{/if}}
       {{#unless controller.job.isShared}}
         <li><a {{action "openEditPlanModal" this}}>Edit</a></li>
         <li><a {{action "openUploadPlanModal" this}} data-id="{{unbound id}}">Upload</a></li>
