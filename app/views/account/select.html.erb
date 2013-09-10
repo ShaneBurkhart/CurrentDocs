@@ -1,3 +1,4 @@
+<% content_for :title, "Account Selection" %>
 <div class="container">
   <h1>Select An Account Type</h1>
   <div class="row">
@@ -51,10 +52,9 @@
               <% end %>
             </td>
             <td>
-              <%= simple_form_for(@user, as: User, :url => account_path, :html => { :method => :put, :class => 'text-center form-vertical' }) do |f| %>
-                <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
-                <%= f.submit "Start your free trial!", class: "button button-green" %>
-              <% end %>
+              <p>
+                <%= link_to "Start your free trial!", account_billing_path, class: "button button-green" %>
+              </p>
             </td>
           </tr>
         </tbody>

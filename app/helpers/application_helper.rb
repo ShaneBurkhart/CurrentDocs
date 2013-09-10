@@ -9,6 +9,30 @@ module ApplicationHelper
     end
   end
 
+  def exp_months
+    [
+      ["January (01)", "01"],
+      ["February (02)", "02"],
+      ["March (03)", "03"],
+      ["April (04)", "04"],
+      ["May (05)", "05"],
+      ["June (06)", "06"],
+      ["July (07)", "07"],
+      ["August (08)", "08"],
+      ["September (09)", "09"],
+      ["October (10)", "10"],
+      ["November (11)", "11"],
+      ["December (12)", "12"],
+    ]
+  end
+
+  def exp_years
+    y = []
+    d = Date.today
+    10.times{ |i| y << d.year + i }
+    y
+  end
+
   def display_base_errors resource
     return '' if (resource.errors.empty?) or (resource.errors[:base].empty?)
     messages = resource.errors[:base].map { |msg| content_tag(:p, msg) }.join
