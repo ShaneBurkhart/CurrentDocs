@@ -25,7 +25,8 @@ PlanSource::Application.routes.draw do
     post "/charge" => "charges#create"
   end
 
-  match "/user/account" => "account#select"
+  get "/account" => "account#select" #show account type
+  put "/account" => "account#update" #update account type
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
   match "/faq" => "faq#index"

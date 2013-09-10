@@ -1,9 +1,11 @@
-<h1>Select An Account Type</h1>
-  <%= simple_form_for(@user, :url => user_registration_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
-    <%= f.input :type, as: :hidden, html: {value: "Viewer"} %>
-    <%= f.submit :Viewer %>
+<div class="container">
+  <h1>Select An Account Type</h1>
+  <%= simple_form_for(@user, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+    <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>
+    <%= f.submit :viewer %>
   <% end %>
-  <%= simple_form_for(@user, :url => user_registration_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
-    <%= f.input :type, as: :hidden, html: {value: "Manger"} %>
+  <%= simple_form_for(@user, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+    <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
     <%= f.submit :Manager %>
   <% end %>
+</div>
