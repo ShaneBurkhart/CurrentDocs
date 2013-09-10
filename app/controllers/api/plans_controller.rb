@@ -20,6 +20,7 @@ class Api::PlansController < ApplicationController
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
       @plan = Plan.new params["plan"]
       if @plan.save
+
         render json: @plan
       else
         render json: {}
@@ -74,15 +75,4 @@ class Api::PlansController < ApplicationController
 
   private
 
-    def user
-      current_user || User.find_by_authentication_token(params[:token])
-    end
-
-    def user_not_there!
-      render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
-    end
-
-    def render_no_permission
-      render :text => "You don't have permission to do that"
-    end
 end

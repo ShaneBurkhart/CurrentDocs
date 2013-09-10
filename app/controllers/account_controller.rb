@@ -11,6 +11,7 @@ class AccountController < ApplicationController
     if params[:user][:type] == "Viewer"
       u.type = params[:user][:type]
       if u.save
+        u.cancel_subscription
         if u.type == "Viewer"
           flash[:notice] = "You are now a Viewer!"
         else
@@ -37,6 +38,7 @@ class AccountController < ApplicationController
       render "billing"
       return
     end
+
     customer = Stripe::Customer.create(
       :email => user.email,
       :card  => params[:stripeToken]

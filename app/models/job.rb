@@ -21,11 +21,22 @@ class Job < ActiveRecord::Base
   validate :check_for_dubplicate_name_for_single_user
 
   before_create :default_print_set
+  after_create :increment_owner
+  after_create :check_free_trial
 
   before_destroy :destroy_plans
 	before_destroy :destroy_shares
 
 	private
+
+    def check_free_trial
+      user.start_subscription if user.free_trial_ended?
+    end
+
+    def increment_owner
+      self.user.increment! :total_jobs
+      self.user.save
+    end
 
     def default_print_set
       self.print_set = PrintSet.new job_id: self.id

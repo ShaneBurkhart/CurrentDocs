@@ -2,13 +2,14 @@
 #
 # Table name: shares
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  job_id     :integer
-#  accepted   :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  token      :string(255)
+#  id          :integer          not null, primary key
+#  user_id     :integer
+#  job_id      :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  token       :string(255)
+#  sharer_id   :integer
+#  can_reshare :boolean          default(FALSE)
 #
 
 require 'spec_helper'

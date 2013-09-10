@@ -13,6 +13,8 @@
 #  plan_content_type :string(255)
 #  plan_file_size    :integer
 #  plan_updated_at   :datetime
+#  page_size         :string(255)
+#  print_set_id      :integer
 #
 
 class Plan < ActiveRecord::Base

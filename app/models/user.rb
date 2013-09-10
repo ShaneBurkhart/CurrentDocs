@@ -28,6 +28,8 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string(255)
 #  type                   :string(255)
+#  authentication_token   :string(255)
+#  stripe_customer_id     :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -88,6 +90,23 @@ class User < ActiveRecord::Base
 
   def has_type?
     return self.type == "Viewer" || self.type == "Manager"
+  end
+
+  def free_trial_ended?
+    return self.total_jobs > 2
+  end
+
+  def start_subscription
+    c = Stripe::Customer.retrieve self.stripe_customer_id
+    c.update_subscription :plan => "manager"
+  end
+
+  def cancel_subscription
+    c = Stripe::Customer.retrieve self.stripe_customer_id
+    begin
+      c.cancel_subscription
+    rescue Exception
+    end
   end
 
   def is_my_token(token)

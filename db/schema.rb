@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910200405) do
+ActiveRecord::Schema.define(:version => 20130910222004) do
 
   create_table "jobs", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130910200405) do
     t.string   "type"
     t.string   "authentication_token"
     t.string   "stripe_customer_id"
+    t.integer  "total_jobs",                           :default => 0
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

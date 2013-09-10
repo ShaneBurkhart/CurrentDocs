@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
     current_user || User.find_by_authentication_token(params[:token])
   end
 
+  def render_no_permission
+    render :text => "You don't have permission to do that"
+  end
+
 end
