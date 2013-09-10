@@ -13,6 +13,24 @@
  *= require_tree .
 */
 
+#features-table{
+  & td{
+    text-align: center;
+  }
+
+  & th{
+    text-align: center;
+  }
+
+  & .icon-ok{
+    color: #4cc602;
+  }
+
+  & .icon-remove{
+    color:#cf1d1d;
+  }
+}
+
 .logo{
 	text-decoration: none;
 	color:black;

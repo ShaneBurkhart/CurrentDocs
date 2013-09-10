@@ -1,11 +1,64 @@
 <div class="container">
   <h1>Select An Account Type</h1>
-  <%= simple_form_for(@user, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
-    <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>
-    <%= f.submit :viewer %>
-  <% end %>
-  <%= simple_form_for(@user, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
-    <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
-    <%= f.submit :Manager %>
-  <% end %>
+  <div class="row">
+    <div class="span12">
+      <table class="table table-bordered" id="features-table">
+        <thead>
+          <th>Features</th>
+          <th>Viewer</th>
+          <th>Manager</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pricing</td><td>Free</td><td>$5/user/month</td>
+          </tr>
+          <tr>
+            <td>Desktop Viewing</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Desktop Downloads</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Mobile Access</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Mobile Access Without Internet</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Create Jobs</td><td><i class="icon-remove"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Edit Jobs</td><td><i class="icon-remove"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Upload Plans</td><td><i class="icon-remove"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Share Jobs</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td>Storage</td><td>None</td><td>100GB</td>
+          </tr>
+          <tr>
+            <td>Printing (Available Soon)</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>
+              <%= simple_form_for(@user, as: User, :url => account_path, :html => { :method => :put, :class => 'text-center form-vertical' }) do |f| %>
+                <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>
+                <%= f.submit "Start now!", class: "button button-blue" %>
+              <% end %>
+            </td>
+            <td>
+              <%= simple_form_for(@user, as: User, :url => account_path, :html => { :method => :put, :class => 'text-center form-vertical' }) do |f| %>
+                <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
+                <%= f.submit "Start your free trial!", class: "button button-green" %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

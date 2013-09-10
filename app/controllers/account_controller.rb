@@ -6,13 +6,17 @@ class AccountController < ApplicationController
   end
 
   def update
-    100.times{puts "AAAAAA"}
     u = user
     u.type = params[:user][:type]
     if u.save
+      if u.type == "Viewer"
+        flash[:notice] = "You are now a Viewer."
+      else
+        flash[:notice] = "You are now a Manager. Thank you for subscribing!"
+      end
       redirect_to app_path
     else
-      notice[:error] = "Not a valid account type"
+      flash[:error] = "Not a valid account type"
       render "select"
     end
   end
