@@ -2,6 +2,7 @@ class AccountController < ApplicationController
   before_filter :authenticate_user!
 
   def select
+    redirect_to edit_user_registration_path if !user.type.nil?
     @user = user
   end
 
@@ -27,7 +28,7 @@ class AccountController < ApplicationController
   end
 
   def billing
-
+    redirect_to edit_user_registration_path if user.type == "Manager"
   end
 
   def update_billing
