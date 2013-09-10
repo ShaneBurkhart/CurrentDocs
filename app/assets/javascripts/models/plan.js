@@ -1,6 +1,10 @@
 PlanSource.Plan = Ember.Object.extend({
 
-	deleteRecord : function(){
+  hasPlan: function() {
+    return this.get("plan_file_name") != null && this.get("plan_file_name") != "";
+  }.property("plan_file_name"),
+
+  deleteRecord : function(){
     this.destroy();
   },
 

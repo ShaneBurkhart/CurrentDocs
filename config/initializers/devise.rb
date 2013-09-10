@@ -6,6 +6,11 @@ Devise.setup do |config|
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
   config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
+
+  # Devise secret key is now required
+  config.secret_key = '3b0f3643a27d2fdaae4f543f06795dfcb7393548e7190ec195885a14881ff57a333fe987fb110f2a7419885625b52edbe78fb71e2cbb6ae380c256b1ca4963c4'
+
+
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"
 
