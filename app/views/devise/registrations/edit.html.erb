@@ -21,7 +21,16 @@
 				<% if current_user %>
 					<p><%= current_user.type %></p>
 				<% end %>
-				<%= link_to current_user.type == "Viewer" ? "Upgrade Your Account!" : "Select Account Type", account_path, class: "button button-purple" %>
+				<% if current_user.type == nil %>
+					<%= link_to "Select Account Type", account_path, class: "button button-blue" %>
+				<% elsif current_user.type == "Viewer" %>
+					<%= link_to "Upgrade Your Account!", account_billing_path, class: "button button-green" %>
+				<% else %>
+          <%= simple_form_for(current_user, as: User, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+            <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>
+            <%= f.submit "Cancel Manager Subsciption", class: "button button-red" %>
+          <% end %>
+				<% end %>
 				<br>
 				<h3>Cancel my account</h3>
 				<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>

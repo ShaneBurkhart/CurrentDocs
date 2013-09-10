@@ -3,9 +3,9 @@
 <div class="container">
   <h1>Enter Your Billing Information</h1>
   <div class="row">
-    <div class="span6 offset2">
+    <div class="span6 offset3">
 
-      <form action="" method="POST" id="payment-form">
+      <%= form_tag account_billing_path, method: :post, id: "payment-form" do %>
         <div class="alert alert-error" style="display:none;">
           <%= content_tag :div, "", class: "payment-errors" %>
         </div>
@@ -86,7 +86,7 @@
             <button type="submit" class="button button-green button-tall button-wide">Start Free Trial</button>
           </div>
         </div>
-      </form>
+      <% end %>
 
     </div>
   </div>
