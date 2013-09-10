@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   include SendGrid
-  default from: "shaneburkhart@gmail.com"
+  default from: "plansource-noreply@plansource.io"
 
   def share_notification(user, share, is_guest, pass)
   	@share = share
