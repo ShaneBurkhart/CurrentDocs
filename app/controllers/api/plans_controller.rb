@@ -64,11 +64,9 @@ class Api::PlansController < ApplicationController
   end
 
   def show_embedded
-    if user.can? :read, Plan
-      @plan = Plan.find(params[:id])
-      if current_user.is_my_plan(@plan)
-        render 'show_embedded', layout: false and return
-      end
+    @plan = Plan.find(params[:id])
+    if user.is_my_plan(@plan) || user.is_shared_plan(@plan)
+      render 'show_embedded', layout: false and return
     end
     render_no_permission
   end
