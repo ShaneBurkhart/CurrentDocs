@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password,
    :password_confirmation, :remember_me, :type, :guest
 
-  validates :type, :first_name, :last_name, presence: true
+  validates :first_name, :last_name, presence: true
   before_validation :check_type
 
   before_destroy :destroy_shares
@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token!
 
   delegate :can?, :cannot?, :to => :ability
+
   def ability
     @ability ||= Ability.new(self)
   end
@@ -83,6 +84,10 @@ class User < ActiveRecord::Base
 
   def admin?
     self.class == Admin
+  end
+
+  def has_type?
+    return self.type == "Viewer" || self.type == "Manager"
   end
 
   def is_my_token(token)
@@ -144,7 +149,6 @@ class User < ActiveRecord::Base
     end
 
     def check_type
-      self.type = self.type || "Viewer"
-      errors.add(:type, 'Not a valid type') unless self.type == "Manager" || self.type == "Viewer"
+      errors.add(:type, 'Not a valid type') unless self.type == "Manager" || self.type == "Viewer" || self.type == nil
     end
 end

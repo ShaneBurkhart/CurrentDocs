@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
   end
 
+  def check_user_account!
+    redirect_to user_account_path if user.type.blank?
+  end
+
   def user
     current_user || User.find_by_authentication_token(params[:token])
   end

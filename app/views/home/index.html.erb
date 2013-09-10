@@ -10,7 +10,6 @@
 			<div class="span4 offset1">
 				<h2>Sign up</h2>
 				<%= simple_form_for(@user, url: user_registration_url, html: {class: "form-vertical"}) do |f| %>
-				  <%= f.input_field :type, :collection => ["Viewer", "Manager"], :as => :select, selected: 1, :required => true, class: "input-block-level" %>
 					<div class="row">
 						<div class="span2">
 							<%= f.input_field :first_name, placeholder: "First", class: "input-block-level" %>

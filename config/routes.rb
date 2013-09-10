@@ -1,4 +1,6 @@
 PlanSource::Application.routes.draw do
+  get "account/select"
+
   get "about/index"
 
   authenticated :user do
@@ -23,6 +25,7 @@ PlanSource::Application.routes.draw do
     post "/charge" => "charges#create"
   end
 
+  match "/user/account" => "account#select"
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
   match "/faq" => "faq#index"
