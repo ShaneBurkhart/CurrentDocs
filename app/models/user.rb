@@ -92,10 +92,6 @@ class User < ActiveRecord::Base
     return self.type == "Viewer" || self.type == "Manager"
   end
 
-  def free_trial_ended?
-    return self.total_jobs > 2
-  end
-
   def start_subscription
     c = Stripe::Customer.retrieve self.stripe_customer_id
     c.update_subscription :plan => "manager"
