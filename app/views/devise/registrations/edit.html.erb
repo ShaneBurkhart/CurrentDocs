@@ -18,17 +18,20 @@
 			</div>
 			<div class="span5">
 				<h3>Account Type</h3>
-				<% if current_user %>
+				<% if current_user.type %>
 					<p><%= current_user.type %></p>
 				<% end %>
 				<% if current_user.type == nil %>
 					<%= link_to "Select Account Type", account_path, class: "button button-blue" %>
 				<% elsif current_user.type == "Viewer" %>
-					<%= link_to "Upgrade Your Account!", account_billing_path, class: "button button-green" %>
+          <%= simple_form_for(current_user, as: User, :url => subscription_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+            <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
+            <%= f.submit "Upgrade Account", class: "button button-green" %>
+          <% end %>
 				<% else %>
-          <%= simple_form_for(current_user, as: User, :url => account_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
+          <%= simple_form_for(current_user, as: User, :url => subscription_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
             <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>
-            <%= f.submit "Cancel Manager Subsciption", class: "button button-red" %>
+            <%= f.submit "Downgrade to Viewer", class: "button button-red" %>
           <% end %>
 				<% end %>
 				<br>

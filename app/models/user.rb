@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
    :password_confirmation, :remember_me, :type, :guest
 
   validates :first_name, :last_name, presence: true
-  before_validation :check_type
+  validate :check_type
 
   before_destroy :destroy_shares
   before_destroy :destroy_jobs
