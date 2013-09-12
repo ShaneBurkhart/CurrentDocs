@@ -64,4 +64,8 @@ class AccountsController < ApplicationController
       flash[:error] = "Not a valid account type"
       render "select"
     end
+
+    def billing_error
+
+    end
 end

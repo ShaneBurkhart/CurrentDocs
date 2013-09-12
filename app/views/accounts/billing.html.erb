@@ -6,7 +6,7 @@
   <div class="row">
     <div class="span6 offset3">
 
-      <%= form_tag account_billing_path, method: :post, id: "payment-form" do %>
+      <%= form_tag account_path, method: :post, id: "payment-form" do %>
         <div class="alert alert-error" style="display:none;">
           <%= content_tag :div, "", class: "payment-errors" %>
         </div>
