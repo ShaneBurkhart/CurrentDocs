@@ -1,30 +1,22 @@
-class AccountController < ApplicationController
+class AccountsController < ApplicationController
   before_filter :authenticate_user!
 
-  def select
+  def show
     redirect_to edit_user_registration_path if !user.type.nil?
     @user = user
   end
 
   def update
-    u = user
     if params[:user][:type] == "Viewer"
-      u.type = params[:user][:type]
-      if u.save
-        u.cancel_subscription
-        if u.type == "Viewer"
-          flash[:notice] = "You are now a Viewer!"
-        else
-          flash[:notice] = "You are now a Manager! Thank you for subscribing!"
-        end
+      user.type = params[:user][:type]
+      if user.save
+        user.cancel_subscription
         redirect_to app_path
       else
-        flash[:error] = "Not a valid account type"
-        render "select"
+        account_type_error
       end
     else
-      flash[:error] = "Not a valid account type"
-      render "select"
+      account_type_error
     end
   end
 
@@ -64,5 +56,12 @@ class AccountController < ApplicationController
     rescue_from Stripe::CardError do |e|
       flash[:error] = e.message
       render "billing"
+    end
+
+  private
+
+    def account_type_error
+      flash[:error] = "Not a valid account type"
+      render "select"
     end
 end

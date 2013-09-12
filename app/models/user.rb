@@ -98,6 +98,7 @@ class User < ActiveRecord::Base
   end
 
   def cancel_subscription
+    return unless self.stripe_customer_id
     c = Stripe::Customer.retrieve self.stripe_customer_id
     begin
       c.cancel_subscription
