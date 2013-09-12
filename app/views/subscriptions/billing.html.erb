@@ -6,9 +6,11 @@
   <div class="row">
     <div class="span6 offset3">
 
-      <%= form_tag account_path, method: :post, id: "payment-form" do %>
-        <div class="alert alert-error" style="display:none;">
-          <%= content_tag :div, "", class: "payment-errors" %>
+      <%= simple_form_for @subscription, url: subscription_path, method: :post, id: "payment-form" do |f| %>
+        <div class="alert alert-error" <%= @subscription.errors ? "" : "style='display:none;'" %> >
+          <div class="payment-errors">
+            <%= @subscription.errors.full_messages.to_sentence if @subscription.errors %>
+          </div>
         </div>
 
         <div class="row-fluid">
@@ -16,7 +18,7 @@
             Name On Card:
           </div>
           <div class="span8">
-            <input type="text" class="input-block-level" size="20" placeholder="Name" data-stripe="name"/>
+            <%= f.input_field :name, placeholder: "Name", class: "input-block-level" %>
           </div>
         </div>
 
@@ -25,28 +27,28 @@
             Address:
           </div>
           <div class="span8">
-            <input type="text" class="input-block-level" placeholder="Street Address" data-stripe="address_line1"/>
+            <%= f.input_field :address, placeholder: "Street Address", class: "input-block-level" %>
           </div>
         </div>
 
         <div class="row-fluid">
           <div class="span8 offset4">
-            <input type="text" class="input-block-level" placeholder="Apartment, Suite, Bldg., etc. (optional)" data-stripe="address_line2"/>
+            <%= f.input_field :address_2, placeholder: "Apartment, Suite, Bldg., etc. (optional)", class: "input-block-level" %>
           </div>
         </div>
 
         <div class="row-fluid">
           <div class="span5 offset4">
-            <input type="text" class="input-block-level" placeholder="City" data-stripe="address_city"/>
+            <%= f.input_field :city, placeholder: "City", class: "input-block-level" %>
           </div>
           <div class="span3">
-            <input type="text" class="input-block-level" placeholder="Zipcode" data-stripe="address_zip"/>
+            <%= f.input_field :zipcode, placeholder: "Zipcode", class: "input-block-level" %>
           </div>
         </div>
 
         <div class="row-fluid">
           <div class="span8 offset4">
-            <input type="text" class="input-block-level" placeholder="State/Region/Province" data-stripe="address_state"/>
+            <%= f.input_field :state, placeholder: "State/Region/Province", class: "input-block-level" %>
           </div>
         </div>
 

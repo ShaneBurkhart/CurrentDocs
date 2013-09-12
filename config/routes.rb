@@ -25,8 +25,8 @@ PlanSource::Application.routes.draw do
     post "/charge" => "charges#create"
   end
 
-  resource :account, only: ["show", "update", "create"]
-  get "/account/billing" => "account#billing"
+  resource :subscription, only: ["show", "update", "create"]
+  get "/subscription/billing" => "subscriptions#billing"
 	match "/mobile" => "mobile#index"
 	match "/prints" => "prints#index"
   match "/faq" => "faq#index"

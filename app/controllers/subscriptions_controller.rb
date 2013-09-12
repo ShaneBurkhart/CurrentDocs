@@ -1,4 +1,4 @@
-class AccountsController < ApplicationController
+class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
 
   def show
@@ -22,35 +22,22 @@ class AccountsController < ApplicationController
 
   def billing
     redirect_to edit_user_registration_path if user.type == "Manager"
+    @subscription = user.subscription || Subscription.new
   end
 
-  def update_billing
-    if params["stripeToken"].blank?
-      flash[:error] = "You must enter billing information."
-      render "billing"
-      return
-    end
+  def create
+    @subscription = Subscription.new params[:subscription]
+    @subscription.stripe_card_token = params[:stripeToken]
+    @subscription.user_id = user.id
 
-    customer = Stripe::Customer.create(
-      :email => user.email,
-      :card  => params[:stripeToken]
-    )
-
-    if customer
-      user.stripe_customer_id = customer.id
+    if @subscription.save_with_stripe
       user.type = "Manager"
-      if user.save
-        flash[:notice] = "You are now a Manager! Thank you for subscribing!"
-        redirect_to app_path
-      else
-        flash[:error] = "There was an error with your card.  Please make sure you entered it correctly"
-        render "billing"
-      end
+      user.save
+      flash[:notice] = "You are now a Manager! Thank you for subscribing!"
+      redirect_to app_path
     else
-      flash[:error] = "There was an error with your card.  Please make sure you entered it correctly"
-      render "billing"
+      billing_error
     end
-
   end
 
     rescue_from Stripe::CardError do |e|
@@ -66,6 +53,7 @@ class AccountsController < ApplicationController
     end
 
     def billing_error
-
+      flash[:error] = "There was an error with your card.  Please make sure you entered it correctly"
+      render "billing"
     end
 end

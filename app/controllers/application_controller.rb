@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_account!
-    redirect_to account_path if user.type.blank?
+    redirect_to subscription_path if user.type.blank?
+  end
+
+  def check_subscription!
+    redirect_to subscription_billing_path if user.manager? && !user.subscription
   end
 
   def user
