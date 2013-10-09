@@ -4,7 +4,7 @@ class Api::PlansController < ApplicationController
   def show
     if user.can? :read, Plan
       @plan = Plan.find(params[:id])
-      if @plan.job.user.id == current_user.id
+      if current_user.is_my_plan(@plan) || current_user.is_shared_plan(@plan)
         render json: @plan
       else
         render_no_permission
