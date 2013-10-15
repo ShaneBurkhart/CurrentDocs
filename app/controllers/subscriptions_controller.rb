@@ -40,11 +40,6 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-    rescue_from Stripe::CardError do |e|
-      flash[:error] = e.message
-      render "billing"
-    end
-
   private
 
     def account_type_error
