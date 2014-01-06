@@ -3,6 +3,10 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
   sortProperties : ['email'],
   sortAscending : true,
 
+  shareWithContacts : function(){
+    this.send("openShareJobModal");
+  },
+
   addContact: function(){
     var self = this;
     var container = $("#contact-email"),
@@ -88,3 +92,15 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
 
 });
 
+
+PlanSource.ContactController = Ember.ObjectController.extend({
+  needs : ["contact_list"],
+  checked: function(){
+    var shares = this.get("controllers.contact_list.job.shares");
+    for(var i = 0 ; i < shares.length ; i ++){
+      if(this.get("model.id") == shares[i].get("id"))
+        return "checked"
+    }
+    return "";
+  }.property()
+});

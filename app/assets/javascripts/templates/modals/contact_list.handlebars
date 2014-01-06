@@ -15,11 +15,11 @@
       <p>All contacts.  Select the ones to share with.</p>
       <div class="scroller-large">
         <table class="table">
-          {{#each}}
+          {{#each itemController="contact"}}
             <tr>
               <td>
-                <input type="checkbox">
-                {{ email }}
+                <input type="checkbox" data-id="{{unbound id}}" {{unbound checked}} >
+                {{ unbound email }}
               </td>
             </tr>
 	  {{/each}}
@@ -28,8 +28,7 @@
     </div>
     <div class="footer">
       <div class="buttons">
-        <a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
-        <a class="button" {{action "openShareJobModal"}}>Done</a>
+        <a class="button button-blue" {{action "shareWithContacts" target=controller}} >Share</a>
       </div>
     </div>
   </div>

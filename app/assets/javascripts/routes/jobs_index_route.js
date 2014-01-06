@@ -16,7 +16,9 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
       this.render("modals/share_job", {into : "jobs", outlet : "modal", controller : "share_job"});
     },
 
-    openContactModal: function(){
+    openContactModal: function(model){
+      if(model)
+        this.controllerFor("contact_list").set("job", model);
       this.controllerFor("contact_list").set("content", PlanSource.Contact.findAll());
       this.render("modals/contact_list", {into : "jobs", outlet : "modal", controller : "contact_list"});
     },
