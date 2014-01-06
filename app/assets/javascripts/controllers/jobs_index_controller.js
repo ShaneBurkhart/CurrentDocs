@@ -1,5 +1,5 @@
 PlanSource.JobsIndexController = Ember.ArrayController.extend({
-	sortProperties: ['sorter'],
+  sortProperties: ['sorter'],
   sortAscending: true,
   content : Em.A(),
 

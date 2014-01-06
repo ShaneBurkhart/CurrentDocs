@@ -1,13 +1,11 @@
 PlanSource.TextField = Ember.TextField.extend({
 
-	attributeBindings : ["placeholder", "value", "autocomplete"],
+	attributeBindings : ["inline", "placeholder", "value", "autocomplete"],
 
 	didInsertElement : function(){
 		var placeholder = this.get("placeholder");
 		if(placeholder)
 			this.set("placeholder", placeholder);
-		//if(this.get("autocomplete"))
-			//this.doAutocomplete();
 		if(this.get("focus"))
 			this.$().focus();
 		if(this.get("modelAttr"))

@@ -1,0 +1,36 @@
+<div class="modal-wrapper">
+  <div class="overlay"></div>
+  <div class="dialog box box-border">
+    <div class="header">
+      <p class="title">Select contacts to share with.</p>
+    </div>
+    <div class="body">
+      <div class="control-group">
+        <div class="controls">
+          {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" autocomplete=true }}
+          <a class="button button-inline">+ Add Contact</a>
+          <span class="help-inline"></span>
+        </div>
+      </div>
+      <p>All contacts.  Select the ones to share with.</p>
+      <div class="scroller-large">
+        <table class="table">
+          {{#each model.contacts }}
+            <tr>
+              <td>
+                <input type="checkbox">
+                {{ users.email}}
+              </td>
+            </tr>
+	  {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="buttons">
+        <a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
+        <a class="button" {{action "openShareJobModal"}}>Done</a>
+      </div>
+    </div>
+  </div>
+</div>

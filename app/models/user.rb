@@ -38,6 +38,9 @@ class User < ActiveRecord::Base
   has_many :shares
   has_many :shared_jobs, through: :shares, source: :job
   has_one :subscription
+  has_many :user_contact_connection, class_name: "Contact", foreign_key: "user_id"
+  has_many :contacts, through: :user_contact_connection
+
   # Include default devise modules. Others available are:
   # , :confirmable,
   # :lockable, :timeoutable and :omniauthable :confirmable,:invitable,

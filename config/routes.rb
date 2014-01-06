@@ -13,6 +13,7 @@ PlanSource::Application.routes.draw do
     resources :jobs, except: ["new", "edit"]
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
+    get '/user/contacts' => 'users#contacts'
     #resources :users, except: ["new", "edit"]
     match "/autocomplete" => "users#autocomplete"
     #resources :shares, only: ["create", "update", "destroy", "show"]

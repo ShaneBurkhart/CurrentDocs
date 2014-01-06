@@ -28,7 +28,7 @@ $purpleHoverAccent: #ad05ad;
 
 /* Mixins */
 @mixin button-hover{
-	
+
 }
 
 @mixin button-gradient($color: $grey, $accentColor: $greyAccent){
@@ -53,7 +53,7 @@ $purpleHoverAccent: #ad05ad;
   border-radius:4px;
 }
 
-.button { 
+.button {
   border-radius: 0;
 	border: 1px solid #ccc;
   text-shadow:0px 1px 0px #acacac;
@@ -68,6 +68,10 @@ $purpleHoverAccent: #ad05ad;
   	border: 1px solid #aaa;
   	color: $black;
     text-decoration: none;
+  }
+
+  &.button-inline{
+    display: inline;
   }
 
 	/* Colors */
