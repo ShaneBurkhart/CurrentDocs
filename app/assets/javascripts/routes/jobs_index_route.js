@@ -17,7 +17,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
     },
 
     openContactModal: function(){
-      this.controllerFor("contact_list").set("model", PlanSource.Contact.findAll());
+      this.controllerFor("contact_list").set("content", PlanSource.Contact.findAll());
       this.render("modals/contact_list", {into : "jobs", outlet : "modal", controller : "contact_list"});
     },
 

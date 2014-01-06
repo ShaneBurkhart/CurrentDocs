@@ -1,4 +1,7 @@
-PlanSource.ContactListController = PlanSource.ModalController.extend({
+PlanSource.ContactListController = Ember.ArrayController.extend({
+
+  sortProperties : ['email'],
+  sortAscending : true,
 
   addContact: function(){
     var self = this;
@@ -14,9 +17,8 @@ PlanSource.ContactListController = PlanSource.ModalController.extend({
       "contact" : {"email" : email}
       },
       function(data){
-        console.log(data.contact.contact);
         if(data.contact && data.contact.id){
-          self.get("contacts").pushObject(PlanSource.Contact.create(data.contact.contact));
+          self.get("content").pushObject(PlanSource.Contact.create(data.contact.contact));
           self.info("#contact-email", "Succesfully added contact.");
         }else{
           if(data.error)
@@ -38,6 +40,51 @@ PlanSource.ContactListController = PlanSource.ModalController.extend({
   keyPress : function(e){
     if (e.keyCode == 13)
       this.addContact();
+  },
+
+  error : function(input_id, msg){
+    var text = $(input_id).siblings(".help-inline"),
+        cont = text.parent().parent();
+    cont.addClass("error");
+    text.text(msg);
+  },
+
+  clearError : function(input_id, msg){
+    var text = $(input_id).siblings(".help-inline"),
+        cont = text.parent().parent();
+    cont.removeClass("error");
+    text.text("");
+  },
+
+  clearAllErrors : function(){
+    var errors = $(".control-group").find("controls").find(".help-inline");
+    errors.each(function(e){
+      e.text("");
+    });
+    $(".control-group").removeClass("error");
+  },
+
+  info : function(input_id, msg){
+    var text = $(input_id).siblings(".help-inline"),
+      cont = text.parent().parent();
+    cont.addClass("info");
+    text.text(msg);
+  },
+
+  clearInfo : function(input_id, msg){
+    var text = $(input_id).siblings(".help-inline"),
+      cont = text.parent().parent();
+    cont.removeClass("info");
+    text.text("");
+  },
+
+  clearAllInfo : function(){
+    var infos = $(".control-group").find("controls").find(".help-inline");
+    infos.each(function(info){
+      info.text("");
+    });
+    $(".control-group").removeClass("info");
   }
 
 });
+
