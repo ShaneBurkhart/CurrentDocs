@@ -7,7 +7,7 @@
     <div class="body">
       <div class="control-group">
         <div class="controls">
-          {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" autocomplete=true }}
+          {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="contact-email" autocomplete=true }}
           <a class="button button-inline">+ Add Contact</a>
           <span class="help-inline"></span>
         </div>
@@ -19,7 +19,7 @@
             <tr>
               <td>
                 <input type="checkbox">
-                {{ users.email}}
+                {{ email }}
               </td>
             </tr>
 	  {{/each}}

@@ -27,7 +27,11 @@ PlanSource.Contact.reopenClass({
   findAll : function(){
     var users = Ember.Object.create();
     $.get(PlanSource.Contact.url()).then(function(data){
-      users.set("contacts", data.users);
+      var u = [];
+      data.users.forEach(function(user){
+        u.push(user.users);
+      });
+      users.set("contacts", u);
       return true;
     });
     return users;
