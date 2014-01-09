@@ -19,6 +19,7 @@ PlanSource::Application.routes.draw do
     match "/autocomplete" => "users#autocomplete"
     #resources :shares, only: ["create", "update", "destroy", "show"]
     resources :shares, only: ["create", "destroy", "update"]
+    post "/shares/batch" => "shares#batch"
     resource :upload, only: ["create"]
     resource :token, only: ["create"] #only retrieve token
     resources :print_sets, only: ["update"]

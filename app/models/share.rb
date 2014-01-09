@@ -36,7 +36,7 @@ class Share < ActiveRecord::Base
       errors.add(:user_id, "Share already exists") if job.user.id == user_id
     end
 
-  	def check_existance
+    def check_existance
       Share.where(job_id: self.job_id, user_id: self.user_id).each do |share|
         errors.add(:job_id, 'Share already exists') if share.id != self.id
       end

@@ -1,10 +1,33 @@
 PlanSource.ContactListController = Ember.ArrayController.extend({
 
+  needs : ["share_job"],
   sortProperties : ['email'],
   sortAscending : true,
 
   shareWithContacts : function(){
-    this.send("openShareJobModal");
+    var button = $("#contact-share");
+    button.bind("click", false);
+    var boxes = $("#contacts-list").find("input");
+    var shares = [];
+    var self = this;
+    boxes.each(function(index, box){
+      var b = $(box);
+      if(b.is(":checked"))
+        shares.push({user_id: b.data("id"), job_id: self.get("job.id")});
+    });
+    $.post("/api/shares/batch", {
+        "job_id" : self.get("job.id"),
+        "shares" : shares
+      },
+      function(data){
+        self.set("job.shares", []);
+        for(var i = 0 ; i < data.shares.length ; i ++)
+          self.get("job.shares").push(PlanSource.Share.create(data.shares[i]));
+        self.send("openShareJobModal");
+        button.bind("click", true);
+      },
+      "json"
+    );
   },
 
   addContact: function(){
@@ -98,8 +121,8 @@ PlanSource.ContactController = Ember.ObjectController.extend({
   checked: function(){
     var shares = this.get("controllers.contact_list.job.shares");
     for(var i = 0 ; i < shares.length ; i ++){
-      if(this.get("model.id") == shares[i].get("id"))
-        return "checked"
+      if(this.get("model.id") == shares[i].get("user.id"))
+        return "checked";
     }
     return "";
   }.property()

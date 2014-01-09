@@ -14,7 +14,7 @@
       </div>
       <p>All contacts.  Select the ones to share with.</p>
       <div class="scroller-large">
-        <table class="table">
+        <table class="table" id="contacts-list">
           {{#each itemController="contact"}}
             <tr>
               <td>
@@ -28,7 +28,7 @@
     </div>
     <div class="footer">
       <div class="buttons">
-        <a class="button button-blue" {{action "shareWithContacts" target=controller}} >Share</a>
+        <a class="button button-blue" id="contact-share" {{action "shareWithContacts" target=controller}} >Share</a>
       </div>
     </div>
   </div>

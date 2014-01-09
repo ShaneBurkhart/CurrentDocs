@@ -1,6 +1,6 @@
 PlanSource.Share = Ember.Object.extend({
 
-	init : function(){
+  init : function(){
     this.setProperties(this.getProperties("user", "sharer"));
   },
 
