@@ -3,16 +3,7 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-=begin
-      @users = User.all.sort do |x, y|
-      return 0 if x.type == y.type
-      return -1 if x.viewer?
-      return 1 if x.admin?
-      return -1 if y.admin?
-      return 1 if y.viewer?
-    end
-=end
-    @users = User.all
+    @users = User.all.sort_by{ |x| 3 - sort_param(x) }
   end
 
   def demote
@@ -23,4 +14,14 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
+
+  private
+
+    def sort_param(x)
+      return 0 if x.type.nil?
+      return 1 if x.viewer?
+      return 2 if x.manager?
+      return 3 if x.admin?
+      return 0
+    end
 end
