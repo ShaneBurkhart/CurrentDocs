@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Hi Mom!</h1>
+  <table class="table table-striped">
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.type %></td>
+        <td><%= user.full_name %></td>
+        <td><%= user.email %></td>
+        <td>
+          <% if user.manager? %>
+            <%= link_to "Demote", demote_path(user.id), class: "btn btn-danger pull-right" %>
+          <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>

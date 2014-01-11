@@ -16,14 +16,15 @@
 
       <div class="pull-right">
         <% if user_signed_in? %>
+          <% if current_user.admin? %>
+            <li>
+              <%= link_to 'Admin', users_path %>
+            </li>
+          <% end %>
+
           <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
           <%= link_to 'Edit Account', edit_user_registration_path %>
           </li>
-          <% if current_user.admin? %>
-            <li>
-            <%= link_to 'Admin', users_path %>
-            </li>
-          <% end %>
         <% else %>
           <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
           <%= link_to 'Sign up', new_user_registration_path %>

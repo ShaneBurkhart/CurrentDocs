@@ -1,8 +1,4 @@
 PlanSource::Application.routes.draw do
-  get "account/select"
-
-  get "about/index"
-
   authenticated :user do
     root :to => 'home#index'
   end
@@ -15,9 +11,6 @@ PlanSource::Application.routes.draw do
     get '/plans/embedded/:id' => 'plans#show_embedded'
     get '/user/contacts' => 'users#contacts'
     post '/user/contacts' => 'users#add_contacts'
-    #resources :users, except: ["new", "edit"]
-    match "/autocomplete" => "users#autocomplete"
-    #resources :shares, only: ["create", "update", "destroy", "show"]
     resources :shares, only: ["create", "destroy", "update"]
     post "/shares/batch" => "shares#batch"
     resource :upload, only: ["create"]
@@ -28,14 +21,14 @@ PlanSource::Application.routes.draw do
     post "/charge" => "charges#create"
   end
 
+  get "/users" => "users#index"
+  get "/users/:id/demote" => "users#demote", as: "demote"
+
   resource :subscription, only: ["show", "update"]
-#  resource :subscription, only: ["show", "update", "create"]
-#  get "/subscription/billing" => "subscriptions#billing"
-	match "/mobile" => "mobile#index"
-	match "/prints" => "prints#index"
+  match "/mobile" => "mobile#index"
+  match "/prints" => "prints#index"
   match "/faq" => "faq#index"
   match "/about_us" => "about#index"
-  get "/print/:job_id" => "prints#purchase"
   match "/app" => "app#index"
 
 end

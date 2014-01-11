@@ -169,6 +169,6 @@ class User < ActiveRecord::Base
     end
 
     def check_type
-      errors.add(:type, 'Not a valid type') unless self.type == "Manager" || self.type == "Viewer" || self.type == nil
+      errors.add(:type, 'Not a valid type') unless self.type == "Admin" || self.type == "Manager" || self.type == "Viewer" || self.type == nil
     end
 end

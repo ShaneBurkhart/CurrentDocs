@@ -2,23 +2,25 @@ require 'spec_helper'
 
 describe UsersController do
 
-  before (:each) do
-    @user = FactoryGirl.create(:manager)
-    sign_in @user
-  end
-
-  describe "GET 'show'" do
-
-    it "should be successful" do
-      get :show, :id => @user.id
+  describe "GET 'index'" do
+    it "returns http success" do
+      get 'index'
       response.should be_success
     end
+  end
 
-    it "should find the right user" do
-      get :show, :id => @user.id
-      assigns(:user).should == @user
+  describe "GET 'delete'" do
+    it "returns http success" do
+      get 'delete'
+      response.should be_success
     end
+  end
 
+  describe "GET 'demote'" do
+    it "returns http success" do
+      get 'demote'
+      response.should be_success
+    end
   end
 
 end
