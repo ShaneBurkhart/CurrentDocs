@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
   has_many :jobs
   has_many :shares
   has_many :shared_jobs, through: :shares, source: :job
-  has_one :subscription
   has_many :user_contact_connection, class_name: "Contact", foreign_key: "user_id"
   has_many :contacts, through: :user_contact_connection
 
@@ -96,9 +95,15 @@ class User < ActiveRecord::Base
     return self.type == "Viewer" || self.type == "Manager"
   end
 
-  def start_subscription
-    c = Stripe::Customer.retrieve self.stripe_customer_id
+  def subscribe(stripe_token)
+    c = Stripe::Customer.create(
+      :description => self.email,
+      :card => stripe_token
+    )
+    self.stripe_customer_id = c.id
     c.update_subscription :plan => "manager"
+    self.type = "Manager"
+    save
   end
 
   def cancel_subscription

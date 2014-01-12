@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112214728) do
+ActiveRecord::Schema.define(:version => 20140112220242) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -56,19 +56,6 @@ ActiveRecord::Schema.define(:version => 20140112214728) do
     t.string   "token"
     t.integer  "sharer_id"
     t.boolean  "can_reshare", :default => false
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.string   "stripe_customer_id"
-    t.integer  "user_id"
-    t.string   "name"
-    t.string   "address"
-    t.string   "address_2"
-    t.string   "city"
-    t.string   "zipcode"
-    t.string   "state"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
   end
 
   create_table "users", :force => true do |t|

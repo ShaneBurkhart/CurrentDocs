@@ -11,7 +11,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>Pricing</td><td>Free</td><td>Free</td>
+            <td>Pricing</td><td>Free</td><td>$10/month</td>
           </tr>
           <tr>
             <td>Desktop Viewing</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
@@ -41,13 +41,8 @@
             <td>Storage</td><td>None</td><td>100GB</td>
           </tr>
           <tr>
-            <td>Printing (Available Soon)</td><td><i class="icon-ok"></i></td><td><i class="icon-ok"></i></td>
+            <td>Free Trial</td><td>n/a</td><td>60 day</td>
           </tr>
-          <!--
-          <tr>
-            <td>Free Trial</td><td></td><td>30 day free trial</td>
-          </tr>
-          !-->
           <tr>
             <td></td>
             <td>
@@ -57,10 +52,7 @@
               <% end %>
             </td>
             <td>
-              <%= simple_form_for(@user, as: User, :url => subscription_path, :html => { :method => :put, :class => 'text-center form-vertical' }) do |f| %>
-                <%= f.input :type, as: :hidden, input_html: {value: "Manager"} %>
-                <%= f.submit "Start now!", class: "button button-blue" %>
-              <% end %>
+              <%= link_to "Start now!", subscription_billing_path, class: "button button-green" %>
             </td>
           </tr>
         </tbody>

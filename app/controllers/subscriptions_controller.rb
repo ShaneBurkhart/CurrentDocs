@@ -21,30 +21,29 @@ class SubscriptionsController < ApplicationController
   end
 
   def billing
-    redirect_to edit_user_registration_path if user.type == "Manager"
-    @subscription = user.subscription || Subscription.new
+    @user = user
   end
 
-  def create
-    @subscription = Subscription.new params[:subscription]
-    @subscription.stripe_card_token = params[:stripeToken]
-    @subscription.user_id = user.id
-
-    if @subscription.save_with_stripe
-      user.type = "Manager"
-      user.save
-      flash[:notice] = "You are now a Manager! Thank you for subscribing!"
-      redirect_to app_path
+  def processing
+    @user = user
+    if(params["user"]["stripe_customer_id"])
+      if(@user.subscribe(params["user"]["stripe_customer_id"]))
+        redirect_to app_path, flash: {notice: "Success! Thanks for signing up!"}
+      else
+        flash[:error] = "There was an error."
+        render billing
+      end
     else
-      billing_error
+      flash[:error] = "Please enter your credit card information."
+      render "billing"
     end
   end
 
-  private
+    private
 
     def account_type_error
       flash[:error] = "Not a valid account type"
-      render "select"
+      render "show"
     end
 
     def billing_error
