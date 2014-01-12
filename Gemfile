@@ -34,4 +34,5 @@ gem 'aws-sdk'
 gem 'newrelic_rpm'
 gem 'sendgrid'
 gem 'pdf-reader'
-gem "stripe", "~> 1.8.4"
+gem "stripe"
+gem "stripe_event"

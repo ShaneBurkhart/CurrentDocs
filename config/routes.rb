@@ -5,6 +5,8 @@ PlanSource::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
+  mount StripeEvent::Engine => '/_stripe'
+
   namespace :api do
     resources :jobs, except: ["new", "edit"]
     resources :plans, except: ["new", "edit", "index"]

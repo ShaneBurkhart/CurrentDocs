@@ -154,6 +154,11 @@ class User < ActiveRecord::Base
     "http://www.gravatar.com/avatar/#{hash}?s=200&d=mm"
   end
 
+  def expire # Account has expired so we will set expired flag to true
+    self.expired = true
+    self.save
+  end
+
   private
 
     def destroy_shares
