@@ -43,9 +43,9 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # , :confirmable,
   # :lockable, :timeoutable and :omniauthable :confirmable,:invitable,
+  # :token_authenticatable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :token_authenticatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name, :last_name, :email, :password,
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   before_destroy :destroy_shares
   before_destroy :destroy_jobs
 
-  before_save :ensure_authentication_token!
+  before_save :authentication_token
 
   delegate :can?, :cannot?, :to => :ability
 
@@ -170,6 +170,13 @@ class User < ActiveRecord::Base
   end
 
   private
+
+    def authentication_token
+      self.authentication_token = loop do
+        random_token = SecureRandom.urlsafe_base64(nil, false)
+        break random_token unless ModelName.exists?(token: random_token)
+      end
+    end
 
     def destroy_shares
       self.shares.each do |share|
