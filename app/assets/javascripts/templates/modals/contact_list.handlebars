@@ -8,7 +8,7 @@
       <div class="control-group">
         <div class="controls">
           {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="contact-email" autocomplete=true }}
-          <a class="button button-inline">+ Add Contact</a>
+          <a class="button button-inline" {{ action "addContact" target="controller" }}>+ Add Contact</a>
           <span class="help-inline"></span>
         </div>
       </div>
