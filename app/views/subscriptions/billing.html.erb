@@ -6,7 +6,7 @@
   <div class="row">
     <div class="span6 offset3">
 
-      <%= simple_form_for(@user, url: subscription_billing_path, :html => {id: "card-form", :class => 'card_form form-vertical' }) do |f| %>
+      <%= simple_form_for(@user, as: User,  url: subscription_billing_path, :html => {id: "card-form", :class => 'card_form form-vertical' }) do |f| %>
         <div class="payment-errors text-error">
           <%= f.error_notification %>
           <%= display_base_errors @user %>
@@ -35,7 +35,7 @@
             <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+10}, {name: nil, id: "card_year", class: "input-block-level", "data-stripe" => "exp-year"} %>
           </div>
         </div>
-        <%= f.hidden_field :stripe_customer_id %>
+        <%= hidden_field_tag 'user[stripe_customer_id]' %>
         <div class="row-fluid">
           <div class="span12">
             <%= f.button :submit, 'Sign Up', :class => "button button-blue " %>

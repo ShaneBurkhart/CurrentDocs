@@ -7,10 +7,18 @@ class SubscriptionsController < ApplicationController
   end
 
   def update
-    user.type = params[:user][:type]
+    if user.type.nil?
+      flash[:notice] = "Thanks for signing up!"
+      user.type = params[:user][:type]
+      user.save
+      redirect_to app_path
+      return
+    end
+    user.cancelled = true if params[:user][:type] == "Viewer"
+    user.cancel_subscription if user.manager? and params[:user][:type] == "Viewer"
     if user.save
       if user.manager?
-        flash[:notice] = "Successfully downgraded your account!"
+        flash[:notice] = "You will be a viewer when your subscription ends."
       else
         flash[:notice] = "Successfully upgraded your account!"
       end

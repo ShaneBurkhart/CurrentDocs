@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
     return unless self.stripe_customer_id
     c = Stripe::Customer.retrieve self.stripe_customer_id
     begin
-      c.cancel_subscription
+      c.cancel_subscription at_period_end: true
     rescue Exception
     end
   end
@@ -160,7 +160,12 @@ class User < ActiveRecord::Base
   end
 
   def expire # Account has expired so we will set expired flag to true
-    self.expired = true
+    if self.cancelled
+      self.cancelled = false
+      self.type = "Viewer"
+    else
+      self.expired = true
+    end
     self.save
   end
 

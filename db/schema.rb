@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140112220242) do
+ActiveRecord::Schema.define(:version => 20140117193517) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20140112220242) do
     t.string   "authentication_token"
     t.string   "stripe_customer_id"
     t.boolean  "expired",                              :default => false
+    t.boolean  "cancelled"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

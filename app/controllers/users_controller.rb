@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     if @user.manager?
       @user.type = "Viewer"
+      @user.expired = false
       @user.save
     end
     redirect_to users_path
