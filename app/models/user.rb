@@ -103,6 +103,7 @@ class User < ActiveRecord::Base
     self.stripe_customer_id = c.id
     c.update_subscription :plan => "manager"
     self.type = "Manager"
+    self.cancelled = false
     save
   end
 
