@@ -25,7 +25,7 @@ PlanSource::Application.routes.draw do
 
   get "/users" => "users#index"
   get "/users/:id/demote" => "users#demote", as: "demote"
-  delete "/users/:id" => "users#delete", as: "delete_user"
+  delete "/users/:id" => "users#destroy", as: "delete_user"
 
   resource :subscription, only: ["show", "update"]
   get "/subscription/billing" => "subscriptions#billing"

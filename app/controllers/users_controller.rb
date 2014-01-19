@@ -16,6 +16,14 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def destroy
+    @user = User.find(params[:id])
+    if @user
+      @user.delete
+      redirect_to users_path
+    end
+  end
+
   private
 
     def sort_param(x)
