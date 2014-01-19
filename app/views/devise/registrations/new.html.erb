@@ -9,6 +9,7 @@
 				  <%= display_base_errors resource %>
 				  <%= f.input :first_name, :autofocus => true, :required => true %>
 				  <%= f.input :last_name, :required => true %>
+                                  <%= f.input :company, :required => true %>
 				  <%= f.input :email, :required => true %>
 				  <%= f.input :password, :required => true %>
 				  <%= f.button :submit, 'Sign up', :class => 'button button-blue' %>

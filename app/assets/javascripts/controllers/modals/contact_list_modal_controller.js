@@ -1,7 +1,7 @@
 PlanSource.ContactListController = Ember.ArrayController.extend({
 
   needs : ["share_job"],
-  sortProperties : ['email'],
+  sortProperties : ['first_name'],
   sortAscending : true,
 
   shareWithContacts : function(){
@@ -28,6 +28,10 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
       },
       "json"
     );
+  },
+
+  changeSort : function(sorter){
+    this.set("sortProperties", [sorter]);
   },
 
   addContact: function(){

@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :last_seen
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
   end
@@ -29,4 +31,12 @@ class ApplicationController < ActionController::Base
     render :text => "You don't have permission to do that"
   end
 
+  private
+
+    def last_seen
+      if user_signed_in?
+        user.last_seen = Time.now
+        user.save
+      end
+    end
 end

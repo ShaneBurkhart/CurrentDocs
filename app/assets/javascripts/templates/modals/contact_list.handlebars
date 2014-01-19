@@ -13,14 +13,24 @@
         </div>
       </div>
       <p>All contacts.  Select the ones to share with.</p>
+      <p>
+        Sort by:
+        <a class="sort-option" {{ action "changeSort" "first_name" }}>First Name</a> |
+        <a class="sort-option" {{ action "changeSort" "last_name" }}>Last Name</a> |
+        <a class="sort-option" {{ action "changeSort" "email" }}>Email</a> |
+        <a class="sort-option" {{ action "changeSort" "company" }}>Company</a>
+      </p>
       <div class="scroller-large">
         <table class="table" id="contacts-list">
           {{#each itemController="contact"}}
             <tr>
               <td>
                 <input type="checkbox" data-id="{{unbound id}}" {{unbound checked}} >
-                {{ unbound email }}
+                {{ unbound first_name }}
               </td>
+              <td>{{ unbound last_name}}</td>
+              <td>{{ unbound email }}</td>
+              <td>{{ unbound company }}</td>
             </tr>
 	  {{/each}}
         </table>
