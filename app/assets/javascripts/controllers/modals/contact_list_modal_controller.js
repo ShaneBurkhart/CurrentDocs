@@ -21,8 +21,10 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
       },
       function(data){
         self.set("job.shares", []);
-        for(var i = 0 ; i < data.shares.length ; i ++)
-          self.get("job.shares").push(PlanSource.Share.create(data.shares[i]));
+        if(data.shares){
+          for(var i = 0 ; i < data.shares.length ; i ++)
+            self.get("job.shares").push(PlanSource.Share.create(data.shares[i]));
+        }
         self.send("openShareJobModal");
         button.bind("click", true);
       },
