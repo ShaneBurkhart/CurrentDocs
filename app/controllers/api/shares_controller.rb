@@ -87,10 +87,8 @@ class Api::SharesController < ApplicationController
   end
 
   def batch
-    puts params
     @job_id = params[:job_id]
     if(!params[:shares] || params[:shares].length < 1)
-      Share.delete_all(job_id: params[:job_id])
       render json: {}
       return
     end
@@ -98,18 +96,19 @@ class Api::SharesController < ApplicationController
     # Removing
     @shares.each do |share|
       d = true
+      f = false
       params[:shares].each do |i, ishare|
-        d = false if(share.user_id == ishare[:user_id])
+        f = true if(share.user_id == ishare[:user_id])
+        d = false if(share.user_id == ishare[:user_id] and ishare[:checked])
       end
-      share.destroy if d
+      share.destroy if d and f
     end
     # Adding new
     params[:shares].each do |i, ishare|
       a = true
       @shares.each do |share|
-        a = false if(ishare[:user_id] == share.user_id)
+        a = false if(ishare[:user_id] == share.user_id and !ishare[:checked])
       end
-      puts a
       Share.create(sharer_id: current_user.id, user_id: ishare[:user_id], job_id: @job_id) if a
     end
     render json: Share.where(job_id: @job_id)
