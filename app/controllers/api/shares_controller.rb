@@ -99,11 +99,15 @@ class Api::SharesController < ApplicationController
       f = false
       params[:shares].each do |i, ishare|
         f = true if(share.user_id == ishare[:user_id])
-        d = false if(share.user_id == ishare[:user_id] and ishare[:checked])
+        d = false if(share.user_id == ishare[:user_id] && ishare[:checked])
       end
-      share.destroy if d and f
+      puts "#{d}, #{f}"
+      puts share.user_id
+      puts ishare[:user_id]
+      # share.destroy if d and f
     end
     # Adding new
+=begin
     params[:shares].each do |i, ishare|
       a = true
       @shares.each do |share|
@@ -111,6 +115,7 @@ class Api::SharesController < ApplicationController
       end
       Share.create(sharer_id: current_user.id, user_id: ishare[:user_id], job_id: @job_id) if a
     end
+=end
     render json: Share.where(job_id: @job_id)
   end
 

@@ -14,6 +14,7 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
       var b = $(box);
       shares.push({checked: b.is(":checked"), user_id: b.data("id"), job_id: self.get("job.id")});
     });
+    console.log(shares);
     $.post("/api/shares/batch", {
         "job_id" : self.get("job.id"),
         "shares" : shares

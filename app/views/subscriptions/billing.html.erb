@@ -35,6 +35,12 @@
             <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+10}, {name: nil, id: "card_year", class: "input-block-level", "data-stripe" => "exp-year"} %>
           </div>
         </div>
+        <div class="row-fluid">
+          <div>
+            <h3><i class="icon-lock"></i> Your information is secure!</h3>
+            <p>We won't give your credit card or personal information to anyone for any reason.  You can trust that all of your information is secure.</p>
+          </div>
+        </div>
         <%= hidden_field_tag 'user[stripe_customer_id]' %>
         <div class="row-fluid">
           <div class="span12">
