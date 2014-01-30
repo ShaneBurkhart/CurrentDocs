@@ -27,6 +27,7 @@ class Api::SharesController < ApplicationController
           guest = true
           @user.save
         end
+        @contact = Contact.find_or_create_by_user_id_and_contact_id(user.id, @user.id)
         if user == @user
           render json: {error: "You can't share with yourself!"}
           return
