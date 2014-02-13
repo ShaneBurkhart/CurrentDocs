@@ -25,7 +25,7 @@
 				<% if current_user.type == nil %>
 					<%= link_to "Select Account Type", account_path, class: "button button-blue" %>
 				<% elsif current_user.type == "Viewer" %>
-                                  <%= link_to "Upgrade to Manager", subscription_billing_path, class: "button button-green" %>
+                                  <%= link_to "Upgrade to Manager", subscription_path, class: "button button-green" %>
 				<% else %>
           <%= simple_form_for(current_user, as: User, :url => subscription_path, :html => { :method => :put, :class => 'form-vertical' }) do |f| %>
             <%= f.input :type, as: :hidden, input_html: {value: "Viewer"} %>

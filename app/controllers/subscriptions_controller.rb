@@ -2,7 +2,6 @@ class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
 
   def show
-    redirect_to edit_user_registration_path if !user.type.nil?
     @user = user
   end
 
