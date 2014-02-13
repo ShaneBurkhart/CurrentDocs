@@ -12,6 +12,11 @@ PlanSource.User = Ember.Object.extend({
 
 PlanSource.Contact = Ember.Object.extend({
 
+  sort_email : function(){
+    var p = this.get("email").split("@");
+    return p[1] + p[0];
+  }.property("email")
+
 });
 
 PlanSource.Contact.reopenClass({
