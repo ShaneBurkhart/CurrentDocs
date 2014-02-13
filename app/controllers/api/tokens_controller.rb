@@ -6,7 +6,10 @@ class Api::TokensController < ApplicationController
       render json: {message: "Invalid email or password"}
     else
       if @user.valid_password? params[:password]
-          if !@user.
+        if !@user.authentication_token
+          @user.generate_token
+          @user.save
+        end
         render json: {token: @user.authentication_token}
       else
         render json: {message: "Invalid email or password"}

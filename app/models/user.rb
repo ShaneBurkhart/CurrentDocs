@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password,
    :password_confirmation, :remember_me, :guest, :company
 
-  validates :first_name, :last_name, :company, presence: true
+  validates :authentication_token, :first_name, :last_name, :company, presence: true
   validate :check_type
 
   before_destroy :destroy_shares
@@ -168,6 +168,13 @@ class User < ActiveRecord::Base
       self.expired = true
     end
     self.save
+  end
+
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless User.exists?(token: random_token)
+    end
   end
 
   private
