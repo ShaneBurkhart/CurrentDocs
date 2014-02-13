@@ -10,6 +10,7 @@
 			<div class="control-group">
 				<div class="controls">
           {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" autocomplete=true }}
+            <a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
             {{#manager}}
               <a {{action "openContactModal" model }} class="button button-inline">Contact list</a>
             {{/manager}}
@@ -40,7 +41,6 @@
 		</div>
 		<div class="footer">
 			<div class="buttons">
-				<a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
 				<a class="button" {{action "close"}}>Done</a>
 			</div>
 		</div>
