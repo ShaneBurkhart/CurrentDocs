@@ -29,6 +29,7 @@ class Plan < ActiveRecord::Base
                     },
                     :path => ":attachment/:id.:extension",
                     :bucket => ENV["AWS_BUCKET"]
+  validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
   attr_accessible :job_id, :plan_name, :plan_num, :page_size,
                   :page_sizes, :num_pages, :print_set_id
