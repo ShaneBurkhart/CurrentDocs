@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :first_name, :last_name, :email, :password,
-   :password_confirmation, :remember_me, :guest, :company
+   :password_confirmation, :remember_me, :guest, :company, :authentication_token
 
   validates :authentication_token, :first_name, :last_name, :company, presence: true
   validate :check_type
@@ -179,7 +179,7 @@ class User < ActiveRecord::Base
 
   private
 
-    def authentication_token
+    def generate_token
       self.authentication_token = loop do
         random_token = SecureRandom.urlsafe_base64(nil, false)
         break random_token unless User.exists?(authentication_token: random_token)
