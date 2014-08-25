@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   before_destroy :destroy_shares
   before_destroy :destroy_jobs
 
-  before_save :authentication_token
+  before_validation :generate_token
 
   delegate :can?, :cannot?, :to => :ability
 
@@ -168,13 +168,6 @@ class User < ActiveRecord::Base
       self.expired = true
     end
     self.save
-  end
-
-  def generate_token
-    self.token = loop do
-      random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token unless User.exists?(token: random_token)
-    end
   end
 
   private
