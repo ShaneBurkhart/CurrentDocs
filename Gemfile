@@ -18,16 +18,6 @@ group :development do
   gem "binding_of_caller", ">= 0.7.1", :platforms => [:mri_19, :rbx]
 end
 
-group :test do
-  gem "rspec-rails", ">= 2.12.2"
-  gem "database_cleaner", ">= 1.0.0.RC1"
-  gem "email_spec", ">= 1.4.0"
-  gem "cucumber-rails", ">= 1.3.1"
-  gem "launchy", ">= 2.2.0"
-  gem "capybara", ">= 2.0.3"
-  gem "factory_girl_rails", ">= 4.2.0"
-end
-
 gem "figaro", ">= 0.6.3"
 gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
