@@ -37,13 +37,13 @@ PlanSource.Job = Ember.Object.extend({
 
 	isShared : function(){
   	if(this.get("user"))
-  		return this.get("user").get("isMyJob") || !this.get("user").get("isManager");
+  		return !this.get("isMyJob");
   	else
   		return false;
   }.property("user"),
 
   isMyJob : function(){
-    return this.get("user").get("id") == user_id
+    return this.get("user").get("id") == user_id;
   }.property("user"),
 
   canReshare : function(){
@@ -59,7 +59,8 @@ PlanSource.Job = Ember.Object.extend({
   }.property("shares.@each"),
 
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
-  	return this.get("isShared") == false ? 0 : 1;
+    var s = this.get("isShared") == false ? '0' : '1';
+    return s + this.get("name").toLowerCase();
   }.property("isShared"),
 
   deleteRecord : function(){
