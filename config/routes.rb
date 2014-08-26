@@ -34,7 +34,6 @@ PlanSource::Application.routes.draw do
   match "/mobile" => "mobile#index"
   match "/prints" => "prints#index"
   match "/faq" => "faq#index"
-  match "/about_us" => "about#index"
   match "/app" => "app#index"
 
 end
