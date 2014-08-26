@@ -18,17 +18,26 @@
 #
 
 class Plan < ActiveRecord::Base
-	belongs_to :job
+  belongs_to :job
   belongs_to :print_set
-	has_attached_file :plan,
-                    :storage => :s3,
-                    :s3_credentials => {
-                      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-                      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-                      :bucket => ENV["AWS_BUCKET"]
-                    },
-                    :path => ":attachment/:id.:extension",
-                    :bucket => ENV["AWS_BUCKET"]
+
+  PAPERCLIP_OPTIONS = {
+    :storage => :s3,
+    :s3_credentials => {
+    :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
+    :bucket => ENV["AWS_BUCKET"]
+    },
+    :path => ":attachment/:id.:extension",
+    :bucket => ENV["AWS_BUCKET"]
+  }
+
+  if Rails.env.production?
+    has_attached_file :plan, PAPERCLIP_OPTIONS
+  else
+    has_attached_file :plan
+  end
+
   validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
   attr_accessible :job_id, :plan_name, :plan_num, :page_size,
