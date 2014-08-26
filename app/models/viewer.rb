@@ -29,7 +29,6 @@
 #  invited_by_type        :string(255)
 #  type                   :string(255)
 #  authentication_token   :string(255)
-#  stripe_customer_id     :string(255)
 #
 
 class Viewer < User

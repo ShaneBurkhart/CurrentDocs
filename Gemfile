@@ -22,8 +22,6 @@ gem "figaro", ">= 0.6.3"
 gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
 gem 'sendgrid', '1.2.0'
-gem "stripe", '1.9.9'
-gem "stripe_event", '1.1.0'
 
 gem 'jquery-rails'
 gem "bootstrap-sass", "= 2.3.0.0"

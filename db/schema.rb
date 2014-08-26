@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140119213847) do
+ActiveRecord::Schema.define(:version => 20140826144758) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(:version => 20140119213847) do
     t.string   "invited_by_type"
     t.string   "type"
     t.string   "authentication_token"
-    t.string   "stripe_customer_id"
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
