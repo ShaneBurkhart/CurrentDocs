@@ -1,7 +1,7 @@
 PlanSource.Job = Ember.Object.extend({
 
   init : function(){
-    this.setProperties(this.getProperties("print_set", "user", "plans", "shares"));
+    this.setProperties(this.getProperties("user", "plans", "shares"));
   },
 
   setProperties : function(hash){
@@ -24,20 +24,6 @@ PlanSource.Job = Ember.Object.extend({
       });
       this.set("shares", shares);
       delete hash.shares
-    }
-    if(hash.print_set){
-      var print_set_plans = Em.A();
-      var self = this;
-      hash.print_set.plan_ids.forEach(function(plan_id){
-        self.get("plans").forEach(function(plan){
-          if(plan.get("id") == plan_id)
-            print_set_plans.pushObject(plan);
-        });
-      });
-      var print_set = PlanSource.PrintSet.create(hash.print_set);
-      print_set.set("plans", print_set_plans);
-      this.set("print_set", print_set);
-      delete hash.print_set
     }
     Ember.setProperties(this, hash);
   },

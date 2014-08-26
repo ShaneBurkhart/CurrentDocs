@@ -10,9 +10,8 @@
 #
 
 class Job < ActiveRecord::Base
-	belongs_to :user
-  has_one :print_set
-	has_many :plans
+  belongs_to :user
+  has_many :plans
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
   attr_accessible :name, :user_id
@@ -20,32 +19,27 @@ class Job < ActiveRecord::Base
   validates :name, presence: true#, uniqueness: true
   validate :check_for_dubplicate_name_for_single_user
 
-  before_create :default_print_set
-
   before_destroy :destroy_plans
-	before_destroy :destroy_shares
+  before_destroy :destroy_shares
 
-	private
+  private
 
-    def default_print_set
-      self.print_set = PrintSet.new job_id: self.id
+
+    def destroy_shares
+      self.shares.each do |share|
+        share.destroy
+      end
     end
 
-		def destroy_shares
-			self.shares.each do |share|
-				share.destroy
-			end
-		end
+    def destroy_plans
+      self.plans.each do |plan|
+        plan.destroy
+      end
+    end
 
-		def destroy_plans
-			self.plans.each do |plan|
-				plan.destroy
-			end
-		end
-
-	  def check_for_dubplicate_name_for_single_user
-	  	j = Job.find_all_by_user_id_and_name(self.user_id, self.name)
-			errors.add(:name, 'already exists') unless j.count < 1
-	  end
+    def check_for_dubplicate_name_for_single_user
+      j = Job.find_all_by_user_id_and_name(self.user_id, self.name)
+      errors.add(:name, 'already exists') unless j.count < 1
+    end
 
 end

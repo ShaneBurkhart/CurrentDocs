@@ -13,12 +13,10 @@
 #  plan_content_type :string(255)
 #  plan_file_size    :integer
 #  plan_updated_at   :datetime
-#  print_set_id      :integer
 #
 
 class Plan < ActiveRecord::Base
   belongs_to :job
-  belongs_to :print_set
 
   PAPERCLIP_OPTIONS = {
     :storage => :s3,
@@ -39,7 +37,7 @@ class Plan < ActiveRecord::Base
 
   validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :print_set_id
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
   before_destroy :delete_file, :delete_plan_num

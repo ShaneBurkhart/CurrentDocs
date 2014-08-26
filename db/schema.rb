@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140826151028) do
+ActiveRecord::Schema.define(:version => 20140826151917) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -38,13 +38,6 @@ ActiveRecord::Schema.define(:version => 20140826151028) do
     t.string   "plan_content_type"
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
-    t.integer  "print_set_id"
-  end
-
-  create_table "print_sets", :force => true do |t|
-    t.integer  "job_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "shares", :force => true do |t|
