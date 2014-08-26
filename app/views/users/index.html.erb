@@ -1,12 +1,12 @@
 <h1>Hi Mom!</h1>
 <table class="table table-striped">
   <tr>
-    <th>Type</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Company</th>
-    <th>Created At</th>
-    <th>Last Seen</th>
+    <th><%= link_to "Type", users_path(s: "type", r: @s == "type" && @r == 'false') %></th>
+    <th><%= link_to "Name", users_path(s: "name", r: @s == "name" && @r == 'false') %></th>
+    <th><%= link_to "Email", users_path(s: "email", r: @s == "email" && @r == 'false') %></th>
+    <th><%= link_to "Company", users_path(s: "company", r: @s == "company" && @r == 'false') %></th>
+    <th><%= link_to "Created At", users_path(s: "created_at", r: @s == "created_at" && @r == 'false') %></th>
+    <th><%= link_to "Last Seen", users_path(s: "last_seen", r: @s == "last_seen" && @r == 'false') %></th>
     <th></th>
   </tr>
   <% @users.each do |user| %>

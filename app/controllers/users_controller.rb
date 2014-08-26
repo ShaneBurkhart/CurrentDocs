@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-    @users = User.all.sort_by{ |x| 3 - sort_param(x) }
+    @s = params[:s] || "type"
+    @r = params[:r] || false
+    @users = User.sorted_by @s
+    @users.reverse! if @r == "true"
   end
 
   def demote
@@ -24,13 +27,4 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-
-    def sort_param(x)
-      return 0 if x.type.nil?
-      return 1 if x.viewer?
-      return 2 if x.manager?
-      return 3 if x.admin?
-      return 0
-    end
 end

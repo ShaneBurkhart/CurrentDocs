@@ -65,6 +65,22 @@ class User < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def self.sorted_by(sort_attr)
+    if sort_attr == "created_at" || sort_attr == "last_seen"
+      @users = User.order "#{sort_attr} DESC"
+    elsif sort_attr == "company"
+      @users = User.all.sort { |x, y| x.company.downcase <=> y.company.downcase }
+    elsif sort_attr == "name"
+      @users = User.all.sort { |x, y| x.full_name.downcase <=> y.full_name.downcase }
+    elsif sort_attr == "email"
+      @users = User.all.sort { |x, y|
+        x.email.downcase.split("@").reverse.join("") <=> y.email.downcase.split("@").reverse.join("")
+      }
+    else
+      @users = User.all.sort_by { |x| 3 - x.sort_param }
+    end
+  end
+
   def self.new_guest_user(share_param, pass)
     Viewer.new first_name: "New", last_name: "User",
       email: share_param["email"],
@@ -147,6 +163,14 @@ class User < ActiveRecord::Base
       self.expired = true
     end
     self.save
+  end
+
+  def sort_param
+    return 0 if self.type.nil?
+    return 1 if self.viewer?
+    return 2 if self.manager?
+    return 3 if self.admin?
+    return 0
   end
 
   private
