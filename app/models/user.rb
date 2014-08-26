@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   before_destroy :destroy_jobs
 
   before_validation :generate_token
+  before_validation :ensure_type
 
   delegate :can?, :cannot?, :to => :ability
 
@@ -93,27 +94,6 @@ class User < ActiveRecord::Base
 
   def has_type?
     return self.type == "Viewer" || self.type == "Manager"
-  end
-
-  def subscribe(stripe_token)
-    c = Stripe::Customer.create(
-      :description => self.email,
-      :card => stripe_token
-    )
-    self.stripe_customer_id = c.id
-    c.update_subscription :plan => "manager"
-    self.type = "Manager"
-    self.cancelled = false
-    save
-  end
-
-  def cancel_subscription
-    return unless self.stripe_customer_id
-    c = Stripe::Customer.retrieve self.stripe_customer_id
-    begin
-      c.cancel_subscription at_period_end: true
-    rescue Exception
-    end
   end
 
   def is_my_token(token)
@@ -191,7 +171,11 @@ class User < ActiveRecord::Base
       end
     end
 
+    def ensure_type
+      self.type = "Viewer" if self.type.nil?
+    end
+
     def check_type
-      errors.add(:type, 'Not a valid type') unless self.type == "Admin" || self.type == "Manager" || self.type == "Viewer" || self.type == nil
+      errors.add(:type, 'Not a valid type') unless self.type == "Admin" || self.type == "Manager" || self.type == "Viewer"
     end
 end
