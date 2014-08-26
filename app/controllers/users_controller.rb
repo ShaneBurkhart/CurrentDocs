@@ -9,14 +9,19 @@ class UsersController < ApplicationController
     @users.reverse! if @r == "true"
   end
 
-  def demote
+  def edit
     @user = User.find params[:id]
-    if @user.manager?
-      @user.type = "Viewer"
-      @user.expired = false
-      @user.save
+  end
+
+  def update
+    @user = User.find params[:id]
+    @user.type = params[:user][:type]
+    params[:user].delete :type
+    if @user.update_attributes params[:user]
+      redirect_to users_path
+    else
+      render :edit
     end
-    redirect_to users_path
   end
 
   def destroy

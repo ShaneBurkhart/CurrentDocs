@@ -19,10 +19,7 @@
       <td><%= distance_of_time_in_words(Time.now, user.last_seen) %> ago</td>
       <td>
         <div class="pull-right">
-          <% if user.manager? %>
-            <%= link_to "Demote", demote_path(user.id), class: "btn btn-danger" %>
-          <% end %>
-          <%= link_to "Delete", delete_user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, class: "btn" %>
+          <%= link_to "Edit", edit_user_path(user), class: "btn" %>
         </div>
       </td>
     </tr>

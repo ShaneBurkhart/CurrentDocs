@@ -18,9 +18,8 @@ PlanSource::Application.routes.draw do
     match "/download/:id" => "downloads#download"
   end
 
-  get "/users" => "users#index"
+  resources :users, only: ["index", "edit", "update", "destroy"]
   get "/users/:id/demote" => "users#demote", as: "demote"
-  delete "/users/:id" => "users#destroy", as: "delete_user"
 
   match "/mobile" => "mobile#index"
   match "/app" => "app#index"
