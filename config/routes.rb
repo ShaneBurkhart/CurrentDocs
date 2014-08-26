@@ -32,7 +32,6 @@ PlanSource::Application.routes.draw do
   put "/subscription/billing" => "subscriptions#processing"
 
   match "/mobile" => "mobile#index"
-  match "/faq" => "faq#index"
   match "/app" => "app#index"
 
 end
