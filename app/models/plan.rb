@@ -13,7 +13,6 @@
 #  plan_content_type :string(255)
 #  plan_file_size    :integer
 #  plan_updated_at   :datetime
-#  page_size         :string(255)
 #  print_set_id      :integer
 #
 
@@ -40,35 +39,10 @@ class Plan < ActiveRecord::Base
 
   validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :page_size,
-                  :page_sizes, :num_pages, :print_set_id
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :print_set_id
   validates :job_id, :plan_num, :plan_name, presence: true
   validate :check_for_duplicate_plan_name_in_job
   before_destroy :delete_file, :delete_plan_num
-
-  # cost is in cents
-  def calculate_cost
-    cost = 0
-    # TODO: come up with real cost
-    page_sizes.each do |page|
-      cost += 100
-    end
-
-    return cost
-  end
-
-  def page_sizes
-    sizes = []
-    return sizes unless self.plan.file?
-    reader = PDF::Reader.new(open(self.plan.url))
-    reader.pages.each do |page|
-      attrs = page.attributes[:MediaBox]
-      width = attrs[2].to_f / 72.0
-      height = attrs[3].to_f / 72.0
-      sizes << [width, height]
-    end
-    sizes
-  end
 
   def self.next_plan_num(job_id)
     greatest = 0

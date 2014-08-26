@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140826144758) do
+ActiveRecord::Schema.define(:version => 20140826151028) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20140826144758) do
     t.string   "plan_content_type"
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
-    t.string   "page_size"
     t.integer  "print_set_id"
   end
 

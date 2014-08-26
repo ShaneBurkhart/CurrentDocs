@@ -15,9 +15,7 @@ PlanSource::Application.routes.draw do
     post "/shares/batch" => "shares#batch"
     resource :upload, only: ["create"]
     resource :token, only: ["create"] #only retrieve token
-    resources :print_sets, only: ["update"]
     match "/download/:id" => "downloads#download"
-    match "/page_sizes" => "page_size#page_sizes"
   end
 
   get "/users" => "users#index"
