@@ -18,7 +18,6 @@ PlanSource::Application.routes.draw do
     resources :print_sets, only: ["update"]
     match "/download/:id" => "downloads#download"
     match "/page_sizes" => "page_size#page_sizes"
-    post "/charge" => "charges#create"
   end
 
   get "/users" => "users#index"
