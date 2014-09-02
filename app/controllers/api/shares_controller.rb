@@ -96,7 +96,10 @@ class Api::SharesController < ApplicationController
     @current_shares = Share.where(job_id: @job_id)
     params[:shares].each do |i, ishare|
       if(ishare[:checked] && ishare[:checked] != "false")
-        Share.find_or_create_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
+        @share = Share.find_or_create_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
+
+        @share.can_reshare = ishare[:can_reshare] || false;
+        @share.save
       else
         @share = Share.find_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
         @share.destroy if @share

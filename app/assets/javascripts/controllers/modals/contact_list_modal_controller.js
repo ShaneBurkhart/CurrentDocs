@@ -7,14 +7,34 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
   shareWithContacts : function(){
     var button = $("#contact-share");
     button.bind("click", false);
-    var boxes = $("#contacts-list").find("input");
+    var shareBoxes = $("#contacts-list").find(".share-box");
+    var canReshareBoxes = $("#contacts-list").find(".can-reshare-box");
     var shares = [];
     var self = this;
-    boxes.each(function(index, box){
+
+    shareBoxes.each(function(index, box){
       var b = $(box);
-      shares.push({checked: b.is(":checked"), user_id: b.data("id"), job_id: self.get("job.id")});
+      var id = b.data("id");
+      var share = {
+        checked: b.is(":checked"),
+        user_id: id,
+        job_id: self.get("job.id"),
+        can_reshare: false
+      };
+
+      canReshareBoxes.each(function(index, reshareBox) {
+        var canReshareBox = $(reshareBox);
+        var reshareId = canReshareBox.data("id");
+        if(id === reshareId) {
+          share["can_reshare"] = canReshareBox.is(":checked");
+        }
+      });
+
+      shares.push(share);
     });
+
     console.log(shares);
+
     $.post("/api/shares/batch", {
         "job_id" : self.get("job.id"),
         "shares" : shares
@@ -25,7 +45,7 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
           for(var i = 0 ; i < data.shares.length ; i ++)
             self.get("job.shares").push(PlanSource.Share.create(data.shares[i]));
         }
-        self.send("openShareJobModal");
+        self.send("close");
         button.bind("click", true);
       },
       "json"
@@ -124,11 +144,21 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
 
 PlanSource.ContactController = Ember.ObjectController.extend({
   needs : ["contact_list"],
-  checked: function(){
+
+  isSharedChecked: function(){
     var shares = this.get("controllers.contact_list.job.shares");
     for(var i = 0 ; i < shares.length ; i ++){
       if(this.get("model.id") == shares[i].get("user.id"))
         return "checked";
+    }
+    return "";
+  }.property(),
+
+  canResharedChecked: function(){
+    var shares = this.get("controllers.contact_list.job.shares");
+    for(var i = 0 ; i < shares.length ; i ++){
+      if(this.get("model.id") == shares[i].get("user.id"))
+        return shares[i].get("can_reshare") ? "checked" : "";
     }
     return "";
   }.property()
