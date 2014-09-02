@@ -18,7 +18,7 @@ PlanSource.MessageGroupController = PlanSource.ModalController.extend({
 
     if(confirmSend) {
       $.post("/api/message", {
-          "job_id": this.get("job.id"),
+          "job_id": this.get("id"),
           "message": message
         },
         function(data){},

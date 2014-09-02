@@ -16,6 +16,7 @@ PlanSource::Application.routes.draw do
     resource :upload, only: ["create"]
     resource :token, only: ["create"] #only retrieve token
     match "/download/:id" => "downloads#download"
+    post '/message' => 'messages#group'
   end
 
   resources :users, only: ["index", "edit", "update", "destroy"]

@@ -12,4 +12,20 @@ class UserMailer < ActionMailer::Base
   	@subject = "Plan Source - #{@name} has shared a job with you!"
   	mail(to: @share.user.email, subject: @subject)
   end
+
+  def arbitrary_message(from, user, message)
+    @message = message
+    @user = user
+    @to = user.email
+    @from = from
+    @subject = "You have a message from #{@from}."
+    @body = [
+      "You have a new message from #{@from}:",
+      "\n\n",
+      @message
+    ].join ""
+
+    mail(to: @to, from: @from, subject: @subject, body: @body, content_type: "text/plain")
+  end
+
 end

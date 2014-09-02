@@ -91,6 +91,10 @@ class User < ActiveRecord::Base
     UserMailer.share_notification(share.user, share, guest, pass).deliver
   end
 
+  def send_message(from_email, message)
+    UserMailer.arbitrary_message(from_email, self, message).deliver
+  end
+
   def full_name
     "#{self.first_name} #{self.last_name}"
   end

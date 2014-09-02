@@ -22,8 +22,13 @@ class Job < ActiveRecord::Base
   before_destroy :destroy_plans
   before_destroy :destroy_shares
 
-  private
+  def send_message_to_group(message)
+    shared_users.each do |user|
+      user.send_message user.email, "This message is to the #{name} group:\n\n#{message}"
+    end
+  end
 
+  private
 
     def destroy_shares
       self.shares.each do |share|
