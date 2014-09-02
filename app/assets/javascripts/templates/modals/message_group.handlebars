@@ -1,48 +1,18 @@
 <div class="modal-wrapper">
-	<div class="overlay"></div>
-	<div class="dialog box box-border">
-		<div class="header">
-			<p class="title">Enter an email to share with.</p>
-		</div>
-		<div class="body">
-			<p>Enter an email to share {{model.name}} with.</p>
-			<p class="muted">If the user doesn't have an account, we will create one, and send them an email.</p>
-			<div class="control-group">
-				<div class="controls">
-          {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="share-email" autocomplete=true }}
-            <a class="button button-blue" {{action "shareJob" target=controller}} >Share</a>
-            {{#manager}}
-              <a {{action "openContactModal" model }} class="button button-inline">Contact list</a>
-            {{/manager}}
-          <span class="help-inline"></span>
-        </div>
-			</div>
-			<p>Users that are currently being shared. ({{numShares}} Users)</p>
-			<div class="scroller-medium">
-				<table class="table">
-					{{#each model.shares itemController="share"}}
-						{{#if isSharer}}
-						<tr>
-								<td>{{user.full_name}}</td>
-								<td>{{user.email}}</td>
-								<td>
-									{{#if can_reshare}}
-										<a {{action "editCanShare"}}>Can Reshare</a>
-									{{else}}
-										<a {{action "editCanShare"}}>Can't Reshare</a>
-									{{/if}}
-								</td>
-								<td><a {{action "deleteShare"}}>Unshare</a></td>
-							</tr>
-						{{/if}}
-					{{/each}}
-				</table>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="buttons">
-				<a class="button" {{action "close"}}>Done</a>
-			</div>
-		</div>
-	</div>
+  <div class="overlay"></div>
+  <div class="dialog box box-border">
+    <div class="header">
+      <p class="title">Type a message to send to group.</p>
+    </div>
+    <div class="body">
+      <p>All users that are shared will receive this message.</p>
+      <textarea style="width: 670px; max-width: 670px; height: 250px; padding: 10px;" placeholder="You message to the group..." id="message-to-group"></textarea>
+    </div>
+    <div class="footer">
+      <div class="buttons">
+        <a class="button button-blue" {{action "sendMessage" target=controller}} >Share</a>
+        <a class="button" {{action "close"}}>Close</a>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,50 +1,26 @@
-PlanSource.ShareJobController = PlanSource.ModalController.extend({
+PlanSource.MessageGroupController = PlanSource.ModalController.extend({
 
-	shareJob : function(){
-		var self = this;
-		var container = $("#share-email"),
-		email = container.val();
-		this.clearAllErrors();
-		this.clearAllInfo();
-		if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)){
-			this.error("#share-email", "Not a valid email.");
-			return;
-		}
-		$.post("/api/shares", {
-			"share" : {"job_id" : this.get("model").get("id"), "email" : email}
-			},
-			function(data){
-				if(data.share && data.share.id){
-					self.get("shares").pushObject(PlanSource.Share.create(data.share));
-					self.get("parent").updateJobs();
-					self.info("#share-email", "Succesfully shared with " + data.share.user.email);
-				}else{
-					if(data.error)
-						self.error("#share-email", data.error);
-					else
-						self.error("#share-email", "An error occured when sharing with " + email);
-				}
-			},
-			"json"
-		);
-		container.val("");
-	},
+  sendMessage : function() {
+    var message = $('#message-to-group').val().trim();
+    var confirmSend = confirm(
+      [
+        "Your message:\n\n",
+        message,
+        "\n\n",
+        "Do you want to send this message to the group?"
+      ].join("")
+    );
 
-	numShares : function(){
-		var num = 0;
-		this.get("shares").forEach(function(share){
-			if(share.get("isSharer")) num++;
-		});
-		return num;
-	}.property("shares.@each"),
-
-	removeShare : function(share){
-		this.get("model").get("shares").removeObject(share);
-	},
-
-	keyPress : function(e){
-		if (e.keyCode == 13)
-			this.shareJob();
-	}
+    if(confirmSend) {
+      $.post("/api/message", {
+          "job_id": this.get("job.id"),
+          "message": message
+        },
+        function(data){},
+        "json"
+      );
+      this.send("close");
+    }
+  }
 
 });
