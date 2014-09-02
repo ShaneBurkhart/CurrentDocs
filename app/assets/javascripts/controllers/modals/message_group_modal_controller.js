@@ -2,6 +2,11 @@ PlanSource.MessageGroupController = PlanSource.ModalController.extend({
 
   sendMessage : function() {
     var message = $('#message-to-group').val().trim();
+
+    if(message === "") {
+      return;
+    }
+
     var confirmSend = confirm(
       [
         "Your message:\n\n",
