@@ -20,6 +20,11 @@
         <td>
           <ul class="controls pull-right unstyled">
             {{#unless isShared}}
+              {{#if isMyJob}}
+                <li>
+                  <a {{action "openMessageGroupModal" this bubbles=false}}>Message Group</a>
+                </li>
+              {{/if}}
               <li><a {{action "openContactListModal" this bubbles=false}}>Share</a></li>
               <li><a {{action "openEditJobModal" this bubbles=false}}>Edit</a></li>
               <li><a {{action "openDeleteJobModal" this bubbles=false}}>Delete</a></li>
