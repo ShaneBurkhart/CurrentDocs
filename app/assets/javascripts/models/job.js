@@ -36,13 +36,16 @@ PlanSource.Job = Ember.Object.extend({
 	}.property('user'),
 
 	isShared : function(){
-  	if(this.get("user"))
-  		return !this.get("isMyJob");
-  	else
-  		return false;
+  	if(this.get("user")) {
+  	  return !this.get("isMyJob");
+        } else
+  	  return false;
   }.property("user"),
 
   isMyJob : function(){
+    if(!this.get("user")) {
+      return false;
+    }
     return this.get("user").get("id") == user_id;
   }.property("user"),
 
