@@ -25,7 +25,7 @@ class UserMailer < ActionMailer::Base
       @message
     ].join ""
 
-    mail(to: @to, from: @from, subject: @subject, body: @body, content_type: "text/plain")
+    mail(to: @to, subject: @subject, body: @body, content_type: "text/plain")
   end
 
 end
