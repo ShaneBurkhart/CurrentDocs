@@ -187,9 +187,7 @@ class User < ActiveRecord::Base
     end
 
     def destroy_shares
-      self.shares.each do |share|
-        share.destroy
-      end
+      Share.where("user_id = ? OR sharer_id = ?", self.id, self.id).destroy_all
     end
 
     def destroy_jobs
