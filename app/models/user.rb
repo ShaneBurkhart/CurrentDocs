@@ -87,8 +87,8 @@ class User < ActiveRecord::Base
       password: pass, password_confirmation: pass
   end
 
-  def send_share_notification(share, guest, pass)
-    #UserMailer.share_notification(share.user, share, guest, pass).deliver
+  def send_share_notification(share)
+    UserMailer.share_notification(share).deliver
   end
 
   def send_new_guest_user_notification(user, pass, parent_email)

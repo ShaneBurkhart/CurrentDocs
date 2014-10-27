@@ -1,40 +1,21 @@
 class Api::SharesController < ApplicationController
   before_filter :user_not_there!, except: ["show"]
   before_filter :authenticate_user!, only: ["show"]
-=begin
-  def show
-    if user.can? :update, Share
-      if params["token"] && current_user.is_my_token(params["token"])
-        @share = Share.find_by_token(params["token"])
-        @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
-        flash[:notice] = "You have accepted #{@share.job.name}!"
-        redirect_to app_path
-      else
-        render_no_permission
-      end
-    else
-      render_no_permission
-    end
-  end
-=end
+
   def create
     if user.can? :create, Share
       if user.can_share_job Job.find(params["share"]["job_id"].to_i)
         @user = User.find_by_email params["share"]["email"]
-        if @user.nil?
-          pass = ('a'..'z').to_a.shuffle[0,8].join
-          @user = User.new_guest_user params["share"], pass
-          guest = true
-          @user.save
-        end
         @contact = Contact.find_or_create_by_user_id_and_contact_id(user.id, @user.id)
+
         if user == @user
           render json: {error: "You can't share with yourself!"}
           return
         end
+
         @share = Share.new sharer_id: user.id, job_id: params["share"]["job_id"], user_id: @user.id
         if @share.save
-          #@user.send_share_notification @share, guest, pass
+          @user.send_share_notification(@share)
           render json: @share
         else
           render json: {error: "Share already exists!"}
@@ -62,17 +43,7 @@ class Api::SharesController < ApplicationController
       render_no_permission
     end
   end
-=begin
-  def update #accepts shares
-    if user.can? :update, Share
-      @share = Share.find(params[:id])
-      @share.update_attributes(accepted: 1) unless !current_user.is_being_shared(@share)
-      render json: @share
-    else
-      render_no_permission
-    end
-  end
-=end
+
   def destroy
     if user.can? :destroy, Job
       @share = Share.find(params[:id])
@@ -99,6 +70,12 @@ class Api::SharesController < ApplicationController
         @share = Share.find_or_create_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
 
         @share.can_reshare = ishare[:can_reshare] || false;
+
+        @user = User.find_by(id: ishare[:user_id])
+        if @user && @share.new_record?
+          @user.send_share_notification(@share)
+        end
+
         @share.save
       else
         @share = Share.find_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
