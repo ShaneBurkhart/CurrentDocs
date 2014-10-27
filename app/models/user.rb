@@ -88,7 +88,11 @@ class User < ActiveRecord::Base
   end
 
   def send_share_notification(share, guest, pass)
-    UserMailer.share_notification(share.user, share, guest, pass).deliver
+    #UserMailer.share_notification(share.user, share, guest, pass).deliver
+  end
+
+  def send_new_guest_user_notification(user, pass, parent_email)
+    UserMailer.guest_user_notification(user, pass, parent_email).deliver
   end
 
   def send_message(from_email, message)

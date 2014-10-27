@@ -13,6 +13,7 @@ class Api::UsersController < ApplicationController
       if(!@user)
         pass = ('a'..'z').to_a.shuffle[0,8].join
         @user = User.new_guest_user(params[:contact], pass)
+        @user.send_new_guest_user_notification(@user, pass, current_user.email)
         @user.save
       end
         @contact = Contact.find_by_user_id_and_contact_id(current_user.id, @user.id)
