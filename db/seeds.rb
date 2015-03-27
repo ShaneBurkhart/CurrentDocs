@@ -13,3 +13,23 @@
 #puts 'user: ' << user.name
 #user.confirm!
 #user.add_role :admin
+
+require 'faker'
+
+user = User.new(
+    email: "shaneburkhart@gmail.com",
+    password: "password",
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    company: Faker::Company.name
+)
+user.type = "Admin"
+puts user.save
+
+(1..10).each do
+  job = Job.create user_id: user.id, name: Faker::Address.street_address
+
+  (1..10).each do |i|
+    Plan.create job_id: job.id, plan_num: i, plan_name: Faker::Address.secondary_address
+  end
+end
