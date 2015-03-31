@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140826151917) do
+ActiveRecord::Schema.define(:version => 20150331234735) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(:version => 20140826151917) do
     t.boolean  "can_reshare", :default => false
   end
 
+  create_table "signup_links", :force => true do |t|
+    t.string   "key"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "signup_links", ["user_id"], :name => "index_signup_links_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "",                    :null => false
     t.string   "encrypted_password",                   :default => ""
@@ -80,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20140826151917) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2014-08-23 22:30:27'
+    t.datetime "last_seen",                            :default => '2015-03-13 22:18:07'
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
