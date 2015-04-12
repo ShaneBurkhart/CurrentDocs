@@ -11,8 +11,7 @@ class UserMailer < ActionMailer::Base
 
     def guest_user_notification(user, inviter_email)
 	@user = user
-	puts @user.email
-	@signup_link = @user.signup_link
+	@signup_link = @user.signup_link.link
 	@inviter_email = inviter_email
 	@subject = "#{@inviter_email} has added you as a contact!"
 	mail(to: @user.email, subject: @subject)

@@ -7,7 +7,7 @@ class SignupLink < ActiveRecord::Base
 
     before_validation :create_key
 
-    def get_link
+    def link
 	if Rails.env.development?
 	    host = "http://127.0.0.1"
 	else
