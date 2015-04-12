@@ -88,7 +88,7 @@ class User < ActiveRecord::Base
     pass = SecureRandom.urlsafe_base64(32)
     v = Viewer.new(first_name: "New", last_name: "User", email: contact_params["email"],
 	password: pass, password_confirmation: pass)
-    v.build_signup_link
+    v.create_signup_link
 
     UserMailer.guest_user_notification(v, inviter_email).deliver
 
