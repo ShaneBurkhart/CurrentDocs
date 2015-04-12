@@ -5,7 +5,7 @@ class UserMailer < ActionMailer::Base
     def share_notification(share)
 	@share = share
 	@email = share.sharer.email
-	@subject = "Plan Source - #{@email} has shared a job with you!"
+	@subject = "#{@email} has shared a job with you!"
 	mail(to: @share.user.email, subject: @subject)
     end
 
@@ -14,7 +14,7 @@ class UserMailer < ActionMailer::Base
 	puts @user.email
 	@signup_link = @user.signup_link
 	@inviter_email = inviter_email
-	@subject = "Plan Source - #{@inviter_email} has added you as a contact!"
+	@subject = "#{@inviter_email} has added you as a contact!"
 	mail(to: @user.email, subject: @subject)
     end
 
