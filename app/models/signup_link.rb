@@ -5,7 +5,7 @@ class SignupLink < ActiveRecord::Base
 
     validates :key, :user_id, presence: true
 
-    before_validation :create_key
+    before_validation :create_key, :unless => Proc.new { |model| model.persisted? }
 
     def link
 	if Rails.env.development?
