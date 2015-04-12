@@ -11,10 +11,7 @@ class Api::UsersController < ApplicationController
 	else
 	    @user = User.find_by_email(params[:contact][:email]);
 	    if(!@user)
-		# Arbitrary password.  We will change it with signup_link.
-		pass = ('a'..'z').to_a.shuffle[0,8].join
-		@user = User.new_guest_user(params[:contact], pass)
-		@user.send_new_guest_user_notification(@user, pass, current_user.email)
+		@user = User.new_guest_user(params[:contact], current_user.email)
 		@user.save
 	    end
 

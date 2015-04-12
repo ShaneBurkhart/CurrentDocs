@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   has_many :shared_jobs, through: :shares, source: :job
   has_many :user_contact_connection, class_name: "Contact", foreign_key: "user_id"
   has_many :contacts, through: :user_contact_connection
+  has_one :signup_link
 
   # Include default devise modules. Others available are:
   # , :confirmable,
@@ -81,18 +82,21 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.new_guest_user(share_param, pass)
-    Viewer.new first_name: "New", last_name: "User",
-      email: share_param["email"],
-      password: pass, password_confirmation: pass
+  def self.new_guest_user(contact_params, inviter_email)
+    # Arbitrary password.  We will change it with signup_link.
+    # It is needed to pass validation of model.
+    pass = SecureRandom.urlsafe_base64(32)
+    v = Viewer.new(first_name: "New", last_name: "User", email: contact_params["email"],
+	password: pass, password_confirmation: pass)
+    v.build_signup_link
+
+    UserMailer.guest_user_notification(v, inviter_email).deliver
+
+    return v
   end
 
   def send_share_notification(share)
     UserMailer.share_notification(share).deliver
-  end
-
-  def send_new_guest_user_notification(user, pass, parent_email)
-    UserMailer.guest_user_notification(user, pass, parent_email).deliver
   end
 
   def send_message(from_email, message)
