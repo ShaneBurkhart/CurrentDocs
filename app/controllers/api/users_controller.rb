@@ -12,7 +12,9 @@ class Api::UsersController < ApplicationController
 	    @user = User.find_by_email(params[:contact][:email]);
 	    if(!@user)
 		@user = User.new_guest_user(params[:contact], current_user.email)
+		puts "Before user save"
 		@user.save
+		puts "After user save"
 	    end
 
 	    @contact = Contact.find_by_user_id_and_contact_id(current_user.id, @user.id)
