@@ -19,12 +19,10 @@ class SignupLink < ActiveRecord::Base
     private
 
 	def create_key
-	    puts "Creating key..."
 	    self.key = loop do
 		random_token = SecureRandom.urlsafe_base64(64, false)
 		break random_token unless SignupLink.exists?(key: random_token)
 	    end
-	    puts "Key: #{self.key}"
 	end
 
 end

@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20150331234735) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2015-04-12 23:03:45'
+    t.datetime "last_seen",                            :default => '2015-04-13 01:06:53'
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

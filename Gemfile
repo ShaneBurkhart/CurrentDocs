@@ -12,6 +12,7 @@ group :assets do
 end
 
 group :development do
+  gem 'faker'
   gem 'sqlite3'
   gem "quiet_assets", ">= 1.0.2"
   gem "better_errors", ">= 0.7.2"

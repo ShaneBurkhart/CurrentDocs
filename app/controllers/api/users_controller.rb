@@ -6,15 +6,14 @@ class Api::UsersController < ApplicationController
     end
 
     def add_contacts
-	if(current_user.email == params[:contact][:email])
+	email = params[:contact][:email]
+	if(current_user.email == email)
 	    render :json => {error: "You can't add yourself to your contacts."}
 	else
-	    @user = User.find_by_email(params[:contact][:email]);
+	    @user = User.find_or_create_new_guest_user(email, current_user.email);
 	    if(!@user)
-		@user = User.new_guest_user(params[:contact], current_user.email)
-		puts "Before user save"
-		@user.save
-		puts "After user save"
+		render json: { error: "Not a valid email." }
+		return
 	    end
 
 	    @contact = Contact.find_by_user_id_and_contact_id(current_user.id, @user.id)

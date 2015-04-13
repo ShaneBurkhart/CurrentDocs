@@ -82,15 +82,21 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.new_guest_user(contact_params, inviter_email)
+  def self.find_or_create_new_guest_user(email, inviter_email)
+    @user = User.find_by_email(email)
+    if @user
+	return @user
+    end
+
     # Arbitrary password.  We will change it with signup_link.
     # It is needed to pass validation of model.
     pass = SecureRandom.urlsafe_base64(32)
-    v = Viewer.new(first_name: "New", last_name: "User", email: contact_params["email"],
+    v = Viewer.new(first_name: "New", last_name: "User", email: email,
 	password: pass, password_confirmation: pass)
-    puts "Before create signup link."
+    if !v.save
+	return nil
+    end
     v.create_signup_link
-    puts "After create signup link."
 
     UserMailer.guest_user_notification(v, inviter_email).deliver
 
