@@ -3,7 +3,7 @@ MAINTAINER Shane Burkhart <shaneburkhart@gmail.com>
 
 ENV RAILS_ENV production
 
-RUN mkdir /app
+RUN mkdir -p /app
 WORKDIR /app
 
 RUN mkdir tmp
@@ -12,9 +12,8 @@ ADD Gemfile.lock Gemfile.lock
 RUN bundle install --without development test
 RUN rm -r tmp
 
-ADD . .
+ADD . /app
 
 EXPOSE 3000
 
-ENTRYPOINT ["rails"]
-CMD ["server"]
+CMD ["bundle", "exec", "rails", "s"]
