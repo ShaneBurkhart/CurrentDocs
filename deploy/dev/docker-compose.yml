@@ -1,0 +1,17 @@
+web:
+    image: shaneburkhart/plansource:dev
+    ports:
+        - "3000:3000"
+    links:
+        - pg
+    volumes:
+        - ../..:/app
+
+pg:
+    image: postgres
+    environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=mydb
+
+
