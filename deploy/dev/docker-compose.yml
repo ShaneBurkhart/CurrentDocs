@@ -5,7 +5,7 @@ web:
     links:
         - pg
     volumes:
-        - ../..:/app
+        - ../../app:/app/app
 
 pg:
     image: postgres

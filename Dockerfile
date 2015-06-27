@@ -8,7 +8,6 @@ WORKDIR /app
 
 RUN mkdir tmp
 ADD Gemfile Gemfile
-ADD Gemfile.lock Gemfile.lock
 RUN bundle install --without development test
 RUN rm -r tmp
 
