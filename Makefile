@@ -14,6 +14,9 @@ run:
 	sudo docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rake db:seed
 	sudo docker-compose -f ${DEV_FILE} -p ${NAME} up -d
 
+bundle:
+	sudo docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
+
 stop:
 	sudo docker-compose -f ${DEV_FILE} -p ${NAME} stop
 

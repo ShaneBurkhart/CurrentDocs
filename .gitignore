@@ -75,7 +75,3 @@ pickle-email-*.html
 
 # Ignore application configuration
 /config/application.yml
-
-
-Gemfile.lock
-public/_files
