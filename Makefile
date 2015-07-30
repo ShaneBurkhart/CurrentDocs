@@ -20,6 +20,9 @@ bundle:
 stop:
 	sudo docker-compose -f ${DEV_FILE} -p ${NAME} stop
 
+logs:
+	sudo docker-compose -f ${DEV_FILE} -p ${NAME} logs
+
 
 assets:
 	RAILS_ENV=production bundle exec rake assets:precompile
