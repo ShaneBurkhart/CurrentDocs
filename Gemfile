@@ -8,7 +8,7 @@ gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
 gem 'sendgrid', '1.2.0'
 
-gem 'jquery-rails'
+gem 'jquery-rails', "3.0.1"
 gem "bootstrap-sass", "2.3.0.0"
 gem 'ember-rails', "0.14.1"
 gem 'ember-source', '1.0.0.rc5' # or the version you need
