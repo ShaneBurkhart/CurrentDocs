@@ -24,10 +24,16 @@ ps:
 	docker ps -a
 
 bundle:
-	 docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
 
 logs:
-	 docker-compose -f ${DEV_FILE} -p ${NAME} logs
+	docker-compose -f ${DEV_FILE} -p ${NAME} logs
+
+heroku_deploy:
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web true
+	docker cp $$(docker ps -a | grep web | head -n 1 | awk '{print $$1}'):/app/Gemfile.lock .
+	git push heroku master
+	rm Gemfile.lock
 
 
 #assets:
