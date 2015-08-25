@@ -44,7 +44,8 @@ class Job < ActiveRecord::Base
 
     def check_for_dubplicate_name_for_single_user
       j = Job.find_all_by_user_id_and_name(self.user_id, self.name)
-      errors.add(:name, 'already exists') unless j.count < 1
+      if j.count > 1 || (j.count == 1 && j.first.id != self.id) then
+        errors.add(:name, 'already exists')
+      end
     end
-
 end
