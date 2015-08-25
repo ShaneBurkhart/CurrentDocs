@@ -42,7 +42,17 @@ heroku_deploy:
 	docker cp $$(docker ps -a | grep web | head -n 1 | awk '{print $$1}'):/app/Gemfile.lock .
 	git add Gemfile.lock
 	git commit -m "Added Gemfile.lock for Heroku deploy."
-	git push heroku master
+	git push -f heroku master
+	rm Gemfile.lock
+	git rm Gemfile.lock
+	git commit -m "Removed Gemfile.lock from Heroku deploy."
+
+heroku_staging_deploy:
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web true
+	docker cp $$(docker ps -a | grep web | head -n 1 | awk '{print $$1}'):/app/Gemfile.lock .
+	git add Gemfile.lock
+	git commit -m "Added Gemfile.lock for Heroku deploy."
+	git push -f heroku_staging master
 	rm Gemfile.lock
 	git rm Gemfile.lock
 	git commit -m "Removed Gemfile.lock from Heroku deploy."
