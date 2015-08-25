@@ -43,6 +43,8 @@ heroku_deploy:
 	git add Gemfile.lock
 	git commit -m "Added Gemfile.lock for Heroku deploy."
 	git push -f heroku master
+	heroku run --app plansource rake db:migrate
+	heroku restart --app plansource
 	rm Gemfile.lock
 	git rm Gemfile.lock
 	git commit -m "Removed Gemfile.lock from Heroku deploy."
@@ -53,6 +55,8 @@ heroku_staging_deploy:
 	git add Gemfile.lock
 	git commit -m "Added Gemfile.lock for Heroku deploy."
 	git push -f heroku_staging master
+	heroku run --app plansourcestaging rake db:migrate
+	heroku restart --app plansourcestaging
 	rm Gemfile.lock
 	git rm Gemfile.lock
 	git commit -m "Removed Gemfile.lock from Heroku deploy."
