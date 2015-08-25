@@ -43,7 +43,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
   },
 
   model : function(){
-    return PlanSource.Job.findAll();
+    return PlanSource.Job.findNonArchivedJobs();
   }
 
 });

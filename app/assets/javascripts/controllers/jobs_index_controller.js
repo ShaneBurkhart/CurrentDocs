@@ -2,6 +2,7 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
   sortProperties: ['sorter'],
   sortAscending: true,
   content : Em.A(),
+  showingArchivedJobs: false,
 
   removeJob : function(job){
   	this.get("content").removeObject(job);
@@ -46,5 +47,15 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
   updateJobs : function(){
     var self = this;
     self.set("content", PlanSource.Job.findAll());
+  },
+
+  showArchivedJobs: function() {
+    this.set('showingArchivedJobs', true);
+    this.set('content', PlanSource.Job.findArchivedJobs())
+  },
+
+  showNonArchivedJobs: function() {
+    this.set('showingArchivedJobs', false);
+    this.set('content', PlanSource.Job.findNonArchivedJobs())
   }
 });

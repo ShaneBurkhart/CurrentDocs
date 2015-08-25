@@ -144,6 +144,10 @@ iframe{
         &.active {
             color: #000000;
             font-weight: bold;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 }

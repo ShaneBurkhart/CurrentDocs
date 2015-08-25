@@ -134,6 +134,10 @@ PlanSource.Job = Ember.Object.extend({
 PlanSource.Job.reopenClass({
   baseUrl : "/api/jobs",
 
+  jobs: Em.A(),
+  nonArchivedJobs: Em.A(),
+  archivedJobs: Em.A(),
+
   url : function(id){
     var pathArray = window.location.href.split( '/' ),
       host = pathArray[2],
@@ -142,17 +146,62 @@ PlanSource.Job.reopenClass({
     return u;
   },
 
+  findNonArchivedJobs: function() {
+    this._getJobsFromServer();
+    return this.nonArchivedJobs;
+  },
+
+  findArchivedJobs: function() {
+    this._getJobsFromServer();
+    return this.archivedJobs;
+  },
+
   findAll : function(){
-    var jobs = Em.A();
+    this._getJobsFromServer();
+    return this.jobs;
+  },
+
+  _getJobsFromServer: function() {
+    var that = this;
     Em.Deferred.promise(function(p){
       p.resolve($.get(PlanSource.Job.url()).then(function(data){
+        that._clearJobs();
         data.jobs.forEach(function(job){
-          jobs.pushObject(PlanSource.Job.create(job));
+          that.jobs.pushObject(PlanSource.Job.create(job));
         });
-        return jobs;
+        that.sortJobsByArchived(that.jobs);
+        return that.jobs;
       }));
     });
-    return jobs;
+  },
+
+  sortJobsByArchived : function(jobs) {
+    var l = jobs.length;
+    for(var i = 0; i < l; i++) {
+      var job = jobs[i];
+      if(job.archived) {
+        this.archivedJobs.pushObject(job)
+      } else {
+        this.nonArchivedJobs.pushObject(job)
+      }
+    }
+  },
+
+  _clearJobs: function() {
+    // We have to copy the length attribute so we can loop
+    // over everything.
+    var l = this.jobs.length;
+    for(var i = 0; i < l; i++) {
+      this.jobs.removeAt(0);
+    }
+    var l = this.nonArchivedJobs.length;
+    for(var i = 0; i < l; i++) {
+      this.nonArchivedJobs.removeAt(0);
+    }
+    var l = this.archivedJobs.length;
+    for(var i = 0; i < l; i++) {
+      this.archivedJobs.removeAt(0);
+    }
   },
 
   find : function(id){
@@ -163,5 +212,4 @@ PlanSource.Job.reopenClass({
       }));
     });
   }
-
 });

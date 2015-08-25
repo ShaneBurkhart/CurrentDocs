@@ -4,7 +4,7 @@ class Api::JobsController < ApplicationController
   def index
     if user.can? :read, Job
       @jobs = get_jobs
-      render json: @jobs 
+      render json: @jobs
     else
       render_no_permission
     end
