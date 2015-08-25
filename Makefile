@@ -26,6 +26,11 @@ ps:
 c:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web /bin/bash
 
+pg:
+	echo "Enter 'postgres'..."
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm pg psql -h pg -d mydb -U postgres --password
+
+
 bundle:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
 
