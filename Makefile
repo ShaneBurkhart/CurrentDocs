@@ -23,6 +23,9 @@ clean: stop
 ps:
 	docker ps -a
 
+c:
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web /bin/bash
+
 bundle:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
 

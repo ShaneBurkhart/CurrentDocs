@@ -6,6 +6,7 @@ web:
         - pg
     volumes:
         - ../../app:/app/app
+        - ../../db/migrate:/app/db/migrate
 
 pg:
     image: postgres
