@@ -1,19 +1,19 @@
 <h2>{{name}} {{#if archived}}(Archived){{/if}}</h2>
 <p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
-{{#unless archived}}
+{{#if archived}}
+    {{#unless isShared}}
+        {{#manager}}
+            <a href="#" {{action "unarchiveJob"}} class="button button-green">Unarchive</a>
+        {{/manager}}
+    {{/unless}}
+{{else}}
     {{#unless isShared}}
         {{#manager}}
             <a href="#" {{action "archiveJob"}} class="button button-red">Archive</a>
             <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
         {{/manager}}
     {{/unless}}
-{{else}}
-    {{#unless isShared}}
-        {{#manager}}
-            <a href="#" {{action "unarchiveJob"}} class="button button-green">Unarchive</a>
-        {{/manager}}
-    {{/unless}}
-{{/unless}}
+{{/if}}
 <table class="table table-hover">
 	<thead>
 		<th>#</th>
