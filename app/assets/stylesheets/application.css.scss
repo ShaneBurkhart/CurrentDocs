@@ -132,6 +132,22 @@ iframe{
 	}
 }
 
+.jobs-controls {
+    padding: 8px 0;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    margin: 13px 0 15px;
+
+    a {
+        margin-right: 15px;
+
+        &.active {
+            color: #000000;
+            font-weight: bold;
+        }
+    }
+}
+
 .job{
   cursor: pointer;
 }
