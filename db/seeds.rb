@@ -27,7 +27,11 @@ user.type = "Admin"
 puts user.save
 
 (1..10).each do
-  job = Job.create user_id: user.id, name: Faker::Address.street_address
+  job = Job.create(
+            user_id: user.id,
+            name: Faker::Address.street_address,
+            archived: [true, false].sample
+  )
 
   (1..10).each do |i|
     Plan.create job_id: job.id, plan_num: i, plan_name: Faker::Address.secondary_address
