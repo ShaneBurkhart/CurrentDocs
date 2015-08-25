@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem "rake", "~> 10.1.0"
-gem 'pg'
+gem 'pg', "0.18.2"
 
 gem "figaro", ">= 0.6.3"
 gem 'active_model_serializers', '0.8.1'
