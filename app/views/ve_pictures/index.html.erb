@@ -1,0 +1,30 @@
+<% content_for :title, "Upload VE Pictures" %>
+
+<section class="container">
+    <h1>VE Pictures</h1>
+    <% @images.each do |image|%>
+        <img src="<%= image.url_for(:read) %>">
+        <form action="<%= ve_pictures_delete_path %>" method="post">
+            <input type="hidden" name="key" value="<%= image.key %>">
+            <button type="submit" class="button button-red">Delete</button>
+        </form>
+        <hr>
+    <% end %>
+
+    <form action="http://vecarouselimages.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="key" value="${filename}" />
+        <input type="hidden" name="acl" value="public-read" />
+        <input type="hidden" name="success_action_redirect" value="<%= @redirect_url %>" />
+        <select name="Content-Type">
+            <option value="image/jpeg">Jpg</option>
+            <option value="image/png">Png</option>
+        </select> <br/>
+        <input type="hidden" name="AWSAccessKeyId" value="<%= ENV['AWS_ACCESS_KEY_ID'] %>" />
+        <input type="hidden" name="Policy" value="<%= @policy %>" />
+        <input type="hidden" name="Signature" value="<%= @signature %>" />
+        <p>Don't upload images under 970px wide.  You can go less than 644px on the height, but you will see a gray area under the image in the slider. If an image is very big, crop it to the correct size to make loading times faster.</p>
+        File: <input type="file" name="file" /> <br />
+        <br/>
+        <button type="submit" name="submit">Upload</button>
+    </form>
+</section>
