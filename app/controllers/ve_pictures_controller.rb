@@ -6,6 +6,10 @@ class VePicturesController < ApplicationController
   before_filter :authenticate_user!, except: [:images]
 
   def index
+    AWS.config(
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    )
     bucket = AWS.s3.buckets["vecarouselimages"]
     @images = bucket.objects
     @redirect_url = request.protocol + request.domain + "/ve_pictures"
