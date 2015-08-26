@@ -2,14 +2,8 @@
 
 <section class="container">
     <h1>VE Pictures</h1>
-    <% @images.each do |image|%>
-        <img src="<%= image.url_for(:read) %>">
-        <form action="<%= ve_pictures_delete_path %>" method="post">
-            <input type="hidden" name="key" value="<%= image.key %>">
-            <button type="submit" class="button button-red">Delete</button>
-        </form>
-        <hr>
-    <% end %>
+
+    <hr>
 
     <form action="http://vecarouselimages.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
         <input type="hidden" name="key" value="${filename}" />
@@ -27,4 +21,16 @@
         <br/>
         <button type="submit" name="submit">Upload</button>
     </form>
+
+    <hr>
+
+    <% @images.each do |image|%>
+        <img src="<%= image.url_for(:read) %>">
+        <p><%= image.key %></p>
+        <form action="<%= ve_pictures_delete_path %>" method="post">
+            <input type="hidden" name="key" value="<%= image.key %>">
+            <button type="submit" class="button button-red">Delete</button>
+        </form>
+        <hr>
+    <% end %>
 </section>
