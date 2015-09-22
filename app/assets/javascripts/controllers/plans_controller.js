@@ -6,27 +6,32 @@ PlanSource.PlansController = Ember.ArrayController.extend({
   addPlan : function(plan){
   	if(this.planExists(plan)) return false;
   	var self = this;
-		this.get("content").pushObject(plan);
+		this.get("controllers.job.model.plans").pushObject(plan);
+    this.updateTab();
 		plan.save().then(function(data){
-      if(data == false)
-        self.get("content").removeObject(plan);
+      if(data == false) {
+        self.get("controller.job.model.plans").removeObject(plan);
+        this.updateTab();
+      }
     });
     return true;
 	},
 
 	removePlan : function(plan){
 		var self = this;
-		this.get("content").removeObject(plan);
+		this.get("controllers.job.model.plans").removeObject(plan);
+    this.updateTab();
 		plan.deleteRecord();
 		plan.save().then(function(){
-			self.updatePlans();
+			self.updateTab();
 		});
 	},
 
 	updatePlans : function(){
 		var self = this;
 		PlanSource.Job.find(this.get("job").get("id")).then(function(job){
-			self.set("content", job.getPlansByTab(self.get('controllers.job.tab')))
+			self.set("controllers.job.model", job);
+      self.updateTab();
 		});
 	},
 
