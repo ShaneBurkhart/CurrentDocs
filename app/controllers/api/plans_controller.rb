@@ -17,7 +17,10 @@ class Api::PlansController < ApplicationController
   def create
     if user.can? :create, Plan
       params["plan"].delete "updated_at"
-      params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
+      params["plan"]["plan_num"] = Plan.next_plan_num(
+        params["plan"]["job_id"],
+        params["plan"]["tab"]
+      )
       @plan = Plan.new params["plan"]
       if @plan.save
         render json: @plan
