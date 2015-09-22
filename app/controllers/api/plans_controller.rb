@@ -20,7 +20,6 @@ class Api::PlansController < ApplicationController
       params["plan"]["plan_num"] = Plan.next_plan_num params["plan"]["job_id"]
       @plan = Plan.new params["plan"]
       if @plan.save
-
         render json: @plan
       else
         render json: {}

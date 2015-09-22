@@ -27,7 +27,8 @@ PlanSource.Plan = Ember.Object.extend({
             type: 'POST',
             data : { plan : {
             	plan_name : self.get("plan_name"),
-            	job_id : self.get("job").get("id")
+            	job_id : self.get("job").get("id"),
+              tab: self.get('tab')
             }}
         }).then(function(data, t, xhr){
           if(!$.isEmptyObject(data)){

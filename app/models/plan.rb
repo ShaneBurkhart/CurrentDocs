@@ -37,9 +37,10 @@ class Plan < ActiveRecord::Base
 
   validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages
-  validates :job_id, :plan_num, :plan_name, presence: true
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab
+  validates :job_id, :plan_num, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_in_job
+  validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
 
   def self.next_plan_num(job_id)
@@ -111,6 +112,13 @@ class Plan < ActiveRecord::Base
 	  	end
 	  	return false
 		end
+
+		def check_for_valid_tab_name
+      valid_tabs = ["Plans", "Shops", "Consultants", "Calcs & Misc"]
+      if !valid_tabs.include?(self.tab)
+        errors.add(:tab, "isni't a valid tab")
+      end
+    end
 
 		def check_for_duplicate_plan_num
 			p = Plan.find_all_by_job_id(self.job_id)

@@ -8,7 +8,11 @@ PlanSource.AddPlanController = PlanSource.ModalController.extend({
     	this.error("#new-plan-name", "You need to enter a name!");
     	return;
     }
-    var plan = PlanSource.Plan.create({"plan_name" : name, "job" : this.get("model")});
+    var plan = PlanSource.Plan.create({
+      'plan_name' : name,
+      'job' : this.get('model'),
+      'tab' : this.get('parent.controllers.job.tab')
+    });
     if(this.get("parent").addPlan(plan))
 			this.send("close");
 		else
