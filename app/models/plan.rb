@@ -43,10 +43,11 @@ class Plan < ActiveRecord::Base
   validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
 
-  def self.next_plan_num(job_id)
+  def self.next_plan_num(job_id, tab)
     greatest = 0
     begin
       Job.find(job_id).plans.each do |plan|
+        next if plan.tab != tab
         if plan.plan_num >= greatest
           greatest = plan.plan_num
         end
@@ -126,6 +127,7 @@ class Plan < ActiveRecord::Base
 	  		if(plan.id == self.id)
 	  			next
 	  		end
+        next if plan.tab != self.tab
   			if(plan.plan_num == self.plan_num)
   				errors.add(:plan_num, 'already exists')
   				return
@@ -139,6 +141,7 @@ class Plan < ActiveRecord::Base
 	  		if(plan.id == self.id)
 	  			next
 	  		end
+        next if plan.tab != self.tab
   			if(plan.plan_name == self.plan_name)
   				errors.add(:plan_name, 'already exists')
   				return
