@@ -31,9 +31,11 @@ PlanSource.JobRoute = Ember.Route.extend({
   },
 
   setupController: function(controller, model) {
+    var plansController = this.controllerFor('plans');
+    var tab = plansController.get('tab') || 'Plans';
     controller.set("model", model);
-    this.controllerFor('plans').set('content', model.get("plans"));
-    this.controllerFor('plans').set('job', model);
+    plansController.set('content', model.getPlansByTab(tab));
+    plansController.set('job', model);
   },
 
   renderTemplate : function(){

@@ -28,6 +28,17 @@ PlanSource.Job = Ember.Object.extend({
     Ember.setProperties(this, hash);
   },
 
+  getPlansByTab: function(tab) {
+    var plansForTab = Em.A();
+    var plans = this.get('plans');
+    for(var i = 0; i < plans.length; i++) {
+      if(plans[i].get('tab') === tab) {
+        plansForTab.pushObject(plans[i]);
+      }
+    }
+    return plansForTab;
+  },
+
 	username : function(){
 		if(this.get("user"))
     	return this.get('user').get('id') == user_id ? "Me" : this.get("user").get("fullName");
