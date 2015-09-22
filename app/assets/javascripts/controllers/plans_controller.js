@@ -23,7 +23,7 @@ PlanSource.PlansController = Ember.ArrayController.extend({
     this.updateTab();
 		plan.deleteRecord();
 		plan.save().then(function(){
-			self.updateTab();
+			self.updatePlans();
 		});
 	},
 

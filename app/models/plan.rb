@@ -89,6 +89,7 @@ class Plan < ActiveRecord::Base
 		p = Plan.find_all_by_job_id(self.job_id)
   	p.each do |plan|
   		next unless(plan.id != self.id)
+      next if plan.tab != self.tab
 			if(plan.plan_num.send(op, oldNum) && plan.plan_num.send(op2, self.plan_num))
 				plan.update_attributes(:plan_num => plan.plan_num.send(at, 1))
   		end
@@ -98,7 +99,7 @@ class Plan < ActiveRecord::Base
 		private
 
 		def highest_plan_num
-      return self.job.plans.count
+      return self.job.plans.where(tab: self.tab).count;
 		end
 
 		def plan_num_exists?
