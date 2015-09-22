@@ -14,6 +14,30 @@
         {{/manager}}
     {{/unless}}
 {{/if}}
+
+<nav class="jobs-controls">
+    {{#if isPlansTab}}
+        <a class="active">Plans</a>
+    {{else}}
+        <a {{action "changeTab" "Plans"}}>Plans</a>
+    {{/if}}
+    {{#if isShopsTab}}
+        <a class="active">Shops</a>
+    {{else}}
+        <a {{action "changeTab" "Shops"}}>Shops</a>
+    {{/if}}
+    {{#if isConsultantsTab}}
+        <a class="active">Consultants</a>
+    {{else}}
+        <a {{action "changeTab" "Consultants"}}>Consultants</a>
+    {{/if}}
+    {{#if isCalcTab}}
+        <a class="active">Calcs & Misc</a>
+    {{else}}
+        <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
+    {{/if}}
+</nav>
+
 <table class="table table-hover">
 	<thead>
 		<th>#</th>

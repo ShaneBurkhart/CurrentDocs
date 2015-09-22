@@ -1,44 +1,42 @@
 {{#each controller}}
-<tr>
-  <td>
-    {{plan_num}}
-  </td>
-  <td>
-    <p title="{{unbound plan_name}}">{{truncate plan_name}}</p>
-  </td>
-  <td>
-    {{date plan_updated_at}}
-  </td>
-  <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
-  <td>
-    <ul class="controls pull-right unstyled">
-      {{#if hasPlan}}
-        <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
-      {{/if}}
-      {{#unless controller.job.isShared}}
-        <li><a {{action "openEditPlanModal" this}}>Edit</a></li>
-        <li><a {{action "openUploadPlanModal" this}} data-id="{{unbound id}}">Upload</a></li>
-        <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
-      {{/unless}}
-    </ul>
-  </td>
-</tr>
+    <tr>
+        <td>{{plan_num}}</td>
+        <td>
+            <p title="{{unbound plan_name}}">{{truncate plan_name}}</p>
+        </td>
+        <td>{{date plan_updated_at}}</td>
+        <td>
+            <a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a>
+        </td>
+        <td>
+            <ul class="controls pull-right unstyled">
+                {{#if hasPlan}}
+                    <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+                {{/if}}
+                {{#unless controller.job.isShared}}
+                    <li><a {{action "openEditPlanModal" this}}>Edit</a></li>
+                    <li><a {{action "openUploadPlanModal" this}} data-id="{{unbound id}}">Upload</a></li>
+                    <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
+                {{/unless}}
+            </ul>
+        </td>
+    </tr>
 {{else}}
-  <tr>
-    <td>
-      {{#manager}}
-      {{#unless job.isShared}}
-      <p>You need to add a plan to your job.</p>
-      {{else}}
-      <p>The owner hasn't added any plans.</p>
-      {{/unless}}
-      {{else}}
-      <p>The owner of this plan has not added any plans.</p>
-      {{/manager}}
-    </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+    <tr>
+        <td>
+            {{#manager}}
+                {{#unless job.isShared}}
+                    <p>You need to add a plan to your job.</p>
+                {{else}}
+                    <p>The owner hasn't added any plans.</p>
+                {{/unless}}
+            {{else}}
+                <p>The owner of this plan has not added any plans.</p>
+            {{/manager}}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
 {{/each}}
