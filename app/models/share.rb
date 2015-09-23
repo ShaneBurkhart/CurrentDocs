@@ -20,7 +20,8 @@ class Share < ActiveRecord::Base
     :user_id, #invited user
     :sharer_id, #user sharing
   	:token,
-    :can_reshare
+    :can_reshare,
+    :permissions
   #job.user is the inviter
   before_create :generate_token
 

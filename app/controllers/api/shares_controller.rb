@@ -33,33 +33,45 @@ class Api::SharesController < ApplicationController
   end
 
   def batch
-    @job_id = params[:job_id]
     if(!params[:shares] || params[:shares].length < 1)
       render json: {}
       return
     end
+
+    @job_id = params[:job_id]
     @current_shares = Share.where(job_id: @job_id)
-    params[:shares].each do |i, ishare|
-      if(ishare[:checked] && ishare[:checked] != "false")
-        @share = Share.find_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
-        @new_share = @share.nil?
 
-        if @new_share
-          @share = Share.create(sharer_id: current_user.id, user_id: ishare[:user_id], job_id: @job_id)
+    params[:shares].each do |i, new_share|
+      share = Share.find_by_sharer_id_and_user_id_and_job_id(
+        current_user.id,
+        new_share[:user_id],
+        @job_id
+      )
 
-        @share.can_reshare = false;
+      if !new_share[:permissions] || new_share[:permissions] == "0"
+        share.destroy if share
+        next
+      end
 
-        @user = User.find_by_id(ishare[:user_id])
-        if @user && @new_share
-          @user.send_share_notification(@share)
+      if share.nil?
+        share = Share.create(
+          sharer_id: current_user.id,
+          user_id: new_share[:user_id],
+          job_id: @job_id,
+          can_reshare: false,
+          permissions: new_share[:permissions]
+        )
+
+        user = User.find_by_id(new_share[:user_id])
+        if user
+          user.send_share_notification(share)
         end
-
-        @share.save
       else
-        @share = Share.find_by_sharer_id_and_user_id_and_job_id(current_user.id, ishare[:user_id], @job_id)
-        @share.destroy if @share
+        share.permissions = new_share[:permissions]
+        share.save
       end
     end
+
     render json: Share.where(job_id: @job_id)
   end
 
