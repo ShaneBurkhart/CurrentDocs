@@ -6,7 +6,7 @@ class Api::SharesController < ApplicationController
     if user.can? :update, Share
       @share = Share.find(params[:id])
       if user.id == @share.sharer_id
-        @share.can_reshare = params[:share][:can_reshare] == "true" ? true : false;
+        @share.can_reshare = false;
         if @share.save
           render json: @share
         else
@@ -46,9 +46,8 @@ class Api::SharesController < ApplicationController
 
         if @new_share
           @share = Share.create(sharer_id: current_user.id, user_id: ishare[:user_id], job_id: @job_id)
-        end
 
-        @share.can_reshare = ishare[:can_reshare] || false;
+        @share.can_reshare = false;
 
         @user = User.find_by_id(ishare[:user_id])
         if @user && @new_share

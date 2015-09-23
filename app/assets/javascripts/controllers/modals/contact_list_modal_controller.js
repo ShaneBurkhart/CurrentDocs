@@ -1,6 +1,4 @@
 PlanSource.ContactListController = Ember.ArrayController.extend({
-
-  needs : ["share_job"],
   sortProperties : ['first_name'],
   sortAscending : true,
 
@@ -8,7 +6,6 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
     var button = $("#contact-share");
     button.bind("click", false);
     var shareBoxes = $("#contacts-list").find(".share-box");
-    var canReshareBoxes = $("#contacts-list").find(".can-reshare-box");
     var shares = [];
     var self = this;
 
@@ -22,18 +19,8 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
         can_reshare: false
       };
 
-      canReshareBoxes.each(function(index, reshareBox) {
-        var canReshareBox = $(reshareBox);
-        var reshareId = canReshareBox.data("id");
-        if(id === reshareId) {
-          share["can_reshare"] = canReshareBox.is(":checked");
-        }
-      });
-
       shares.push(share);
     });
-
-    console.log(shares);
 
     $.post("/api/shares/batch", {
         "job_id" : self.get("job.id"),
