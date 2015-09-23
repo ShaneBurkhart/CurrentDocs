@@ -56,7 +56,7 @@ user.save
     user_id: user.id,
     job_id: job.id,
     can_reshare: false,
-    permissions: Random.rand(7)
+    permissions: Random.rand(6) + 1
   )
 end
 
