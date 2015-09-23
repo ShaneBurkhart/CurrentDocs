@@ -47,11 +47,6 @@
               <li><a {{action "openEditJobModal" this bubbles=false}}>Edit</a></li>
               <li><a {{action "openDeleteJobModal" this bubbles=false}}>Delete</a></li>
             {{else}}
-              {{#if canReshare}}
-                <li>
-                  <a {{action "openShareJobModal" this bubbles=false}}>Share</a>
-                </li>
-              {{/if}}
               {{#unless isMyJob}}
                 <li>
                   <a {{action "openUnshareJobModal" this bubbles=false}}>Unshare</a>

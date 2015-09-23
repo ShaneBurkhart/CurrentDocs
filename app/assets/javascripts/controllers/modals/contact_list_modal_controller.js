@@ -156,14 +156,5 @@ PlanSource.ContactController = Ember.ObjectController.extend({
 
   isConsultantsChecked: function(){
     return this.isAttrChecked('hasConsultantsShared');
-  }.property(),
-
-  canResharedChecked: function(){
-    var shares = this.get("controllers.contact_list.job.shares");
-    for(var i = 0 ; i < shares.length ; i ++){
-      if(this.get("model.id") == shares[i].get("user.id"))
-        return shares[i].get("can_reshare") ? "checked" : "";
-    }
-    return "";
   }.property()
 });
