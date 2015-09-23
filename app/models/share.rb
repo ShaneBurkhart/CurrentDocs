@@ -26,7 +26,7 @@ class Share < ActiveRecord::Base
   before_create :generate_token
 
   validates :token, uniqueness: true
-  validates :job_id, :user_id, :sharer_id, presence: true
+  validates :job_id, :user_id, :sharer_id, :permissions, presence: true
   validate :check_existance
   validate :check_share_with_owner
 
