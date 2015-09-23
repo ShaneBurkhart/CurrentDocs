@@ -20,6 +20,21 @@ PlanSource.Share = Ember.Object.extend({
     this.destroy();
   },
 
+  hasPlansShared: function() {
+    var permissions = this.get('permissions') || 0;
+    return (permissions >> 2) % 2;
+  }.property('permissions'),
+
+  hasShopsShared: function() {
+    var permissions = this.get('permissions') || 0;
+    return (permissions >> 1) % 2;
+  }.property('permissions'),
+
+  hasConsultantsShared: function() {
+    var permissions = this.get('permissions') || 0;
+    return (permissions >> 0) % 2;
+  }.property('permissions'),
+
   isSharer : function(){
     if(this.get("sharer"))
       return this.get("sharer").get("id") == user_id;

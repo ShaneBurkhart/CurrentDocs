@@ -137,13 +137,25 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
 PlanSource.ContactController = Ember.ObjectController.extend({
   needs : ["contact_list"],
 
-  isSharedChecked: function(){
+  isAttrChecked: function(attr) {
     var shares = this.get("controllers.contact_list.job.shares");
     for(var i = 0 ; i < shares.length ; i ++){
-      if(this.get("model.id") == shares[i].get("user.id"))
+      if(this.get("model.id") == shares[i].get("user.id") && shares[i].get(attr))
         return "checked";
     }
     return "";
+  },
+
+  isPlansChecked: function(){
+    return this.isAttrChecked('hasPlansShared');
+  }.property(),
+
+  isShopsChecked: function(){
+    return this.isAttrChecked('hasShopsShared');
+  }.property(),
+
+  isConsultantsChecked: function(){
+    return this.isAttrChecked('hasConsultantsShared');
   }.property(),
 
   canResharedChecked: function(){
