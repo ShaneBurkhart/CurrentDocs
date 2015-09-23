@@ -24,7 +24,24 @@ user = User.new(
     company: Faker::Company.name
 )
 user.type = "Admin"
-puts user.save
+user.save
+
+(1..15).each do
+  u = User.new(
+      email: Faker::Internet.email,
+      password: "password",
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      company: Faker::Company.name,
+  )
+  u.type = "Viewer"
+  u.save
+
+  Contact.create(
+    user_id: user.id,
+    contact_id: u.id
+  )
+end
 
 (1..10).each do
   job = Job.create(
