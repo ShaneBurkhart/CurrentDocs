@@ -60,6 +60,32 @@ PlanSource.Job = Ember.Object.extend({
     return this.get("user").get("id") == user_id;
   }.property("user"),
 
+  canViewTab: function(tab) {
+    if(this.get('isMyJob')) {
+      return true;
+    }
+
+    var shares = this.get('shares');
+    for(var i = 0; i < shares.length; i++) {
+      if(shares[i].get('user.id') == user_id) {
+        return shares[i].get('has' + tab + 'Shared');
+      }
+    }
+    return false;
+  },
+
+  canViewPlansTab: function() {
+    return this.canViewTab('Plans');
+  }.property('shares.@each'),
+
+  canViewShopsTab: function() {
+    return this.canViewTab('Shops');
+  }.property('shares.@each'),
+
+  canViewConsultantsTab: function() {
+    return this.canViewTab('Consultants');
+  }.property('shares.@each'),
+
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
     var s = this.get("isShared") == false ? '0' : '1';
     return s + this.get("name").toLowerCase();
