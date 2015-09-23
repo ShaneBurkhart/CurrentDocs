@@ -16,26 +16,37 @@
 {{/if}}
 
 <nav class="jobs-controls">
-    {{#if isPlansTab}}
-        <a class="active">Plans</a>
-    {{else}}
-        <a {{action "changeTab" "Plans"}}>Plans</a>
+    {{#if canViewPlansTab}}
+        {{#if isPlansTab}}
+            <a class="active">Plans</a>
+        {{else}}
+            <a {{action "changeTab" "Plans"}}>Plans</a>
+        {{/if}}
     {{/if}}
-    {{#if isShopsTab}}
-        <a class="active">Shops</a>
-    {{else}}
-        <a {{action "changeTab" "Shops"}}>Shops</a>
+
+    {{#if canViewShopsTab}}
+        {{#if isShopsTab}}
+            <a class="active">Shops</a>
+        {{else}}
+            <a {{action "changeTab" "Shops"}}>Shops</a>
+        {{/if}}
     {{/if}}
-    {{#if isConsultantsTab}}
-        <a class="active">Consultants</a>
-    {{else}}
-        <a {{action "changeTab" "Consultants"}}>Consultants</a>
+
+    {{#if canViewConsultantsTab}}
+        {{#if isConsultantsTab}}
+            <a class="active">Consultants</a>
+        {{else}}
+            <a {{action "changeTab" "Consultants"}}>Consultants</a>
+        {{/if}}
     {{/if}}
-    {{#if isCalcTab}}
-        <a class="active">Calcs & Misc</a>
-    {{else}}
-        <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
-    {{/if}}
+
+    {{#unless isShared}}
+        {{#if isCalcTab}}
+            <a class="active">Calcs & Misc</a>
+        {{else}}
+            <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
+        {{/if}}
+    {{/unless}}
 </nav>
 
 <table class="table table-hover">
