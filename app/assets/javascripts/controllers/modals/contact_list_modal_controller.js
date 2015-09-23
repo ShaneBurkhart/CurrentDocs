@@ -5,19 +5,24 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
   shareWithContacts : function(){
     var button = $("#contact-share");
     button.bind("click", false);
-    var shareBoxes = $("#contacts-list").find(".share-box");
+    var shareBoxeGroups = $("#contacts-list").find(".share-box-group");
     var shares = [];
     var self = this;
 
-    shareBoxes.each(function(index, box){
-      var b = $(box);
-      var id = b.data("id");
+    shareBoxeGroups.each(function(i, g){
+      var group = $(g);
       var share = {
-        checked: b.is(":checked"),
-        user_id: id,
+        permissions: 0,
         job_id: self.get("job.id"),
-        can_reshare: false
       };
+
+      group.find('input.share-box').each(function(j, b) {
+        var box = $(b);
+        share.user_id = box.data('id')
+
+        var flag = box.is(":checked") ? 1 : 0;
+        share.permissions |= flag << box.data('place');
+      });
 
       shares.push(share);
     });
