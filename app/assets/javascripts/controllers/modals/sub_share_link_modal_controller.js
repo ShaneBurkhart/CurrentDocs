@@ -3,7 +3,7 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
 	sendLink : function(){
     var emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
     var host = window.location.href.split('/')[2];
-    var shareLinkUrl = 'http://' + host + '/jobs/share_link';
+    var shareLinkUrl = 'http://' + host + '/api/jobs/share_link';
 
 		var container = $("#share-link-email"),
     		email = container.val();
