@@ -33,6 +33,17 @@
                             </td>
                         </tr>
                     <% end %>
+                    <% if @job.plans.empty? %>
+                        <tr>
+                            <td>
+                                <p>The owner of this plan has not added any plans.</p>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    <% end %>
                 </tbody>
             </table>
         </div>
