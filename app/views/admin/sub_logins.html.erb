@@ -17,7 +17,7 @@
       <td><%= distance_of_time_in_words(Time.now, link.created_at) %> ago</td>
       <td>
         <div class="pull-right">
-          <%= link_to 'Delete', , method: :delete, data: {confirm: "Are you sure?"} %>
+            <%= link_to 'Delete', delete_sub_login_path(link.id), method: :delete, data: {confirm: "Are you sure you want to delete the share link with #{link.email_shared_with}?"} %>
 
         </div>
       </td>
