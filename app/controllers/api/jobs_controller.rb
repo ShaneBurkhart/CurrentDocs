@@ -69,6 +69,37 @@ class Api::JobsController < ApplicationController
     end
   end
 
+  def sub_share_link
+    if user.can? :update, Job
+      @job = get_job(params[:job_id])
+      @email_to_share_with = params[:email_to_share_with]
+
+      # TODO check the permission set in the admin panel for whether they can send links.
+      # For now, it's just anyone who owns the job.
+      if @job && user.is_my_job(@job)
+        @share_link = ShareLink.new(
+            job_id: @job.id,
+            user_id: user.id,
+            email_shared_with: @email_to_share_with
+        )
+
+        if @share_link.save()
+          UserMailer.share_link_notification(@share_link, @job, user).deliver
+          # 204 since we don't need to return any content.
+          render json: {}, status: 204
+        else
+          # Close enough to the right status.  Essentially, if it doesn't work, it was a bad
+          # request.
+          render json: {}, status: 400
+        end
+      else
+        render json: {}, status: 404
+      end
+    else
+      render_no_permission
+    end
+  end
+
   private
 
     def get_jobs
