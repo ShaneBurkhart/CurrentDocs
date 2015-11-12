@@ -1,20 +1,22 @@
 <h2>{{name}} {{#if archived}}(Archived){{/if}}</h2>
 <p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
-{{#if archived}}
-    {{#unless isShared}}
+{{#unless isShared}}
+    {{#if archived}}
         {{#manager}}
             <a href="#" {{action "unarchiveJob"}} class="button button-green">Unarchive</a>
         {{/manager}}
-    {{/unless}}
-{{else}}
-    {{#unless isShared}}
+    {{else}}
         {{#manager}}
             <a href="#" {{action "archiveJob"}} class="button button-red">Archive</a>
-            <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
             <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
         {{/manager}}
-    {{/unless}}
-{{/if}}
+    {{/if}}
+{{/unless}}
+
+{{#can_share_link}}
+    <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
+{{/can_share_link}}
+
 
 <nav class="jobs-controls">
     {{#if canViewPlansTab}}
