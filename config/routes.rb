@@ -10,6 +10,7 @@ PlanSource::Application.routes.draw do
 
   namespace :api do
     resources :jobs, except: ["new", "edit"]
+    post '/jobs/share_link' => 'jobs#sub_share_link'
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
     get '/user/contacts' => 'users#contacts'
