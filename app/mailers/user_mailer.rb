@@ -10,7 +10,7 @@ class UserMailer < ActionMailer::Base
     end
 
     def share_link_notification(share_link, job, current_user)
-	@link = "http://plansource.io/jobs/#{job.id}?share_link_token=#{share_link.token}"
+	@link = "http://plansource.io/jobs/#{job.id}/share?share_link_token=#{share_link.token}"
     @job_name = job.name
 	@subject = "#{current_user.email} shared a link to #{@job_name}!"
 	mail(to: share_link.email_shared_with, subject: @subject)
