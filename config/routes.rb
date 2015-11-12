@@ -30,6 +30,9 @@ PlanSource::Application.routes.draw do
   get "/users/signup_link/:key", to: "signup_links#edit", as: "signup_link"
   put "/users/signup_link/:key", to: "signup_links#update"
 
+  get "/admin/sub_logins" => "admin#sub_logins"
+  delete "/admin/sub_logins/:id" => "admin#delete_sub_login"
+
   match "/mobile" => "mobile#index"
   match "/app" => "app#index"
   match "/ve_pictures" => "ve_pictures#index"
