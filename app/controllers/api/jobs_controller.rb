@@ -1,5 +1,6 @@
 class Api::JobsController < ApplicationController
-  before_filter :user_not_there!
+  before_filter :user_not_there!, except: :show_sub_share_link
+  before_filter :check_share_link_token!, only: :show_sub_share_link
 
   def index
     if user.can? :read, Job
@@ -69,6 +70,17 @@ class Api::JobsController < ApplicationController
     end
   end
 
+  def show_sub_share_link
+    @job = Job.find params[:id]
+
+    if @job
+      # Record that someone opened the page
+      render :sub_share_link
+    else
+      not_found
+    end
+  end
+
   def sub_share_link
     if user.can? :update, Job
       @job = get_job(params[:job_id])
@@ -101,6 +113,12 @@ class Api::JobsController < ApplicationController
   end
 
   private
+
+    def check_share_link_token!
+        if params[:share_link_token] && ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
+            not_found
+        end
+    end
 
     def get_jobs
       # Kinda gross in the sense that it is essentiall duplicate include calls.  You can't merge them and

@@ -23,6 +23,8 @@ PlanSource::Application.routes.draw do
     post '/message' => 'messages#group'
   end
 
+  get '/jobs/:id/share' => 'api/jobs#show_sub_share_link'
+
   resources :users, only: ["index", "edit", "update", "destroy"]
   get "/users/:id/demote" => "users#demote", as: "demote"
   get "/users/signup_link/:key", to: "signup_links#edit", as: "signup_link"
