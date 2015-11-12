@@ -10,6 +10,7 @@
     {{#unless isShared}}
         {{#manager}}
             <a href="#" {{action "archiveJob"}} class="button button-red">Archive</a>
+            <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
             <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
         {{/manager}}
     {{/unless}}

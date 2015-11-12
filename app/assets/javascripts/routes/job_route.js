@@ -27,6 +27,12 @@ PlanSource.JobRoute = Ember.Route.extend({
       this.controllerFor("edit_plan").set("job", this.get("controller").get("model"));
       this.controllerFor("edit_plan").set("parent", this.controllerFor("plans"));
       this.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
+    },
+
+    openSubShareLinkModal: function(){
+      this.controllerFor("sub_share_link").set("model", this.get("controller").get("model"));
+      this.controllerFor("sub_share_link").set("parent", this.controllerFor("plans"));
+      this.render("modals/sub_share_link", {into : "jobs", outlet : "modal", controller : "sub_share_link"});
     }
   },
 
