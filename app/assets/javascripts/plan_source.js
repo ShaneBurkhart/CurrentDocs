@@ -41,6 +41,21 @@ Ember.Handlebars.registerBoundHelper ('truncate', function (str) {
   return str;
 });
 
+PlanSource.showNotification = function(msg, type) {
+  if(!type) {
+    type = 'success';
+  }
+
+  var body = [
+    '<div class="alert alert-' + type + '">',
+      '<a class="close" data-dismiss="alert">&#215;</a>',
+      '<div>' + msg + '</div>',
+    '</div>'
+  ].join("\n");
+
+  $('#site-notifications .span12').append(body);
+};
+
 $.fn.upload = function(remote, successFn, progressFn) {
 	return this.each(function() {
 
