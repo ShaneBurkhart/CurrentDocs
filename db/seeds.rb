@@ -58,6 +58,12 @@ user.save
     can_reshare: false,
     permissions: Random.rand(6) + 1
   )
+
+  ShareLink.create(
+      job_id: job.id,
+      user_id: user.id,
+      email_shared_with: Faker::Internet.email
+  )
 end
 
 (1..10).each do
