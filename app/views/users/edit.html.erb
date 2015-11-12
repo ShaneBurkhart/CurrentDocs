@@ -15,6 +15,7 @@
                                   <%= f.input :company, :required => true %>
 				  <%= f.input :email, :required => true %>
 				  <%= f.input :type, :required => true, as: :select, collection: ["Admin", "Manager", "Viewer"]%>
+				  <%= f.input :can_share_link, :required => true, as: :boolean %>
 				  <%= f.button :submit, 'Edit User', :class => 'button button-blue' %>
 				<% end %>
 			</div>

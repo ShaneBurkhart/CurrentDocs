@@ -17,6 +17,7 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     @user.type = params[:user][:type]
     params[:user].delete :type
+
     if @user.update_attributes params[:user]
       redirect_to users_path
     else
