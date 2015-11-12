@@ -85,10 +85,11 @@ class Api::JobsController < ApplicationController
     if user.can? :update, Job
       @job = get_job(params[:job_id])
       @email_to_share_with = params[:email_to_share_with]
+      @share = Share.find_by_job_id_and_user_id(params[:job_id], user.id)
 
       # TODO check the permission set in the admin panel for whether they can send links.
       # For now, it's just anyone who owns the job.
-      if @job && user.is_my_job(@job)
+      if @job && (user.is_my_job(@job) || (@share && user.can_share_link))
         # No need to create a duplicate link if we already have a link from a previous share.
         @share_link = ShareLink.find_or_create_by_job_id_and_user_id_and_email_shared_with(
             job_id: @job.id,
