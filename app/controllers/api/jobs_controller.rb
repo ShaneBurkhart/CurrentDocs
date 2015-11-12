@@ -115,7 +115,7 @@ class Api::JobsController < ApplicationController
   private
 
     def check_share_link_token!
-        if params[:share_link_token] && ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
+        if !params[:share_link_token] || !ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
             not_found
         end
     end
