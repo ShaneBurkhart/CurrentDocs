@@ -5,7 +5,7 @@ class CreateShareLinks < ActiveRecord::Migration
     	t.integer :job_id
     	t.integer :user_id
     	t.string :email_shared_with
-    	t.integer :company_name
+    	t.string :company_name
       t.timestamps
     end
   end

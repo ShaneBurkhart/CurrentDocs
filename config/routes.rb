@@ -24,6 +24,8 @@ PlanSource::Application.routes.draw do
   end
 
   get '/jobs/:id/share' => 'api/jobs#show_sub_share_link'
+  get '/share_link/company_name' => 'api/jobs#share_link_company_name'
+  post '/share_link/company_name' => 'api/jobs#set_share_link_company_name', as: "set_share_link_company_name"
 
   resources :users, only: ["index", "edit", "update", "destroy"]
   get "/users/:id/demote" => "users#demote", as: "demote"

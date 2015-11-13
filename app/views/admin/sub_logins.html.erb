@@ -2,6 +2,7 @@
 <table class="table table-striped">
   <tr>
     <th>Sharer</th>
+    <th>Job</th>
     <th>Email Shared With</th>
     <th>Last Seen</th>
     <th>Company Name</th>
@@ -11,6 +12,7 @@
   <% @share_links.each do |link| %>
     <tr>
       <td><%= link.user.email %></td>
+      <td><%= link.job.name%></td>
       <td><%= link.email_shared_with %></td>
       <td><%= distance_of_time_in_words(Time.now, link.updated_at) %> ago</td>
       <td><%= link.company_name || "N/A" %></td>

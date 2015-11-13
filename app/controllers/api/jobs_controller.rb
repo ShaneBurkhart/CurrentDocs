@@ -1,6 +1,11 @@
 class Api::JobsController < ApplicationController
-  before_filter :user_not_there!, except: :show_sub_share_link
+  before_filter :user_not_there!, except: [
+      :show_sub_share_link,
+      :share_link_company_name,
+      :set_share_link_company_name
+  ]
   before_filter :check_share_link_token!, only: :show_sub_share_link
+  before_filter :check_company_name_cookie!, only: :show_sub_share_link
 
   def index
     if user.can? :read, Job
@@ -70,6 +75,31 @@ class Api::JobsController < ApplicationController
     end
   end
 
+  # Show the form to get company name.
+  def share_link_company_name
+      if cookies[:share_link_company_name].blank?
+          render :share_link_company_name
+      else
+          redirect_to root_path
+      end
+  end
+
+  # Set a cookie for the company name then redirect to the share link.
+  def set_share_link_company_name
+      if params[:company_name].blank?
+          @error = "Company name cannot be blank."
+          render :share_link_company_name
+          return
+      end
+
+      cookies[:share_link_company_name] = params[:company_name]
+      @url = session[:share_link_to_go_back] || root_path
+      redirect_to @url
+  end
+
+  # TODO Check for cookie that contains the company name
+  # If not, redirect to page to get the name and update our table.
+  # If the cookie is set, we just want to update it right now.
   def show_sub_share_link
     @job = Job.find params[:id]
 
@@ -117,8 +147,19 @@ class Api::JobsController < ApplicationController
   private
 
     def check_share_link_token!
-        if !params[:share_link_token] || !ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
+        @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
+        if @share_link.nil?
             not_found
+        end
+    end
+
+    def check_company_name_cookie!
+        if cookies[:share_link_company_name].blank?
+            session[:share_link_to_go_back] = request.original_url
+            redirect_to share_link_company_name_path
+        else
+            @share_link.company_name = cookies[:share_link_company_name]
+            @share_link.save
         end
     end
 

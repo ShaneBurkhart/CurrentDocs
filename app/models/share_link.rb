@@ -2,6 +2,7 @@ class ShareLink < ActiveRecord::Base
     attr_accessible :job_id, :user_id, :email_shared_with
 
     belongs_to :user
+    belongs_to :job
 
     validates :token, :job_id, :user_id, :email_shared_with, presence: true
 
