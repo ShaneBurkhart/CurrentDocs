@@ -11,7 +11,7 @@
         <td>
             <ul class="controls pull-right unstyled">
                 {{#if hasPlan}}
-                    <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+                    <li><a href="{{unbound plan}}" target="_blank">View</a></li>
                 {{/if}}
                 {{#unless controller.job.isShared}}
                     <li><a {{action "openEditPlanModal" this}}>Edit</a></li>
