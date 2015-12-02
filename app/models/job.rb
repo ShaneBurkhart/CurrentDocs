@@ -11,7 +11,7 @@
 
 class Job < ActiveRecord::Base
   belongs_to :user
-  has_many :plans
+  has_many :plans, order: "plan_num ASC"
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
   attr_accessible :name, :user_id, :archived
