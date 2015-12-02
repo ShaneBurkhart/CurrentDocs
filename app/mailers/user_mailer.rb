@@ -5,6 +5,10 @@ class UserMailer < ActionMailer::Base
     def share_notification(share)
 	@share = share
 	@email = share.sharer.email
+    signup_link_model = SignupLink.find_by_user_id @share.user.id
+    if signup_link_model
+        @signup_link = signup_link_model.link
+    end
 	@subject = "#{@email} has shared a job with you!"
 	mail(to: @share.user.email, subject: @subject)
     end
