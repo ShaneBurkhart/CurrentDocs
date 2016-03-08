@@ -1,7 +1,8 @@
-<h2>Hi Mom!</h2>
-<ul>
-    <li><%= link_to "Sub Logins", admin_sub_logins_path %></li>
-</ul>
+<h2>Users</h2>
+<div class="div-padding">
+  <%= link_to "Sub Logins", admin_sub_logins_path %>
+</div>
+
 <table class="table table-striped">
   <tr>
     <th><%= link_to "Type", users_path(s: "type", r: @s == "type" && @r == 'false') %></th>
