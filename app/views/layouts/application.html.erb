@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1024">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= title yield(:title) %></title>
     <%= favicon_link_tag %>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Plansource" %>">
@@ -39,7 +40,7 @@
 
     <footer>
       <div class="container">
-        <p class="muted credit">Created By <%= link_to "Shane Burkhart", "https://github.com/ShaneBurkhart" %> for <%= link_to "VE Design Group", "http://vedesigngroup.com/" %></p>
+        <p class="muted credit"><%= link_to "VE Design Group", "http://vedesigngroup.com/" %></p>
       </div>
     </footer>
   </body>

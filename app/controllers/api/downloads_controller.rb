@@ -19,5 +19,4 @@ class Api::DownloadsController < ApplicationController
     def user_not_there!
       render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
     end
-
 end

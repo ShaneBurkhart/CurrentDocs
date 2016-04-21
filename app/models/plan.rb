@@ -42,20 +42,20 @@ class Plan < ActiveRecord::Base
   validate :check_for_duplicate_plan_name_in_job
   validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
+  # validate :ensure_plans_have_unique_plan_nums, :on => :save
+  validates_uniqueness_of :plan_num, scope: :tab
+
+  def find_all_by_job_id_and_tab(job_id, desired_tab)
+    plans = Plan.find_all_by_job_id(job)
+    relavent_plans = plans.select do |plan| # Select all plans in desired tab
+      plan.tab == desired_tab
+    end
+    return relavent_plans
+  end
 
   def self.next_plan_num(job_id, tab)
-    greatest = 0
-    begin
-      Job.find(job_id).plans.each do |plan|
-        next if plan.tab != tab
-        if plan.plan_num >= greatest
-          greatest = plan.plan_num
-        end
-      end
-      return greatest + 1
-    rescue
-      return greatest
-    end
+    plans = Plan.find_all_by_job_id_and_tab(job_id, tab)
+    return plans.count + 1
   end
 
   def delete_file
@@ -88,8 +88,8 @@ class Plan < ActiveRecord::Base
 		end
 		p = Plan.find_all_by_job_id(self.job_id)
   	p.each do |plan|
-  		next unless(plan.id != self.id)
-      next if plan.tab != self.tab
+  		next unless(plan.id != self.id) # Skip if plan.id matches current plan id
+      next if plan.tab != self.tab # Skip if the tab doesn't match.
 			if(plan.plan_num.send(op, oldNum) && plan.plan_num.send(op2, self.plan_num))
 				plan.update_attributes(:plan_num => plan.plan_num.send(at, 1))
   		end
@@ -123,17 +123,15 @@ class Plan < ActiveRecord::Base
     end
 
 		def check_for_duplicate_plan_num
-			p = Plan.find_all_by_job_id(self.job_id)
+			p = Plan.find_all_by_job_id_and_tab(self.job_id, self.plan_num)
 	  	p.each do |plan|
-	  		if(plan.id == self.id)
-	  			next
-	  		end
-        next if plan.tab != self.tab
+	  		next if (plan.id == self.id) # Skip if current plan
   			if(plan.plan_num == self.plan_num)
   				errors.add(:plan_num, 'already exists')
-  				return
+  				return false
 	  		end
 	  	end
+      return true
 		end
 
 	  def check_for_duplicate_plan_name_in_job
@@ -150,4 +148,39 @@ class Plan < ActiveRecord::Base
 	  	end
 	  end
 
+    # Attempt to solve weird indexing bug
+    def ensure_plans_have_unique_plan_nums
+      puts "Attempting to ensure plans have unique plan nums"
+      plans = Plan.find_all_by_job_id(self.id)
+      tabs = {}
+      plans.each do |plan|
+        if tabs[plan.tab] == nil
+          tabs[plan.tab] = []
+        else
+          tabs[plan.tab] << plan
+        end
+      end
+      tabs.keys do |key| # Go through all the plans per tab
+        puts "Checking #{key}"
+        plan_nums = {} # Keep track if we've seen a plan_num yet
+        plans[key].each do |plan|
+          plan_num = plan.plan_num
+          if plan_nums[plan_num] == nil # If we've never seen the num, then good
+            plan_nums[plan_num] = true
+          elsif plan_nums[plan_num] == true # If we've seen the number before, then reorder.
+            puts "ERROR: Redordering plan nums!"
+            reorder_plan_nums(plans[key])
+            return false
+          end
+        end
+      end
+      return true
+    end
+
+    def reorder_plan_nums(plans)
+      plans.each_with_index do |plan, index|
+        plan.plan_num == index + 1
+        plan.save
+      end
+    end
 end

@@ -22,6 +22,9 @@ class Job < ActiveRecord::Base
   before_destroy :destroy_plans
   before_destroy :destroy_shares
 
+
+
+
   def send_message_to_group(message)
     shared_users.each do |shared_user|
       shared_user.send_message user.email, "This message is to the #{name} group:\n\n#{message}"
@@ -48,4 +51,6 @@ class Job < ActiveRecord::Base
         errors.add(:name, 'already exists')
       end
     end
+
+
 end
