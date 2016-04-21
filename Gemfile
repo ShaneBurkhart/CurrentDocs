@@ -3,6 +3,8 @@ gem 'rails', '3.2.13'
 gem "rake", "~> 10.1.0"
 gem 'pg', "0.18.2"
 
+gem 'test-unit', '~> 3.1', '>= 3.1.7'
+
 gem "figaro", ">= 0.6.3"
 gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
@@ -33,4 +35,3 @@ group :development do
   gem "better_errors", ">= 0.7.2"
   gem "binding_of_caller", ">= 0.7.1", :platforms => [:mri_19, :rbx]
 end
-

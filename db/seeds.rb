@@ -26,6 +26,16 @@ user = User.new(
 user.type = "Admin"
 user.save
 
+user = User.new(
+  email: "test@gmail.com",
+  password: "test1234",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  company: Faker::Company.name
+)
+user.type = "Admin"
+user.save
+
 (1..15).each do
   u = User.new(
     email: Faker::Internet.email,
