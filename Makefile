@@ -14,6 +14,11 @@ run:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rake db:seed
 	docker-compose -f ${DEV_FILE} -p ${NAME} up -d
 
+up:
+	docker-machine start default
+	docker-machine env
+	eval $(docker-machine env)
+
 stop:
 	docker stop $$(docker ps -q)
 
