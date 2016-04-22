@@ -17,11 +17,16 @@ class Api::PlansController < ApplicationController
   def create
     if user.can? :create, Plan
       params["plan"].delete "updated_at"
-      params["plan"]["plan_num"] = Plan.next_plan_num(
+			next_plan_num = Plan.next_plan_num(
         params["plan"]["job_id"],
         params["plan"]["tab"]
       )
+			params["plan"]["plan_num"] = next_plan_num
+
+			puts "The current next #{params['plan']['tab']} num is #{next_plan_num}"
       @plan = Plan.new params["plan"]
+			puts "PLAN ERRORS: #{@plan.errors.full_messages}"
+
       if @plan.save
         render json: @plan
       else
@@ -37,11 +42,11 @@ class Api::PlansController < ApplicationController
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
-          @plan.set_plan_num params["plan"]["plan_num"].to_i
+					@plan.update_attribute(:plan_name, params["plan"]["plan_name"])
+					@plan.set_plan_num params["plan"]["plan_num"].to_i
           params["plan"].delete "plan_num"
         end
         params["plan"].delete "updated_at"
-        @plan.update_attributes(params["plan"])
         render json: @plan
       else
         render_no_permission

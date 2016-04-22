@@ -43,10 +43,10 @@ class Plan < ActiveRecord::Base
   validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
   # validate :ensure_plans_have_unique_plan_nums, :on => :save
-  validates_uniqueness_of :plan_num, scope: :tab
+  # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]
 
   def find_all_by_job_id_and_tab(job_id, desired_tab)
-    plans = Plan.find_all_by_job_id(job)
+    plans = Plan.find_all_by_job_id(job_id)
     relavent_plans = plans.select do |plan| # Select all plans in desired tab
       plan.tab == desired_tab
     end
@@ -77,22 +77,33 @@ class Plan < ActiveRecord::Base
 	def set_plan_num(num)
 		oldNum = self.plan_num
 		highest = highest_plan_num
-		self.plan_num = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
-		if self.plan_num == oldNum
+		newNum = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
+    puts "The new plan_num is #{self.plan_num}"
+		if newNum == oldNum
 			return #return if nothing changed
 		end
-		if self.plan_num > oldNum
-			op = ">"; at = "-"; op2 = "<="
-		else
-			op = "<";	at = "+"; op2 = ">="
-		end
-		p = Plan.find_all_by_job_id(self.job_id)
-  	p.each do |plan|
-  		next unless(plan.id != self.id) # Skip if plan.id matches current plan id
-      next if plan.tab != self.tab # Skip if the tab doesn't match.
-			if(plan.plan_num.send(op, oldNum) && plan.plan_num.send(op2, self.plan_num))
-				plan.update_attributes(:plan_num => plan.plan_num.send(at, 1))
-  		end
+    old_num_index = oldNum - 1
+    new_num_index = newNum - 1
+    p = Plan.find_all_by_job_id_and_tab(self.job_id, self.tab)
+    p = p.sort_by{ |plan| plan.plan_num }
+
+    puts "Old"
+    p.each do |plan|
+      puts plan.inspect
+    end
+
+    temp = p.at(old_num_index)
+    p.delete_at(old_num_index)
+    p = p.insert(new_num_index, temp)
+
+    puts "New"
+    p.each do |plan|
+      puts plan.inspect
+    end
+
+    p.each_with_index do |plan, index|
+      plan.plan_num = index + 1
+      plan.save
   	end
 	end
 
@@ -149,9 +160,8 @@ class Plan < ActiveRecord::Base
 	  end
 
     # Attempt to solve weird indexing bug
-    def ensure_plans_have_unique_plan_nums
+    def ensure_plans_have_unique_plan_nums(plans)
       puts "Attempting to ensure plans have unique plan nums"
-      plans = Plan.find_all_by_job_id(self.id)
       tabs = {}
       plans.each do |plan|
         if tabs[plan.tab] == nil
@@ -169,18 +179,18 @@ class Plan < ActiveRecord::Base
             plan_nums[plan_num] = true
           elsif plan_nums[plan_num] == true # If we've seen the number before, then reorder.
             puts "ERROR: Redordering plan nums!"
-            reorder_plan_nums(plans[key])
-            return false
+            return reorder_plan_nums(plans[key])
+
           end
         end
       end
-      return true
+      return plans
     end
 
     def reorder_plan_nums(plans)
       plans.each_with_index do |plan, index|
         plan.plan_num == index + 1
-        plan.save
       end
+      return plans
     end
 end

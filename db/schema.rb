@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150331234735) do
+ActiveRecord::Schema.define(:version => 20151113023429) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -23,21 +23,33 @@ ActiveRecord::Schema.define(:version => 20150331234735) do
   create_table "jobs", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "archived",   :default => false
   end
 
   create_table "plans", :force => true do |t|
     t.string   "plan_name"
     t.string   "filename"
     t.integer  "job_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "plan_num"
     t.string   "plan_file_name"
     t.string   "plan_content_type"
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
+    t.string   "tab",               :default => "Plans"
+  end
+
+  create_table "share_links", :force => true do |t|
+    t.string   "token"
+    t.integer  "job_id"
+    t.integer  "user_id"
+    t.string   "email_shared_with"
+    t.string   "company_name"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "shares", :force => true do |t|
@@ -48,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20150331234735) do
     t.string   "token"
     t.integer  "sharer_id"
     t.boolean  "can_reshare", :default => false
+    t.integer  "permissions", :default => 4
   end
 
   create_table "signup_links", :force => true do |t|
@@ -89,7 +102,8 @@ ActiveRecord::Schema.define(:version => 20150331234735) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2015-04-13 01:06:53'
+    t.datetime "last_seen",                            :default => '2016-04-22 01:12:24'
+    t.boolean  "can_share_link",                       :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
