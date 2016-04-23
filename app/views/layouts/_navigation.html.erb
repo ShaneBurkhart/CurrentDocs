@@ -1,9 +1,7 @@
-<div class="navigation navigation-dark navigation-fixed">
-  <div class="container">
+<nav class="navigation navigation-dark">
+
+  <div class="container-fluid">
     <ul>
-      <li class="<%= controller_name == "mobile" ? "active" : "" %>">
-        <%= link_to "Mobile Apps", mobile_path %>
-      </li>
 
       <div class="pull-right">
         <% if user_signed_in? %>
@@ -41,7 +39,8 @@
       </div>
     </ul>
   </div>
-</div>
+
+</nav>
 
 <div class="brand-container">
   <div class="container">

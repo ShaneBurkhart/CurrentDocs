@@ -11,7 +11,7 @@ gem 'newrelic_rpm', '3.7.1.182'
 gem 'sendgrid', '1.2.0'
 
 gem 'jquery-rails', "3.0.1"
-gem "bootstrap-sass", "2.3.0.0"
+gem 'bootstrap-sass', '3.1.1.0'
 gem 'ember-rails', "0.14.1"
 gem 'ember-source', '1.0.0.rc5' # or the version you need
 gem 'handlebars-source', '1.0.0.rc4' # or the version you need
