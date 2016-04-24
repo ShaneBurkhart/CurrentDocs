@@ -11,7 +11,7 @@ PlanSource.JobsIndexRoute = Ember.Route.extend({
 
     openMessageGroupModal : function(model){
       if(model)
-        this.controllerFor("message_group").set("model", model);
+      this.controllerFor("message_group").set("model", model);
       this.controllerFor("message_group").set("parent", this.get("controller"));
       this.render("modals/message_group", {into : "jobs", outlet : "modal", controller : "message_group"});
     },
