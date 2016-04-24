@@ -13,35 +13,46 @@
         </div>
       </div>
       <p>All contacts.  Select the ones to share with.</p>
-      <p>
-        Sort by:
-        <a class="sort-option" {{ action "changeSort" "first_name" }}>First Name</a> |
-        <a class="sort-option" {{ action "changeSort" "last_name" }}>Last Name</a> |
-        <a class="sort-option" {{ action "changeSort" "sort_email" }}>Email</a> |
-        <a class="sort-option" {{ action "changeSort" "company" }}>Company</a>
-      </p>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-control-padding">
+            Sort by
+            <a class="sort-option" {{ action "changeSort" "first_name" }}>First Name</a> |
+            <a class="sort-option" {{ action "changeSort" "last_name" }}>Last Name</a> |
+            <a class="sort-option" {{ action "changeSort" "sort_email" }}>Email</a> |
+            <a class="sort-option" {{ action "changeSort" "company" }}>Company</a>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <form id="share-search-form">
+            <input placeholder="Search..." class="form-control form-smaller form-control-padding" style="max-width:250px" id="share-search-input"/>
+          </form>
+        </div>
+      </div>
 
       <div class="scroller-xlarge">
-        <table class="table" id="contacts-list">
+        <div class="table-responsive">
+        <table class="table table-hover" id="contacts-list">
           {{#each itemController="contact"}}
-            <tr>
-              <td class="share-box-group">
-                <input class="share-box" type="checkbox" data-place="2" data-id="{{unbound id}}" {{unbound isPlansChecked}} >
-                P
-                <input class="share-box" type="checkbox" data-place="1" data-id="{{unbound id}}" {{unbound isShopsChecked}} >
-                S
-                <input class="share-box" type="checkbox" data-place="0" data-id="{{unbound id}}" {{unbound isConsultantsChecked}} >
-                C
-              </td>
-              <td>
-                {{ unbound first_name }}
-              </td>
-              <td>{{ unbound last_name}}</td>
-              <td>{{ unbound email }}</td>
-              <td>{{ unbound company }}</td>
-            </tr>
-	  {{/each}}
+          <tr>
+            <td class="share-box-group">
+              <input class="share-box" type="checkbox" data-place="2" data-id="{{unbound id}}" {{unbound isPlansChecked}} >
+              P
+              <input class="share-box" type="checkbox" data-place="1" data-id="{{unbound id}}" {{unbound isShopsChecked}} >
+              S
+              <input class="share-box" type="checkbox" data-place="0" data-id="{{unbound id}}" {{unbound isConsultantsChecked}} >
+              C
+            </td>
+            <td>
+              {{ unbound first_name }}
+            </td>
+            <td>{{ unbound last_name}}</td>
+            <td>{{ unbound email }}</td>
+            <td>{{ unbound company }}</td>
+          </tr>
+          {{/each}}
         </table>
+      </div>
       </div>
     </div>
     <div class="footer">
@@ -52,3 +63,17 @@
     </div>
   </div>
 </div>
+<script>
+$("#share-search-input").keyup(function () {
+    console.log("Searching!")
+    var filter = jQuery(this).val();
+    jQuery("#contacts-list tr").each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+});
+
+</script>

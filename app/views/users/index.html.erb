@@ -1,9 +1,21 @@
-<h2>Users</h2>
+
+<div class="container">
+  <h2>Users</h2>
+<div class="row">
+  <div class="col-sm-6">
+
 <div class="div-padding">
   <%= link_to "Sub Logins", admin_sub_logins_path %>
 </div>
-
-<table class="table table-striped">
+</div>
+<div class="col-sm-6">
+  <form id="share-search-form" class="form-control-buffer">
+    <input placeholder="Search..." class="form-control form-smaller form-control-padding" id="share-search-input"/>
+  </form>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-striped table-compact">
   <tr>
     <th><%= link_to "Type", users_path(s: "type", r: @s == "type" && @r == 'false') %></th>
     <th><%= link_to "Name", users_path(s: "name", r: @s == "name" && @r == 'false') %></th>
@@ -29,3 +41,18 @@
     </tr>
   <% end %>
 </table>
+</div>
+</div>
+<script>
+$("#share-search-input").keyup(function () {
+    console.log("Searching!")
+    var filter = jQuery(this).val();
+    jQuery("table tr").each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+});
+</script>

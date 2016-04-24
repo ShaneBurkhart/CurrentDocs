@@ -1,15 +1,20 @@
-<h1>Sub Logins</h1>
-<table class="table table-striped">
-  <tr>
-    <th>Sharer</th>
-    <th>Job</th>
-    <th>Email Shared With</th>
-    <th>Last Seen</th>
-    <th>Company Name</th>
-    <th>Shared On</th>
-    <th></th>
-  </tr>
-  <% @share_links.each do |link| %>
+<div class="container">
+  <h1>Sub Logins</h1>
+<form id="share-search-form" class="form-control-buffer">
+  <input placeholder="Search..." class="form-control form-smaller form-control-padding" id="share-search-input"/>
+</form>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tr>
+      <th>Sharer</th>
+      <th>Job</th>
+      <th>Email Shared With</th>
+      <th>Last Seen</th>
+      <th>Company Name</th>
+      <th>Shared On</th>
+      <th></th>
+    </tr>
+    <% @share_links.each do |link| %>
     <tr>
       <td><%= link.user.email %></td>
       <td><%= link.job.name%></td>
@@ -19,10 +24,25 @@
       <td><%= distance_of_time_in_words(Time.now, link.created_at) %> ago</td>
       <td>
         <div class="pull-right">
-            <%= link_to 'Delete', delete_sub_login_path(link.id), method: :delete, data: {confirm: "Are you sure you want to delete the share link with #{link.email_shared_with}?"} %>
+          <%= link_to 'Delete', delete_sub_login_path(link.id), method: :delete, data: {confirm: "Are you sure you want to delete the share link with #{link.email_shared_with}?"} %>
 
         </div>
       </td>
     </tr>
-  <% end %>
-</table>
+    <% end %>
+  </table>
+</div>
+</div>
+<script>
+$("#share-search-input").keyup(function () {
+    console.log("Searching!")
+    var filter = jQuery(this).val();
+    jQuery("table tr").each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+});
+</script>

@@ -1,6 +1,6 @@
 <nav class="navigation navigation-dark">
 
-  <div class="container">
+  <div class="container-fluid">
     <ul>
       <div class="pull-right">
         <% if user_signed_in? %>
@@ -37,47 +37,12 @@
         <% end %>
       </div>
     </ul>
-    <select></select>
 
   </div>
 </select>
 
 </nav>
-<script>
 
-// Create the dropdown base
-
-// Create default option "Go to..."
-$("<option />", {
-   "selected": "selected",
-   "value"   : "",
-   "text"    : "Go to..."
-}).appendTo("nav select");
-
-// Populate dropdown with menu items
-$("nav a").each(function() {
- var el = $(this);
-
- $("<option />", {
-     "value"   : el.attr("href"),
-     "text"    : el.text(),
-     "data-method": el.attr("data-method")
-
- }).appendTo("nav select");
-});
-
-$("nav select").change(function() {
-  var linkUrl = $(this).find("option:selected").val();
-  console.log($(this));
-  if ($(this).find("option:selected").attr("data-method") == "delete"){
-    console.log("Delete!")
-     $('<form action="'+ linkUrl  +'" method="DELETE"></form>').appendTo('body').submit();
-  }else{
-    // window.location = linkUrl
-  }
-
-});
-</script>
 
 <div class="brand-container">
   <div class="container">

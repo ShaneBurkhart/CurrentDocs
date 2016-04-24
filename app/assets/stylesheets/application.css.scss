@@ -24,15 +24,14 @@
 //   padding: 2px 6px;
 // }
 
-nav select {
-  display: none;
-}
 
 @media (max-width: 480px) {
-  nav ul     { display: none; }
-  nav select { display: inline-block; }
+  nav ul     { font-size: 0.8em; }
 }
 
+// @media (max-width: 700px) {
+//   nav ul     { font-size: 0.9em; }
+// }
 
 .container-fluid {
     padding-right: 15px;
@@ -298,5 +297,5 @@ iframe{
 }
 
 .left{
-  padding-left: 20px;
+  padding-left: 5px;
  }
