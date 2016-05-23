@@ -24,8 +24,8 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <form id="share-search-form">
-            <input placeholder="Search..." class="form-control form-smaller form-control-padding" style="max-width:250px" id="share-search-input"/>
+          <form id="share-search-form" class="pull-right">
+            <input placeholder="Search..." class="form-control form-smaller form-control-padding" style="max-width:250px" id="share-search-input-modal"/>
           </form>
         </div>
       </div>
@@ -64,7 +64,7 @@
   </div>
 </div>
 <script>
-$("#share-search-input").keyup(function () {
+$("#share-search-input-modal").keyup(function () {
     console.log("Searching!")
     var filter = jQuery(this).val();
     jQuery("#contacts-list tr").each(function () {
@@ -75,5 +75,4 @@ $("#share-search-input").keyup(function () {
         }
     });
 });
-
 </script>
