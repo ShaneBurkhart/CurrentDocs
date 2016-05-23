@@ -32,7 +32,7 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
     }).done(function(data){
       PlanSource.showNotification('Successfully sent link to ' + email + '.');
     }).fail(function(data){
-      PlanSource.showNotification('Failed to send link to ' + email + '.', "error");
+      PlanSource.showNotification('Failed to send link to ' + email + '.', "warning");
     });
     this.send('close');
 	},
