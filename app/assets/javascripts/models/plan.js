@@ -8,6 +8,13 @@ PlanSource.Plan = Ember.Object.extend({
     this.destroy();
   },
 
+  getPlanURI: function(){
+    var planURL = this.get('plan');
+    console.log("Here's the plan: " + planURL);
+    return planURL;
+
+  }.property("plan"),
+
   save : function(){
     if(this.get("isDestroyed") || this.get("isDestroying")){
       return this._deleteRequest();
