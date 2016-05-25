@@ -1,6 +1,7 @@
 <h2>{{name}} {{#if archived}}(Archived){{/if}}</h2>
 <p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
-{{#unless isShared}}
+<div>
+  {{#unless isShared}}
     {{#if archived}}
         {{#manager}}
             <a href="#" {{action "unarchiveJob"}} class="button button-green">Unarchive</a>
@@ -17,10 +18,11 @@
         <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
     {{/can_share_link}}
 {{/unless}}
+  <input placeholder="Search..." class="form-control form-smaller form-control-padding pull-right" style="max-width:250px" id="search-input"/>
+</div>
 
 
-
-<nav class="jobs-controls">
+<nav id="jobs-nav" class="jobs-controls">
     {{#if canViewPlansTab}}
         {{#if isPlansTab}}
             <a class="active">Plans</a>
@@ -54,7 +56,7 @@
     {{/unless}}
 </nav>
 
-<div class="table-responsive">
+<div class="table-responsive" id="plan-table">
   <table class="table table-hover">
   	<thead>
   		<th>#</th>
@@ -70,17 +72,47 @@
 </div>
 
 <script>
-  $(document).ready(function(){
-    $(".table-row-button").click(function(e){
-      if (e.target.nodeName != "A") {
-        console.log(this.getAttribute("data-link"));
-        window.open(this.getAttribute("data-link"), '_blank');
+  var readyTableLinks = function(){
+    // console.log("Loading table links")
+    $("tr").click(function(e){
+      // console.log("clicked!");
+      if($(this).hasClass("table-row-button")){
+        if (e.target.nodeName != "A") { // Make sure normal links still function
+          console.log(this.getAttribute("data-link"));
+          window.open(this.getAttribute("data-link"), '_blank');
+        }
       }
     });
-    // $(".table-row-button a").click(function(e){
-    //   e.stopPropagation();
-    //   return true
-    // });
+  }
 
+  // When the tree changes, we need to make sure the rows can still be selected
+  $("#plan-table").bind("DOMSubtreeModified", function(){
+    readyTableLinks();
+  });
+
+  $(document).ready(function(){
+    readyTableLinks();
+  });
+</script>
+<script>
+  function toggleResults(filter){
+    jQuery("table tr").not('thead tr').each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+  }
+
+  $("#search-input").keyup(function () {
+      console.log("Searching!")
+      var filter = jQuery(this).val();
+      toggleResults(filter);
+  });
+  $('#jobs-nav').bind('DOMSubtreeModified', function(e) {
+      console.log("Triggered")
+      var filter = $("#search-input").val();
+      toggleResults(filter);
   });
 </script>

@@ -53,6 +53,7 @@ PlanSource.Plan = Ember.Object.extend({
             }}
         }).then(function(data){
           self.setProperties(data.plan);
+          
         })
       );
     });
