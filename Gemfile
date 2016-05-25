@@ -10,6 +10,9 @@ gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
 gem 'sendgrid', '1.2.0'
 
+gem 'pdfjs_rails'
+
+
 gem 'jquery-rails', "3.0.1"
 gem 'bootstrap-sass', '3.1.1.0'
 gem 'ember-rails', "0.14.1"
