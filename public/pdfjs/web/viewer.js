@@ -4473,5 +4473,3 @@ window.addEventListener('afterprint', function afterPrint(evt) {
     PDFView.animationStartedPromise.resolve();
   });
 })();
-
-
