@@ -2,8 +2,8 @@
 	<div class="container">
 
 		<div id="login-form">
-		<div class="row">
-			<div class="col-sm-6">
+			<div class="row">
+				<div class="col-sm-6">
 
 					<h2>Sign in</h2>
 					<%= simple_form_for(@user, url: user_session_url, html: {class: "form-vertical"}) do |f| %>
@@ -21,36 +21,37 @@
 					</fieldset>
 					<% end %>
 				</div>
-			
-			<div class="col-sm-6">
-				<div class="span5 offset2">
-					<h2>Sign up</h2>
-					<%= simple_form_for(@user, url: user_registration_url, html: {class: "form-vertical"}) do |f| %>
 
-					<fieldset class="form-group">
-						<%= f.input_field :first_name, placeholder: "First", class: "input-block-level form-control" %>
+				<div class="col-sm-6">
+					<div class="span5 offset2">
+						<h2>Sign up</h2>
+						<%= simple_form_for(@user, url: user_registration_url, html: {class: "form-vertical"}) do |f| %>
 
-					</fieldset>
-					<fieldset class="form-group">
+						<fieldset class="form-group">
+							<%= f.input_field :first_name, placeholder: "First", class: "input-block-level form-control" %>
 
-						<%= f.input_field :last_name, placeholder: "Last", class: "input-block-level form-control" %>
+						</fieldset>
+						<fieldset class="form-group">
 
-					</fieldset>
+							<%= f.input_field :last_name, placeholder: "Last", class: "input-block-level form-control" %>
 
-					<fieldset class="form-group">
-						<%= f.input_field :company, placeholder: "Company", class: "input-block-level form-control" %>
-					</fieldset>
-					<fieldset class="form-group">
-						<%= f.input_field :email, placeholder: "Email", class: "input-block-level form-control" %>
-					</fieldset>
-					<fieldset class="form-group">
-						<%= f.input_field :password, placeholder: "Password", class: "input-block-level form-control" %>
-					</fieldset>
-					<fieldset class="form-group">
+						</fieldset>
 
-						<%= f.button :submit, "Sign up", class: "btn-primary btn-block btn-large form-control" %>
-					</fieldset>
-					<% end %>
+						<fieldset class="form-group">
+							<%= f.input_field :company, placeholder: "Company", class: "input-block-level form-control" %>
+						</fieldset>
+						<fieldset class="form-group">
+							<%= f.input_field :email, placeholder: "Email", class: "input-block-level form-control" %>
+						</fieldset>
+						<fieldset class="form-group">
+							<%= f.input_field :password, placeholder: "Password", class: "input-block-level form-control" %>
+						</fieldset>
+						<fieldset class="form-group">
+
+							<%= f.button :submit, "Sign up", class: "btn-primary btn-block btn-large form-control" %>
+						</fieldset>
+						<% end %>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -11,6 +11,7 @@
         <td>
             <ul class="controls pull-right unstyled">
                 {{#if hasPlan}}
+                    <li><a href="/view/{{unbound plan}}" target="_blank">JS View</a></li>
                     <li><a href="{{unbound plan}}" target="_blank">View</a></li>
                 {{/if}}
                 {{#unless controller.job.isShared}}
