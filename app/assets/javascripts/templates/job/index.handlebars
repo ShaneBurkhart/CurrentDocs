@@ -71,11 +71,16 @@
 
 <script>
   $(document).ready(function(){
-    $(".table-row-button").each(function(){
-      this.addEventListener('click', function(){
+    $(".table-row-button").click(function(e){
+      if (e.target.nodeName != "A") {
         console.log(this.getAttribute("data-link"));
         window.open(this.getAttribute("data-link"), '_blank');
-      });
+      }
     });
+    // $(".table-row-button a").click(function(e){
+    //   e.stopPropagation();
+    //   return true
+    // });
+
   });
 </script>
