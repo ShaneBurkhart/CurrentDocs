@@ -68,3 +68,14 @@
   	</tbody>
   </table>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $(".table-row-button").each(function(){
+      this.addEventListener('click', function(){
+        console.log(this.getAttribute("data-link"));
+        window.open(this.getAttribute("data-link"), '_blank');
+      });
+    });
+  });
+</script>
