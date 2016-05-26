@@ -30,6 +30,7 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
           'email_to_share_with': email
         }
     }).done(function(data){
+			console.log("Sent email link.")
       PlanSource.showNotification('Successfully sent link to ' + email + '.');
     }).fail(function(data){
       PlanSource.showNotification('Failed to send link to ' + email + '.', "warning");

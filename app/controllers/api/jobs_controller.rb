@@ -129,6 +129,8 @@ class Api::JobsController < ApplicationController
 
         if @share_link
           UserMailer.share_link_notification(@share_link, @job, user).deliver
+          flash[:notice] = "Successfully sent share link."
+
           # 204 since we don't need to return any content.
           render json: {}, status: 204
         else
