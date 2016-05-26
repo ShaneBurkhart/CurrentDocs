@@ -59,7 +59,7 @@ PlanSource.showNotification = function(msg, type) {
     '</div>'
   ].join("\n");
 
-  $('#site-notifications .span12').append(body);
+  $('#site-notifications .col-sm-12').append(body);
 };
 
 $.fn.upload = function(remote, successFn, progressFn) {
