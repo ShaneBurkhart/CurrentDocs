@@ -62,7 +62,11 @@
   <table class="table table-hover">
   	<thead>
   		<th>#</th>
-  		<th>Plan Name</th>
+      {{#if isShopsTab}}
+        <th>Description</th>
+      {{else}}
+        <th>Plan Name</th>
+      {{/if}}
   		<th>Updated</th>
   		<th>Download File</th>
   		<th class="text-right">Controls</th>
