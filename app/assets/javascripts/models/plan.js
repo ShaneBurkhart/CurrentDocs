@@ -1,5 +1,4 @@
 PlanSource.Plan = Ember.Object.extend({
-
   hasPlan: function() {
     return this.get("plan_file_name") != null && this.get("plan_file_name") != "";
   }.property("plan_file_name"),
