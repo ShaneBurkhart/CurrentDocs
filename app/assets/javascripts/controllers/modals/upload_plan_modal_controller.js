@@ -19,11 +19,11 @@ PlanSource.UploadPlanController = PlanSource.ModalController.extend({
 		var plan_id = this.get("id");
 		$("#plan_id").val(plan_id);
 		$("#plan_source_upload_form").upload("/api/upload", function(){
-       $(".loading").slideUp(75);
-       self.get("parent").updatePlans();
+        	$(".loading").slideUp(75);
+        	self.get("parent").updatePlans();
 		}, function(p){
-      $(".loading").slideDown(75);
-      $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
+      	$(".loading").slideDown(75);
+      	$(".loading-percent").text(Math.floor(p.loaded/p.total*100));
 		});
 		file.val("");
 		this.send("close");

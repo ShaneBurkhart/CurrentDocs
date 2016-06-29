@@ -18,7 +18,28 @@
 		<div class="footer">
 			<div class="buttons">
 				<a class="button button-blue" {{action "editPlan" target=controller}} >Change</a>
+			</div>
+		</div>
+		<div class="header">
+			<p class="title">Upload a file</p>
+		</div>
+		<div class="body">
+			<p>Select a file to upload.</p>
+			<form enctype="multipart/form-data" id="plan_source_upload_form">
+				<input type="hidden" name="plan_id" id="plan_id">
+				<div class="control-group">
+					<div class="controls">
+						<span class="help-inline"></span>
+						<br>
+						<input type="file" name="file" id="file">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="footer">
+			<div class="buttons">
 				<a class="button" {{action "close"}}>Cancel</a>
+				<a class="button button-blue" {{action "uploadPlan" target=controller}} >Upload</a>
 			</div>
 		</div>
 	</div>
