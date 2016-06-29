@@ -4,13 +4,18 @@ class Api::UploadsController < ApplicationController
 	def create
 		u = params[:file]
 		plan = Plan.find(params[:plan_id])
-		plan.filename = u.original_filename
 		# puts "plan:\t#{plan.inspect}"
 		# puts "u:\t#{u.inspect}"
-		if plan.plan
+		if plan.filename
 			# Already got a plan, need to make plan file history
-			
+			relevant_attr = ['plan_name', 'job_id', 'tab', 'filename', 'plan_num', 'csi']
+			new_data = plan.attributes.select{ |key, _| relevant_attr.include? key }
+			new_data["plan_id"] = plan.id
+			plan_record = PlanRecord.new(new_data)
+			plan_record.plan_record = plan.plan
+			plan_record.save
 		end
+		plan.filename = u.original_filename
 		plan.plan = u
 
 
@@ -21,7 +26,6 @@ class Api::UploadsController < ApplicationController
 			puts "Didn't Saved File"
 			render :text => "Bad one"
 		end
-		puts "savrhegvhh"
 	end
 
 	private

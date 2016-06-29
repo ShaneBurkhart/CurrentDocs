@@ -13,6 +13,7 @@ PlanSource::Application.routes.draw do
     post '/jobs/share_link' => 'jobs#sub_share_link'
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
+    get '/plans/records/:id' => 'plans#plan_records'
     get '/user/contacts' => 'users#contacts'
     post '/user/contacts' => 'users#add_contacts'
     resources :shares, only: ["create", "destroy", "update"]
