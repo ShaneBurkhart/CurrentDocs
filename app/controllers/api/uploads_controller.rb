@@ -5,7 +5,15 @@ class Api::UploadsController < ApplicationController
 		u = params[:file]
 		plan = Plan.find(params[:plan_id])
 		plan.filename = u.original_filename
+		# puts "plan:\t#{plan.inspect}"
+		# puts "u:\t#{u.inspect}"
+		if plan.plan
+			# Already got a plan, need to make plan file history
+			
+		end
 		plan.plan = u
+
+
 		if plan.save
 			puts "Saved File"
 			render :text => "Good one"
@@ -13,6 +21,7 @@ class Api::UploadsController < ApplicationController
 			puts "Didn't Saved File"
 			render :text => "Bad one"
 		end
+		puts "savrhegvhh"
 	end
 
 	private
