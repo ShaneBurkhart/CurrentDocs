@@ -1,17 +1,4 @@
-Models
-	-User
-		-name, email, password
-	-Job: A "folder" for all of the plans
-		-name, user_id
-	-Plan: A PDF document
-		-job_id, filename, page_name
-	-Assignment: List of all the jobs users can see
-		-job_id, user_id
+Welcome to PlanSource
 
-Controllers
-	-Home
-		-index
-	-Jobs: shows list of jobs and specific job plans
-		-index: show all to a user
-		-show: show specific job with plans
-		-create, new, edit
+Managed by [Drew Wetherington](https://github.com/DrewWeth)
+Previously managed by [Shane Burkhart](https://github.com/ShaneBurkhart)
