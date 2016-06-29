@@ -22,10 +22,11 @@ PlanSource.Plan = Ember.Object.extend({
     this.destroy();
   },
 
-  allRecords:function(){
-    PlanSource.PlanRecord._getPlanRecordsFromServer(400);
+  planRecords:function(){
+    PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
     return PlanSource.PlanRecord.planRecords;
-  }.property('allRecords'),
+    // return ['ello', 'mas', 'amigos']
+  }.property('planRecords'),
 
   save : function(){
     if(this.get("isDestroyed") || this.get("isDestroying")){

@@ -33,7 +33,7 @@ PlanSource.PlanRecord.reopenClass({
         that._clearPlanRecords();
         console.log(data);
         data.plans.forEach(function(planRecord){
-          that.planRecords.pushObject(PlanSource.PlanRecord.create(planRecord));
+          that.planRecords.pushObject(PlanSource.PlanRecord.create(planRecord.plans));
         });
         return that.planRecords;
       }));

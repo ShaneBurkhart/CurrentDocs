@@ -1,4 +1,4 @@
-<div class="modal-wrapper">
+<div class="modal modal-wrapper">
 	<div class="overlay"></div>
 	<div class="dialog box box-border">
 		<div class="header">
@@ -41,12 +41,23 @@
 		<div class="footer">
 			<div class="buttons">
 				<a class="button" {{action "close"}}>Cancel</a>
-				<a class="button button-blue" {{action "uploadPlan" target=controller}} >Upload</a>
+				<a class="button button-blue" {{action "uploadPlan"}} >Upload</a>
 			</div>
 		</div>
+		<div class="header">
+			<p class="title">Plan History</p>
+		</div>
 		<div class="body">
-			<p>Plan History</p>
-			{{log allRecords}}
+			<!-- {{log this}} -->
+			{{#each planRecords}}
+				<div>
+					<a href="/api/plans/embedded/{{unbound this.id}}?type=record" target="_blank">{{this.filename}}</a><span class="pull-right"> changed {{date updated_at }}</span>
+				</div>
+			{{else}}
+				<div>
+					This plan has no plan history.
+				</div>
+			{{/each}}
 		</div>
 	</div>
 </div>

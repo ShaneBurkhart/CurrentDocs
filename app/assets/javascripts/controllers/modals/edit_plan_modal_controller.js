@@ -71,7 +71,6 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.editPlan();
-            this.uploadPlan();
 	}
 
 

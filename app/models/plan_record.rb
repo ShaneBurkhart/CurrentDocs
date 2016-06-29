@@ -1,6 +1,7 @@
 include Common
 class PlanRecord < ActiveRecord::Base
   belongs_to :plan
+  belongs_to :job
 
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()
 
@@ -11,9 +12,10 @@ class PlanRecord < ActiveRecord::Base
   end
 
   # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
-  attr_accessor :plan_record_file_name
-  attr_accessible :job_id, :plan_id, :plan_name, :plan_num, :tab, :csi, :filename
-  validates :plan_id, :plan_name, :tab, presence: true
+
+  validates :plan_record, attachment_presence: true
+  attr_accessible :plan_id, :filename, :plan_updated_at, :plan_record_file_name, :plan_record
+  validates :plan_id, presence: true
   before_destroy :delete_file
   # validate :ensure_plans_have_unique_plan_nums, :on => :save
   # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]
