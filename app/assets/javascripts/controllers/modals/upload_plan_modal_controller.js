@@ -12,10 +12,10 @@ PlanSource.UploadPlanController = PlanSource.ModalController.extend({
 			return;
 		}
 		var parts = file.val().split("\.");
-		if(parts[parts.length - 1].toLowerCase() != "pdf"){
-			this.error("#file", "The file must be a PDF!");
-			return;
-		}
+		// if(parts[parts.length - 1].toLowerCase() != "pdf"){
+		// 	this.error("#file", "The file must be a PDF!");
+		// 	return;
+		// }
 		var plan_id = this.get("id");
 		$("#plan_id").val(plan_id);
 		$("#plan_source_upload_form").upload("/api/upload", function(){

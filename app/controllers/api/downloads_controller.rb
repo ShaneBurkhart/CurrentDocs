@@ -15,7 +15,7 @@ class Api::DownloadsController < ApplicationController
 		else
 			data = open(plan.plan.url)
 		end
-  		send_data data.read, filename: plan.filename, type: "application/pdf", stream: 'true', buffer_size: '4096'
+  		send_data data.read, filename: plan.filename, stream: 'true', buffer_size: '4096'
 		#f = plan.plan.path
 		#send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end

@@ -35,7 +35,7 @@ class Plan < ActiveRecord::Base
     has_attached_file :plan
   end
 
-  validates_attachment_content_type :plan, :content_type => %w(application/pdf)
+  # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
   attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab
   validates :job_id, :plan_num, :plan_name, :tab, presence: true
