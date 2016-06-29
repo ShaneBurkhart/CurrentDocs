@@ -2,15 +2,16 @@
 	<div class="overlay"></div>
 	<div class="dialog box box-border">
 		<div class="header">
-			<p class="title">Edit your plan.</p>
+			<p class="title">Edit your plan</p>
 		</div>
 		<div class="body">
 			<div class="control-group">
 				<div class="controls">
 					<p>Enter a new number and name for this plan.</p>
 					{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" class="short" }}
+					{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" }}
 					{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
-					<span class="help-inline"></span>
+					<div class="help-inline"></div>
 				</div>
 			</div>
 		</div>

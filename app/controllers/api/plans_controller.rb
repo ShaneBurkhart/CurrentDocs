@@ -43,6 +43,12 @@ class Api::PlansController < ApplicationController
       if current_user.is_my_plan @plan
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
 					@plan.update_attribute(:plan_name, params["plan"]["plan_name"])
+          csi = params["plan"]["csi"]
+          if csi == 0 || csi == nil || csi == ""
+            @plan.update_attribute(:csi, nil)
+          else
+            @plan.update_attribute(:csi, csi.to_i)
+          end
 					@plan.set_plan_num params["plan"]["plan_num"].to_i
           params["plan"].delete "plan_num"
         end

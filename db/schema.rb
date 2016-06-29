@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151113023429) do
+ActiveRecord::Schema.define(:version => 20160628022226) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20151113023429) do
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
     t.string   "tab",               :default => "Plans"
+    t.string   "csi"
   end
 
   create_table "share_links", :force => true do |t|
@@ -102,7 +103,7 @@ ActiveRecord::Schema.define(:version => 20151113023429) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2016-04-22 01:12:24'
+    t.datetime "last_seen",                            :default => '2016-06-28 02:15:36'
     t.boolean  "can_share_link",                       :default => false
   end
 

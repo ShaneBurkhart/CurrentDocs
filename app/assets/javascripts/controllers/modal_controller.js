@@ -2,8 +2,8 @@ PlanSource.ModalController = Ember.ObjectController.extend({
 
   error : function(input_id, msg){
     var text = $(input_id).siblings(".help-inline"),
-      cont = text.parent().parent();
-    cont.addClass("error");
+    cont = text.parent().parent();
+    text.addClass("error margin-top-20");
     text.text(msg);
   },
 

@@ -57,21 +57,7 @@
         {{/if}}
     {{/unless}}
 </nav>
-
-<div class="table-responsive" id="plan-table">
-  <table class="table table-hover">
-  	<thead>
-  		<th>#</th>
-  		<th>Plan Name</th>
-  		<th>Updated</th>
-  		<th>Download File</th>
-  		<th class="text-right">Controls</th>
-  	</thead>
-  	<tbody>
-  	   {{outlet}}
-  	</tbody>
-  </table>
-</div>
+{{outlet}}
 
 <script>
   var readyTableLinks = function(){
@@ -113,7 +99,7 @@
       toggleResults(filter);
   });
   $('#jobs-nav').bind('DOMSubtreeModified', function(e) {
-      console.log("Triggered")
+      // console.log("Triggered")
       var filter = $("#search-input").val();
       toggleResults(filter);
   });

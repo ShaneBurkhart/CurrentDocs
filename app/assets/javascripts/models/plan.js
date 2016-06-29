@@ -4,6 +4,14 @@ PlanSource.Plan = Ember.Object.extend({
     return this.get("plan_file_name") != null && this.get("plan_file_name") != "";
   }.property("plan_file_name"),
 
+  belongsToShops: function() {
+    if (this.get("tab") === 'Shops'){
+      return true;
+    }else{
+      return false;
+    }
+  }.property('belongsToShops'),
+
   deleteRecord : function(){
     this.destroy();
   },
@@ -27,6 +35,7 @@ PlanSource.Plan = Ember.Object.extend({
             type: 'POST',
             data : { plan : {
             	plan_name : self.get("plan_name"),
+              csi : self.get("csi"),
             	job_id : self.get("job").get("id"),
               tab: self.get('tab')
             }}
@@ -49,6 +58,7 @@ PlanSource.Plan = Ember.Object.extend({
             type: 'PUT',
             data : { plan : {
             	plan_num : self.get("plan_num"),
+              csi : self.get("csi"),
             	plan_name : self.get("plan_name")
             }}
         }).then(function(data){

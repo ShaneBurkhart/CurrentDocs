@@ -5,7 +5,9 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
-    		num = $("#edit-plan-num").val();
+    		num = $("#edit-plan-num").val(),
+            csi = $("#edit-plan-csi").val();
+
     this.clearAllErrors();
     this.clearAllInfo();
     if(!num.match(/^(0|[1-9]\d*)$/)){
@@ -18,6 +20,14 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     }
     if(name && name != "")
     	this.get("model").set("plan_name", name);
+
+    // Ensure CSI code is either empty or a six digit number.
+    if( csi != "" && ( !csi.match(/^(0|[1-9]\d*)$/) || csi.length != 6)) {
+        this.error("#edit-plan-csi", "Must be six digit number or empty.");
+        return;
+    }else{
+        this.get("model").set("csi", csi);
+    }
     if(num && num != "")
     	this.get("model").set("plan_num", num);
 		this.get("model").save().then(function(){

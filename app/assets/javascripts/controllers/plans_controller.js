@@ -3,6 +3,20 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	sortProperties: ['plan_num'],
   sortAscending: true,
 
+  sort: function(sortProperty){    
+    if (sortProperty == this.sortProperties[0]){
+      if (this.sortAscending == true){
+        this.set("sortAscending", false);
+      }
+      else{
+        this.set("sortAscending", true);
+      }
+    }else{
+      this.set("sortAscending", true);
+    }
+    this.set('sortProperties', [sortProperty]);
+  },
+
   addPlan : function(plan){
   	if(this.planExists(plan)) return false;
   	var self = this;

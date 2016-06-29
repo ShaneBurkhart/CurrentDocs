@@ -1,0 +1,152 @@
+Searching 400 files for "help-inline"
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modal_controller.js:
+    2  
+    3    error : function(input_id, msg){
+    4:     var text = $(input_id).siblings(".help-inline"),
+    5        cont = text.parent().parent();
+    6      cont.addClass("error");
+    .
+    9  
+   10    clearError : function(input_id, msg){
+   11:     var text = $(input_id).siblings(".help-inline"),
+   12        cont = text.parent().parent();
+   13        cont.removeClass("error");
+   ..
+   16  
+   17    clearAllErrors : function(){
+   18:     var errors = $(".control-group").find("controls").find(".help-inline");
+   19      errors.each(function(e){
+   20        e.text("");
+   ..
+   24  
+   25    info : function(input_id, msg){
+   26:     var text = $(input_id).siblings(".help-inline"),
+   27        cont = text.parent().parent();
+   28      cont.addClass("info");
+   ..
+   31  
+   32    clearInfo : function(input_id, msg){
+   33:     var text = $(input_id).siblings(".help-inline"),
+   34        cont = text.parent().parent();
+   35        cont.removeClass("info");
+   ..
+   38  
+   39    clearAllInfo : function(){
+   40:     var infos = $(".control-group").find("controls").find(".help-inline");
+   41      infos.each(function(info){
+   42        info.text("");
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/contact_list_modal_controller.js:
+   89  
+   90    error : function(input_id, msg){
+   91:     var text = $(input_id).siblings(".help-inline"),
+   92          cont = text.parent().parent();
+   93      cont.addClass("error");
+   ..
+   96  
+   97    clearError : function(input_id, msg){
+   98:     var text = $(input_id).siblings(".help-inline"),
+   99          cont = text.parent().parent();
+  100      cont.removeClass("error");
+  ...
+  103  
+  104    clearAllErrors : function(){
+  105:     var errors = $(".control-group").find("controls").find(".help-inline");
+  106      errors.each(function(e){
+  107        e.text("");
+  ...
+  111  
+  112    info : function(input_id, msg){
+  113:     var text = $(input_id).siblings(".help-inline"),
+  114        cont = text.parent().parent();
+  115      cont.addClass("info");
+  ...
+  118  
+  119    clearInfo : function(input_id, msg){
+  120:     var text = $(input_id).siblings(".help-inline"),
+  121        cont = text.parent().parent();
+  122      cont.removeClass("info");
+  ...
+  125  
+  126    clearAllInfo : function(){
+  127:     var infos = $(".control-group").find("controls").find(".help-inline");
+  128      infos.each(function(info){
+  129        info.text("");
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/edit_job_modal_controller.js:
+   24  
+   25  	jobError : function(error){
+   26: 		var text = $("#edit-job-name").siblings(".help-inline"),
+   27  			cont = text.parent().parent();
+   28  		cont.addClass("error");
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/add_job.handlebars:
+   10  				<div class="controls">
+   11  					{{ view PlanSource.TextField placeholder="Job name" focus=true id="new-job-name" }}
+   12: 					<span class="help-inline"></span>
+   13  				</div>
+   14  			</div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/add_plan.handlebars:
+   10  				<div class="controls">
+   11  					{{ view PlanSource.TextField placeholder="Plan name" focus=true id="new-plan-name" }}
+   12: 					<span class="help-inline"></span>
+   13  				</div>
+   14  			</div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/contact_list.handlebars:
+   10            {{ view PlanSource.TextField placeholder="share@email.com" focus=true id="contact-email" autocomplete=true }}
+   11            <a class="button button-inline" {{ action "addContact" target="controller" }}>+ Add Contact</a>
+   12:           <span class="help-inline"></span>
+   13          </div>
+   14        </div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/edit_job.handlebars:
+   10  					<p>Enter a new name for this job.</p>
+   11  					{{ view PlanSource.TextField placeholder="Job name" focus=true id="edit-job-name" modelAttr="name" }}
+   12: 					<span class="help-inline"></span>
+   13  				</div>
+   14  			</div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/edit_plan.handlebars:
+   12  					{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" }}
+   13  					{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
+   14: 					<span class="help-inline"></span>
+   15  				</div>
+   16  			</div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/sub_share_link.handlebars:
+   10  				<div class="controls">
+   11  					{{ view PlanSource.TextField placeholder="user@domain.com" focus=true id="share-link-email" }}
+   12: 					<span class="help-inline"></span>
+   13  				</div>
+   14  			</div>
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/templates/modals/upload_plan.handlebars:
+   11  				<div class="control-group">
+   12  					<div class="controls">
+   13: 						<span class="help-inline"></span>
+   14  						<br>
+   15  						<input type="file" name="file" id="file">
+
+/Users/ReidWeth/PlanSource/config/initializers/simple_form_bootstrap.rb:
+    7      b.wrapper :tag => 'div', :class => 'controls' do |ba|
+    8        ba.use :input
+    9:       ba.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+   10        ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
+   11      end
+   ..
+   21        end
+   22        input.use :hint,  :wrap_with => { :tag => 'span', :class => 'help-block' }
+   23:       input.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+   24      end
+   25    end
+   ..
+   34        end
+   35        input.use :hint,  :wrap_with => { :tag => 'span', :class => 'help-block' }
+   36:       input.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+   37      end
+   38    end
+
+23 matches across 11 files
