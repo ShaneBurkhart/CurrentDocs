@@ -8,8 +8,14 @@ class Api::DownloadsController < ApplicationController
 			render :text => "No File Exists!!"
 			return
 		end
-		data = open(plan.plan.url)
-  	send_data data.read, filename: plan.filename, type: "application/pdf", stream: 'true', buffer_size: '4096'
+		if Rails.env.development?
+			path = File.join(Rails.root, 'public/system/plans/plans/000/000/', plan.id.to_s, '/original', plan.plan_file_name)
+			puts "PATH: #{path}"
+			data = open(path)
+		else
+			data = open(plan.plan.url)
+		end
+  		send_data data.read, filename: plan.filename, type: "application/pdf", stream: 'true', buffer_size: '4096'
 		#f = plan.plan.path
 		#send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end

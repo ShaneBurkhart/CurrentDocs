@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
-    <title>PlanSource | <%= @plan.plan_name %></title>
+    <title><%= @plan.filename %></title>
+    <%= favicon_link_tag %>
+
     <style type="text/css">
     html{
       height: 100%;
     }
     </style>
   </head>
-  <body style="height: 100%;">
+  <body style="height: 100%;margin:0">
     <embed src="<%= @plan.plan.url %>&view=FitH" type="application/pdf" width="100%" height="100%" style="height: 100%;">
   </body>
 </html>

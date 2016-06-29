@@ -6,15 +6,14 @@
             <th {{action "sort" "csi"}}><a>CSI</a></th>
         {{/if}}
         <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
-        <th {{action "sort" "updated"}}><a>Updated</a></th>
-        <th>Download File</th>
+        <th {{action "sort" "updated_at"}}><a>Updated</a></th>
+        <th {{action "sort" "filename"}}><a>Download File</a></th>
         <th class="text-right">Controls</th>
     </thead>
     <tbody>
         {{#each controller}}
-            {{log this}}
             {{#if hasPlan}}
-            <tr class="table-row-button" data-link="{{ unbound plan }}">
+            <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
             {{else}}
             <tr>
             {{/if}}
@@ -32,7 +31,7 @@
                 <td>
                     <ul class="controls pull-right unstyled">
                         {{#if hasPlan}}
-                            <li><a href="{{unbound plan}}" target="_blank">View</a></li>
+                            <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
                         {{/if}}
                         {{#unless controller.job.isShared}}
                             <li><a {{action "openEditPlanModal" this}}>Edit</a></li>
