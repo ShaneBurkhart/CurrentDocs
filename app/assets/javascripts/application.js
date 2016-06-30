@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require moment
 
+
 $(document).ready(function(){
 	var xhr2 = ( window.FormData !== undefined );
 	if(!xhr2){

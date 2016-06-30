@@ -1,4 +1,4 @@
-<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade bs-example-modal-lg" data-backdrop="static" style="display:block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   	<div class="modal-dialog modal-lg" role="document">
     	<div class="modal-content">
       		<div class="modal-header">
@@ -37,10 +37,10 @@
 				</div>
 				<hr>
 			</div>
-							<div class="modal-section">
+				<div class="modal-section">
 
 				<h4 class="title">Plan History</h4>
-				<!-- {{log this}} -->
+				
 				{{#each planRecords}}
 					<div>
 						<a href="/api/plans/embedded/{{unbound this.id}}?type=record" target="_blank">{{this.filename}}</a><span class="pull-right"> changed {{date updated_at }}</span>
@@ -53,7 +53,7 @@
 			</div>
 				<div class="modal-footer">
 					<div class="buttons">
-					<a class="button" {{action "close"}}>Cancel</a>
+					<a class="button" {{action "closeModal"}}>Cancel</a>
 					<a class="button button-blue" {{action "editPlan" target=controller}} >Save</a>
 				</div>
 			</div>
@@ -61,6 +61,11 @@
 	</div>
 </div>
 <script>
-jQuery.noConflict();
 $('#myModal').modal('show');
+// PlanSource.__container__.lookup("controller:edit_plan").send('modalInitialize');
+// $('#myModal').on('shown.bs.modal', function () {
+// 	$('body').on('click', function(e) {
+// 	    PlanSource.__container__.lookup("controller:edit_plan").send('bodyClicked');
+// 	});
+// });
 </script>

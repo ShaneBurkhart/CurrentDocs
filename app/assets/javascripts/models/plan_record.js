@@ -31,7 +31,7 @@ PlanSource.PlanRecord.reopenClass({
     Em.Deferred.promise(function(p){
       p.resolve($.get(PlanSource.PlanRecord.url(id)).then(function(data){
         that._clearPlanRecords();
-        console.log(data);
+        
         data.plans.forEach(function(planRecord){
           that.planRecords.pushObject(PlanSource.PlanRecord.create(planRecord.plans));
         });

@@ -1,4 +1,3 @@
-//= require jquery
 //= require handlebars
 //= require ember
 //= require ember-data
@@ -31,6 +30,8 @@ Handlebars.registerHelper('manager', function(options) {
 	else
 		return options.inverse(this);
 });
+
+
 Handlebars.registerHelper('can_share_link', function(options) {
 	if(PlanSource._can_share_link)
 		return options.fn(this);

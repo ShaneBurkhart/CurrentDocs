@@ -23,6 +23,7 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openEditPlanModal : function(model){
+      
       this.controllerFor("edit_plan").set("model", model);
       this.controllerFor("edit_plan").set("job", this.get("controller").get("model"));
       this.controllerFor("edit_plan").set("parent", this.controllerFor("plans"));

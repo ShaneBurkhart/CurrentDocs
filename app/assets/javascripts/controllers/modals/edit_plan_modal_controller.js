@@ -3,8 +3,10 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	job : {},
 
     closeModal : function(){
-        // $('#myModal').modal('toggle');
+        jQuery('#myModal').modal('hide');
+        this.send('close');
     },
+
 
 	editPlan : function(){
 		var self = this;
@@ -40,7 +42,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});
-		this.send("close");
+		this.send("closeModal");
 	},
 
     uploadPlan : function(){
@@ -68,6 +70,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
             $(".loading").slideDown(75);
             $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
         });
+        PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
         file.val("");
         // this.send("close");
     },
