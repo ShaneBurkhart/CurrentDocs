@@ -42,6 +42,11 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});
+        var file = $("#file");
+        if(file.val() || file.val() != ""){
+            this.send('uploadPlan');
+        }
+
 		this.send("closeModal");
 	},
 
