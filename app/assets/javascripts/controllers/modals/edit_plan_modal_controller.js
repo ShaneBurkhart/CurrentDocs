@@ -2,6 +2,10 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	job : {},
 
+    closeModal : function(){
+        // $('#myModal').modal('toggle');
+    },
+
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
@@ -65,7 +69,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
             $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
         });
         file.val("");
-        this.send("close");
+        // this.send("close");
     },
 
 	keyPress : function(e){

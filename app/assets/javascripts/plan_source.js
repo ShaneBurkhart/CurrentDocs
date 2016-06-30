@@ -62,32 +62,34 @@ PlanSource.showNotification = function(msg, type) {
   $('#site-notifications .col-sm-12').append(body);
 };
 
-$.fn.upload = function(remote, successFn, progressFn) {
-	return this.each(function() {
+(function($){
+	$.fn.upload = function(remote, successFn, progressFn) {
+		return this.each(function() {
 
-		var formData = new FormData(this);
-		PlanSource.isUploading = true;
-		$.ajax({
-			url: remote,
-			type: 'POST',
-			xhr: function() {
-				var myXhr = $.ajaxSettings.xhr();
-				if(myXhr.upload && progressFn){
-					myXhr.upload.addEventListener('progress', progressFn, false);
+			var formData = new FormData(this);
+			PlanSource.isUploading = true;
+			$.ajax({
+				url: remote,
+				type: 'POST',
+				xhr: function() {
+					var myXhr = $.ajaxSettings.xhr();
+					if(myXhr.upload && progressFn){
+						myXhr.upload.addEventListener('progress', progressFn, false);
+					}
+					return myXhr;
+				},
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				complete : function(res) {
+					if(successFn) successFn(res);
+					PlanSource.isUploading = false;
 				}
-				return myXhr;
-			},
-			data: formData,
-			cache: false,
-			contentType: false,
-			processData: false,
-			complete : function(res) {
-				if(successFn) successFn(res);
-				PlanSource.isUploading = false;
-			}
+			});
 		});
-	});
-}
+	}
+}(jQuery));
 
 PlanSource.download = function(plan_id){
 	if(plan_id)

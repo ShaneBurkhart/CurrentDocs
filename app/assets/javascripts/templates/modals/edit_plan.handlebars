@@ -1,63 +1,66 @@
-<div class="modal modal-wrapper">
-	<div class="overlay"></div>
-	<div class="dialog box box-border">
-		<div class="header">
-			<p class="title">Edit your plan</p>
-		</div>
-		<div class="body">
-			<div class="control-group">
-				<div class="controls">
-					<p>Enter a new number and name for this plan.</p>
-					{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" class="short" }}
-					{{#if belongsToShops}}
-					{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" }}
-					{{/if}}
-					{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
-					<div class="help-inline"></div>
-				</div>
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  	<div class="modal-dialog modal-lg" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+		        <button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Edit your plan</h4>
 			</div>
-		</div>
-		<div class="footer">
-			<div class="buttons">
-				<a class="button button-blue" {{action "editPlan" target=controller}} >Change</a>
-			</div>
-		</div>
-		<div class="header">
-			<p class="title">Upload a file</p>
-		</div>
-		<div class="body">
-			<p>Select a file to upload.</p>
-			<form enctype="multipart/form-data" id="plan_source_upload_form">
-				<input type="hidden" name="plan_id" id="plan_id">
+			<div class="modal-body">
 				<div class="control-group">
 					<div class="controls">
-						<span class="help-inline"></span>
-						<br>
-						<input type="file" name="file" id="file">
+						<p>Enter a new number and name for this plan.</p>
+						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" class="short" }}
+						{{#if belongsToShops}}
+						{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" }}
+						{{/if}}
+						{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
+						<div class="help-inline"></div>
 					</div>
 				</div>
-			</form>
-		</div>
-		<div class="footer">
-			<div class="buttons">
-				<a class="button" {{action "close"}}>Cancel</a>
-				<a class="button button-blue" {{action "uploadPlan"}} >Upload</a>
+				<hr>
+				<div class="modal-section">
+				<h4 class="title">Upload a file</h4>
+				<p>Select a file to upload.</p>
+				<form enctype="multipart/form-data" id="plan_source_upload_form">
+					<input type="hidden" name="plan_id" id="plan_id">
+					<div class="control-group">
+						<div class="controls">
+
+							<input type="file" name="file" id="file">
+							<span class="help-inline"></span>
+						</div>
+					</div>
+				</form>
+
+				<div class="buttons inline" style="margin-top:10px">
+					<a class="button button-blue" {{action "uploadPlan"}} >Upload</a>
+				</div>
+				<hr>
 			</div>
-		</div>
-		<div class="header">
-			<p class="title">Plan History</p>
-		</div>
-		<div class="body">
-			<!-- {{log this}} -->
-			{{#each planRecords}}
-				<div>
-					<a href="/api/plans/embedded/{{unbound this.id}}?type=record" target="_blank">{{this.filename}}</a><span class="pull-right"> changed {{date updated_at }}</span>
+							<div class="modal-section">
+
+				<h4 class="title">Plan History</h4>
+				<!-- {{log this}} -->
+				{{#each planRecords}}
+					<div>
+						<a href="/api/plans/embedded/{{unbound this.id}}?type=record" target="_blank">{{this.filename}}</a><span class="pull-right"> changed {{date updated_at }}</span>
+					</div>
+				{{else}}
+					<div>
+						This plan has no plan history.
+					</div>
+				{{/each}}
+			</div>
+				<div class="modal-footer">
+					<div class="buttons">
+					<a class="button" {{action "close"}}>Cancel</a>
+					<a class="button button-blue" {{action "editPlan" target=controller}} >Save</a>
 				</div>
-			{{else}}
-				<div>
-					This plan has no plan history.
-				</div>
-			{{/each}}
+			</div>
 		</div>
 	</div>
 </div>
+<script>
+jQuery.noConflict();
+$('#myModal').modal('show');
+</script>
