@@ -42,6 +42,7 @@ class Plan < ActiveRecord::Base
   validate :check_for_duplicate_plan_name_in_job
   validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
+  validates :status, :length => { :maximum => 50 }
   # validate :ensure_plans_have_unique_plan_nums, :on => :save
   # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]
 

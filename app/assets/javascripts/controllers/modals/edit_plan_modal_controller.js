@@ -2,10 +2,15 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	job : {},
 
+	
+
+
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
-    		num = $("#edit-plan-num").val();
+    		num = $("#edit-plan-num").val(),
+			  status = $("#edit-select-status").val();
+
     this.clearAllErrors();
     this.clearAllInfo();
     if(!num.match(/^(0|[1-9]\d*)$/)){
@@ -20,6 +25,9 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     	this.get("model").set("plan_name", name);
     if(num && num != "")
     	this.get("model").set("plan_num", num);
+			console.log("The new status is: " + status)
+		this.get("model").set("status", status);
+
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});

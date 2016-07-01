@@ -44,6 +44,7 @@ class Api::PlansController < ApplicationController
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
 					@plan.update_attribute(:plan_name, params["plan"]["plan_name"])
 					@plan.set_plan_num params["plan"]["plan_num"].to_i
+					@plan.update_attribute(:status, params["plan"]["status"])
           params["plan"].delete "plan_num"
         end
         params["plan"].delete "updated_at"

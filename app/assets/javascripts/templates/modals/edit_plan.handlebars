@@ -10,6 +10,15 @@
 					<p>Enter a new number and name for this plan.</p>
 					{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" class="short" }}
 					{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
+					Status: {{ status }}
+					<!-- <select id="edit-select-status"> -->
+					
+					<!-- {{#each anOption in statusOptions }}
+						{{#if (eq anOption status) }}
+							<option value="{{unbound anOption}}" selected>{{unbound anOption}}</option>
+						{{/if}}
+					{{/each}} -->
+					</select>
 					<span class="help-inline"></span>
 				</div>
 			</div>
