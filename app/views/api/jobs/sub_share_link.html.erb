@@ -1,51 +1,79 @@
 <div class="section">
 	<div class="container">
-		<div class="box box-border">
-            <h2><%= @job.name %></h2>
-
-            <table class="table table-hover">
-                <thead>
-                    <th>#</th>
-                    <th>Plan Name</th>
-                    <th>Updated</th>
-                    <th>Download File</th>
-                    <th class="pull-right">Controls</th>
-                </thead>
-                <tbody>
-                    <% @job.plans.each do |plan|  %>
-                        <tr>
-                            <td><%= plan.plan_num %></td>
-                            <td>
-                                <p><%= plan.plan_name.truncate(35) %></p>
-                            </td>
-                            <td><%= plan.plan_updated_at %></td>
-                            <td>
-                                <% if plan.plan.exists? %>
-                                    <a href="/api/download/<%= plan.id %>"><%= plan.plan_file_name.truncate(35) %></a>
-                                <% end %>
-                            </td>
-                            <td>
-                                <ul class="controls pull-right unstyled">
-                                    <% if plan.plan.exists? %>
-                                        <li><a href="/api/plans/embedded/<%= plan.id %>" target="_blank">View</a></li>
-                                    <% end %>
-                                </ul>
-                            </td>
-                        </tr>
-                    <% end %>
-                    <% if @job.plans.empty? %>
-                        <tr>
-                            <td>
-                                <p>The owner of this plan has not added any plans.</p>
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2><%= @job.name %></h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<!-- Future navbar here -->
+			</div>
+			<div class="col-sm-6">
+				<form id="share-search-form">
+			    <input placeholder="Search..." class="form-control form-smaller form-control-padding standard-search-bar pull-right" id="share-search-input"/>
+			  </form>
+			</div>
+		</div>
+		<div class="table-responsive" id="plan-table">
+			<table class="table table-responsive table-hover">
+				<thead>
+					<th>#</th>
+					<th>Plan Name</th>
+					<th>Updated</th>
+					<th>Download File</th>
+					<th class="text-right">Controls</th>
+				</thead>
+				<tbody>
+					<% @job.get_plans_for_tabs("Plans").each do |plan|  %>
+					<tr>
+						<td><%= plan.plan_num %></td>
+						<td>
+							<p><%= plan.plan_name.truncate(35) %></p>
+						</td>
+						<td><%= plan.plan_updated_at ? plan.plan_updated_at.strftime("%B %d, %Y") : "" %></td>
+						<td>
+							<% if plan.plan.exists? %>
+							<a href="/api/download/<%= plan.id %>"><%= plan.plan_file_name.truncate(35) %></a>
+							<% end %>
+						</td>
+						<td>
+							<ul class="controls pull-right unstyled">
+								<% if plan.plan.exists? %>
+								<li><a href="/api/plans/embedded/<%= plan.id %>" target="_blank">View</a></li>
+								<% end %>
+							</ul>
+						</td>
+					</tr>
+					<% end %>
+					<% if @job.plans.empty? %>
+					<tr>
+						<td>
+							<p>The owner of this plan has not added any plans.</p>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
+
+<script>
+// This script should be modularized instead of copied everywhere
+$("#share-search-input").keyup(function () {
+    console.log("Searching!")
+    var filter = jQuery(this).val();
+    jQuery("table tr").not('thead tr').each(function () {
+        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+            jQuery(this).hide();
+        } else {
+            jQuery(this).show()
+        }
+    });
+});
+</script>

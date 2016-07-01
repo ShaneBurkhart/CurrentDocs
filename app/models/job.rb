@@ -25,6 +25,9 @@ class Job < ActiveRecord::Base
 
 
 
+  def get_plans_for_tabs(tabs)
+    self.plans.select{ |plan| tabs.include? plan.tab }
+  end
 
   def send_message_to_group(message)
     shared_users.each do |shared_user|
