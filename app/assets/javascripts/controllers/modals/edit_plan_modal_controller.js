@@ -2,11 +2,15 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	job : {},
 
+	
+
+
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
     		num = $("#edit-plan-num").val(),
-            csi = $("#edit-plan-csi").val();
+            csi = $("#edit-plan-csi").val(),
+            status = $("#edit-select-status").val();;
 
         this.clearAllErrors();
         this.clearAllInfo();
@@ -33,6 +37,8 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
         if(num && num != ""){
         	this.get("model").set("plan_num", num);
         }
+        this.get("model").set("status", status);
+
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});

@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20160628022226) do
     t.integer  "plan_file_size"
     t.datetime "plan_updated_at"
     t.string   "tab",               :default => "Plans"
+    t.string   "status"
     t.string   "csi"
   end
 
@@ -103,7 +104,7 @@ ActiveRecord::Schema.define(:version => 20160628022226) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2016-06-28 02:15:36'
+    t.datetime "last_seen",                            :default => '2016-07-01 07:56:22'
     t.boolean  "can_share_link",                       :default => false
   end
 

@@ -1,4 +1,14 @@
 PlanSource.Plan = Ember.Object.extend({
+  statusOptions:['', 'Submitted', 'Approved', 'Approved as Corrected', 'Revise & Resubmit', 'Record Copy'],
+
+
+  isSelected : function(option, status){
+		if (status == option){
+			return "selected";
+		}
+		return "";
+	}.property('isSelected'),
+
   hasPlan: function() {
     return this.get("plan_file_name") != null && this.get("plan_file_name") != "";
   }.property("plan_file_name"),
@@ -66,10 +76,11 @@ PlanSource.Plan = Ember.Object.extend({
             	plan_num : self.get("plan_num"),
               csi : self.get("csi"),
             	plan_name : self.get("plan_name")
+              status: self.get("status")
             }}
         }).then(function(data){
           self.setProperties(data.plan);
-          
+
         })
       );
     });
