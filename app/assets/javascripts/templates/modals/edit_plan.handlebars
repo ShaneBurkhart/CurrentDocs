@@ -26,7 +26,7 @@
 						<div class="control-group">
 							<div class="controls">
 
-								<input type="file" name="file" id="file">
+								<input style="font-size:16px" type="file" name="file" id="file">
 								<span class="help-inline"></span>
 							</div>
 						</div>
@@ -40,12 +40,17 @@
 				<div class="modal-section">
 
 					<h4 class="title">Plan History</h4>
-
+					<div class="container-fluid">
 					{{#each planRecords}}
-					<div class="row">
-						<div class="col-sm-12">
-							<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:130%;margin-right:10px" class="glyphicon glyphicon-download"></span></a> <a href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
-							<div class="pull-right"> changed {{date updated_at }}</div>
+					<div class="row" style="margin-bottom:20px">
+						<div class="col-sm-8" style="padding-left:30px;">
+								<a style="left:0;top:0;position:absolute" href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:140%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
+						
+								<a style="word-wrap:break-word" href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
+							
+						</div>
+						<div class="col-sm-4" style="padding-left:30px;">
+							<div> changed {{date updated_at }}</div>
 						</div>
 					</div>
 					{{else}}
@@ -53,6 +58,7 @@
 						This plan has no plan history.
 					</div>
 					{{/each}}
+					</div>
 				</div>
 				<div class="modal-footer">
 					<div class="buttons">

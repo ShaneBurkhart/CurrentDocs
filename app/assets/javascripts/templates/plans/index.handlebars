@@ -14,9 +14,11 @@
         {{#each controller}}
             {{#if hasPlan}}
                 {{#if fileIsPDF}}
-                    <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
+                    <tr class="table-row-button" data-link="/web/viewer.html?file={{ unbound getPlanURI }}">
+
                 {{else}}
-                    <tr>
+                    <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
+
                 {{/if}}
             {{else}}
             <tr>
@@ -36,8 +38,9 @@
                     <ul class="controls pull-right unstyled">
                         {{#if hasPlan}}
                             {{#if fileIsPDF}}
-                                <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+                                <li><a href="/web/viewer.html?file={{ unbound getPlanURI }}" target="_blank">PDF Viewer</a></li>
                             {{/if}}
+                            <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
                         {{/if}}
                         {{#unless controller.job.isShared}}
                             <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>

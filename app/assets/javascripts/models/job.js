@@ -4,6 +4,10 @@ PlanSource.Job = Ember.Object.extend({
     this.setProperties(this.getProperties("user", "plans", "shares"));
   },
 
+  planCount:function(){
+    return this.get('plans').length
+  }.property('planCount'),
+
   setProperties : function(hash){
     if(hash.user){
       this.set("user", PlanSource.User.create(hash.user));

@@ -2,6 +2,10 @@ body{
 	font-family: 'Roboto', sans-serif;
 }
 
+.demo:after{
+	clear:both;
+	visibility: hidden;
+}
 
 .modal-section{
 	margin-top: 30px;

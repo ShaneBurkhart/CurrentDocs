@@ -38,6 +38,12 @@ Handlebars.registerHelper('can_share_link', function(options) {
 	else
 		return options.inverse(this);
 });
+
+Handlebars.registerHelper('tab_count', function(arr, tab) {
+	console.log(arr)
+	return arr.length
+});
+
 Ember.Handlebars.registerBoundHelper ('truncate', function (str) {
 	var len = 35;
 	if(!str) return str;
