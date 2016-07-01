@@ -1,7 +1,6 @@
 PlanSource.Plan = Ember.Object.extend({
   statusOptions:['', 'Submitted', 'Approved', 'Approved as Corrected', 'Revise & Resubmit', 'Record Copy'],
 
-
   isSelected : function(option, status){
 		if (status == option){
 			return "selected";
@@ -75,7 +74,7 @@ PlanSource.Plan = Ember.Object.extend({
             data : { plan : {
             	plan_num : self.get("plan_num"),
               csi : self.get("csi"),
-            	plan_name : self.get("plan_name")
+            	plan_name : self.get("plan_name"),
               status: self.get("status")
             }}
         }).then(function(data){
