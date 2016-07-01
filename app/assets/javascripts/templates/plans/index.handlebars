@@ -14,11 +14,10 @@
     <tbody>
         {{#each controller}}
             {{#if hasPlan}}
-                {{#if fileIsPDF}}
-                    <tr class="table-row-button" data-link="/web/viewer.html?file={{ unbound getPlanURI }}">
-
-                {{else}}
                     <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
+                {{#if fileIsPDF}}
+                    <!-- <tr class="table-row-button" data-link="/web/viewer.html?file={{ unbound getPlanURI }}"> -->
+                {{else}}
 
                 {{/if}}
             {{else}}
@@ -42,7 +41,7 @@
                     <ul class="controls pull-right unstyled">
                         {{#if hasPlan}}
                             {{#if fileIsPDF}}
-                                <li><a href="/web/viewer.html?file={{ unbound getPlanURI }}" title="Native PDF Viewer" target="_blank">PDF Viewer</a></li>
+                                <!-- <li><a href="/web/viewer.html?file={{ unbound getPlanURI }}" title="Native PDF Viewer" target="_blank">PDF Viewer</a></li> -->
                             {{/if}}
                             <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
                         {{/if}}

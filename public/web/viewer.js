@@ -8170,7 +8170,7 @@ var PDFViewerApplication = {
 };
 
 var HOSTED_VIEWER_ORIGINS = ['null',
-  'http://mozilla.github.io', 'https://mozilla.github.io'];
+  'http://mozilla.github.io', 'https://mozilla.github.io', 'http://plansourcestaging.herokuapp.com', 'http://localhost:3000'];
 function validateFileURL(file) {
   try {
     var viewerOrigin = new URL(window.location.href).origin || 'null';

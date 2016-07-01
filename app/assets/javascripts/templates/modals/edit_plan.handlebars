@@ -11,7 +11,7 @@
 						<p>Enter a new number and name for this plan.</p>
 						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" title="Plan number" class="short ps-input" }}
 						{{#if belongsToShops}}
-						{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" title="CSI" class="short ps-input"}}
+						{{ view PlanSource.TextField placeholder="CSI" focus=false id="edit-plan-csi" modelAttr="csi" title="CSI" class="short ps-input"}}
 						{{/if}}
 						{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" title="Plan name" class="left ps-input"}}
 						<input hidden id="init-select-status" value="{{unbound status}}">
