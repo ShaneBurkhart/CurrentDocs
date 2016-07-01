@@ -39,10 +39,21 @@ Handlebars.registerHelper('can_share_link', function(options) {
 		return options.inverse(this);
 });
 
-Handlebars.registerHelper('tab_count', function(arr, tab) {
-	console.log(arr)
-	return arr.length
+
+Handlebars.registerHelper('eq', function(one, two) {
+	return one === two
 });
+
+Ember.Handlebars.helper('ifCond', function(one, two, options) {
+	console.log(one)
+	console.log(two)
+	if (one === two){
+		return options.fn(this);
+	}
+	return options.inverse(this);
+});
+
+
 
 Ember.Handlebars.registerBoundHelper ('truncate', function (str) {
 	var len = 35;

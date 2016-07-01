@@ -1,6 +1,7 @@
 PlanSource.Plan = Ember.Object.extend({
   statusOptions:['', 'Submitted', 'Approved', 'Approved as Corrected', 'Revise & Resubmit', 'Record Copy'],
 
+
   isSelected : function(option, status){
 		if (status == option){
 			return "selected";

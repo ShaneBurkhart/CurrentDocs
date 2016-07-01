@@ -9,11 +9,17 @@
 				<div class="control-group">
 					<div class="controls">
 						<p>Enter a new number and name for this plan.</p>
-						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" class="short" }}
+						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" title="Plan number" class="short ps-input" }}
 						{{#if belongsToShops}}
-						{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" }}
+						{{ view PlanSource.TextField placeholder="CSI code" focus=false id="edit-plan-csi" modelAttr="csi" title="CSI" class="short ps-input"}}
 						{{/if}}
-						{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" class="left"}}
+						{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" title="Plan name" class="left ps-input"}}
+						<input hidden id="init-select-status" value="{{unbound status}}">
+						<select id="edit-select-status" class="form-control ps-input" style="width:230px;display:inline-block">
+						{{#each statusOptions}}
+							<option value="{{unbound this}}">{{this}}</option>
+						{{/each}}
+						</select>
 						<div class="help-inline"></div>
 					</div>
 				</div>
@@ -63,7 +69,7 @@
 				<div class="modal-footer">
 					<div class="buttons">
 						<a class="button" {{action "closeModal"}}>Cancel</a>
-						<a class="button button-blue" {{action "editPlan" target=controller}} >Save</a>
+						<a class="button button-blue" {{action "editPlan" target=controller}}>Save</a>
 					</div>
 				</div>
 			</div>
@@ -72,6 +78,8 @@
 </div>
 <script>
 $('#myModal').modal('show');
+var initSelect = $('#init-select-status').val();
+$('#edit-select-status').val(initSelect);
 // PlanSource.__container__.lookup("controller:edit_plan").send('modalInitialize');
 // $('#myModal').on('shown.bs.modal', function () {
 // 	$('body').on('click', function(e) {
