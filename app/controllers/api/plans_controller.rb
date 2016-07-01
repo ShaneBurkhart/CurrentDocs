@@ -78,13 +78,41 @@ class Api::PlansController < ApplicationController
   end
 
   def show_embedded
+    # if isRecord? params
+    #   plan = PlanRecord.find(params[:id]).plan
+    # else
+    if isRecord? params
+      plan = PlanRecord.find(params[:id]).plan
+    else
+      plan = Plan.find(params[:id])
+    end
+    # end
+
+    if user.is_my_plan(plan) || user.is_shared_plan(plan)
+      if isRecord? params
+        @plan = PlanRecord.find(params[:id])
+      else
+        @plan = plan
+      end
+      render 'show_embedded', layout: false and return
+    else
+      render_no_permission
+    end
+  end
+
+  def plan_records
     @plan = Plan.find(params[:id])
     if user.is_my_plan(@plan) || user.is_shared_plan(@plan)
-      render 'show_embedded', layout: false and return
+      render :json => PlanRecord.where(:plan_id => @plan.id).order("created_at DESC")
+    else
+      render_no_permission
     end
-    render_no_permission
+    
   end
 
   private
+  def isRecord? params
+    return params[:type] == 'plan_record'
+  end
 
 end

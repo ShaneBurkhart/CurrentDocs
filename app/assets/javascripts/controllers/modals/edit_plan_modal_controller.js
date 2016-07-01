@@ -2,7 +2,12 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	job : {},
 
-	
+
+    closeModal : function(){
+        jQuery('#myModal').modal('hide');
+        this.send('close');
+    },
+
 
 
 	editPlan : function(){
@@ -42,7 +47,12 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});
-		this.send("close");
+        var file = $("#file");
+        if(file.val() || file.val() != ""){
+            this.send('uploadPlan');
+        }
+
+		this.send("closeModal");
 	},
 
     uploadPlan : function(){
@@ -70,14 +80,14 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
             $(".loading").slideDown(75);
             $(".loading-percent").text(Math.floor(p.loaded/p.total*100));
         });
+        PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
         file.val("");
-        this.send("close");
+        // this.send("close");
     },
 
 	keyPress : function(e){
 		if (e.keyCode == 13)
 			this.editPlan();
-            this.uploadPlan();
 	}
 
 

@@ -31,6 +31,12 @@ PlanSource.Plan = Ember.Object.extend({
     this.destroy();
   },
 
+  planRecords:function(){
+    PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
+    return PlanSource.PlanRecord.planRecords;
+    // return ['ello', 'mas', 'amigos']
+  }.property('planRecords'),
+
   save : function(){
     if(this.get("isDestroyed") || this.get("isDestroying")){
       return this._deleteRequest();

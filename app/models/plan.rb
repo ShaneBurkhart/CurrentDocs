@@ -15,19 +15,12 @@
 #  plan_updated_at   :datetime
 #
 
+include Common
 class Plan < ActiveRecord::Base
   belongs_to :job
+  has_many :plan_records
 
-  PAPERCLIP_OPTIONS = {
-    :storage => :s3,
-    :s3_credentials => {
-    :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-    :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'],
-    :bucket => ENV["AWS_BUCKET"]
-    },
-    :path => ":attachment/:id.:extension",
-    :bucket => ENV["AWS_BUCKET"]
-  }
+  PAPERCLIP_OPTIONS = get_s3_paperclip_options()
 
   if Rails.env.production?
     has_attached_file :plan, PAPERCLIP_OPTIONS
@@ -37,7 +30,8 @@ class Plan < ActiveRecord::Base
 
   # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab
+  attr_accessor :plan_updated_at
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at
   validates :job_id, :plan_num, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_in_job
   validate :check_for_valid_tab_name

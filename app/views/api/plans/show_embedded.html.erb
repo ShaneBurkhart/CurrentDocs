@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=1024">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= @plan.filename %></title>
     <%= favicon_link_tag %>
 
     <style type="text/css">
-    html{
+    html,body{
       height: 100%;
+      margin: 0px;
     }
     </style>
   </head>
-  <body style="height: 100%;margin:0">
-    <embed src="<%= @plan.plan.url %>&view=FitH" width="100%" height="100%" style="height: 100%;">
+    <% if not @missing_url %>
+      <% if @plan.has_attribute? "plan_id" %>
+        <iframe src="<%= @plan.plan_record.url %>" width="100%" height="100%"></iframe>
+      <% else %>
+        <iframe src="<%= @plan.plan.url %>" width="100%" height="100%" ></iframe>
+      <% end %>
+    <% else %>
+      <div>There doesn't seem to be an attachment here.</div>
+     
+    <% end %>
   </body>
 </html>
