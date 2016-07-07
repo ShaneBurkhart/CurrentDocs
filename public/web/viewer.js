@@ -8170,7 +8170,7 @@ var PDFViewerApplication = {
 };
 
 var HOSTED_VIEWER_ORIGINS = ['null',
-  'http://mozilla.github.io', 'https://mozilla.github.io', 'http://localhost:3000', 'http://s3.amazonaws.com', 'http://plansourcestaging.herokuapp.com', 'http://plansource.herokuapp.com'];
+  'http://mozilla.github.io', 'https://mozilla.github.io', 'http://localhost:3000', 'http://plansourcestaging.herokuapp.com', 'http://plansource.herokuapp.com', 'http://www.plansource.io'];
 function validateFileURL(file) {
   try {
     var viewerOrigin = new URL(window.location.href).origin || 'null';
