@@ -1,0 +1,94 @@
+Searching 1041 files for "Must be six digit number or empty."
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/edit_plan_modal_controller.js:
+   34          if(this.get('tab') == 'Shops'){
+   35              if( csi != "" && ( !csi.match(/^(0|[1-9]\d*)$/) || csi.length != 6)) {
+   36:                 this.error("#edit-plan-csi", "Must be six digit number or empty.");
+   37                  return;
+   38              }else{
+
+1 match in 1 file
+
+
+Searching 1041 files for ".short"
+
+/Users/ReidWeth/PlanSource/app/assets/stylesheets/application.css.scss:
+  198  }
+  199  
+  200: .short{
+  201    width:60px;
+  202  }
+
+1 match in 1 file
+
+
+Searching 1041 files for "updatePlans"
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/plans_controller.js:
+   39  		plan.deleteRecord();
+   40  		plan.save().then(function(){
+   41: 			self.updatePlans();
+   42  		});
+   43  	},
+   44  
+   45: 	updatePlans : function(){
+   46  		var self = this;
+   47  		PlanSource.Job.find(this.get("job").get("id")).then(function(job){
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/edit_plan_modal_controller.js:
+   47  
+   48  		this.get("model").save().then(function(){
+   49: 			self.get("parent").updatePlans();
+   50  		});
+   51          var file = $("#file");
+   ..
+   77          $("#plan_source_upload_form").upload("/api/upload", function(){
+   78              $(".loading").slideUp(75);
+   79:             self.get("parent").updatePlans();
+   80          }, function(p){
+   81              $(".loading").slideDown(75);
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/upload_plan_modal_controller.js:
+   21  	// 	$("#plan_source_upload_form").upload("/api/upload", function(){
+   22   //        	$(".loading").slideUp(75);
+   23:  //        	self.get("parent").updatePlans();
+   24  	// 	}, function(p){
+   25   //      	$(".loading").slideDown(75);
+
+5 matches across 3 files
+
+
+Searching 1041 files for "updatePlans"
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/plans_controller.js:
+   39  		plan.deleteRecord();
+   40  		plan.save().then(function(){
+   41: 			self.updatePlans();
+   42  		});
+   43  	},
+   44  
+   45: 	updatePlans : function(){
+   46  		var self = this;
+   47  		PlanSource.Job.find(this.get("job").get("id")).then(function(job){
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/edit_plan_modal_controller.js:
+   47  
+   48  		this.get("model").save().then(function(){
+   49: 			self.get("parent").updatePlans();
+   50  		});
+   51          var file = $("#file");
+   ..
+   77          $("#plan_source_upload_form").upload("/api/upload", function(){
+   78              $(".loading").slideUp(75);
+   79:             self.get("parent").updatePlans();
+   80          }, function(p){
+   81              $(".loading").slideDown(75);
+
+/Users/ReidWeth/PlanSource/app/assets/javascripts/controllers/modals/upload_plan_modal_controller.js:
+   21  	// 	$("#plan_source_upload_form").upload("/api/upload", function(){
+   22   //        	$(".loading").slideUp(75);
+   23:  //        	self.get("parent").updatePlans();
+   24  	// 	}, function(p){
+   25   //      	$(".loading").slideDown(75);
+
+5 matches across 3 files

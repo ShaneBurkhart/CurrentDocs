@@ -18,6 +18,24 @@ PlanSource = Ember.Application.create({
 
 PlanSource.isUploading = false;
 
+
+Ember.Handlebars.registerBoundHelper("encode_URL", function(url){
+	if(url){
+		return encodeURIComponent(url)
+	}else
+		return "";
+});
+
+Ember.Handlebars.registerBoundHelper("csi_formatter", function(csi){
+	if(csi){
+		csiArr = csi.split('');
+		csiArr.splice(4, 0, " "); // Go backwards to preserve index
+		csiArr.splice(2, 0, " ");
+		return csiArr.join("");
+	}else
+		return "";
+});
+
 Ember.Handlebars.registerBoundHelper("date", function(date){
 	if(date)
 		return moment(date).fromNow();

@@ -25,7 +25,7 @@
             {{/if}}
                 <td><span>{{plan_num}}</span></td>
                 {{#if this.belongsToShops}}
-                    <td><span>{{csi}}</span></td>
+                    <td><span>{{csi_formatter csi}}</span></td>
                 {{/if}}
                 <td>
                     <span>{{unbound status}}</span>
@@ -41,7 +41,7 @@
                     <ul class="controls pull-right unstyled">
                         {{#if hasPlan}}
                             {{#if fileIsPDF}}
-                                <!-- <li><a href="/web/viewer.html?file={{ unbound getPlanURI }}" title="Native PDF Viewer" target="_blank">PDF Viewer</a></li> -->
+                                <li><a href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="PDF Viewer" target="_blank">PDF Viewer</a></li>
                             {{/if}}
                             <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
                         {{/if}}

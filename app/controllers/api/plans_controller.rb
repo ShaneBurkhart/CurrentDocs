@@ -47,7 +47,7 @@ class Api::PlansController < ApplicationController
           if csi == 0 || csi == nil || csi == ""
             @plan.update_attribute(:csi, nil)
           else
-            @plan.update_attribute(:csi, csi.to_i)
+            @plan.update_attribute(:csi, csi)
           end
 					@plan.set_plan_num params["plan"]["plan_num"].to_i
 					@plan.update_attribute(:status, params["plan"]["status"])

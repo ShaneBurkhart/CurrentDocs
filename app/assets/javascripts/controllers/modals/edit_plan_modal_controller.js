@@ -9,6 +9,9 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     },
 
 
+    updateCSI:function(){
+        console.log("Ay");
+    },
 
 	editPlan : function(){
 		var self = this;
@@ -16,6 +19,8 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     		num = $("#edit-plan-num").val(),
             csi = $("#edit-plan-csi").val(),
             status = $("#edit-select-status").val();;
+        
+
 
         this.clearAllErrors();
         this.clearAllInfo();
@@ -32,11 +37,15 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
         // Ensure CSI code is either empty or a six digit number.
         if(this.get('tab') == 'Shops'){
-            if( csi != "" && ( !csi.match(/^(0|[1-9]\d*)$/) || csi.length != 6)) {
+            if(csi != ""){
+                csi = csi.replace(/ +/g, '');
+            }
+            if( csi != "" && ( !csi.match(/^(\d*)$/) || csi.length != 6)) {
                 this.error("#edit-plan-csi", "Must be six digit number or empty.");
                 return;
             }else{
                 this.get("model").set("csi", csi);
+
             }
         }
         if(num && num != ""){
