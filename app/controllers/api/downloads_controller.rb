@@ -22,7 +22,11 @@ class Api::DownloadsController < ApplicationController
 			puts "PATH: #{path}"
 			data = open(path)
 		else
-			data = open(plan.plan.url)
+			if isPlanRecord?
+				data = open(plan.plan_record.url)
+			else
+				data = open(plan.plan.url)
+			end
 		end
   		send_data data.read, filename: plan.filename, stream: 'true', buffer_size: '4096'
 		#f = plan.plan.path
