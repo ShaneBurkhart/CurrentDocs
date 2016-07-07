@@ -16,9 +16,9 @@
   </head>
     <% if not @missing_url %>
       <% if @plan.has_attribute? "plan_id" %>
-        <iframe src="<%= @plan.plan_record.url %>" width="100%" height="100%"></iframe>
+        <iframe src="<%= @plan.plan_record.url.sub('http', 'https') %>" width="100%" height="100%"></iframe>
       <% else %>
-        <iframe src="<%= @plan.plan.url %>" width="100%" height="100%" ></iframe>
+        <iframe src="<%= @plan.plan.url.sub('http', 'https') %>" width="100%" height="100%" ></iframe>
       <% end %>
     <% else %>
       <div>There doesn't seem to be an attachment here.</div>
