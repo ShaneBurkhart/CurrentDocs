@@ -23,7 +23,7 @@ PlanSource.Contact.reopenClass({
   url : function(){
     var pathArray = window.location.href.split( '/' ),
       host = pathArray[2],
-      u = "http://" + host + PlanSource.Contact.baseUrl;
+      u = PlanSource.getProtocol() + host + PlanSource.Contact.baseUrl;
     return u;
   },
 

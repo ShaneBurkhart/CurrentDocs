@@ -167,7 +167,7 @@ PlanSource.Job.reopenClass({
   url : function(id){
     var pathArray = window.location.href.split( '/' ),
       host = pathArray[2],
-      u = "http://" + host + PlanSource.Job.baseUrl;
+      u = PlanSource.getProtocol() + host + PlanSource.Job.baseUrl;
     if(id) return u + "/" + id;
     return u;
   },

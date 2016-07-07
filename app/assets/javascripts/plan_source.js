@@ -83,6 +83,13 @@ Ember.Handlebars.registerBoundHelper ('truncate', function (str) {
   return str;
 });
 
+PlanSource.getProtocol = function(){
+	if (window.location.protocol == "https:")
+		return "https://"
+	else
+		return "http://"
+}
+
 PlanSource.showNotification = function(msg, type) {
   if(!type) {
     type = 'success';
