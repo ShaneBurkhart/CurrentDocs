@@ -41,7 +41,7 @@
                     <ul class="controls pull-right unstyled">
                         {{#if hasPlan}}
                             {{#if fileIsPDF}}
-                                <li><a href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="PDF Viewer" target="_blank">PDF Viewer</a></li>
+                                <li><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
                             {{/if}}
                             <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
                         {{/if}}
@@ -79,3 +79,8 @@
     </tbody>
   </table>
 </div>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
+})
+</script>
