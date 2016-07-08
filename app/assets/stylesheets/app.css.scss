@@ -9,6 +9,15 @@ body{
     height: 34px;
 }
 
+.text-nowrap{
+	white-space:nowrap;	
+}
+
+
+.controls li a {
+  text-align: right;
+}
+
 .demo:after{
 	clear:both;
 	visibility: hidden;

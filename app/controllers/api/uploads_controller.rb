@@ -18,6 +18,8 @@ class Api::UploadsController < ApplicationController
 			# plan_record.save
 			# plan_record.plan_record.reprocess!
 		end
+		
+		plan.plan_updated_at = Time.now
 		plan.filename = new_file.original_filename
 		plan.plan = new_file
 

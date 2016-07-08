@@ -25,7 +25,7 @@
             {{/if}}
                 <td><span>{{plan_num}}</span></td>
                 {{#if this.belongsToShops}}
-                    <td><span>{{csi_formatter csi}}</span></td>
+                    <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
                 {{/if}}
                 <td>
                     <span>{{unbound status}}</span>
@@ -33,12 +33,12 @@
                 <td class="word">
                     <span title="{{unbound plan_name}}">{{plan_name}}</span>
                 </td>
-                <td><span>{{date updated_at}}</span></td>
+                <td><span>{{date plan_updated_at}}</span></td>
                 <td>
                     <a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a>
                 </td>
                 <td>
-                    <ul class="controls pull-right unstyled">
+                    <ul class="controls text-right unstyled">
                         {{#if hasPlan}}
                             {{#if fileIsPDF}}
                                 <li><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
