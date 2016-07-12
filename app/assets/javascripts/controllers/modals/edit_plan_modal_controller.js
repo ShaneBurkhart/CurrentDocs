@@ -10,10 +10,6 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     },
 
 
-    updateCSI:function(){
-        console.log("Ay");
-    },
-
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
