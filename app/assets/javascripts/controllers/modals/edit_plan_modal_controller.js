@@ -5,6 +5,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
     closeModal : function(){
         jQuery('#myModal').modal('hide');
+        $('body').removeClass('modal-open');
         this.send('close');
     },
 
