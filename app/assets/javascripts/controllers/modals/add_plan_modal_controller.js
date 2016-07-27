@@ -13,8 +13,10 @@ PlanSource.AddPlanController = PlanSource.ModalController.extend({
       'job' : this.get('model'),
       'tab' : this.get('parent.controllers.job.tab')
     });
-    if(this.get("parent").addPlan(plan))
+    if(this.get("parent").addPlan(plan)){
+			
 			this.send("close");
+		}
 		else
 			this.error("#new-plan-name","That plan already exists!");
 	},

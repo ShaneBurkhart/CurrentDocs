@@ -16,7 +16,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
     		num = $("#edit-plan-num").val(),
             csi = $("#edit-plan-csi").val(),
             status = $("#edit-select-status").val();;
-        
+
 
 
         this.clearAllErrors();

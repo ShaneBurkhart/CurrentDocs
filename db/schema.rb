@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20160629073218) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2016-07-01 07:56:22'
+    t.datetime "last_seen",                            :default => '2016-04-22 01:12:24'
     t.boolean  "can_share_link",                       :default => false
   end
 

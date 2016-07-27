@@ -4,7 +4,8 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	sortProperties: ['plan_num'],
   sortAscending: true,
 
-  sort: function(sortProperty){    
+
+  sort: function(sortProperty){
     if (sortProperty == this.sortProperties[0]){
       if (this.sortAscending == true){
         this.set("sortAscending", false);
@@ -23,6 +24,8 @@ PlanSource.PlansController = Ember.ArrayController.extend({
   	var self = this;
 		this.get("controllers.job.model.plans").pushObject(plan);
     this.updateTab();
+
+
 		plan.save().then(function(data){
       if(data == false) {
         self.get("controller.job.model.plans").removeObject(plan);
