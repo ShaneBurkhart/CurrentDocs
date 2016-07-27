@@ -27,7 +27,6 @@ PlanSource.JobsIndexController = Ember.ArrayController.extend({
       if(data == false)
         self.get("content").removeObject(new_job);
     });
-    this.updateJobs();
     return true;
   },
 
