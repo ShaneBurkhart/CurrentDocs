@@ -1,7 +1,7 @@
 PlanSource.PlansController = Ember.ArrayController.extend({
 
   needs: ['job'],
-	sortProperties: ['plan_num'],
+	sortProperties: ['plan_name', 'plan_num'],
   sortAscending: true,
 
 

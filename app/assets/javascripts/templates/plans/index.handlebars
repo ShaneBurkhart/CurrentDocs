@@ -4,10 +4,10 @@
         <th {{action "sort" "plan_num"}}><a>#</a></th>
         {{#if controllers.job.isShopsTab}}
             <th {{action "sort" "csi"}}><a>CSI</a></th>
+            <th {{action "sort" "status"}}><a>Status</a></th>
         {{/if}}
-        <th {{action "sort" "status"}}><a>Status</a></th>
         <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
-        <th {{action "sort" "updated_at"}}><a>Updated</a></th>
+        <th {{action "sort" "plan_updated_at"}}><a>Updated</a></th>
         <th {{action "sort" "filename"}}><a>Download File</a></th>
         <th class="text-right">Controls</th>
     </thead>
@@ -26,10 +26,11 @@
                 <td><span>{{plan_num}}</span></td>
                 {{#if this.belongsToShops}}
                     <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
+                    <td>
+                        <span>{{unbound status}}</span>
+                    </td>
                 {{/if}}
-                <td>
-                    <span>{{unbound status}}</span>
-                </td>
+
                 <td class="word">
                     <span title="{{unbound plan_name}}">{{plan_name}}</span>
                 </td>
@@ -68,11 +69,12 @@
                 </td>
                 <td></td>
                 <td>{{plan_num}}</td>
-                <td></td>
                         {{#if controllers.job.isShopsTab}}
                         <td></td>
+                        <td></td>
+
                         {{/if}}
-                <td></td>
+                        <td></td>
                 <td></td>
             </tr>
         {{/each}}
