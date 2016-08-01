@@ -107,7 +107,7 @@ class Api::PlansController < ApplicationController
     else
       render_no_permission
     end
-    
+
   end
 
   private

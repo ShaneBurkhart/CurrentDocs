@@ -1,8 +1,6 @@
 PlanSource.JobController = Ember.ObjectController.extend({
   tab: 'Plans',
 
-
-
   changeTab: function(tab) {
     this.set('tab', tab);
   },

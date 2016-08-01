@@ -1,4 +1,4 @@
-<div class="modal fade bs-example-modal-lg" data-backdrop="static" style="display:block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade bs-example-modal-lg" data-backdrop="static" style="display:block" data-keyboard="false" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -9,9 +9,10 @@
 				<div class="control-group">
 					<div class="controls">
 						<p>Enter a new number and name for this plan.</p>
-						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" title="Plan number" class="short ps-input" }}
 						{{#if belongsToShops}}
-							{{ view PlanSource.CSIField placeholder="CSI" focus=false id="edit-plan-csi" modelAttr="csi" title="CSI" class="short ps-input" }}
+						{{ view PlanSource.CSIField placeholder="CSI" focus=true id="edit-plan-csi" modelAttr="csi" title="CSI" class="short ps-input" autofocus="autofocus" }}
+							{{else}}
+						{{ view PlanSource.TextField placeholder="#" focus=true id="edit-plan-num" modelAttr="plan_num" title="Plan number" class="short ps-input" }}
 						{{/if}}
 						{{ view PlanSource.TextField placeholder="Plan name" focus=false id="edit-plan-name" modelAttr="plan_name" title="Plan name" class="left ps-input"}}
 						<input hidden id="init-select-status" value="{{unbound status}}">
@@ -80,6 +81,11 @@
 </div>
 <script>
 $('#myModal').modal('show');
+$('#myModal').on('shown.bs.modal', function () {
+    $('#edit-plan-num').focus();
+		$('#edit-plan-csi').focus();
+})
+
 var initSelect = $('#init-select-status').val();
 $('#edit-select-status').val(initSelect);
 
@@ -102,6 +108,4 @@ var formatCSI = function(thisObj) {
 $('#edit-plan-csi').keyup(function(){
 	formatCSI($(this));
 });
-
-
 </script>
