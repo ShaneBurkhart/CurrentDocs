@@ -1,7 +1,7 @@
 PlanSource.PlansController = Ember.ArrayController.extend({
 
   needs: ['job'],
-	sortProperties: ['plan_name', 'plan_num'],
+	sortProperties: ['plan_num'],
   sortAscending: true,
 
 
@@ -70,5 +70,10 @@ PlanSource.PlansController = Ember.ArrayController.extend({
   updateTab: function() {
     var jobController = this.get('controllers.job');
     this.set('content', jobController.get('model').getPlansByTab(jobController.get('tab')));
+    if(jobController.get('tab') == 'Shops'){
+      this.set('sortProperties', ['csi']);
+    }else{
+      this.set('sortProperties', ['plan_num']);
+    }
   }.observes('controllers.job.tab')
 });
