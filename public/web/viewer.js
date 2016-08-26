@@ -21,7 +21,7 @@ var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
   var pdfjsWebLibs = {
     pdfjsWebPDFJS: window.pdfjsDistBuildPdf
   };
-  
+
   (function () {
 
 
@@ -8170,7 +8170,7 @@ var PDFViewerApplication = {
 };
 
 var HOSTED_VIEWER_ORIGINS = ['null',
-  'http://mozilla.github.io', 'https://mozilla.github.io', 'http://localhost:3000', 'http://plansourcestaging.herokuapp.com', 'http://plansource.herokuapp.com', 'http://www.plansource.io'];
+  'http://mozilla.github.io', 'https://mozilla.github.io', 'http://localhost:3000', 'http://plansourcestaging.herokuapp.com', 'http://plansource.herokuapp.com', 'http://www.plansource.io', 'http://www.staging.plansource.io'];
 function validateFileURL(file) {
   try {
     var viewerOrigin = new URL(window.location.href).origin || 'null';
@@ -9248,4 +9248,3 @@ function webViewerLoad() {
 }
 
 document.addEventListener('DOMContentLoaded', webViewerLoad, true);
-
