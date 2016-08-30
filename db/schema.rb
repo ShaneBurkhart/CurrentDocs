@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160629073218) do
+ActiveRecord::Schema.define(:version => 20160829222614) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(:version => 20160629073218) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "events", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.string   "target_action"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "events", ["target_type", "target_id"], :name => "index_events_on_target_type_and_target_id"
+  add_index "events", ["user_id"], :name => "index_events_on_user_id"
+
   create_table "jobs", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -27,6 +39,19 @@ ActiveRecord::Schema.define(:version => 20160629073218) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "archived",   :default => false
   end
+
+  create_table "notification_subscriptions", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "target_type"
+    t.string   "target_action"
+    t.integer  "target_id"
+    t.boolean  "is_active",     :default => true
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "notification_subscriptions", ["target_type", "target_id"], :name => "index_notification_subscriptions_on_target_type_and_target_id"
+  add_index "notification_subscriptions", ["user_id"], :name => "index_notification_subscriptions_on_user_id"
 
   create_table "plan_records", :force => true do |t|
     t.string   "plan_name"
@@ -120,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20160629073218) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2016-04-22 01:12:24'
+    t.datetime "last_seen",                            :default => '2016-08-29 23:55:32'
     t.boolean  "can_share_link",                       :default => false
   end
 
