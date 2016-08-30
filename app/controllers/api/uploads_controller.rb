@@ -4,7 +4,7 @@ class Api::UploadsController < ApplicationController
 	def create
 		new_file = params[:file]
 		plan = Plan.find(params[:plan_id])
-	
+
 		# puts "plan:\t#{plan.inspect}"
 		# puts "u:\t#{u.inspect}"
 		if plan.filename
@@ -18,12 +18,13 @@ class Api::UploadsController < ApplicationController
 			# plan_record.save
 			# plan_record.plan_record.reprocess!
 		end
-		
+
 		plan.plan_updated_at = Time.now
 		plan.filename = new_file.original_filename
 		plan.plan = new_file
 
 		if plan.save
+			Event.create(user_id:user.id, target_type:NOTIF_TARGET_TYPE, target_id: plan.job.id, target_action:NOTIF_ACTIONS[:upload])
 			puts "Saved File"
 			render :text => "Good one"
 		else

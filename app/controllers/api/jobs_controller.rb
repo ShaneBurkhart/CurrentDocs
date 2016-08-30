@@ -55,12 +55,18 @@ class Api::JobsController < ApplicationController
       if @job && user.is_my_job(@job)
         params[:job][:subscribed] = 'true' == params[:job][:subscribed] ? true : false
         subscribed = params[:job][:subscribed]
+
+
         notifs = NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
-        notifs.each do |notif|
-          if notif.is_active != subscribed
-            notif.is_active = subscribed
-            notif.save
+        if notifs.present?
+          notifs.each do |notif|
+            if notif.is_active != subscribed
+              notif.is_active = subscribed
+              notif.save
+            end
           end
+        else
+          NotificationSubscription.create(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
         end
         # @job.name = params[:job][:name]
         @job.update_attributes params[:job]

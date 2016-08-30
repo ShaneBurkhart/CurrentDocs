@@ -20,7 +20,7 @@ class NotificationSubscription < ActiveRecord::Base
     # subs = NotificationSubscription.joins("LEFT OUTER JOIN users on users.id = notification_subscriptions.user_id").where(:target_id => event.target_id,
     # :target_type => event.target_type)
     subs = NotificationSubscription.where(:target_id => event.target_id,
-    :target_type => event.target_type)
+    :target_type => event.target_type, is_active:true)
 
     # puts "subs: #{subs.inspect}"
 
@@ -32,7 +32,7 @@ class NotificationSubscription < ActiveRecord::Base
 
   def self.user_is_subscribed(params)
     return false if(params[:target_type] != NOTIF_TARGET_TYPE)
-    if ! NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:params[:target_id], user_id:params[:user_id]).empty?
+    if ! NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:params[:target_id], user_id:params[:user_id], is_active:true).empty?
       return true
     else
       return false
