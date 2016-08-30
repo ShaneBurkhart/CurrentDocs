@@ -13,4 +13,10 @@ module Common
 	def get_s3_paperclip_options
 		return PAPERCLIP_OPTIONS
 	end
+
+	NOTIF_ACTIONS = { delete:'delete',
+		upload:'upload' }
+	PERMISSIBLE_NOTIF_ACTIONS_LIST = NOTIF_ACTIONS.stringify_keys.keys
+
+	NOTIF_TARGET_TYPE = 'job'
 end
