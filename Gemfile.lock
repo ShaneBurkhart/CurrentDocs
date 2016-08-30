@@ -56,6 +56,7 @@ GEM
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
+    colorize (0.8.1)
     daemons (1.2.4)
     debug_inspector (0.0.2)
     devise (3.2.2)
@@ -206,6 +207,7 @@ DEPENDENCIES
   binding_of_caller (>= 0.7.1)
   bootstrap-sass (= 3.1.1.0)
   cancan (= 1.6.10)
+  colorize
   devise (= 3.2.2)
   ember-rails (= 0.14.1)
   ember-source (= 1.0.0.rc5)
