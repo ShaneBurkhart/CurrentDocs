@@ -1,8 +1,10 @@
+require 'colorize'
+include Common
 class Api::JobsController < ApplicationController
   before_filter :user_not_there!, except: [
-      :show_sub_share_link,
-      :share_link_company_name,
-      :set_share_link_company_name
+    :show_sub_share_link,
+    :share_link_company_name,
+    :set_share_link_company_name
   ]
   before_filter :check_share_link_token!, only: :show_sub_share_link
   before_filter :check_company_name_cookie!, only: :show_sub_share_link
@@ -10,6 +12,10 @@ class Api::JobsController < ApplicationController
   def index
     if user.can? :read, Job
       @jobs = get_jobs
+      @jobs.each do |job|
+        job.subscribed = NotificationSubscription.user_is_subscribed({target_type:NOTIF_TARGET_TYPE, target_id:job.id, user_id:user.id})
+      end
+
       render json: @jobs
     else
       render_no_permission
@@ -20,6 +26,7 @@ class Api::JobsController < ApplicationController
     if user.can? :read, Job
       @job = get_job(params[:id])
       if user.is_my_job(@job) || user.is_shared_job(@job)
+        @job.subscribed = NotificationSubscription.user_is_subscribed({target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id})
         render json: @job
       else
         render json: {job: {}}
@@ -46,9 +53,21 @@ class Api::JobsController < ApplicationController
     if user.can? :update, Job
       @job = get_job(params[:id])
       if @job && user.is_my_job(@job)
-        @job.name = params[:job][:name]
+        params[:job][:subscribed] = 'true' == params[:job][:subscribed] ? true : false
+        subscribed = params[:job][:subscribed]
+        notifs = NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
+        notifs.each do |notif|
+          if notif.is_active != subscribed
+            notif.is_active = subscribed
+            notif.save
+          end
+        end
+        # @job.name = params[:job][:name]
         @job.update_attributes params[:job]
-        render json: @job
+
+        # @job.save
+
+        puts render json: @job
       else
         render json: @job
       end
@@ -77,24 +96,24 @@ class Api::JobsController < ApplicationController
 
   # Show the form to get company name.
   def share_link_company_name
-      if cookies[:share_link_company_name].blank?
-          render :share_link_company_name
-      else
-          redirect_to root_path
-      end
+    if cookies[:share_link_company_name].blank?
+      render :share_link_company_name
+    else
+      redirect_to root_path
+    end
   end
 
   # Set a cookie for the company name then redirect to the share link.
   def set_share_link_company_name
-      if params[:company_name].blank?
-          @error = "Company name cannot be blank."
-          render :share_link_company_name
-          return
-      end
+    if params[:company_name].blank?
+      @error = "Company name cannot be blank."
+      render :share_link_company_name
+      return
+    end
 
-      cookies[:share_link_company_name] = params[:company_name]
-      @url = session[:share_link_to_go_back] || root_path
-      redirect_to @url
+    cookies[:share_link_company_name] = params[:company_name]
+    @url = session[:share_link_to_go_back] || root_path
+    redirect_to @url
   end
 
   # TODO Check for cookie that contains the company name
@@ -122,9 +141,9 @@ class Api::JobsController < ApplicationController
       if @job && (user.is_my_job(@job) || (@share && user.can_share_link))
         # No need to create a duplicate link if we already have a link from a previous share.
         @share_link = ShareLink.find_or_create_by_job_id_and_user_id_and_email_shared_with(
-            job_id: @job.id,
-            user_id: user.id,
-            email_shared_with: @email_to_share_with
+        job_id: @job.id,
+        user_id: user.id,
+        email_shared_with: @email_to_share_with
         )
 
         if @share_link
@@ -148,36 +167,36 @@ class Api::JobsController < ApplicationController
 
   private
 
-    def check_share_link_token!
-        @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
-        if @share_link.nil?
-            not_found
-        end
+  def check_share_link_token!
+    @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
+    if @share_link.nil?
+      not_found
     end
+  end
 
-    def check_company_name_cookie!
-        if cookies[:share_link_company_name].blank?
-            session[:share_link_to_go_back] = request.original_url
-            redirect_to share_link_company_name_path
-        else
-            @share_link.company_name = cookies[:share_link_company_name]
-            @share_link.save
-        end
+  def check_company_name_cookie!
+    if cookies[:share_link_company_name].blank?
+      session[:share_link_to_go_back] = request.original_url
+      redirect_to share_link_company_name_path
+    else
+      @share_link.company_name = cookies[:share_link_company_name]
+      @share_link.save
     end
+  end
 
-    def get_jobs
-      # Kinda gross in the sense that it is essentiall duplicate include calls.  You can't merge them and
-      # then run includes on the combination becuase ActiveRecord will try to tell you it's a array.
-      # Alternatively, we could create a "meta" function that takes the object and calls the includes method on
-      # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
-      user.jobs.includes(:user, :plans, shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
-    end
+  def get_jobs
+    # Kinda gross in the sense that it is essentiall duplicate include calls.  You can't merge them and
+    # then run includes on the combination becuase ActiveRecord will try to tell you it's a array.
+    # Alternatively, we could create a "meta" function that takes the object and calls the includes method on
+    # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
+    user.jobs.includes(:user, :plans, shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
+  end
 
-    def get_job(id)
-      Job.includes(:user, :plans, shares: [:user, :sharer]).find(id)
-    end
+  def get_job(id)
+    Job.includes(:user, :plans, shares: [:user, :sharer]).find(id)
+  end
 
-    def render_no_permission
-      render :text => "You don't have permission to do that"
-    end
+  def render_no_permission
+    render :text => "You don't have permission to do that"
+  end
 end

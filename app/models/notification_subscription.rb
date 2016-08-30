@@ -30,6 +30,15 @@ class NotificationSubscription < ActiveRecord::Base
     end
   end
 
+  def self.user_is_subscribed(params)
+    return false if(params[:target_type] != NOTIF_TARGET_TYPE)
+    if ! NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:params[:target_id], user_id:params[:user_id]).empty?
+      return true
+    else
+      return false
+    end
+  end
+
   private
   def sanitize_data
     self.target_type.downcase!

@@ -12,6 +12,11 @@
               <a href="#" {{action "archiveJob"}} class="button button-red">Archive</a>
               <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
               <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
+              {{#if subscribed}}
+              <a href="#" {{action "unsubscribeJob"}} class="button button-default">Unsubscribe</a>
+              {{else}}
+              <a href="#" {{action "subscribeJob"}} class="button button-default">Subscribe</a>
+              {{/if}}
           {{/manager}}
       {{/if}}
   {{else}}
