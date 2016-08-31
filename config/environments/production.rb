@@ -1,8 +1,6 @@
 PlanSource::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  # Used for email
-  config.absolute_site_url = 'http://plansource.io:80'
 
   # Code is not reloaded between requests
   config.cache_classes = true

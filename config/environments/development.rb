@@ -23,7 +23,6 @@ PlanSource::Application.configure do
 
   config.action_controller.default_url_options = {:host=>"localhost:3000", :protocol => "http://"}
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  config.absolute_site_url = 'http://localhost:3000'
 
   # Path to preview the email
   # config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"

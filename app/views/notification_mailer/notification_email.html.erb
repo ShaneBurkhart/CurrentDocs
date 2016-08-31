@@ -4,12 +4,12 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><a href="<%= Rails.application.config.absolute_site_url %>">PlanSource.io</a> Notification</h1>
+    <h1><%= link_to 'PlanSource.io', root_url %></a> Notification</h1>
     <p>
       <a href="mailto:<%= @event_user.email %>" target="_blank"><%= @event_user.email.capitalize %></a>
       <%= verbage_helper @event.target_action %>
       <%= @event.target_type %>
-      <a href="<%= "#{Rails.application.config.absolute_site_url}/app#/jobs/#{@job.id}" %>" target="_blank"><%= @plan.plan_name %></a>
+      <a href="<%= "http://plansource.io/app#/jobs/#{@job.id}" %>" target="_blank"><%= @plan.plan_name %></a>
       from job <%= @job.name %>
       on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z")
  %>.
