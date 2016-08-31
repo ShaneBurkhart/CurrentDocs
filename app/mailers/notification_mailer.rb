@@ -17,5 +17,5 @@ class NotificationMailer < ActionMailer::Base
     mail(to: User.first.email, subject: "[PlanSource] Notification #{@event.target_type.capitalize} #{@event.target_action.capitalize}")
   end
 
-  
+
 end

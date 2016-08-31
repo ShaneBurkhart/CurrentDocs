@@ -6,12 +6,15 @@ class NotificationSubscription < ActiveRecord::Base
   attr_accessible :is_active, :target_action, :target_id, :target_type, :user_id
   belongs_to :user
 
-  validates :target_id, :target_type, :user_id, :presence => true
+  validates :target_id, :target_type, :user_id, :token, :presence => true
   validates :target_action, uniqueness: { scope: [:target_type, :target_id, :user_id], message:"this user is already subscribed to this event's particular action"}
   before_save :sanitize_data
+  before_create :generate_token
 
   # Be aware of a user requesting no email notifications
   # Be aware of manager refusing notifications to a user
+
+
   def self.notify(event)
     # Exit if target action is not valid
     unless PERMISSIBLE_NOTIF_ACTIONS_LIST.include? event.target_action
@@ -40,9 +43,18 @@ class NotificationSubscription < ActiveRecord::Base
     NotificationSubscription.where(target_type:params[:type], target_id:params[:id], user_id:params[:user_id])
   end
 
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(10, false) # Length is 4/3 of n, see docs
+      break random_token unless NotificationSubscription.exists?(token: random_token)
+    end
+  end
+
   private
   def sanitize_data
     self.target_type.downcase!
     self.target_action.downcase! if self.target_action.present?
   end
+
+
 end
