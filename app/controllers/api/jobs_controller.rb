@@ -1,4 +1,3 @@
-require 'colorize'
 include Common
 
 class Api::JobsController < ApplicationController

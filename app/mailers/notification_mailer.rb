@@ -1,4 +1,3 @@
-require 'colorize'
 class NotificationMailer < ActionMailer::Base
   include SendGrid
   default from: "PlanSource <plansource-noreply@plansource.io>"

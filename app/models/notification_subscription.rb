@@ -37,7 +37,7 @@ class NotificationSubscription < ActiveRecord::Base
     subs = NotificationSubscription.where(:target_id => context.id,
     :target_type => context.class.name.downcase, is_active:true)
     subs.each do |sub|
-      puts "Sending email! event_id:#{sub.inspect}".blue
+      # puts "Sending email! event_id:#{sub.inspect}"
       NotificationMailer.notification_email(event, context, sub).deliver # Plan
     end
   end
