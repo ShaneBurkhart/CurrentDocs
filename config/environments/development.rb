@@ -21,7 +21,7 @@ PlanSource::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
-  config.action_controller.default_url_options = {:host=>"localhost:3000", :protocol => "http://"}
+  
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   # Path to preview the email
