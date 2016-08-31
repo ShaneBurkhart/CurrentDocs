@@ -1,8 +1,9 @@
 class NotificationPreview < ActionMailer::Base
   def self.update
-    event = Event.first
-    email_receip = User.first
+    event = Event.last
+    plan = event.get_event # Plan
+    email_receip = NotificationSubscription.first
     # subscription = NotificationSubscription.first
-    NotificationMailer.notification_email(event, email_receip).deliver
+    NotificationMailer.notification_email(event, plan, email_receip).deliver
   end
 end

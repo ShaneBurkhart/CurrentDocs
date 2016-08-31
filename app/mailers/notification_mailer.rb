@@ -9,11 +9,14 @@ class NotificationMailer < ActionMailer::Base
     mail(to: User.first.email, subject: 'Test email')
   end
 
-  def notification_email(event, receip)
-    @event_object = event.get_event
+  def notification_email(event, job, sub)
+    @plan = event.get_event # Plan
+    @job = @plan.job
     @event = event
     @event_user = event.user
-    @receip = receip
+    @receip = sub.user
+    @sub = sub
+
     mail(to: User.first.email, subject: "[PlanSource] Notification #{@event.target_type.capitalize} #{@event.target_action.capitalize}")
   end
 

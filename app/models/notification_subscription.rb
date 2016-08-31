@@ -20,19 +20,31 @@ class NotificationSubscription < ActiveRecord::Base
     unless PERMISSIBLE_NOTIF_ACTIONS_LIST.include? event.target_action
       return
     end
-    # subs = NotificationSubscription.joins("LEFT OUTER JOIN users on users.id = notification_subscriptions.user_id").where(:target_id => event.target_id,
-    # :target_type => event.target_type)
-    subs = NotificationSubscription.where(:target_id => event.target_id,
-    :target_type => event.target_type, is_active:true)
+
+    #If event is a plan, update job subscribers
+    # target_attr_arr = [:target_id, :target_type]
+    # target_attr = {}
+
+    if event.target_type == 'plan'
+      plan = Plan.find(event.target_id)
+      context = plan.job
+    else
+      context = event
+    end
+
+
+    # Send emails to all subscribers
+    subs = NotificationSubscription.where(:target_id => context.id,
+    :target_type => context.class.name.downcase, is_active:true)
     subs.each do |sub|
       puts "Sending email! event_id:#{sub.inspect}".blue
-      NotificationMailer.test_email(sub.user).deliver
+      NotificationMailer.notification_email(event, context, sub).deliver # Plan
     end
   end
 
   def self.user_is_subscribed(params)
-    return false if(params[:target_type] != NOTIF_TARGET_TYPE)
-    if ! NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:params[:target_id], user_id:params[:user_id], is_active:true).empty?
+    return false if(NOTIF_TARGET_TYPE.exclude? params[:target_type])
+    if ! NotificationSubscription.where(target_type:'job', target_id:params[:target_id], user_id:params[:user_id], is_active:true).empty?
       return true
     else
       return false

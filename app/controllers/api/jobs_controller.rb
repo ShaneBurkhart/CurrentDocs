@@ -14,7 +14,7 @@ class Api::JobsController < ApplicationController
     if user.can? :read, Job
       @jobs = get_jobs
       @jobs.each do |job|
-        job.subscribed = NotificationSubscription.user_is_subscribed({target_type:NOTIF_TARGET_TYPE, target_id:job.id, user_id:user.id})
+        job.subscribed = NotificationSubscription.user_is_subscribed({target_type:'job', target_id:job.id, user_id:user.id})
       end
 
       render json: @jobs
@@ -27,7 +27,7 @@ class Api::JobsController < ApplicationController
     if user.can? :read, Job
       @job = get_job(params[:id])
       if user.is_my_job(@job) || user.is_shared_job(@job)
-        @job.subscribed = NotificationSubscription.user_is_subscribed({target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id})
+        @job.subscribed = NotificationSubscription.user_is_subscribed({target_type:'job', target_id:@job.id, user_id:user.id})
         render json: @job
       else
         render json: {job: {}}
@@ -59,7 +59,7 @@ class Api::JobsController < ApplicationController
         params[:job][:subscribed] = is_bool params[:job][:subscribed]
         subscribed = params[:job][:subscribed]
         # Update notifications
-        notifs = NotificationSubscription.get_notifs_for_target(type:NOTIF_TARGET_TYPE, id:@job.id, user_id:user.id)
+        notifs = NotificationSubscription.get_notifs_for_target(type:'job', id:@job.id, user_id:user.id)
         if notifs.present?
           notifs.each do |notif|
             if notif.is_active != subscribed
@@ -69,7 +69,7 @@ class Api::JobsController < ApplicationController
           end
         elsif subscribed == true
           # Create new subscription for job
-          NotificationSubscription.create(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
+          NotificationSubscription.create(target_type:'job', target_id:@job.id, user_id:user.id)
         end
         @job.update_attributes params[:job]
         puts render json: @job

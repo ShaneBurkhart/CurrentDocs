@@ -2,7 +2,7 @@ module VerbageHelperHelper
   def verbage_helper target_action
     case target_action
     when 'upload'
-      'uploaded'
+      'uploaded to'
     when 'delete'
       'deleted'
     when 'update'

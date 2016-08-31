@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
 
   private
   def ensure_valid_target_type
-    errors.add(:target_type, "target type is invalid") unless target_type == NOTIF_TARGET_TYPE
+    errors.add(:target_type, "target type is invalid") unless NOTIF_TARGET_TYPE.include? target_type
   end
 
   def ensure_valid_target_action

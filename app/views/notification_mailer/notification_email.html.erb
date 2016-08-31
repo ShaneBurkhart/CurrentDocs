@@ -4,17 +4,21 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1><a href="<%= Rails.application.config.absolute_site_url %>">PlanSource.io</a> Update</h1>
+    <h1><a href="<%= Rails.application.config.absolute_site_url %>">PlanSource.io</a> Notification</h1>
     <p>
-      <a href="mailto:<%= @event_user.email %>" target="_blank"><%= @event_user.email.capitalize %></a> <%= verbage_helper @event.target_action %> <%= @event.target_type %> <a href="<%= "#{Rails.application.config.absolute_site_url}/app#/jobs/#{@event_object.id}" %>"><%= @event_object.name %></a> on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z")
+      <a href="mailto:<%= @event_user.email %>" target="_blank"><%= @event_user.email.capitalize %></a>
+      <%= verbage_helper @event.target_action %>
+      <%= @event.target_type %>
+      <a href="<%= "#{Rails.application.config.absolute_site_url}/app#/jobs/#{@job.id}" %>" target="_blank"><%= @plan.plan_name %></a>
+      from job <%= @job.name %>
+      on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z")
  %>.
     </p>
-    <p><%= @event_object.inspect %></p>
-    <p><%= @event.inspect %></p>
-    <p><%= @receip.inspect %></p>
     <p>
-      To login to the site, just follow this link: <%= Rails.root %>.
+
+      <%= link_to jobs_link_url(:id => @job.name), jobs_link_url(:id => @job.id) %>
     </p>
+    <p style="margin-top:50px"><%= link_to 'Unsubscribe', unsubscribe_url(:id => @sub.token)%> from notifications on job <%@job.name%></p>
 
   </body>
 </html>
