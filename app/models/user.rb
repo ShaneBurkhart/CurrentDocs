@@ -195,6 +195,10 @@ class User < ActiveRecord::Base
     return 0
   end
 
+  def get_subscriptions(params)
+    return self.notification_subscriptions if params == nil
+  end
+
   private
 
     def generate_token

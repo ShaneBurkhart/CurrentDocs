@@ -24,6 +24,7 @@ class Api::UploadsController < ApplicationController
 		plan.plan = new_file
 
 		if plan.save
+			# Create event that a user has uploaded to a plan.
 			Event.create(user_id:user.id, target_type:NOTIF_TARGET_TYPE, target_id: plan.job.id, target_action:NOTIF_ACTIONS[:upload])
 			puts "Saved File"
 			render :text => "Good one"

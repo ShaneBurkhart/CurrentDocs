@@ -1,5 +1,6 @@
 require 'colorize'
 include Common
+
 class Api::JobsController < ApplicationController
   before_filter :user_not_there!, except: [
     :show_sub_share_link,
@@ -53,11 +54,12 @@ class Api::JobsController < ApplicationController
     if user.can? :update, Job
       @job = get_job(params[:id])
       if @job && user.is_my_job(@job)
-        params[:job][:subscribed] = 'true' == params[:job][:subscribed] ? true : false
+
+        # TODO Should be refactored into Job model
+        params[:job][:subscribed] = is_bool params[:job][:subscribed]
         subscribed = params[:job][:subscribed]
-
-
-        notifs = NotificationSubscription.where(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
+        # Update notifications
+        notifs = NotificationSubscription.get_notifs_for_target(type:NOTIF_TARGET_TYPE, id:@job.id, user_id:user.id)
         if notifs.present?
           notifs.each do |notif|
             if notif.is_active != subscribed
@@ -65,14 +67,11 @@ class Api::JobsController < ApplicationController
               notif.save
             end
           end
-        else
+        elsif subscribed == true
+          # Create new subscription for job
           NotificationSubscription.create(target_type:NOTIF_TARGET_TYPE, target_id:@job.id, user_id:user.id)
         end
-        # @job.name = params[:job][:name]
         @job.update_attributes params[:job]
-
-        # @job.save
-
         puts render json: @job
       else
         render json: @job
@@ -172,7 +171,6 @@ class Api::JobsController < ApplicationController
   end
 
   private
-
   def check_share_link_token!
     @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
     if @share_link.nil?

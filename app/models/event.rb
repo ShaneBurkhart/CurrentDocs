@@ -1,5 +1,5 @@
 include Common
-# Event.create(target_type:'job', target_id:1, target_action:'updated', user_id:1)
+# Event.create(target_type:'job', target_id:1, target_action:'update', user_id:1)
 class Event < ActiveRecord::Base
   attr_accessible :target_action, :target_id, :target_type, :user_id
   belongs_to :user
@@ -13,6 +13,14 @@ class Event < ActiveRecord::Base
   # Send logic to update users to NotificationSubscription
   def notify_subscribers
     NotificationSubscription.notify(self)
+  end
+
+  # NOTE make sure to sanitize class_name before using reflection.
+  # Potentially dangerous
+  def get_event
+    class_name = self.target_type.classify
+    klass = Object.const_get(class_name)
+    return klass.find(self.target_id)
   end
 
   private

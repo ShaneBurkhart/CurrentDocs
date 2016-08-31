@@ -23,20 +23,14 @@ class Job < ActiveRecord::Base
   before_destroy :destroy_plans
   before_destroy :destroy_shares
 
-
+  # rendering json is done in two steps. as_json, then to_json.
+  # This overrides as_json for a Job to include specified
+  # non-persisting attributes.
   def as_json options=nil
     options ||= {}
     options[:methods] = ((options[:methods] || []) + [:subscribed])
     super options
   end
-
-  # def initialize()
-  #   subscribed ||= nil
-  # end
-
-  # def attributes
-  #   super.merge({'subscribed' => self.subscribed})
-  # end
 
   def get_plans_for_tabs(tabs)
     self.plans.select{ |plan| tabs.include? plan.tab }
@@ -49,7 +43,6 @@ class Job < ActiveRecord::Base
   end
 
   private
-
   def destroy_shares
     self.shares.each do |share|
       share.destroy

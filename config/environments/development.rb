@@ -21,6 +21,13 @@ PlanSource::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
 
+  # config.action_controller.default_url_options = {:host=>"localhost", :protocol => "http://"}
+  config.absolute_site_url = 'http://localhost:3000'
+
+  # Path to preview the email
+  # config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+  # IT WAS ADDED IN RAILS 4!!!!!!! MUST UPDATE SOON
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

@@ -1,6 +1,9 @@
 PlanSource::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Used for email
+  config.absolute_site_url = 'http://plansource.io:80'
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -73,7 +76,7 @@ PlanSource::Application.configure do
     :domain         => 'heroku.com',
     :enable_starttls_auto => true
   }
-  
+
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
 
