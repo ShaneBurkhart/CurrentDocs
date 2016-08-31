@@ -1,4 +1,3 @@
-require 'colorize'
 include Common
 
 # NotificationSubscription.create(target_id:1, target_type:'job', user_id:1)
