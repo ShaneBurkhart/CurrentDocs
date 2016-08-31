@@ -24,6 +24,7 @@ gem "simple_form", "2.1.1"
 gem 'paperclip', '3.5.2'
 gem 'aws-sdk', '1.32.0'
 
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'uglifier', '>= 1.0.3'
