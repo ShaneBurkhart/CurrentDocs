@@ -21,6 +21,6 @@ module Common
 	NOTIF_TARGET_TYPE = ['job', 'plan']
 
 	def is_bool(value)
-		return ['true', 'True', '1', 1, true, 'TRUE'].include? value ? true : false
+		return ['true', 'True', '1', 1, true, 'TRUE'].include? value
 	end
 end

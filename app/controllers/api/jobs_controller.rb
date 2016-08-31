@@ -1,3 +1,4 @@
+require 'colorize'
 include Common
 
 class Api::JobsController < ApplicationController
@@ -55,10 +56,13 @@ class Api::JobsController < ApplicationController
       if @job && user.is_my_job(@job)
 
         # TODO Should be refactored into Job model
+        puts "#{params.inspect}".yellow
         params[:job][:subscribed] = is_bool params[:job][:subscribed]
         subscribed = params[:job][:subscribed]
+        puts "#{subscribed}".blue
         # Update notifications
         notifs = NotificationSubscription.get_notifs_for_target(type:'job', id:@job.id, user_id:user.id)
+        puts "#{notifs.inspect}".red
         if notifs.present?
           notifs.each do |notif|
             if notif.is_active != subscribed
