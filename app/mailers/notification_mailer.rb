@@ -1,6 +1,7 @@
 require 'colorize'
 class NotificationMailer < ActionMailer::Base
-  default from: "from@example.com"
+  include SendGrid
+  default from: "PlanSource <plansource-noreply@plansource.io>"
   helper :verbage_helper
 
   def test_email(user)
