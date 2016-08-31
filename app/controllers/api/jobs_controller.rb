@@ -66,9 +66,10 @@ class Api::JobsController < ApplicationController
               notif.save
             end
           end
-        elsif subscribed == true
+        elsif subscribed
+          puts "Creating new subscription"
           # Create new subscription for job
-          NotificationSubscription.create(target_type:'job', target_id:@job.id, user_id:user.id)
+          puts NotificationSubscription.create(target_type:'job', target_id:@job.id, user_id:user.id).inspect
         end
         @job.update_attributes params[:job]
         puts render json: @job

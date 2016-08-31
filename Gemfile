@@ -25,7 +25,6 @@ gem 'paperclip', '3.5.2'
 gem 'aws-sdk', '1.32.0'
 
 gem 'thin', group: :production
-gem 'rails_12factor', group: :production
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

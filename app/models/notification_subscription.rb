@@ -5,10 +5,12 @@ class NotificationSubscription < ActiveRecord::Base
   attr_accessible :is_active, :target_action, :target_id, :target_type, :user_id
   belongs_to :user
 
-  validates :target_id, :target_type, :user_id, :token, :presence => true
+  validates :target_id, :target_type, :user_id, :presence => true
+  validates_presence_of :token, on: :before_create
+
   validates :target_action, uniqueness: { scope: [:target_type, :target_id, :user_id], message:"this user is already subscribed to this event's particular action"}
   before_save :sanitize_data
-  before_create :generate_token
+  before_validation :generate_token
 
   # Be aware of a user requesting no email notifications
   # Be aware of manager refusing notifications to a user
