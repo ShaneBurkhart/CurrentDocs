@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require moment
-
+//= require toastr.min.js
 
 $(document).ready(function(){
 	var xhr2 = ( window.FormData !== undefined );
