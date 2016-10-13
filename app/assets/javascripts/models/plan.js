@@ -90,10 +90,15 @@ PlanSource.Plan = Ember.Object.extend({
               csi : self.get("csi"),
             	plan_name : self.get("plan_name"),
               status: self.get("status")
-            }}
+            }},
+            success:function(data){
+              toastr["success"]("Successfully saved " + self.get('plan_name'));
+            },
+            error:function(){
+              toastr["error"]("Could not save " + self.get('plan_name'));
+            }
         }).then(function(data){
           self.setProperties(data.plan);
-
         })
       );
     });
@@ -101,10 +106,17 @@ PlanSource.Plan = Ember.Object.extend({
 
   _deleteRequest : function(){
     var self = this;
+    var preDeleteName = self.get('plan_name');
     return Em.Deferred.promise(function(p){
       p.resolve($.ajax({
             url: PlanSource.Plan.url(self.get("id")),
-            type: 'DELETE'
+            type: 'DELETE',
+            success:function(data){
+              toastr["success"]("Successfully deleted " + preDeleteName);
+            },
+            error:function(){
+              toastr["error"]("Could not delete " + preDeleteName);
+            }
         }).then(function(data){
 
         })

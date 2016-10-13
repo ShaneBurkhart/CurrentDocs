@@ -3,6 +3,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<a class="button button-blue pull-right" {{action "editPlan" target=controller}}>Save</a>
 				<h4 class="modal-title">Edit your plan</h4>
 			</div>
 			<div class="modal-body">
@@ -71,20 +72,25 @@
 				</div>
 				<div class="modal-footer">
 					<div class="buttons">
-						<a class="button" {{action "closeModal"}}>Cancel</a>
 						<a class="button button-blue" {{action "editPlan" target=controller}}>Save</a>
+						<a class="button" {{action "closeModal"}}>Cancel</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <script>
 $('#myModal').modal('show');
 $('#myModal').on('shown.bs.modal', function () {
     $('#edit-plan-num').focus();
 		$('#edit-plan-csi').focus();
-})
+});
+
+$("#myModal").on('hide.bs.modal', function(){
+	// console.log(PlanSource.EditPlanController.send(''));
+});
 
 var initSelect = $('#init-select-status').val();
 $('#edit-select-status').val(initSelect);

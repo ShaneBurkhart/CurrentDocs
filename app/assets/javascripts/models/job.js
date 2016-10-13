@@ -134,7 +134,13 @@ PlanSource.Job = Ember.Object.extend({
       p.resolve($.ajax({
             url: PlanSource.Job.url(self.get("id")),
             type: 'PUT',
-            data : { job : self.getProperties("name", "archived")}
+            data : { job : self.getProperties("name", "archived")},
+            success:function(data){
+              toastr["success"]("Successfully saved " + self.get('name'));
+            },
+            error:function(){
+              toastr["error"]("Could not save " + self.get('name'));
+            }
         }).then(function(data){
           self.setProperties(data.job);
         })
@@ -147,7 +153,13 @@ PlanSource.Job = Ember.Object.extend({
     return Em.Deferred.promise(function(p){
       p.resolve($.ajax({
             url: PlanSource.Job.url(self.get("id")),
-            type: 'DELETE'
+            type: 'DELETE',
+            success:function(data){
+              toastr["success"]("Successfully deleted job")
+            },
+            error:function(){
+              toastr["error"]("Could not delete job")
+            }
         }).then(function(data){
 
         })

@@ -12,7 +12,7 @@
 				  <%= f.input :last_name, :input_html => {:class=>"form-control" } %>
           <%= f.input :company, :input_html => {:class=>"form-control" }%>
 				  <%= f.input :email, :required => true, :input_html => {:class=>"form-control" } %>
-				  <%= f.input :password, :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false, :input_html => {:class=>"form-control" } %>
+				  <%= f.input :password, :label => "New password", :autocomplete => "off", :hint => "leave it blank if you don't want to change it", :required => false, :input_html => {:class=>"form-control" } %>
 				  <%= f.input :password_confirmation, :required => false, :input_html => {:class=>"form-control" } %>
 				  <%= f.input :current_password, :hint => "we need your current password to confirm your changes", :required => true, :input_html => {:class=>"form-control" } %>
 				  <%= f.button :submit, 'Update', :class => 'button button-blue' %>
