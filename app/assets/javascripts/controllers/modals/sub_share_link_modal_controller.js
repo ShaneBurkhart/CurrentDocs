@@ -6,7 +6,7 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
     var shareLinkUrl = '//' + host + '/api/jobs/share_link';
 
 		var container = $("#share-link-email"),
-    		email = container.val();
+    		email = container.val().trim();
 
    	this.clearAllErrors();
 
