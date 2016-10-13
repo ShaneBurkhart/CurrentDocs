@@ -1,9 +1,14 @@
-Welcome to example.com
-===============================================
+PlanSource Notification
 
-You have successfully signed up to example.com,
-your username is:
 
-To login to the site, just follow this link:
+<%= @event_user.email.capitalize %> <%= verbage_helper @event.target_action %> <%= @plan.plan_name %> from job <%= @job.name %> on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z") %>.
 
-Thanks for joining and have a great day!
+Link to job:
+<%= jobs_link_url(:id => @job.id) %>
+
+
+
+
+
+Unsubscribe to emails with this link:
+<%= unsubscribe_url(:id => @sub.token)%>

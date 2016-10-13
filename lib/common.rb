@@ -17,8 +17,11 @@ module Common
 
 	# Notification constants
 	NOTIF_ACTIONS = { delete:'delete', upload:'upload' }
-	PERMISSIBLE_NOTIF_ACTIONS_LIST = NOTIF_ACTIONS.stringify_keys.keys
-	NOTIF_TARGET_TYPE = ['job', 'plan']
+	NOTIF_ACTIONS_LIST = NOTIF_ACTIONS.stringify_keys.keys
+
+	NOTIF_TARGET_TYPE = { job: 'job', plan: 'plan' }
+	NOTIF_TARGET_TYPE_LIST = NOTIF_TARGET_TYPE.stringify_keys.keys
+
 
 	def is_bool(value)
 		return ['true', 'True', '1', 1, true, 'TRUE'].include? value

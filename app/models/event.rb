@@ -17,7 +17,7 @@ class Event < ActiveRecord::Base
 
   # NOTE make sure to sanitize class_name before using reflection.
   # Potentially dangerous
-  def get_event
+  def get_object
     class_name = self.target_type.classify
     klass = Object.const_get(class_name)
     return klass.find(self.target_id)
@@ -25,11 +25,11 @@ class Event < ActiveRecord::Base
 
   private
   def ensure_valid_target_type
-    errors.add(:target_type, "target type is invalid") unless NOTIF_TARGET_TYPE.include? target_type
+    errors.add(:target_type, "target type is invalid") unless NOTIF_TARGET_TYPE_LIST.include? target_type
   end
 
   def ensure_valid_target_action
-    errors.add(:target_action, "target action is not valid") unless PERMISSIBLE_NOTIF_ACTIONS_LIST.include? target_action
+    errors.add(:target_action, "target action is not valid") unless NOTIF_ACTIONS_LIST.include? target_action
   end
 
   def sanitize_data

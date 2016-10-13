@@ -4,11 +4,15 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
+    <style>
+      body{
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+      }
+    </style>
     <h1><%= link_to 'PlanSource.io', root_url %></a> Notification</h1>
     <p>
       <a href="mailto:<%= @event_user.email %>" target="_blank"><%= @event_user.email.capitalize %></a>
-      <%= verbage_helper @event.target_action %>
-      <%= @event.target_type %>
+      <%= verbage_helper @event.target_action %> 
       <a href="<%= "http://plansource.io/app#/jobs/#{@job.id}" %>" target="_blank"><%= @plan.plan_name %></a>
       from job <%= @job.name %>
       on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z")
