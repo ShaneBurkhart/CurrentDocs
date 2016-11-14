@@ -14,7 +14,7 @@ class Api::DownloadsController < ApplicationController
 		end
 
 		# Make sure plan is shared with you
-		if not params[:share_token].nil? && ShareLink.find_by_token_and_job_id(params[:share_token], plan.job_id)
+		if params[:share_token] && not ShareLink.find_by_token_and_job_id(params[:share_token], plan.job_id)
 			flash[:warning] = "Please make sure you are signed in or the project is shared with you."
 			redirect_to(:back) and return
 		end
