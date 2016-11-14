@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   has_many :user_contact_connection, class_name: "Contact", foreign_key: "user_id"
   has_many :contacts, through: :user_contact_connection
   has_one :signup_link
+  has_many :events
+  has_many :notification_subscriptions
 
   # Include default devise modules. Others available are:
   # , :confirmable,
@@ -191,6 +193,10 @@ class User < ActiveRecord::Base
     return 2 if self.manager?
     return 3 if self.admin?
     return 0
+  end
+
+  def get_subscriptions(params)
+    return self.notification_subscriptions if params == nil
   end
 
   private

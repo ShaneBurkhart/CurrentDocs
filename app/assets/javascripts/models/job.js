@@ -134,7 +134,8 @@ PlanSource.Job = Ember.Object.extend({
       p.resolve($.ajax({
             url: PlanSource.Job.url(self.get("id")),
             type: 'PUT',
-            data : { job : self.getProperties("name", "archived")},
+
+            data : { job : self.getProperties("name", "archived", "subscribed")},
             success:function(data){
               toastr["success"]("Successfully saved " + self.get('name'));
             },

@@ -25,11 +25,20 @@ PlanSource.JobController = Ember.ObjectController.extend({
     this.get('model').set('archived', true);
     this.get('model').save();
   },
-
   unarchiveJob: function() {
     this.get('model').set('archived', false);
     this.get('model').save();
   },
+
+  subscribeJob:function(){
+    this.get('model').set('subscribed', true);
+    this.get('model').save();
+  },
+  unsubscribeJob:function(){
+    this.get('model').set('subscribed', false);
+    this.get('model').save();
+  },
+
 
 	back : function(){
 		window.history.go(-1);

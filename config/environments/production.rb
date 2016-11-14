@@ -1,6 +1,10 @@
 PlanSource::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.logger = Logger.new(STDOUT)
+  config.log_level = :error
+
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -64,6 +68,16 @@ PlanSource::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.default_url_options = { :host => 'plansource.io' }
+  config.action_mailer.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
+
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
 

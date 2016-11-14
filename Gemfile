@@ -23,6 +23,9 @@ gem "simple_form", "2.1.1"
 
 gem 'paperclip', '3.5.2'
 gem 'aws-sdk', '1.32.0'
+gem 'colorize'
+
+gem 'thin', group: :production
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -30,8 +33,11 @@ group :assets do
 end
 
 group :development do
+  gem 'colorize'
   gem 'faker'
   gem "quiet_assets", ">= 1.0.2"
   gem "better_errors", ">= 0.7.2"
   gem "binding_of_caller", ">= 0.7.1", :platforms => [:mri_19, :rbx]
+
+  gem 'mailcatcher'
 end

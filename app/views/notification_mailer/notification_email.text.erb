@@ -1,0 +1,14 @@
+PlanSource Notification
+
+
+<%= @event_user.email.capitalize %> <%= verbage_helper @event.target_action %> <%= @plan.plan_name %> from job <%= @job.name %> on <%= @event.created_at.strftime("%A %b %d, %Y at %I:%M %p %Z") %>.
+
+Link to job:
+<%= jobs_link_url(:id => @job.id) %>
+
+
+
+
+
+Unsubscribe to emails with this link:
+<%= unsubscribe_url(:id => @sub.token)%>

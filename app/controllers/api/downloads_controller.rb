@@ -13,12 +13,18 @@ class Api::DownloadsController < ApplicationController
 			return
 		end
 
+		# Make sure plan is shared with you
+		if params[:share_token] && ShareLink.find_by_token_and_job_id(params[:share_token], plan.job_id) == nil
+			flash[:warning] = "Please make sure you are signed in or the project is shared with you."
+			redirect_to(:back) and return
+		end
+
 		if Rails.env.development?
 			sym = plan.class.name.underscore
 			puts "sym: #{sym}"
 			rel_path = plan.send(sym).url
 			path = File.join(Rails.root, 'public', rel_path)
-			
+
 			puts "PATH: #{path}"
 			data = open(path)
 		else
@@ -28,15 +34,19 @@ class Api::DownloadsController < ApplicationController
 				data = open(plan.plan.url)
 			end
 		end
-  		send_data data.read, filename: plan.filename, stream: 'true', buffer_size: '4096'
+		send_data data.read, filename: plan.filename, stream: 'true', buffer_size: '4096'
 		#f = plan.plan.path
 		#send_file f.to_s, :type => 'application/pdf', :filename => plan.filename
 	end
 
 	private
 
+		# TODO: Check out this method. Not really authenticating, just checking existance
     def user_not_there!
-      render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
+			unless user_signed_in? || User.find_by_authentication_token(params[:token]) || params[:share_token]
+				flash[:warning] = "Please make sure you are signed in or the project is shared with you."
+				redirect_to(:back) and return
+			end
     end
 
     def isPlanRecord?

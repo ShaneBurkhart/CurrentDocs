@@ -14,12 +14,19 @@ PlanSource::Application.configure do
   config.action_controller.perform_caching = false
 
   # ActionMailer Config
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { address: "127.0.0.1", port: 1025 }
   # change to true to allow email to be sent during development
-  config.action_mailer.perform_deliveries = false
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default :charset => "utf-8"
+
+  
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # Path to preview the email
+  # config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+  # IT WAS ADDED IN RAILS 4!!!!!!! MUST UPDATE SOON
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

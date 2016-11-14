@@ -17,7 +17,7 @@
 require 'faker'
 
 user = User.new(
-  email: "shaneburkhart@gmail.com",
+  email: "dgwetherington@gmail.com",
   password: "password",
   first_name: Faker::Name.first_name,
   last_name: Faker::Name.last_name,
