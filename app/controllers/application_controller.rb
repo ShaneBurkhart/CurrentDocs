@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     end
 
     def render_no_permission
-	render :text => "You don't have permission to do that"
+	     render :text => "You don't have permission to do that"
     end
 
     private

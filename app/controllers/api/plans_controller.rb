@@ -93,7 +93,11 @@ class Api::PlansController < ApplicationController
       render 'show_embedded', layout: false and return
     else
       flash[:warning] = "You don't have permission to do that"
-			redirect_to root_path
+			begin
+				redirect_to(:back) and return
+			rescue ActionController::RedirectBackError
+				redirect_to root_path and return
+			end
     end
   end
 
