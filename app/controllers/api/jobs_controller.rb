@@ -130,7 +130,6 @@ class Api::JobsController < ApplicationController
   # If the cookie is set, we just want to update it right now.
   def show_sub_share_link
     @job = Job.find params[:id]
-
     if @job
       # Record that someone opened the page
       render :sub_share_link
@@ -178,7 +177,8 @@ class Api::JobsController < ApplicationController
   def check_share_link_token!
     @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
     if @share_link.nil?
-      not_found
+      flash[:warning] = "Your share token is missing or not valid."
+      redirect_to root_path
     end
   end
 

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
     end
 
     def user_not_there!
-	render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token])
+	     render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token]) || params[:share_token]
     end
 
     def user

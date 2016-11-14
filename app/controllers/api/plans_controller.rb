@@ -78,17 +78,13 @@ class Api::PlansController < ApplicationController
   end
 
   def show_embedded
-    # if isRecord? params
-    #   plan = PlanRecord.find(params[:id]).plan
-    # else
     if isRecord? params
       plan = PlanRecord.find(params[:id]).plan
     else
       plan = Plan.find(params[:id])
     end
-    # end
 
-    if user.is_my_plan(plan) || user.is_shared_plan(plan)
+    if (user && (user.is_my_plan(plan) || user.is_shared_plan(plan))) || (params[:share_token] && ShareLink.find_by_token_and_job_id(params[:share_token], plan.job_id))
       if isRecord? params
         @plan = PlanRecord.find(params[:id])
       else
@@ -96,7 +92,8 @@ class Api::PlansController < ApplicationController
       end
       render 'show_embedded', layout: false and return
     else
-      render_no_permission
+      flash[:warning] = "You don't have permission to do that"
+			redirect_to root_path
     end
   end
 
