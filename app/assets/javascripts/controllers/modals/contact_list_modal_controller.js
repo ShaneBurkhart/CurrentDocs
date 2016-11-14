@@ -25,6 +25,9 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
       });
 
       shares.push(share);
+
+      //Comfort notification, doesn't actually check for success :/
+      toastr["success"]("Updated shares for " + self.get("job.name"));
     });
 
     $.post("/api/shares/batch", {

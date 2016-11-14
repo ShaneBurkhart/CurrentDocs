@@ -10,7 +10,7 @@ body{
 }
 
 .text-nowrap{
-	white-space:nowrap;	
+	white-space:nowrap;
 }
 
 
@@ -74,4 +74,22 @@ input[type="checkbox"] {
 	height: 1.6em;
 	font-size: 1.2em;
 	line-height: 1em;
+}
+
+// If on small screen
+@media (max-width: 768px) {
+	#share-search-input{
+		float:left !important
+	}
+
+	#search-input{
+		float:left !important
+	}
+}
+
+// Customize modal button
+.close{
+	margin-left:20px;
+	line-height: 1;
+	font-size:30px;
 }

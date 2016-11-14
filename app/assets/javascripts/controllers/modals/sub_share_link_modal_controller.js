@@ -6,17 +6,17 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
     var shareLinkUrl = '//' + host + '/api/jobs/share_link';
 
 		var container = $("#share-link-email"),
-    		email = container.val();
+    		email = container.val().trim();
 
    	this.clearAllErrors();
 
     if(!email || email == ""){
-    	this.error("#share-link-email", "You need to enter an email!");
+    	this.error("#share-link-email", "You need to enter an email");
     	return;
     }
 
     if(!email.match(emailRegex)) {
-    	this.error("#share-link-email", "You need to enter a valid email!");
+    	this.error("#share-link-email", "Please enter a valid email");
     	return;
     }
 
@@ -31,9 +31,9 @@ PlanSource.SubShareLinkController = PlanSource.ModalController.extend({
         }
     }).done(function(data){
 			console.log("Sent email link.")
-      PlanSource.showNotification('Successfully sent link to ' + email + '.');
+			toastr["success"]("Sent link to " + email);
     }).fail(function(data){
-      PlanSource.showNotification('Failed to send link to ' + email + '.', "warning");
+			toastr["warning"]("Failed to send link to " + email);
     });
     this.send('close');
 	},
