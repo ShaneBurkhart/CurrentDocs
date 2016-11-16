@@ -14,7 +14,7 @@
           <% end %>
 
           <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
-          <%= link_to 'Edit Account', edit_user_registration_path %>
+          <%= link_to 'My Account', edit_user_registration_path %>
           </li>
         <% else %>
           <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">

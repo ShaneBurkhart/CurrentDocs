@@ -1,19 +1,19 @@
 <div class="modal-wrapper">
   <div class="overlay"></div>
-  <div class="dialog box box-border" style="width: 850px;">
+  <div class="dialog box box-border" style="width: 95%;">
     <div class="header">
       <div class="pull-right">
         <a class="button button-blue" id="contact-share" {{action "shareWithContacts" target=controller}} >Update</a>
         <button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
-      <h4 class="modal-title">Select contacts to share with</h4>
+      <h4 class="modal-title">Sharing Options for {{ job.name }}</h4>
     </div>
     <div class="body">
       <div class="control-group">
         <div class="controls">
           <div class="form-inline">
             {{ view PlanSource.TextField class="form-control" placeholder="share@email.com" focus=true id="contact-email" autocomplete=true }}
-            <a class="button button-inline" {{ action "addContact" target="controller" }}>+ Add Contact</a>
+            <input type="submit" class="button button-inline" {{ action "addContact" target="controller" }} value="+ Add Contact">
             <span class="help-inline"></span>
           </div>
         </div>

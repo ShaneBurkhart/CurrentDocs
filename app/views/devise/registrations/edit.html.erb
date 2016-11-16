@@ -1,10 +1,10 @@
-<% content_for :title, "Edit Account" %>
+<% content_for :title, "My Account" %>
 <div class="section">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 
-				<h2>Edit <%= resource_name.to_s.humanize %></h2>
+				<h2>My Account</h2>
 				<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => 'form-vertical', :style=>"margin-bottom:30px;" }) do |f| %>
 				  <%= f.error_notification %>
 				  <%= display_base_errors resource %>

@@ -54,7 +54,7 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
   addContact: function(){
     var self = this;
     var container = $("#contact-email"),
-    email = container.val();
+    email = container.val().trim();
     this.clearAllErrors();
     this.clearAllInfo();
     if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)){
@@ -67,7 +67,7 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
       function(data){
         if(data.contact && data.contact.id){
           self.get("content").pushObject(PlanSource.Contact.create(data.contact.contact));
-          self.info("#contact-email", "Succesfully added contact.");
+          toastr["success"]("Succesfully added contact. Sent email with share details to " + email);
         }else{
           if(data.error)
             self.error("#contact-email", data.error);
