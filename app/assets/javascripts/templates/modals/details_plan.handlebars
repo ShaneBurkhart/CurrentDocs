@@ -4,7 +4,7 @@
 			<div class="modal-header">
 				<button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<a class="button button-blue pull-right" {{action "editPlan" target=controller}}>Save</a>
-				<h4 class="modal-title">Edit {{this.plan_name}}</h4>
+				<h4 class="modal-title">Details {{this.plan_name}}</h4>
 			</div>
 			<div class="modal-body">
 				{{partial "modals/edit_plan_partial"}}

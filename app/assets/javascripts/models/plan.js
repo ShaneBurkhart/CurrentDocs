@@ -29,6 +29,10 @@ PlanSource.Plan = Ember.Object.extend({
     }
   }.property('belongsToASI'),
 
+  isNotShopOrASI:function(){
+    return !(this.get("belongsToShops") || this.get("belongsToASI"))
+  }.property('isNotShopOrASI'),
+
   fileIsPDF:function(){
     if(this.get('filename').toLowerCase().indexOf('.pdf') > 0){
       return true;
@@ -39,6 +43,13 @@ PlanSource.Plan = Ember.Object.extend({
   deleteRecord : function(){
     this.destroy();
   },
+
+  getDescriptionString:function(){
+    var tempCont = document.createElement("div");
+    var quil = new Quill(tempCont);
+    quil.setContents(JSON.parse(this.get("description")));
+    return quil.getText();
+  }.property("getDescriptionString"),
 
   planRecords:function(){
     PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
@@ -97,7 +108,9 @@ PlanSource.Plan = Ember.Object.extend({
             	plan_num : self.get("plan_num"),
               csi : self.get("csi"),
             	plan_name : self.get("plan_name"),
-              status: self.get("status")
+              status: self.get("status"),
+              description: self.get('description'),
+              code: self.get('code')
             }},
             success:function(data){
               toastr["success"]("Successfully saved " + self.get('plan_name'));

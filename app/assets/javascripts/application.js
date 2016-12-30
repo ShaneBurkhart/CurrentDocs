@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require moment
 //= require toastr.min.js
+//= require quill.min.js
 
 $(document).ready(function(){
 	var xhr2 = ( window.FormData !== undefined );

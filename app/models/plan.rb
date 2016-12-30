@@ -30,12 +30,15 @@ class Plan < ActiveRecord::Base
 
   # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at, :description, :code, :link_id, :link_type
   validates :job_id, :plan_num, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_in_job
   validate :check_for_valid_tab_name
   before_destroy :delete_file, :delete_plan_num
   validates :status, :length => { :maximum => 50 }
+  validates :description, :length => { :maximum => 20000 }
+  validates :code, :length => { :minimum => 12,  :maximum => 12 }
+
   # validate :ensure_plans_have_unique_plan_nums, :on => :save
   # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]
 

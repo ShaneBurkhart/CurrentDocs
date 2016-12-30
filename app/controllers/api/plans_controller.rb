@@ -51,6 +51,8 @@ class Api::PlansController < ApplicationController
           end
 					@plan.set_plan_num params["plan"]["plan_num"].to_i
 					@plan.update_attribute(:status, params["plan"]["status"])
+					@plan.update_attribute(:code, params["plan"]["code"])
+					@plan.update_attribute(:description, params["plan"]["description"])
           params["plan"].delete "plan_num"
         end
         params["plan"].delete "updated_at"

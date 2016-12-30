@@ -32,9 +32,9 @@
           <td><span>{{unbound status}}</span></td>
           {{else}}
             {{#if this.belongsToASI}}
-            <td><span>{{code}}</span>C</td>
-            <td><span>{{description}}</span>D</td>
-            <td><span>{{link_id}}</span>A</td>
+            <td><span>{{unbound code}}</span></td>
+            <td><span>{{truncate getDescriptionString}}</span></td>
+            <td><span>{{unbound link_id}}</span></td>
             {{else}}
             <td><span>{{plan_num}}</span></td>
             {{/if}}
@@ -52,6 +52,7 @@
               {{/if}}
               {{#unless controller.job.isShared}}
               <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
+              <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
               <li><a {{action "openDeletePlanModal" this}}><span class="glyphicon glyphicon-remove"></span></a></li>
               {{/unless}}
             </ul>

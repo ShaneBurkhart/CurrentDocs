@@ -1,4 +1,4 @@
-PlanSource.EditPlanController = PlanSource.ModalController.extend({
+PlanSource.DetailsPlanController = PlanSource.ModalController.extend({
 	job : {},
 
 	init:function(){

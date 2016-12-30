@@ -9,7 +9,6 @@ PlanSource.CSIField = Ember.TextField.extend({
 		return csiArr.join("")
 	},
 
-
 	didInsertElement : function(){
 		var placeholder = this.get("placeholder");
 		if(placeholder)
