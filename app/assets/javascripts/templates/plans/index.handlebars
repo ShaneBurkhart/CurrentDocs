@@ -6,7 +6,13 @@
         <th {{action "sort" "csi"}}><a>CSI</a></th>
         <th {{action "sort" "status"}}><a>Status</a></th>
         {{else}}
-        <th {{action "sort" "plan_num"}}><a>#</a></th>
+          {{#if controllers.job.isASITab}}
+          <th {{action "sort" "code"}}><a>ASI</a></th>
+          <th {{action "sort" "description"}}><a>Description</a></th>
+          <th {{action "sort" "affected"}}><a>Affects</a></th>
+          {{else}}
+          <th {{action "sort" "plan_num"}}><a>#</a></th>
+          {{/if}}
         {{/if}}
         <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
         <th {{action "sort" "plan_updated_at"}}><a>Updated</a></th>
@@ -25,7 +31,13 @@
           <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
           <td><span>{{unbound status}}</span></td>
           {{else}}
-          <td><span>{{plan_num}}</span></td>
+            {{#if this.belongsToASI}}
+            <td><span>{{code}}</span>C</td>
+            <td><span>{{description}}</span>D</td>
+            <td><span>{{link_id}}</span>A</td>
+            {{else}}
+            <td><span>{{plan_num}}</span></td>
+            {{/if}}
           {{/if}} <!-- belongsToShops -->
           <td class="word"><span title="{{unbound plan_name}}">{{plan_name}}</span></td>
           <td><span>{{date plan_updated_at}}</span></td>
@@ -59,15 +71,10 @@
             {{/manager}}
           </td>
 
-          {{#if controllers.job.isShopsTab}}
-          <td></td>
-          <td></td>
-          {{else}}
+          {{#unless controllers.job.isShopsTab}}
           <td>{{plan_num}}</td>
-          {{/if}}
-          <td></td>
-          <td></td>
-          <td></td>
+          {{/unless}}
+
         </tr>
         {{/each}}
       </tbody>

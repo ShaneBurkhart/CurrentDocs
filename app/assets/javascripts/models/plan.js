@@ -21,6 +21,14 @@ PlanSource.Plan = Ember.Object.extend({
     }
   }.property('belongsToShops'),
 
+  belongsToASI: function() {
+    if (this.get("tab") === 'ASI'){
+      return true;
+    }else{
+      return false;
+    }
+  }.property('belongsToASI'),
+
   fileIsPDF:function(){
     if(this.get('filename').toLowerCase().indexOf('.pdf') > 0){
       return true;

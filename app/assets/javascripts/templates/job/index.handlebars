@@ -38,6 +38,14 @@
         {{/if}}
     {{/if}}
 
+    {{#if canViewPlansTab}}
+        {{#if isASITab}}
+            <a class="active">ASI</a>
+        {{else}}
+            <a {{action "changeTab" "ASI"}}>ASI</a>
+        {{/if}}
+    {{/if}}
+
     {{#if canViewShopsTab}}
         {{#if isShopsTab}}
             <a class="active">Shops</a>
@@ -66,7 +74,6 @@
 
 <script>
   var readyTableLinks = function(){
-
     $("#plan-table tbody tr").not(".clickable").off("click");
     $("#plan-table tbody tr").not(".clickable").click(function(e){
       console.log("clicked!");

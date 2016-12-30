@@ -17,6 +17,10 @@ PlanSource.JobController = Ember.ObjectController.extend({
     return this.get('tab') === 'Consultants';
   }.property('tab'),
 
+  isASITab: function() {
+    return this.get('tab') === 'ASI';
+  }.property('tab'),
+
   isCalcTab: function() {
     return this.get('tab') === 'Calcs & Misc';
   }.property('tab'),
