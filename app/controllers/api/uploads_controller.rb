@@ -27,7 +27,8 @@ class Api::UploadsController < ApplicationController
 			puts "Saved File"
 			render :text => "Good one"
 		else
-			puts "Didn't Saved File"
+			puts "Didn't Saved File #{plan.errors.messages}"
+
 			render :text => "Bad one"
 		end
 	end

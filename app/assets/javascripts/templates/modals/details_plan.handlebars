@@ -3,31 +3,11 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<a class="button button-blue pull-right" {{action "editPlan" target=controller}}>Save</a>
 				<h4 class="modal-title">Details {{this.plan_name}}</h4>
 			</div>
 			<div class="modal-body">
-				{{partial "modals/edit_plan_partial"}}
+				{{partial "modals/details_plan_partial"}}
 				<hr>
-				<div class="modal-section">
-					<h4 class="title">Upload a file</h4>
-					<p>Select a file to upload.</p>
-					<form enctype="multipart/form-data" id="plan_source_upload_form">
-						<input type="hidden" name="plan_id" id="plan_id">
-						<div class="control-group">
-							<div class="controls">
-
-								<input style="font-size:16px" type="file" name="file" id="file">
-								<span class="help-inline"></span>
-							</div>
-						</div>
-					</form>
-
-					<div class="buttons inline" style="margin-top:10px">
-						<a class="button button-blue" {{action "uploadPlan"}} >Upload</a>
-					</div>
-					<hr>
-				</div>
 				<div class="modal-section">
 					<h4 class="title">Plan History</h4>
 					<div class="container-fluid">
@@ -50,8 +30,7 @@
 				</div>
 				<div class="modal-footer">
 					<div class="buttons">
-						<a class="button button-blue" {{action "editPlan" target=controller}}>Save</a>
-						<a class="button" {{action "closeModal"}}>Cancel</a>
+						<a class="button" {{action "closeModal"}}>Close</a>
 					</div>
 				</div>
 			</div>
@@ -94,10 +73,13 @@ $('#edit-plan-csi').keyup(function(){
 </script>
 <!-- Include the Quill library -->
 <script>
-if($("#edit-plan-description").length > 0){
-	var editor = new Quill('#edit-plan-description', {
-		// modules: { toolbar: '#toolbar' },
-		theme: 'snow'
+if($("#details-plan-description").length > 0){
+	var editor = new Quill('#details-plan-description', {
+		theme: 'snow',
+    readOnly:true,
+    modules:{
+      toolbar:false
+    }
 	});
 }
 </script>

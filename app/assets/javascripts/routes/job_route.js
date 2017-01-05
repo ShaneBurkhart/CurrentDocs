@@ -1,7 +1,9 @@
 PlanSource.JobRoute = Ember.Route.extend({
   events : {
     close : function(){
-      this.render("nothing", {into : "jobs", outlet : "modal"});
+      // this.render("nothing", {into : "jobs", outlet : "modal"});
+      this.controllerFor('plans');
+      this.clearOutlet('jobs', 'modal');
     },
 
     openAddPlanModal : function(){
@@ -75,6 +77,12 @@ PlanSource.JobRoute = Ember.Route.extend({
 
   model : function(param){
     return PlanSource.Job.find(param.job_id);
-  }
+  },
+
+  clearOutlet: function(container, outlet) {
+     parentView = this.router._lookupActiveView(container);
+     parentView.disconnectOutlet(outlet);
+   }
+
 
 });

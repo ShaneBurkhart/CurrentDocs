@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<button type="button" {{action "closeModal"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<a class="button button-blue pull-right" {{action "editPlan" target=controller}}>Save</a>
 				<h4 class="modal-title">Edit {{this.plan_name}}</h4>
 			</div>
@@ -22,7 +22,6 @@
 							</div>
 						</div>
 					</form>
-
 					<div class="buttons inline" style="margin-top:10px">
 						<a class="button button-blue" {{action "uploadPlan"}} >Upload</a>
 					</div>
@@ -51,7 +50,7 @@
 				<div class="modal-footer">
 					<div class="buttons">
 						<a class="button button-blue" {{action "editPlan" target=controller}}>Save</a>
-						<a class="button" {{action "closeModal"}}>Cancel</a>
+						<a class="button" {{action 'closeModal'}}>Cancel</a>
 					</div>
 				</div>
 			</div>
@@ -93,11 +92,3 @@ $('#edit-plan-csi').keyup(function(){
 });
 </script>
 <!-- Include the Quill library -->
-<script>
-if($("#edit-plan-description").length > 0){
-	var editor = new Quill('#edit-plan-description', {
-		// modules: { toolbar: '#toolbar' },
-		theme: 'snow'
-	});
-}
-</script>

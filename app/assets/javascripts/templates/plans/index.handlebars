@@ -43,7 +43,7 @@
           <td><span>{{date plan_updated_at}}</span></td>
           <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
           <td>
-            <ul class="controls text-right unstyled">
+            <ul style="padding-left:0px;" class="controls text-right unstyled">
               {{#if hasPlan}}
               {{#if fileIsPDF}}
               <li style="display:none"><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
@@ -51,10 +51,10 @@
               <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
               {{/if}}
               {{#unless controller.job.isShared}}
+              <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
               <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
-              <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
-              <li><a {{action "openDeletePlanModal" this}}><span class="glyphicon glyphicon-remove"></span></a></li>
               {{/unless}}
+              <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
             </ul>
           </td>
         </tr>

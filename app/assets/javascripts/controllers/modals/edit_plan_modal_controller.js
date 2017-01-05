@@ -1,24 +1,30 @@
 PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	job : {},
 
-	init:function(){
-		this._super();
-		Ember.run.schedule("afterRender", this, function(){
-			this.send("initQuill");
-		});
-	},
-
 	initQuill:function(){
 		if(this.get('tab') == 'ASI'){
-			editor.setContents(JSON.parse(this.get("model").get("description")));
+			if($("#edit-plan-description").length > 0){
+				editor.setContents(JSON.parse(this.get("model").get("description")));
+			}
 		}
 	},
 
 	closeModal : function(){
-		jQuery('#myModal').modal('hide');
-		$('body').removeClass('modal-open');
+		$('#myModal').modal('hide');
+		console.log("Closing modal");
+		$('#myModal').on('hidden', function(){
+			$(this).data('modal', null);
+		});
 		this.send('close');
 	},
+
+	filenameOrDefault:function(){
+		console.log("filename", this.get('filename'));
+		if(this.get('filename') == null){
+			return "No file attached";
+		}
+		return this.get('filename');
+	}.observes('filename'),
 
 	editPlan : function(){
 		var self = this;
@@ -54,7 +60,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 				this.get("model").set("status", status);
 			}
 		}else if(this.get('tab') == 'ASI'){
-			console.log(editor.getContents());
+			// console.log(editor.getContents());
 			if(code != ""){
 				code = code.replace(/ +/g, '');
 			}
@@ -67,7 +73,6 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 				this.get("model").set("description", JSON.stringify(editor.getContents()));
 			}
 		}else{
-			console.log(this);
 			if(!num.match(/^(0|[1-9]\d*)$/)){
 				this.error("#edit-plan-name", "That is not a valid plan number!");
 				return;
@@ -86,7 +91,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 			this.send('uploadPlan');
 		}
 
-		this.send("closeModal");
+		this.send('closeModal');
 	},
 
 	uploadPlan : function(){
@@ -120,10 +125,11 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	},
 
 	keyPress : function(e){
+		// Enter key
 		if (e.keyCode == 13)
-		this.editPlan();
-
+			this.editPlan();
+		// Esc key
+		if (e.keyCode == 27)
+			this.send('close');
 	}
-
-
 });

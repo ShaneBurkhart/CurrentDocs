@@ -37,7 +37,7 @@ class Plan < ActiveRecord::Base
   before_destroy :delete_file, :delete_plan_num
   validates :status, :length => { :maximum => 50 }
   validates :description, :length => { :maximum => 20000 }
-  validates :code, :length => { :minimum => 12,  :maximum => 12 }
+  validates :code, :length => { :maximum => 12 }
 
   # validate :ensure_plans_have_unique_plan_nums, :on => :save
   # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]

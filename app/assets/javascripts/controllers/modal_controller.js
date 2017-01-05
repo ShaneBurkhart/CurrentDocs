@@ -1,5 +1,4 @@
 PlanSource.ModalController = Ember.ObjectController.extend({
-
   error : function(input_id, msg){
     var text = $(input_id).siblings(".help-inline"),
     cont = text.parent().parent();

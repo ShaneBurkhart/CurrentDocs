@@ -42,6 +42,14 @@ Ember.Handlebars.registerBoundHelper("date", function(date){
 	else
 		return "";
 });
+
+Ember.Handlebars.registerBoundHelper("format-date", function(date){
+	if(date)
+		return moment(date).format('ll');
+	else
+		return "";
+});
+
 Handlebars.registerHelper('manager', function(options) {
 	if(PlanSource._user_type == "Manager")
 		return options.fn(this);

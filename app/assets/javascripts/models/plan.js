@@ -51,6 +51,20 @@ PlanSource.Plan = Ember.Object.extend({
     return quil.getText();
   }.property("getDescriptionString"),
 
+  getDescriptionHTML:function(){
+    var tempCont = document.createElement("div");
+    var quil = new Quill(tempCont);
+    quil.setContents(JSON.parse(this.get("description")));
+    return quil.root.innerHTML;
+  }.property('getDescriptionHTML'),
+
+  filenameOrDefault:function(){
+    if(this.get('filename') == null){
+      return "No file attached";
+    }
+    return this.get('filename');
+  }.property('filenameOrDefault'),
+
   planRecords:function(){
     PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
     return PlanSource.PlanRecord.planRecords;

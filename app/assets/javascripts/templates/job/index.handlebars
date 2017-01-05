@@ -76,7 +76,6 @@
   var readyTableLinks = function(){
     $("#plan-table tbody tr").not(".clickable").off("click");
     $("#plan-table tbody tr").not(".clickable").click(function(e){
-      console.log("clicked!");
       if($(this).hasClass("table-row-button")){
         if (e.target.nodeName.toUpperCase() != "A" && e.target.nodeName.toUpperCase() != "SPAN") { // Make sure normal links still function
           console.log(this.getAttribute("data-link"));
