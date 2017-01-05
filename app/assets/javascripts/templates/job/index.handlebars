@@ -54,13 +54,13 @@
         {{/if}}
     {{/if}}
 
-    {{#unless isShared}}
+    {{#if canViewCalcsTab}}
         {{#if isCalcTab}}
             <a class="active">Calcs & Misc</a>
         {{else}}
             <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
         {{/if}}
-    {{/unless}}
+    {{/if}}
 </nav>
 {{outlet}}
 

@@ -38,27 +38,40 @@
 
       <div class="scroller-xlarge">
         <div class="table-responsive">
-        <table class="table table-hover" id="contacts-list">
-          {{#each itemController="contact"}}
-          <tr>
-            <td class="share-box-group">
-              <input class="share-box" type="checkbox" data-place="2" data-id="{{unbound id}}" {{unbound isPlansChecked}} >
-              P
-              <input class="share-box" type="checkbox" data-place="1" data-id="{{unbound id}}" {{unbound isShopsChecked}} >
-              S
-              <input class="share-box" type="checkbox" data-place="0" data-id="{{unbound id}}" {{unbound isConsultantsChecked}} >
-              C
-            </td>
-            <td>
-              {{ unbound first_name }}
-            </td>
-            <td>{{ unbound last_name}}</td>
-            <td>{{ unbound email }}</td>
-            <td>{{ unbound company }}</td>
-          </tr>
-          {{/each}}
-        </table>
-      </div>
+
+          <table class="table table-hover table-striped header-fixed" id="contacts-list">
+            <thead>
+              <tr>
+                <th>Plan | Shops | Support | Calcs</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Company</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each itemController="contact"}}
+              <tr>
+                <td class="share-box-group">
+                  <input class="share-box" type="checkbox" data-place="2" data-id="{{unbound id}}" {{unbound isPlansChecked}} >
+                  Plans
+                  <input class="share-box" type="checkbox" data-place="1" data-id="{{unbound id}}" {{unbound isShopsChecked}} >
+                  Shops
+                  <input class="share-box" type="checkbox" data-place="0" data-id="{{unbound id}}" {{unbound isConsultantsChecked}} >
+                  Support
+                  <input class="share-box" type="checkbox" data-place="3" data-id="{{unbound id}}" {{unbound isCalcsChecked}} >
+                  Calcs
+                <td>
+                  {{ unbound first_name }}
+                </td>
+                <td>{{ unbound last_name}}</td>
+                <td>{{ unbound email }}</td>
+                <td>{{ unbound company }}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
     <div class="footer">
@@ -71,14 +84,13 @@
 </div>
 <script>
 $("#share-search-input-modal").keyup(function () {
-    console.log("Searching!")
-    var filter = jQuery(this).val();
-    jQuery("#contacts-list tr").each(function () {
-        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
-            jQuery(this).hide();
-        } else {
-            jQuery(this).show()
-        }
-    });
+  var filter = jQuery(this).val();
+  jQuery("#contacts-list tbody tr").each(function () {
+    if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+      jQuery(this).hide();
+    } else {
+      jQuery(this).show()
+    }
+  });
 });
 </script>
