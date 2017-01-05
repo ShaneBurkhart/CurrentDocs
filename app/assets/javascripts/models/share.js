@@ -35,6 +35,11 @@ PlanSource.Share = Ember.Object.extend({
     return !!((permissions >> 0) % 2);
   }.property('permissions'),
 
+  hasCalcsShared: function() {
+    var permissions = this.get('permissions') || 0;
+    return !!((permissions >> 3) % 2);
+  }.property('permissions'),
+
   isSharer : function(){
     if(this.get("sharer"))
       return this.get("sharer").get("id") == user_id;

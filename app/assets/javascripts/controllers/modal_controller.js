@@ -14,7 +14,7 @@ PlanSource.ModalController = Ember.ObjectController.extend({
   },
 
   clearAllErrors : function(){
-    var errors = $(".control-group").find("controls").find(".help-inline");
+    var errors = $(".control-group").find(".controls").find(".help-inline");
     errors.each(function(e){
       e.text("");
     });

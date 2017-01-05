@@ -16,7 +16,8 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
         job_id: self.get("job.id"),
       };
 
-      group.find('input.share-box').each(function(j, b) {
+      var boxes = group.find('input.share-box');
+      boxes.each(function(j, b) {
         var box = $(b);
         share.user_id = box.data('id')
 
@@ -24,10 +25,8 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
         share.permissions |= flag << box.data('place');
       });
 
+      console.log("Share:", share)
       shares.push(share);
-
-      //Comfort notification, doesn't actually check for success :/
-      toastr["success"]("Updated shares for " + self.get("job.name"));
     });
 
     $.post("/api/shares/batch", {
@@ -58,6 +57,7 @@ PlanSource.ContactListController = Ember.ArrayController.extend({
     this.clearAllErrors();
     this.clearAllInfo();
     if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)){
+      console.log("Error with email: ", email);
       this.error("#contact-email", "Not a valid email.");
       return;
     }
@@ -159,5 +159,9 @@ PlanSource.ContactController = Ember.ObjectController.extend({
 
   isConsultantsChecked: function(){
     return this.isAttrChecked('hasConsultantsShared');
+  }.property(),
+
+  isCalcsChecked: function(){
+    return this.isAttrChecked('hasCalcsShared');
   }.property()
 });
