@@ -42,21 +42,27 @@ class Api::PlansController < ApplicationController
       @plan = Plan.find(params[:id])
       if current_user.is_my_plan @plan
         if !params["plan"]["plan_num"].nil? && params["plan"]["plan_num"].to_i.is_a?(Numeric)
-					@plan.update_attribute(:plan_name, params["plan"]["plan_name"])
+					@plan.plan_name = params["plan"]["plan_name"]
           csi = params["plan"]["csi"]
           if csi == 0 || csi == nil || csi == ""
-            @plan.update_attribute(:csi, nil)
+            @plan.csi = nil
           else
-            @plan.update_attribute(:csi, csi)
+            @plan.csi = csi
           end
-					@plan.set_plan_num params["plan"]["plan_num"].to_i
-					@plan.update_attribute(:status, params["plan"]["status"])
-					@plan.update_attribute(:code, params["plan"]["code"])
-					@plan.update_attribute(:description, params["plan"]["description"])
+					@plan.plan_num 		= params["plan"]["plan_num"].to_i
+					@plan.status 			= params["plan"]["status"]
+					@plan.code 				= params["plan"]["code"]
+					@plan.description = params["plan"]["description"]
+					@plan.tags 				= params["plan"]["tags"]
+
           params["plan"].delete "plan_num"
         end
         params["plan"].delete "updated_at"
-        render json: @plan
+				if @plan.save
+        	render json: @plan
+				else
+					render json: @plan.errors.messages
+				end
       else
         render_no_permission
       end

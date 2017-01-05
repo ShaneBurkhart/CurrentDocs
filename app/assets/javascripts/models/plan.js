@@ -59,11 +59,16 @@ PlanSource.Plan = Ember.Object.extend({
   }.property('getDescriptionHTML'),
 
   filenameOrDefault:function(){
-    if(this.get('filename') == null){
+    if(this.get('filename') == null)
       return "No file attached";
-    }
     return this.get('filename');
   }.property('filenameOrDefault'),
+
+  tagsOrDefault:function(){
+    if(this.get('tags') == null)
+      return 'None';
+    return this.get('tags');
+  }.property('tagsOrDefault'),
 
   planRecords:function(){
     PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
@@ -124,7 +129,8 @@ PlanSource.Plan = Ember.Object.extend({
             	plan_name : self.get("plan_name"),
               status: self.get("status"),
               description: self.get('description'),
-              code: self.get('code')
+              code: self.get('code'),
+              tags: self.get('tags')
             }},
             success:function(data){
               toastr["success"]("Successfully saved " + self.get('plan_name'));

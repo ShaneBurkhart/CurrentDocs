@@ -86,8 +86,7 @@ ActiveRecord::Schema.define(:version => 20161229231212) do
     t.string   "csi"
     t.text     "description"
     t.string   "code"
-    t.integer  "link_id"
-    t.string   "link_type"
+    t.string   "tags"
   end
 
   create_table "share_links", :force => true do |t|

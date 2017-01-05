@@ -30,7 +30,7 @@ class Plan < ActiveRecord::Base
 
   # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at, :description, :code, :link_id, :link_type
+  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at, :description, :code, :tags
   validates :job_id, :plan_num, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_in_job
   validate :check_for_valid_tab_name

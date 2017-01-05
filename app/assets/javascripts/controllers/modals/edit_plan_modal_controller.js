@@ -33,7 +33,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		csi = $("#edit-plan-csi").val(),
 		status = $("#edit-select-status").val(),
 		code = $("#edit-plan-code").val(),
-		affects = $("#edit-plan-links").val(),
+		tags = $("#edit-plan-tags").val(),
 		description = $("#edit-plan-description").val();
 
 		this.clearAllErrors();
@@ -47,7 +47,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 			this.get("model").set("plan_name", name);
 		}
 
-		if(this.get('tab') == 'Shops'){
+		if(this.get('tab') == 'Shops'){ // Shops plan
 			if(csi != ""){
 				csi = csi.replace(/ +/g, '');
 			}
@@ -59,18 +59,18 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 				this.get("model").set("csi", csi);
 				this.get("model").set("status", status);
 			}
-		}else if(this.get('tab') == 'ASI'){
-			// console.log(editor.getContents());
+		}else if(this.get('tab') == 'ASI'){ // ASI plan
 			if(code != ""){
 				code = code.replace(/ +/g, '');
 			}
-			// Ensure CSI code is either empty or a six digit number.
+			// Ensure ASI code is either empty or a 12 digit number.
 			if( code != "" && ( !code.match(/^(\d*)$/) || code.length != 12)) {
 				this.error("#edit-plan-code", "Must be 12 digit number or empty.");
 				return;
 			}else{
 				this.get("model").set("code", code);
 				this.get("model").set("description", JSON.stringify(editor.getContents()));
+				this.get("model").set("tags", tags);
 			}
 		}else{
 			if(!num.match(/^(0|[1-9]\d*)$/)){
@@ -83,6 +83,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 			}
 		}
 
+		// Save plan
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});

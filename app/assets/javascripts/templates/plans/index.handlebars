@@ -4,17 +4,25 @@
       <tr>
         {{#if controllers.job.isShopsTab}}
         <th {{action "sort" "csi"}}><a>CSI</a></th>
-        <th {{action "sort" "status"}}><a>Status</a></th>
         {{else}}
           {{#if controllers.job.isASITab}}
           <th {{action "sort" "code"}}><a>ASI</a></th>
-          <th {{action "sort" "description"}}><a>Description</a></th>
-          <th {{action "sort" "affected"}}><a>Affects</a></th>
           {{else}}
           <th {{action "sort" "plan_num"}}><a>#</a></th>
           {{/if}}
         {{/if}}
+
         <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
+
+        {{#if controllers.job.isShopsTab}}
+        <th {{action "sort" "status"}}><a>Status</a></th>
+        {{else}}
+          {{#if controllers.job.isASITab}}
+          <th {{action "sort" "description"}}><a>Description</a></th>
+          <th {{action "sort" "affected"}}><a>Affects</a></th>
+          {{/if}}
+        {{/if}}
+
         <th {{action "sort" "plan_updated_at"}}><a>Updated</a></th>
         <th {{action "sort" "filename"}}><a>Download File</a></th>
         <th class="text-right">Controls</th>
@@ -29,17 +37,23 @@
           {{/if}} <!-- end of hasPlan -->
           {{#if this.belongsToShops}}
           <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
-          <td><span>{{unbound status}}</span></td>
           {{else}}
             {{#if this.belongsToASI}}
             <td><span>{{unbound code}}</span></td>
-            <td><span>{{truncate getDescriptionString}}</span></td>
-            <td><span>{{unbound link_id}}</span></td>
             {{else}}
             <td><span>{{plan_num}}</span></td>
             {{/if}}
           {{/if}} <!-- belongsToShops -->
           <td class="word"><span title="{{unbound plan_name}}">{{plan_name}}</span></td>
+          {{#if this.belongsToShops}}
+          <td><span>{{unbound status}}</span></td>
+          {{else}}
+            {{#if this.belongsToASI}}
+            <td><span>{{truncate getDescriptionString}}</span></td>
+            <td><span>{{unbound tags}}</span></td>
+            {{else}}
+            {{/if}}
+          {{/if}} <!-- belongsToShops -->
           <td><span>{{date plan_updated_at}}</span></td>
           <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
           <td>

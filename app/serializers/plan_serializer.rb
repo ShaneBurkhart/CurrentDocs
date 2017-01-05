@@ -14,6 +14,5 @@ class PlanSerializer < ActiveModel::Serializer
   :plan_updated_at,
   :description,
   :code,
-  :link_id,
-  :link_type
+  :tags
 end
