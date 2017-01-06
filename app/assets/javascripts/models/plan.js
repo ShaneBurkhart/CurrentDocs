@@ -47,8 +47,11 @@ PlanSource.Plan = Ember.Object.extend({
   getDescriptionString:function(){
     var tempCont = document.createElement("div");
     var quil = new Quill(tempCont);
-    quil.setContents(JSON.parse(this.get("description")));
-    return quil.getText();
+    if(this.get('description') != null){
+      quil.setContents(JSON.parse(this.get("description")));
+      return quil.getText();
+    }
+    return ""
   }.property("getDescriptionString"),
 
   getDescriptionHTML:function(){

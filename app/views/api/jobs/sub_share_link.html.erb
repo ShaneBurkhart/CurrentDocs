@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
-				<h2><%= @job.name %></h2>
+				<h2><%= @job.name %> Plans</h2>
 			</div>
 		</div>
 		<div class="row">
@@ -29,8 +29,57 @@
 					<tr>
 						<td><%= plan.plan_num %></td>
 						<td>
-							<p><%= plan.plan_name.truncate(35) %></p>
+							<p><%= plan.plan_name %></p>
 						</td>
+						<td><%= plan.plan_updated_at ? plan.plan_updated_at.strftime("%B %d, %Y") : "" %></td>
+						<td>
+							<% if plan.plan.exists? %>
+							<a href="/api/download/<%= plan.id %><%= "?share_token=#{@share_link.token}" if not @share_link.nil? %>"><%= plan.plan_file_name.truncate(35) %></a>
+							<% end %>
+						</td>
+						<td>
+							<ul class="controls pull-right unstyled">
+								<% if plan.plan.exists? %>
+								<li><a href="/api/plans/embedded/<%= plan.id %><%= "?share_token=#{@share_link.token}" if not @share_link.nil? %>" target="_blank">View</a></li>
+								<% end %>
+							</ul>
+						</td>
+					</tr>
+					<% end %>
+					<% if @job.plans.empty? %>
+					<tr>
+						<td>
+							<p>The owner of this plan has not added any plans.</p>
+						</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+
+		<h4>Architects Supplemental Information</h4>
+		<div class="table-responsive" id="plan-table">
+			<table class="table table-responsive table-hover">
+				<thead>
+					<th>ASI</th>
+					<th>Plan Name</th>
+					<th>Description</th>
+					<th>Affects Plans</th>
+					<th>Updated</th>
+					<th>Download File</th>
+					<th class="text-right">Controls</th>
+				</thead>
+				<tbody>
+					<% @job.get_plans_for_tabs("ASI").each do |plan|  %>
+					<tr>
+						<td><%= plan.code %></td>
+						<td><p><%= plan.plan_name %></p></td>
+						<td><p class="quill-description"><%= plan.description %></p></td>
+						<td><p><%= plan.tags %></p></td>
 						<td><%= plan.plan_updated_at ? plan.plan_updated_at.strftime("%B %d, %Y") : "" %></td>
 						<td>
 							<% if plan.plan.exists? %>
@@ -76,4 +125,7 @@ $("#share-search-input").keyup(function () {
         }
     });
 });
+</script>
+<script>
+	$(".quill-description")
 </script>
