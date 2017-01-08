@@ -153,6 +153,10 @@ class User < ActiveRecord::Base
     is_my_job plan.job
   end
 
+  def is_my_plan_record(plan_record)
+    is_my_plan plan_record.plan
+  end
+
   def is_my_share(share)
     is_being_shared(share) || is_my_job(share.job)
   end

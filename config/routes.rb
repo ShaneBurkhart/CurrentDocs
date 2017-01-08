@@ -14,6 +14,7 @@ PlanSource::Application.routes.draw do
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
     get '/plans/records/:id' => 'plans#plan_records'
+    post '/plans/records' => 'plan_records#batch_update'
     get '/user/contacts' => 'users#contacts'
     post '/user/contacts' => 'users#add_contacts'
     resources :shares, only: ["create", "destroy", "update"]
@@ -21,6 +22,7 @@ PlanSource::Application.routes.draw do
     resource :upload, only: ["create"]
     resource :token, only: ["create"] #only retrieve token
     match "/download/:id" => "downloads#download"
+    post '/message' => 'messages#group'
     post '/message' => 'messages#group'
   end
 

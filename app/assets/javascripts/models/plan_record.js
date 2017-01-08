@@ -11,12 +11,26 @@ PlanSource.PlanRecord = Ember.Object.extend({
       delete hash.plan
     }
     Ember.setProperties(this, hash);
-  }
+  },
+
+  archivedToChecked:function(){
+		if(this.isArchived()){
+			return "checked";
+		}
+		return "";
+	}.property(),
+
+  isArchived:function(){
+		return this.get("archived") == true
+	},
+
+  isArchivedProp:function(){
+		return this.isArchived();
+	}.property()
 });
 
 PlanSource.PlanRecord.reopenClass({
   baseUrl : "/api/plans/records",
-  planRecords: Em.A(),
 
   url : function(id){
     var pathArray = window.location.href.split( '/' ),
@@ -24,29 +38,6 @@ PlanSource.PlanRecord.reopenClass({
       u = PlanSource.getProtocol() + host + PlanSource.PlanRecord.baseUrl;
     if(id) return u + "/" + id;
     return u;
-  },
-
-  _getPlanRecordsFromServer: function(id) {
-    var that = this;
-    Em.Deferred.promise(function(p){
-      p.resolve($.get(PlanSource.PlanRecord.url(id)).then(function(data){
-        that._clearPlanRecords();
-        
-        data.plans.forEach(function(planRecord){
-          that.planRecords.pushObject(PlanSource.PlanRecord.create(planRecord.plans));
-        });
-        return that.planRecords;
-      }));
-    });
-  },
-
-  _clearPlanRecords: function() {
-    // We have to copy the length attribute so we can loop
-    // over everything.
-    var l = this.planRecords.length;
-    for(var i = 0; i < l; i++) {
-      this.planRecords.removeAt(0);
-    }
   }
 
 });

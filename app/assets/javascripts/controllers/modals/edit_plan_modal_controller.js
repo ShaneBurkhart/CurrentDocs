@@ -87,12 +87,26 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		this.get("model").save().then(function(){
 			self.get("parent").updatePlans();
 		});
+
+		// Save file if file one exists
 		var file = $("#file");
 		if(file.val() || file.val() != ""){
 			this.send('uploadPlan');
 		}
 
+		// Save plan history archived states
+		self.savePlanRecords();
+
 		this.send('closeModal');
+	},
+
+	savePlanRecords:function(){
+		var archivedBoxes = $('.archived-box');
+		var hash = {};
+		archivedBoxes.each(function(index, box){
+			hash[$(box).data('id')] = $(box).is(":checked")
+		});
+		this.get('model').upatePlanRecords(hash);
 	},
 
 	uploadPlan : function(){
@@ -120,10 +134,11 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 			$(".loading").slideDown(75);
 			$(".loading-percent").text(Math.floor(p.loaded/p.total*100));
 		});
-		PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
+		this.get('model').getPlanRecords();
 		file.val("");
 		// this.send("close");
 	},
+
 
 	keyPress : function(e){
 		// Enter key

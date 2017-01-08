@@ -1,13 +1,17 @@
 PlanSource.Plan = Ember.Object.extend({
   statusOptions:['', 'Submitted', 'Approved', 'Approved as Corrected', 'Revise & Resubmit', 'Record Copy'],
+  planRecords: [],
 
+  init:function(){
+    this.getPlanRecords();
+  },
 
   isSelected : function(option, status){
-		if (status == option){
-			return "selected";
-		}
-		return "";
-	}.property('isSelected'),
+    if (status == option){
+      return "selected";
+    }
+    return "";
+  }.property('isSelected'),
 
   hasPlan: function() {
     return this.get("plan_file_name") != null && this.get("plan_file_name") != "";
@@ -63,21 +67,19 @@ PlanSource.Plan = Ember.Object.extend({
 
   filenameOrDefault:function(){
     if(this.get('filename') == null)
-      return "No file attached";
+    return "No file attached";
     return this.get('filename');
   }.property('filenameOrDefault'),
 
   tagsOrDefault:function(){
     if(this.get('tags') == null)
-      return 'None';
+    return 'None';
     return this.get('tags');
   }.property('tagsOrDefault'),
 
-  planRecords:function(){
-    PlanSource.PlanRecord._getPlanRecordsFromServer(this.get('id'));
-    return PlanSource.PlanRecord.planRecords;
-    // return ['ello', 'mas', 'amigos']
-  }.property('planRecords'),
+  planRecordsProp:function(){
+    return this.planRecords;
+  }.property(),
 
   getPlanURI: function(){
     var planURL = this.get('plan');
@@ -91,82 +93,121 @@ PlanSource.Plan = Ember.Object.extend({
       return this._deleteRequest();
     }else{
       if(this.get("id")) ///Not news
-        return this._updateRequest();
+      return this._updateRequest();
       else
-        return this._createRequest();
+      return this._createRequest();
     }
   },
 
-  _createRequest : function(){
+  getPlanRecords:function(){
     var self = this;
-    return Em.Deferred.promise(function(p){
-      p.resolve($.ajax({
-            url: PlanSource.Plan.url(),
-            type: 'POST',
-            data : { plan : {
-            	plan_name : self.get("plan_name"),
-              csi : self.get("csi"),
-            	job_id : self.get("job").get("id"),
-              tab: self.get('tab')
-            }}
-        }).then(function(data, t, xhr){
-          if(!$.isEmptyObject(data)){
-            self.setProperties(data.plan);
-            return true;
-          }else
-            return false;
-        })
-      );
+    Em.Deferred.promise(function(p){
+      p.resolve($.get(PlanSource.PlanRecord.url(self.get('id'))).then(function(data){
+        self.clearPlanRecords();
+        data.plans.forEach(function(planRecord){
+          self.planRecords.push(PlanSource.PlanRecord.create(planRecord.plans));
+        });
+        return self.planRecords;
+      }));
     });
   },
 
-  _updateRequest : function(){
-    var self = this;
-    return Em.Deferred.promise(function(p){
-      p.resolve($.ajax({
-            url: PlanSource.Plan.url(self.get("id")),
-            type: 'PUT',
-            data : { plan : {
-            	plan_num : self.get("plan_num"),
-              csi : self.get("csi"),
-            	plan_name : self.get("plan_name"),
-              status: self.get("status"),
-              description: self.get('description'),
-              code: self.get('code'),
-              tags: self.get('tags')
-            }},
-            success:function(data){
-              toastr["success"]("Successfully saved " + self.get('plan_name'));
-            },
-            error:function(){
-              toastr["error"]("Could not save " + self.get('plan_name'));
-            }
-        }).then(function(data){
-          self.setProperties(data.plan);
-        })
-      );
-    });
+  clearPlanRecords: function() {
+    this.planRecords = [];
   },
 
-  _deleteRequest : function(){
+  upatePlanRecords : function(updateData){
+    var updateDataString = JSON.stringify(updateData);
     var self = this;
-    var preDeleteName = self.get('plan_name');
     return Em.Deferred.promise(function(p){
       p.resolve($.ajax({
-            url: PlanSource.Plan.url(self.get("id")),
-            type: 'DELETE',
-            success:function(data){
-              toastr["success"]("Successfully deleted " + preDeleteName);
-            },
-            error:function(){
-              toastr["error"]("Could not delete " + preDeleteName);
-            }
-        }).then(function(data){
+        url: PlanSource.PlanRecord.baseUrl,
+        type: 'POST',
+        data : { update : updateDataString },
+        success:function(data){
+          console.log("Successful plan record update", data);
+        },
+        error:function(err){
+          console.log("UNsuccessful plan record update", err);
+          // toastr["error"]("Could not save " + self.get('plan_name'));
+        }
+      }).then(function(data){
+        // self.setProperties(data.plan);
+      })
+    );
+  });
+},
 
-        })
-      );
-    });
-  }
+_createRequest : function(){
+  var self = this;
+  return Em.Deferred.promise(function(p){
+    p.resolve($.ajax({
+      url: PlanSource.Plan.url(),
+      type: 'POST',
+      data : { plan : {
+        plan_name : self.get("plan_name"),
+        csi : self.get("csi"),
+        job_id : self.get("job").get("id"),
+        tab: self.get('tab')
+      }}
+    }).then(function(data, t, xhr){
+      if(!$.isEmptyObject(data)){
+        self.setProperties(data.plan);
+        return true;
+      }else
+      return false;
+    })
+  );
+});
+},
+
+_updateRequest : function(){
+  var self = this;
+  return Em.Deferred.promise(function(p){
+    p.resolve($.ajax({
+      url: PlanSource.Plan.url(self.get("id")),
+      type: 'PUT',
+      data : { plan : {
+        plan_num : self.get("plan_num"),
+        csi : self.get("csi"),
+        plan_name : self.get("plan_name"),
+        status: self.get("status"),
+        description: self.get('description'),
+        code: self.get('code'),
+        tags: self.get('tags')
+      }},
+      success:function(data){
+        toastr["success"]("Successfully saved " + self.get('plan_name'));
+      },
+      error:function(){
+        toastr["error"]("Could not save " + self.get('plan_name'));
+      }
+    }).then(function(data){
+      self.setProperties(data.plan);
+    })
+  );
+});
+},
+
+_deleteRequest : function(){
+  var self = this;
+  var preDeleteName = self.get('plan_name');
+  return Em.Deferred.promise(function(p){
+    p.resolve($.ajax({
+      url: PlanSource.Plan.url(self.get("id")),
+      type: 'DELETE',
+      success:function(data){
+        toastr["success"]("Successfully deleted " + preDeleteName);
+      },
+      error:function(){
+        toastr["error"]("Could not delete " + preDeleteName);
+      }
+    }).then(function(data){
+
+    })
+  );
+});
+}
 
 });
 
@@ -175,8 +216,8 @@ PlanSource.Plan.reopenClass({
 
   url : function(id){
     var pathArray = window.location.href.split( '/' ),
-      host = pathArray[2],
-      u = PlanSource.getProtocol() + host + PlanSource.Plan.baseUrl;
+    host = pathArray[2],
+    u = PlanSource.getProtocol() + host + PlanSource.Plan.baseUrl;
     if(id) return u + "/" + id;
     return u;
   }

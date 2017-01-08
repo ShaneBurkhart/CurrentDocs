@@ -12,3 +12,4 @@ Make SubShareLink available by link along with associated with email
 20000 character limit on plan description
 Make file names into random tokens for S3
 Get rid of listening to DOMSubtreeModified
+Check out _clearPlanRecords function

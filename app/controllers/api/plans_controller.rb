@@ -111,12 +111,13 @@ class Api::PlansController < ApplicationController
 
   def plan_records
     @plan = Plan.find(params[:id])
-    if user.is_my_plan(@plan) || user.is_shared_plan(@plan)
+    if user.is_my_plan(@plan)
       render :json => PlanRecord.where(:plan_id => @plan.id).order("created_at DESC")
-    else
+    elsif user.is_shared_plan(@plan)
+			render :json => PlanRecord.where(:plan_id => @plan.id, :archived => false).order("created_at DESC")
+		else
       render_no_permission
     end
-
   end
 
   private

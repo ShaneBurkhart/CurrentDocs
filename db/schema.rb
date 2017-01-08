@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161229231212) do
+ActiveRecord::Schema.define(:version => 20170108043819) do
 
   create_table "contacts", :force => true do |t|
     t.integer  "user_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20161229231212) do
     t.datetime "plan_updated_at"
     t.string   "tab",                      :default => "Plans"
     t.string   "csi"
+    t.boolean  "archived",                 :default => false
   end
 
   create_table "plans", :force => true do |t|

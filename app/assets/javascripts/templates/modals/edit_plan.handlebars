@@ -30,14 +30,16 @@
 				<div class="modal-section">
 					<h4 class="title">Plan History</h4>
 					<div class="container-fluid">
-						{{#each planRecords}}
+						{{#each planRecordsProp}}
 						<div class="row" style="margin-bottom:20px">
-							<div class="col-sm-8" style="padding-left:30px;">
-								<a style="left:0;top:0;position:absolute" href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:140%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
+							<div class="col-sm-8">
+								<span>{{unbound id}}</span>
+								<input class="archived-box" type="checkbox" data-id="{{unbound id}}" {{unbound archivedToChecked}} >
+								<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:140%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
 								<a style="word-wrap:break-word" href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
 							</div>
 							<div class="col-sm-4" style="padding-left:30px;">
-								<div> changed {{date updated_at }}</div>
+								<div> changed {{date created_at }}</div>
 							</div>
 						</div>
 						{{else}}
