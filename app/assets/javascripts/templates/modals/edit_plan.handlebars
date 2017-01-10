@@ -16,7 +16,6 @@
 						<input type="hidden" name="plan_id" id="plan_id">
 						<div class="control-group">
 							<div class="controls">
-
 								<input style="font-size:16px" type="file" name="file" id="file">
 								<span class="help-inline"></span>
 							</div>
@@ -29,13 +28,17 @@
 				</div>
 				<div class="modal-section">
 					<h4 class="title">Plan History</h4>
+					{{#if planRecordsProp}}
+					<p>
+						Select plan to hide plan in the details modal.
+					</p>
+					{{/if}}
 					<div class="container-fluid">
 						{{#each planRecordsProp}}
-						<div class="row" style="margin-bottom:20px">
+						<div class="row" style="margin-bottom:15px">
 							<div class="col-sm-8">
-								<span>{{unbound id}}</span>
-								<input class="archived-box" type="checkbox" data-id="{{unbound id}}" {{unbound archivedToChecked}} >
-								<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:140%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
+								<input class="archived-box" style="margin-right:10px;" type="checkbox" data-id="{{unbound id}}" {{unbound archivedToChecked}} >
+								<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:110%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
 								<a style="word-wrap:break-word" href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
 							</div>
 							<div class="col-sm-4" style="padding-left:30px;">
@@ -60,7 +63,6 @@
 	</div>
 </div>
 <script>
-
 $('#myModal').modal('show');
 $('#myModal').on('shown.bs.modal', function () {
 	$('#edit-plan-name').focus();
