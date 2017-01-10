@@ -11,7 +11,6 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 
 	closeModal : function(){
 		$('#myModal').modal('hide');
-		console.log("Closing modal");
 		$('#myModal').on('hidden', function(){
 			$(this).data('modal', null);
 		});

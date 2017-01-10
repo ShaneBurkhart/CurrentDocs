@@ -83,7 +83,6 @@ PlanSource.Plan = Ember.Object.extend({
 
   getPlanURI: function(){
     var planURL = this.get('plan');
-    console.log("Here's the plan: " + planURL);
     return planURL;
 
   }.property("getPlanURI"),
