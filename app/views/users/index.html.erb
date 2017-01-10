@@ -44,7 +44,7 @@
 </div>
 </div>
 <script>
-$("#share-search-input").keyup(function () {
+$("#share-search-input").change(function () {
     console.log("Searching!")
     var filter = jQuery(this).val();
     jQuery("table tr").not('thead tr').each(function () {

@@ -7,30 +7,28 @@
 <div class="row">
   <div class="col-sm-6">
 
-{{#unless showingArchivedJobs}}
-{{#manager}}
-<a href="#" {{action "openAddJobModal"}} class="button button-green">+ Add Job</a>
-{{/manager}}
-{{/unless}}
-</div>
+    {{#unless showingArchivedJobs}}
+    {{#manager}}
+    <a href="#" {{action "openAddJobModal"}} class="button button-green">+ Add Job</a>
+    {{/manager}}
+    {{/unless}}
+  </div>
   <div class="col-sm-6">
-<form id="share-search-form">
-  <input placeholder="Search..." class="form-control form-smaller form-control-padding pull-right" style="max-width:250px" id="share-search-input"/>
-</form>
+    <form id="share-search-form">
+      <input placeholder="Search..." class="form-control form-smaller form-control-padding pull-right" style="max-width:250px" id="share-search-input"/>
+    </form>
 
+  </div>
 </div>
-</div>
-    <nav class="jobs-controls">
-      {{#if showingArchivedJobs}}
-      <a {{action "showNonArchivedJobs"}}>My Jobs</a>
-      <a class="active">Archived Jobs</a>
-      {{else}}
-      <a class="active">My Jobs</a>
-      <a {{action "showArchivedJobs"}}>Archived Jobs</a>
-      {{/if}}
-    </nav>
-
-
+<nav class="jobs-controls">
+  {{#if showingArchivedJobs}}
+  <a {{action "showNonArchivedJobs"}}>My Jobs</a>
+  <a class="active">Archived Jobs</a>
+  {{else}}
+  <a class="active">My Jobs</a>
+  <a {{action "showArchivedJobs"}}>Archived Jobs</a>
+  {{/if}}
+</nav>
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
@@ -86,14 +84,14 @@
 </div>
 <script>
 $("#share-search-input").keyup(function () {
-    console.log("Searching!")
-    var filter = jQuery(this).val();
-    jQuery("table tr").not('thead tr').each(function () {
-        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
-            jQuery(this).hide();
-        } else {
-            jQuery(this).show()
-        }
-    });
+  console.log("Searching!")
+  var filter = jQuery(this).val();
+  jQuery("table tr").not('thead tr').each(function () {
+    if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
+      jQuery(this).hide();
+    } else {
+      jQuery(this).show()
+    }
+  });
 });
 </script>
