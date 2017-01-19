@@ -63,8 +63,8 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 				code = code.replace(/ +/g, '');
 			}
 			// Ensure ASI code is either empty or a 12 digit number.
-			if( code != "" && ( !code.match(/^(\d*)$/) || code.length != 12)) {
-				this.error("#edit-plan-code", "Must be 12 digit number or empty.");
+			if( code.length > 12) {
+				this.error("#edit-plan-code", "Must be 12 characters or less.");
 				return;
 			}else{
 				this.get("model").set("code", code);
