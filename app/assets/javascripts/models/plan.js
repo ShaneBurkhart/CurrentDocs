@@ -81,6 +81,13 @@ PlanSource.Plan = Ember.Object.extend({
     return this.planRecords;
   }.property(),
 
+  planRecordsArchivedProp:function(){
+    console.log("this.planRecords", this.planRecords);
+    return this.planRecords.filter(function(item){
+      return item.archived == false;
+    });
+  }.property(),
+
   getPlanURI: function(){
     var planURL = this.get('plan');
     return planURL;

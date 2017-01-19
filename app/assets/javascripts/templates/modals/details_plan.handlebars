@@ -11,8 +11,7 @@
 				<div class="modal-section">
 					<h4 class="title">Plan History</h4>
 					<div class="container-fluid">
-						{{#each planRecordsProp}}
-						{{#unless isArchivedProp}}
+						{{#each planRecordsArchivedProp}}
 						<div class="row" style="margin-bottom:20px">
 							<div class="col-sm-8">
 								<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:110%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
@@ -22,7 +21,6 @@
 								<div> changed {{date created_at }}</div>
 							</div>
 						</div>
-						{{/unless}}
 						{{else}}
 						<div>
 							This plan has no plan history.
