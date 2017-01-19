@@ -56,138 +56,130 @@ class Plan < ActiveRecord::Base
   end
 
   def delete_file
-  	path = Rails.root.join("public", "_files", self.id.to_s)
-  	return unless File.exists?(path)
-  	File.delete path
+    path = Rails.root.join("public", "_files", self.id.to_s)
+    return unless File.exists?(path)
+    File.delete path
   end
 
   def delete_plan_num
-  	p = Plan.find_all_by_job_id(self.job_id)
-  	p.each do |plan|
-  		next unless(plan.id != self.id)
-			if plan.plan_num > self.plan_num
-				plan.update_attributes(:plan_num => plan.plan_num - 1)
-  		end
-  	end
+    p = Plan.find_all_by_job_id(self.job_id)
+    p.each do |plan|
+      next unless(plan.id != self.id)
+      if plan.plan_num > self.plan_num
+        plan.update_attributes(:plan_num => plan.plan_num - 1)
+      end
+    end
   end
 
-	def set_plan_num(num)
-		oldNum = self.plan_num
-		highest = highest_plan_num
-		newNum = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
+  def set_plan_num(num)
+    highest = highest_plan_num
+    newNum = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
     puts "The new plan_num is #{self.plan_num}"
-		if newNum == oldNum
-			return #return if nothing changed
-		end
-    old_num_index = oldNum - 1
+    if newNum == self.plan_num
+      return #return if nothing changed
+    end
     new_num_index = newNum - 1
     p = Plan.find_all_by_job_id_and_tab(self.job_id, self.tab)
     p = p.sort_by{ |plan| plan.plan_num }
+    old_num_index = p.index(self) # Find plan in sorted plans,
+    # this is done in case self.plan_num is not a valid index.
 
-    puts "Old"
-    p.each do |plan|
-      puts plan.inspect
-    end
-
+    # Remove and insert plan based on index to achieve shifting of plans.
     temp = p.at(old_num_index)
     p.delete_at(old_num_index)
     p = p.insert(new_num_index, temp)
 
-    puts "New"
-    p.each do |plan|
-      puts plan.inspect
-    end
-
     p.each_with_index do |plan, index|
+      # puts "Plan.inspect #{index}: #{plan.inspect}"
       plan.plan_num = index + 1
       plan.save
-  	end
-	end
+    end
+  end
 
-		private
+  private
 
-		def highest_plan_num
-      return self.job.plans.where(tab: self.tab).count;
-		end
+  def highest_plan_num
+    return self.job.plans.where(tab: self.tab).count;
+  end
 
-		def plan_num_exists?
-			p = Plan.find_all_by_job_id(self.job_id)
-	  	p.each do |plan|
-	  		if(plan.id == self.id)
-	  			next
-	  		end
-  			if(plan.plan_num == self.plan_num)
-  				return true
-	  		end
-	  	end
-	  	return false
-		end
-
-		def check_for_valid_tab_name
-      valid_tabs = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc"]
-      if !valid_tabs.include?(self.tab)
-        errors.add(:tab, "isni't a valid tab")
+  def plan_num_exists?
+    p = Plan.find_all_by_job_id(self.job_id)
+    p.each do |plan|
+      if(plan.id == self.id)
+        next
+      end
+      if(plan.plan_num == self.plan_num)
+        return true
       end
     end
+    return false
+  end
 
-		def check_for_duplicate_plan_num
-			p = Plan.find_all_by_job_id_and_tab(self.job_id, self.plan_num)
-	  	p.each do |plan|
-	  		next if (plan.id == self.id) # Skip if current plan
-  			if(plan.plan_num == self.plan_num)
-  				errors.add(:plan_num, 'already exists')
-  				return false
-	  		end
-	  	end
-      return true
-		end
+  def check_for_valid_tab_name
+    valid_tabs = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc"]
+    if !valid_tabs.include?(self.tab)
+      errors.add(:tab, "isni't a valid tab")
+    end
+  end
 
-	  def check_for_duplicate_plan_name_in_job
-	  	p = Plan.find_all_by_job_id(self.job_id)
-	  	p.each do |plan|
-	  		if(plan.id == self.id)
-	  			next
-	  		end
-        next if plan.tab != self.tab
-  			if(plan.plan_name == self.plan_name)
-  				errors.add(:plan_name, 'already exists')
-  				return
-	  		end
-	  	end
-	  end
+  def check_for_duplicate_plan_num
+    p = Plan.find_all_by_job_id_and_tab(self.job_id, self.plan_num)
+    p.each do |plan|
+      next if (plan.id == self.id) # Skip if current plan
+      if(plan.plan_num == self.plan_num)
+        errors.add(:plan_num, 'already exists')
+        return false
+      end
+    end
+    return true
+  end
 
-    # Attempt to solve weird indexing bug
-    def ensure_plans_have_unique_plan_nums(plans)
-      puts "Attempting to ensure plans have unique plan nums"
-      tabs = {}
-      plans.each do |plan|
-        if tabs[plan.tab] == nil
-          tabs[plan.tab] = []
-        else
-          tabs[plan.tab] << plan
+  def check_for_duplicate_plan_name_in_job
+    p = Plan.find_all_by_job_id(self.job_id)
+    p.each do |plan|
+      if(plan.id == self.id)
+        next
+      end
+      next if plan.tab != self.tab
+      if(plan.plan_name == self.plan_name)
+        errors.add(:plan_name, 'already exists')
+        return
+      end
+    end
+  end
+
+  # Attempt to solve weird indexing bug
+  def ensure_plans_have_unique_plan_nums(plans)
+    puts "Attempting to ensure plans have unique plan nums"
+    tabs = {}
+    plans.each do |plan|
+      if tabs[plan.tab] == nil
+        tabs[plan.tab] = []
+      else
+        tabs[plan.tab] << plan
+      end
+    end
+    tabs.keys do |key| # Go through all the plans per tab
+      puts "Checking #{key}"
+      plan_nums = {} # Keep track if we've seen a plan_num yet
+      plans[key].each do |plan|
+        plan_num = plan.plan_num
+        if plan_nums[plan_num] == nil # If we've never seen the num, then good
+          plan_nums[plan_num] = true
+        elsif plan_nums[plan_num] == true # If we've seen the number before, then reorder.
+          puts "ERROR: Redordering plan nums!"
+          return reorder_plan_nums(plans[key])
+
         end
       end
-      tabs.keys do |key| # Go through all the plans per tab
-        puts "Checking #{key}"
-        plan_nums = {} # Keep track if we've seen a plan_num yet
-        plans[key].each do |plan|
-          plan_num = plan.plan_num
-          if plan_nums[plan_num] == nil # If we've never seen the num, then good
-            plan_nums[plan_num] = true
-          elsif plan_nums[plan_num] == true # If we've seen the number before, then reorder.
-            puts "ERROR: Redordering plan nums!"
-            return reorder_plan_nums(plans[key])
-
-          end
-        end
-      end
-      return plans
     end
+    return plans
+  end
 
-    def reorder_plan_nums(plans)
-      plans.each_with_index do |plan, index|
-        plan.plan_num == index + 1
-      end
-      return plans
+  def reorder_plan_nums(plans)
+    plans.each_with_index do |plan, index|
+      plan.plan_num == index + 1
     end
+    return plans
+  end
 end
