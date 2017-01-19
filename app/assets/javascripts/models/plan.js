@@ -82,7 +82,6 @@ PlanSource.Plan = Ember.Object.extend({
   }.property(),
 
   planRecordsArchivedProp:function(){
-    console.log("this.planRecords", this.planRecords);
     return this.planRecords.filter(function(item){
       return item.archived == false;
     });
