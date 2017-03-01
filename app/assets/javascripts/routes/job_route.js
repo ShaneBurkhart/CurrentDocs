@@ -25,16 +25,22 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openEditPlanModal : function(model){
-      this.controllerFor("edit_plan").set("model", model);
-      this.controllerFor("edit_plan").set("job", this.get("controller").get("model"));
-      this.controllerFor("edit_plan").set("parent", this.controllerFor("plans"));
-      this.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
+      var self = this;
+      model.getPlanRecordsSync(function(){
+        self.controllerFor("edit_plan").set("model", model);
+        self.controllerFor("edit_plan").set("job", self.get("controller").get("model"));
+        self.controllerFor("edit_plan").set("parent", self.controllerFor("plans"));
+        self.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
+      });
     },
     openDetailsPlanModal : function(model){
-      this.controllerFor("details_plan").set("model", model);
-      this.controllerFor("details_plan").set("job", this.get("controller").get("model"));
-      this.controllerFor("details_plan").set("parent", this.controllerFor("plans"));
-      this.render("modals/details_plan", {into : "jobs", outlet : "modal", controller : "details_plan"});
+      var self = this;
+      model.getPlanRecordsSync(function(){
+        self.controllerFor("details_plan").set("model", model);
+        self.controllerFor("details_plan").set("job", self.get("controller").get("model"));
+        self.controllerFor("details_plan").set("parent", self.controllerFor("plans"));
+        self.render("modals/details_plan", {into : "jobs", outlet : "modal", controller : "details_plan"});
+      });
     },
 
     openSubShareLinkModal: function(){
@@ -49,14 +55,14 @@ PlanSource.JobRoute = Ember.Route.extend({
     var tab = plansController.get('tab') || 'Plans';
     switch(true) {
       case model.get('canViewPlansTab'):
-        tab = 'Plans';
-        break;
+      tab = 'Plans';
+      break;
       case model.get('canViewShopsTab'):
-        tab = 'Shops';
-        break;
+      tab = 'Shops';
+      break;
       case model.get('canViewConsultantsTab'):
-        tab = 'Consultants';
-        break;
+      tab = 'Consultants';
+      break;
     }
 
     controller.set("model", model);
@@ -80,9 +86,9 @@ PlanSource.JobRoute = Ember.Route.extend({
   },
 
   clearOutlet: function(container, outlet) {
-     parentView = this.router._lookupActiveView(container);
-     parentView.disconnectOutlet(outlet);
-   }
+    parentView = this.router._lookupActiveView(container);
+    parentView.disconnectOutlet(outlet);
+  }
 
 
 });

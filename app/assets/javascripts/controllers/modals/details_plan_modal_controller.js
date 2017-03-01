@@ -3,6 +3,7 @@ PlanSource.DetailsPlanController = PlanSource.ModalController.extend({
 
 	init:function(){
 		this._super();
+
 	},
 
 	closeModal : function(){

@@ -3,7 +3,7 @@ PlanSource.Plan = Ember.Object.extend({
   planRecords: [],
 
   init:function(){
-    this.getPlanRecords();
+    // this.getPlanRecords();
   },
 
   isSelected : function(option, status){
@@ -78,11 +78,11 @@ PlanSource.Plan = Ember.Object.extend({
   }.property('tagsOrDefault'),
 
   planRecordsProp:function(){
-    return this.planRecords;
-  }.property(),
+    return this.get('planRecords');
+  }.property('planRecordsProp'),
 
   planRecordsArchivedProp:function(){
-    return this.planRecords.filter(function(item){
+    return this.get('planRecords').filter(function(item){
       return item.archived == false;
     });
   }.property(),
@@ -117,8 +117,23 @@ PlanSource.Plan = Ember.Object.extend({
     });
   },
 
+  getPlanRecordsSync:function(callback){
+    var self = this;
+    Em.Deferred.promise(function(p){
+      p.resolve($.get(PlanSource.PlanRecord.url(self.get('id'))).then(function(data){
+        self.clearPlanRecords();
+        data.plans.forEach(function(planRecord){
+          self.planRecords.push(PlanSource.PlanRecord.create(planRecord.plans));
+        });
+        callback();
+
+      }));
+    });
+  },
+
   clearPlanRecords: function() {
-    this.planRecords = [];
+    var emptyArray = [];
+    this.set('planRecords', emptyArray);
   },
 
   upatePlanRecords : function(updateData){
@@ -130,11 +145,9 @@ PlanSource.Plan = Ember.Object.extend({
         type: 'POST',
         data : { update : updateDataString },
         success:function(data){
-          console.log("Successful plan record update", data);
         },
         error:function(err){
-          console.log("UNsuccessful plan record update", err);
-          // toastr["error"]("Could not save " + self.get('plan_name'));
+          toastr["error"]("Could not save " + self.get('plan_name'));
         }
       }).then(function(data){
         // self.setProperties(data.plan);

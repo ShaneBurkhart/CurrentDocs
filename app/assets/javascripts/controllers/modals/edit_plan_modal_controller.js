@@ -1,6 +1,7 @@
 PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	job : {},
 
+
 	initQuill:function(){
 		if(this.get('tab') == 'ASI'){
 			if($("#edit-plan-description").length > 0){
