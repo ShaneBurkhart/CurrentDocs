@@ -116,9 +116,9 @@ class Plan < ActiveRecord::Base
   end
 
   def check_for_valid_tab_name
-    valid_tabs = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc"]
+    valid_tabs = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
     if !valid_tabs.include?(self.tab)
-      errors.add(:tab, "isni't a valid tab")
+      errors.add(:tab, "isn't a valid tab")
     end
   end
 

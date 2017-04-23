@@ -38,6 +38,14 @@
         {{/if}}
     {{/if}}
 
+    {{#if canViewAddendumsTab}}
+        {{#if isAddendumsTab}}
+            <a class="active">Addendums</a>
+        {{else}}
+            <a {{action "changeTab" "Addendums"}}>Addendums</a>
+        {{/if}}
+    {{/if}}
+
     {{#if canViewPlansTab}}
         {{#if isASITab}}
             <a class="active">ASI</a>

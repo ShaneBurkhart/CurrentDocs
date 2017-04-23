@@ -82,6 +82,10 @@ PlanSource.Job = Ember.Object.extend({
     return this.canViewTab('Plans');
   }.property('shares.@each'),
 
+  canViewAddendumsTab: function() {
+    return this.canViewTab('Addendums');
+  }.property('shares.@each'),
+
   canViewShopsTab: function() {
     return this.canViewTab('Shops');
   }.property('shares.@each'),

@@ -9,6 +9,10 @@ PlanSource.JobController = Ember.ObjectController.extend({
     return this.get('tab') === 'Plans';
   }.property('tab'),
 
+  isAddendumsTab: function() {
+    return this.get('tab') === 'Addendums';
+  }.property('tab'),
+
   isShopsTab: function() {
     return this.get('tab') === 'Shops';
   }.property('tab'),
