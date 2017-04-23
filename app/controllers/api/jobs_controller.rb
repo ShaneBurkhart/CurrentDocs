@@ -14,6 +14,7 @@ class Api::JobsController < ApplicationController
     if user.can? :read, Job
       @jobs = get_jobs
       @jobs.each do |job|
+        # TODO change this to persistent attribute. It doesn't change enough to warrent this.
         job.subscribed = NotificationSubscription.user_is_subscribed({target_type:'job', target_id:job.id, user_id:user.id})
       end
 
