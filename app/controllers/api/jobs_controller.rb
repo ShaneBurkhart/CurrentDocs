@@ -147,7 +147,7 @@ class Api::JobsController < ApplicationController
 
       # TODO check the permission set in the admin panel for whether they can send links.
       # For now, it's just anyone who owns the job.
-      if @job && ( user.is_my_job(@job) || (user.can_share_link) )
+      if @job && ( user.is_my_job(@job) || (user.can_share_link == true) )
         # No need to create a duplicate link if we already have a link from a previous share.
         @share_link = ShareLink.find_or_create_by_job_id_and_user_id_and_email_shared_with(
         job_id: @job.id,
@@ -157,7 +157,6 @@ class Api::JobsController < ApplicationController
 
         if @share_link
           UserMailer.share_link_notification(@share_link, @job, user).deliver
-          # flash[:notice] = "Successfully sent share link."
 
           # 204 since we don't need to return any content.
           render json: {}, status: 204
