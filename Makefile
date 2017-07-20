@@ -1,3 +1,5 @@
+.PHONY: db
+
 NAME=plansource
 DEV_FILE=deploy/dev/docker-compose.yml
 
@@ -9,9 +11,11 @@ build:
 	 docker build -t ${BASE_TAG} .
 	 docker build -t ${BASE_TAG}:dev ./deploy/dev
 
-run:
+db:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rake db:migrate
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rake db:seed
+
+run:
 	docker-compose -f ${DEV_FILE} -p ${NAME} up -d
 
 up:
@@ -40,7 +44,7 @@ bundle:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle
 
 logs:
-	docker-compose -f ${DEV_FILE} -p ${NAME} logs
+	docker-compose -f ${DEV_FILE} -p ${NAME} logs -f
 
 heroku_deploy:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web true

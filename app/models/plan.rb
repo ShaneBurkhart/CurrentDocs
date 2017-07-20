@@ -21,6 +21,7 @@ class Plan < ActiveRecord::Base
   has_many :plan_records
 
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()
+  TABS = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
 
   if Rails.env.production?
     has_attached_file :plan, PAPERCLIP_OPTIONS
@@ -116,8 +117,7 @@ class Plan < ActiveRecord::Base
   end
 
   def check_for_valid_tab_name
-    valid_tabs = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
-    if !valid_tabs.include?(self.tab)
+    if !TABS.include?(self.tab)
       errors.add(:tab, "isn't a valid tab")
     end
   end

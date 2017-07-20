@@ -17,16 +17,6 @@
 require 'faker'
 
 user = User.new(
-email: "shaneburkhart@gmail.com",
-password: "password",
-first_name: Faker::Name.first_name,
-last_name: Faker::Name.last_name,
-company: Faker::Company.name
-)
-user.type = "Admin"
-user.save
-
-user = User.new(
 email: "dgwetherington@gmail.com",
 password: "password",
 first_name: Faker::Name.first_name,
@@ -57,8 +47,13 @@ user.save
   name: Faker::Address.street_address,
   archived: [true, false].sample
   )
-  (1..10).each do |i|
-    Plan.create job_id: job.id, plan_num: i, plan_name: Faker::Address.secondary_address
+  (1..15).each do |i|
+    Plan.create(
+      job_id: job.id,
+      plan_num: i,
+      plan_name: Faker::Address.secondary_address,
+      tab: Plan::TABS.sample
+    )
   end
 
   Share.create(
@@ -96,12 +91,17 @@ end
 
 (1..10).each do
   job = Job.create(
-  user_id: user.id,
-  name: Faker::Address.street_address,
-  archived: [true, false].sample
+    user_id: user.id,
+    name: Faker::Address.street_address,
+    archived: [true, false].sample
   )
 
-  (1..10).each do |i|
-    Plan.create job_id: job.id, plan_num: i, plan_name: Faker::Address.secondary_address
+  (1..15).each do |i|
+    Plan.create(
+      job_id: job.id,
+      plan_num: i,
+      plan_name: Faker::Address.secondary_address,
+      tab: Plan::TABS.sample
+    )
   end
 end
