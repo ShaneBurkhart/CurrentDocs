@@ -7,6 +7,8 @@ web:
     volumes:
         - ../../app:/app/app
         - ../../db:/app/db
+    env_file:
+        - ../../user.env
 
 pg:
     image: postgres

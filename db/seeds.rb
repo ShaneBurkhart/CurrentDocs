@@ -16,37 +16,41 @@
 
 require 'faker'
 
-user = User.new(
-email: "dgwetherington@gmail.com",
-password: "password",
-first_name: Faker::Name.first_name,
-last_name: Faker::Name.last_name,
-company: Faker::Company.name
-)
-user.type = "Admin"
-user.save
-
-(1..10).each do
-  u = User.new(
-  email: Faker::Internet.email,
+viewer = User.new(
+  email: "viewer@plansource.io",
   password: "password",
   first_name: Faker::Name.first_name,
   last_name: Faker::Name.last_name,
   company: Faker::Company.name,
-  )
-  u.type = "Viewer"
-  u.save
+  can_share_link: true
+)
+viewer.type = "Viewer"
+viewer.save
 
+user = User.new(
+  email: ENV["EMAIL"],
+  password: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  company: Faker::Company.name,
+  can_share_link: true
+)
+user.type = "Admin"
+user.save
+
+(1..10).each do |i|
+  # Make the first viewer an account we can access
   Contact.create(
-  user_id: user.id,
-  contact_id: u.id
+    user_id: user.id,
+    contact_id: viewer.id
   )
 
   job = Job.create(
-  user_id: u.id,
-  name: Faker::Address.street_address,
-  archived: [true, false].sample
+    user_id: user.id,
+    name: Faker::Address.street_address,
+    archived: [true, false].sample
   )
+
   (1..15).each do |i|
     Plan.create(
       job_id: job.id,
@@ -57,11 +61,11 @@ user.save
   end
 
   Share.create(
-  sharer_id: u.id,
-  user_id: user.id,
-  job_id: job.id,
-  can_reshare: false,
-  permissions: Random.rand(6) + 1
+    sharer_id: user.id,
+    user_id: viewer.id,
+    job_id: job.id,
+    can_reshare: false,
+    permissions: Random.rand(6) + 1
   )
 
   ShareLink.create(

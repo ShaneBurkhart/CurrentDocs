@@ -48,6 +48,7 @@ class Api::SharesController < ApplicationController
         @job_id
       )
 
+      # Delete share if they were updated to have no permissions
       if !new_share[:permissions] || new_share[:permissions] == "0"
         share.destroy if share
         next
