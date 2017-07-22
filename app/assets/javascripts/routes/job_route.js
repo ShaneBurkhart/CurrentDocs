@@ -8,30 +8,34 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openAddPlanModal : function(){
-      this.controllerFor("add_plan").set("model", this.get("controller").get("model"));
-      this.controllerFor("add_plan").set("parent", this.controllerFor("plans"));
-      this.render("modals/add_plan", {into : "jobs", outlet : "modal", controller : "add_plan"});
+      self.renderModal("add_plan", {
+        model: self.get("controller").get("model"),
+        parent: this.controllerFor("plans"),
+      });
     },
 
     openUploadPlanModal : function(model){
-      this.controllerFor("upload_plan").set("model", model);
-      this.controllerFor("upload_plan").set("parent", this.controllerFor("plans"));
-      this.render("modals/upload_plan", {into : "jobs", outlet : "modal", controller : "upload_plan"});
+      self.renderModal("upload_plan", {
+        model: model,
+        parent: this.controllerFor("plans"),
+      });
     },
 
     openDeletePlanModal : function(model){
-      this.controllerFor("delete_plan").set("model", model);
-      this.controllerFor("delete_plan").set("parent", this.controllerFor("plans"));
-      this.render("modals/delete_plan", {into : "jobs", outlet : "modal", controller : "delete_plan"});
+      self.renderModal("delete_plan", {
+        model: model,
+        parent: this.controllerFor("plans"),
+      });
     },
 
     openEditPlanModal : function(model){
       var self = this;
       model.getPlanRecordsSync(function(){
-        self.controllerFor("edit_plan").set("model", model);
-        self.controllerFor("edit_plan").set("job", self.get("controller").get("model"));
-        self.controllerFor("edit_plan").set("parent", self.controllerFor("plans"));
-        self.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
+        self.renderModal("edit_plan", {
+          model: model,
+          job: self.get("controller").get("model"),
+          parent: this.controllerFor("plans"),
+        });
       });
     },
     openDetailsPlanModal : function(plan){
@@ -48,9 +52,10 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openSubShareLinkModal: function(){
-      this.controllerFor("sub_share_link").set("model", this.get("controller").get("model"));
-      this.controllerFor("sub_share_link").set("parent", this.controllerFor("plans"));
-      this.render("modals/sub_share_link", {into : "jobs", outlet : "modal", controller : "sub_share_link"});
+      self.renderModal("sub_share_link", {
+        model: this.get("controller").get("model"),
+        parent: this.controllerFor("plans"),
+      });
     },
 
     openSubmittalModal: function(submittal) {
