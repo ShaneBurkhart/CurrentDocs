@@ -30,7 +30,6 @@ PlanSource.JobController = Ember.ObjectController.extend({
   }.property('tab'),
 
   submittalCount: function () {
-    console.log(this.get("model").get("submittals"));
     return this.get('model').get('submittals').length;
   }.property('model'),
 

@@ -1,7 +1,7 @@
 PlanSource.Job = Ember.Object.extend({
 
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "shares"));
+    this.setProperties(this.getProperties("user", "plans", "shares", "submittals"));
   },
 
   planCount:function(){

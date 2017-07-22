@@ -38,6 +38,7 @@ PlanSource.JobRoute = Ember.Route.extend({
         });
       });
     },
+
     openDetailsPlanModal : function(plan){
       var self = this;
       plan.getPlanRecordsSync(function(){
@@ -63,6 +64,15 @@ PlanSource.JobRoute = Ember.Route.extend({
 
       this.renderModal("submittal", {
         model: submittal,
+        job: job,
+      });
+    },
+
+    openSubmittalListModal: function(submittals) {
+      var job = this.get("controller").get("model");
+
+      this.renderModal("submittal_list", {
+        model: submittals,
         job: job,
       });
     }
