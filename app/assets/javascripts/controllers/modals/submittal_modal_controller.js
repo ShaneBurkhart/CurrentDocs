@@ -1,21 +1,12 @@
 PlanSource.SubmittalController = PlanSource.ModalController.extend({
-	job : {},
-
-	init:function(){
-		this._super();
-
-	},
-
-	closeModal : function(){
-		jQuery('#myModal').modal('hide');
-		$('body').removeClass('modal-open');
-		this.send('close');
-	},
+  // 3 states: new, review, and view
+  // new - no model
+  // review - model exists but is in review
+  // view - model exists and is not in review
 
 	keyPress : function(e){
-		console.log(e);
 		if (e.keyCode == 27){
-			this.send('closeModal');
+			this.send('close');
 		}
 	}
 });

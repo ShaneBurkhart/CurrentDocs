@@ -125,10 +125,11 @@ ActiveRecord::Schema.define(:version => 20170722032125) do
 
   create_table "submittals", :force => true do |t|
     t.text     "data"
+    t.boolean  "is_accepted", :default => false
     t.integer  "user_id"
     t.integer  "plan_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -161,7 +162,7 @@ ActiveRecord::Schema.define(:version => 20170722032125) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-07-22 17:43:32'
+    t.datetime "last_seen",                            :default => '2017-07-22 19:27:50'
     t.boolean  "can_share_link",                       :default => false
   end
 
