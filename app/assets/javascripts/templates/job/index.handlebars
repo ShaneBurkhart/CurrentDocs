@@ -26,6 +26,9 @@
           <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
         {{/can_share_link}}
       {{/if}}
+      {{#if isShopsTab}}
+        <a href="#" {{action "openSubmittalModal"}} class="button button-green">Submit Shop Drawing</a>
+      {{/if}}
     {{/unless}}
     <input placeholder="Search..." class="form-control form-smaller form-control-padding pull-right" style="max-width:250px" id="search-input"/>
   </div>
