@@ -8,21 +8,21 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openAddPlanModal : function(){
-      self.renderModal("add_plan", {
-        model: self.get("controller").get("model"),
+      this.renderModal("add_plan", {
+        model: this.get("controller").get("model"),
         parent: this.controllerFor("plans"),
       });
     },
 
     openUploadPlanModal : function(model){
-      self.renderModal("upload_plan", {
+      this.renderModal("upload_plan", {
         model: model,
         parent: this.controllerFor("plans"),
       });
     },
 
     openDeletePlanModal : function(model){
-      self.renderModal("delete_plan", {
+      this.renderModal("delete_plan", {
         model: model,
         parent: this.controllerFor("plans"),
       });
@@ -34,7 +34,7 @@ PlanSource.JobRoute = Ember.Route.extend({
         self.renderModal("edit_plan", {
           model: model,
           job: self.get("controller").get("model"),
-          parent: this.controllerFor("plans"),
+          parent: self.controllerFor("plans"),
         });
       });
     },
@@ -52,7 +52,7 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openSubShareLinkModal: function(){
-      self.renderModal("sub_share_link", {
+      this.renderModal("sub_share_link", {
         model: this.get("controller").get("model"),
         parent: this.controllerFor("plans"),
       });
