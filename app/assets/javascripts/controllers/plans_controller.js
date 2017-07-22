@@ -4,7 +4,6 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 	sortProperties: ['plan_num'],
   sortAscending: true,
 
-
   sort: function(sortProperty){
     if (sortProperty == this.sortProperties[0]){
       if (this.sortAscending == true){

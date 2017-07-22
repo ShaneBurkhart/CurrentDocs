@@ -1,4 +1,10 @@
 <div class="table-responsive" id="plan-table">
+  {{#if controllers.job.isShopsTab}}
+    {{#if controllers.job.submittalCount}}
+      <p><a href="#" {{action "openSubmittalModal"}} class="button button-green">{{controllers.job.submittalCount}} Submittals For Review</a></p>
+    {{/if}}
+  {{/if}}
+
   <table class="table table-hover">
     <thead>
       <tr>
@@ -30,73 +36,76 @@
     </thead>
     <tbody>
       {{#each controller}}
-      {{#if hasPlan}}
-      <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
-        {{else}} <!-- else does not have plan -->
-        <tr>
-          {{/if}} <!-- end of hasPlan -->
+        {{#if hasPlan}}
+          <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
+        {{else}}
+          <tr>
+        {{/if}}
           {{#if this.belongsToShops}}
-          <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
+            <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
           {{else}}
             {{#if this.belongsToASI}}
-            <td><span>{{unbound code}}</span></td>
+              <td><span>{{unbound code}}</span></td>
             {{else}}
-            <td><span>{{plan_num}}</span></td>
+              <td><span>{{plan_num}}</span></td>
             {{/if}}
           {{/if}} <!-- belongsToShops -->
+
           <td class="word"><span title="{{unbound plan_name}}">{{plan_name}}</span></td>
+
           {{#if this.belongsToShops}}
-          <td><span>{{unbound status}}</span></td>
+            <td><span>{{unbound status}}</span></td>
           {{else}}
             {{#if this.belongsToASI}}
-            <td><span>{{truncate getDescriptionString}}</span></td>
-            <td><span>{{unbound tags}}</span></td>
-            {{else}}
+              <td><span>{{truncate getDescriptionString}}</span></td>
+              <td><span>{{unbound tags}}</span></td>
             {{/if}}
           {{/if}} <!-- belongsToShops -->
+
           <td><span>{{date plan_updated_at}}</span></td>
           <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
           <td>
             <ul style="padding-left:0px;" class="controls text-right unstyled">
               {{#if hasPlan}}
-              {{#if fileIsPDF}}
-              <li style="display:none"><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
-              {{/if}}
-              <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+                {{#if fileIsPDF}}
+                  <li style="display:none"><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
+                {{/if}}
+
+                <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
               {{/if}}
               {{#unless controller.job.isShared}}
-              <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
-              <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
+                <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
               {{/unless}}
               <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
             </ul>
           </td>
         </tr>
-        {{else}}
+      {{else}}
         <tr>
           <td>
             {{#manager}}
-            {{#unless job.isShared}}
-            <p>You need to add a plan to your job.</p>
+              {{#unless job.isShared}}
+                <p>You need to add a plan to your job.</p>
+              {{else}}
+                <p>The owner hasn't added any plans.</p>
+              {{/unless}}
             {{else}}
-            <p>The owner hasn't added any plans.</p>
-            {{/unless}}
-            {{else}}
-            <p>The owner of this plan has not added any plans.</p>
+              <p>The owner of this plan has not added any plans.</p>
             {{/manager}}
           </td>
 
           {{#unless controllers.job.isShopsTab}}
-          <td>{{plan_num}}</td>
+            <td>{{plan_num}}</td>
           {{/unless}}
 
         </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-  <script>
-  $(function () {
-    $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
-  })
-  </script>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
+})
+</script>

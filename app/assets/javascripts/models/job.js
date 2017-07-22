@@ -29,6 +29,16 @@ PlanSource.Job = Ember.Object.extend({
       this.set("shares", shares);
       delete hash.shares
     }
+
+    if(hash.submittals){
+      var submittals = Em.A();
+      hash.submittals.forEach(function(submittal){
+        submittals.pushObject(PlanSource.Submittal.create(submittal));
+      });
+      this.set("submittals", submittals);
+      delete hash.submittals;
+    }
+
     Ember.setProperties(this, hash);
   },
 

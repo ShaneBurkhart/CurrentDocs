@@ -16,7 +16,7 @@
 
 require 'faker'
 
-viewer = User.new(
+@viewer = User.new(
   email: "viewer@plansource.io",
   password: "password",
   first_name: Faker::Name.first_name,
@@ -24,10 +24,10 @@ viewer = User.new(
   company: Faker::Company.name,
   can_share_link: true
 )
-viewer.type = "Viewer"
-viewer.save
+@viewer.type = "Viewer"
+@viewer.save
 
-user = User.new(
+@user = User.new(
   email: ENV["EMAIL"],
   password: "password",
   first_name: Faker::Name.first_name,
@@ -35,22 +35,10 @@ user = User.new(
   company: Faker::Company.name,
   can_share_link: true
 )
-user.type = "Admin"
-user.save
+@user.type = "Admin"
+@user.save
 
-(1..10).each do |i|
-  # Make the first viewer an account we can access
-  Contact.create(
-    user_id: user.id,
-    contact_id: viewer.id
-  )
-
-  job = Job.create(
-    user_id: user.id,
-    name: Faker::Address.street_address,
-    archived: [true, false].sample
-  )
-
+def create_plans_for_job(job)
   (1..15).each do |i|
     tab = Plan::TABS.sample
     plan = Plan.create(
@@ -69,7 +57,7 @@ user.save
           },
           is_accepted: true,
           plan_id: plan.id,
-          user_id: viewer.id,
+          user_id: @viewer.id,
         )
       end
     end
@@ -82,22 +70,39 @@ user.save
         description: Faker::Address.street_address,
       },
       job_id: job.id,
-      user_id: viewer.id,
+      user_id: @viewer.id,
     )
   end
+end
+
+# Make the first viewer an account we can access
+Contact.create(
+  user_id: @user.id,
+  contact_id: @viewer.id
+)
+
+# Shared jobs
+(1..10).each do |i|
+  job = Job.create(
+    user_id: @user.id,
+    name: Faker::Address.street_address,
+    archived: [true, false].sample
+  )
+
+  create_plans_for_job(job)
 
   Share.create(
-    sharer_id: user.id,
-    user_id: viewer.id,
+    sharer_id: @user.id,
+    user_id: @viewer.id,
     job_id: job.id,
     can_reshare: false,
     permissions: Random.rand(6) + 1
   )
 
   ShareLink.create(
-  job_id: job.id,
-  user_id: user.id,
-  email_shared_with: Faker::Internet.email
+    job_id: job.id,
+    user_id: @user.id,
+    email_shared_with: Faker::Internet.email
   )
 end
 
@@ -113,7 +118,7 @@ end
   u.save
 
   Contact.create(
-  user_id: user.id,
+  user_id: @user.id,
   contact_id: u.id
   )
 end
@@ -121,17 +126,10 @@ end
 
 (1..10).each do
   job = Job.create(
-    user_id: user.id,
+    user_id: @user.id,
     name: Faker::Address.street_address,
     archived: [true, false].sample
   )
 
-  (1..15).each do |i|
-    Plan.create(
-      job_id: job.id,
-      plan_num: i,
-      plan_name: Faker::Address.secondary_address,
-      tab: Plan::TABS.sample
-    )
-  end
+  create_plans_for_job(job)
 end

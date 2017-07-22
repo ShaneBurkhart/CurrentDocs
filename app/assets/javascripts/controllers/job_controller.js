@@ -29,6 +29,11 @@ PlanSource.JobController = Ember.ObjectController.extend({
     return this.get('tab') === 'Calcs & Misc';
   }.property('tab'),
 
+  submittalCount: function () {
+    console.log(this.get("model").get("submittals"));
+    return this.get('model').get('submittals').length;
+  }.property('model'),
+
   archiveJob: function() {
     this.get('model').set('archived', true);
     this.get('model').save();
@@ -46,7 +51,6 @@ PlanSource.JobController = Ember.ObjectController.extend({
     this.get('model').set('subscribed', false);
     this.get('model').save();
   },
-
 
 	back : function(){
 		window.history.go(-1);
