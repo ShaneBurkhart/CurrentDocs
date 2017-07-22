@@ -11,19 +11,26 @@ PlanSource::Application.routes.draw do
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job
     post '/jobs/share_link' => 'jobs#sub_share_link'
+
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
     get '/plans/records/:id' => 'plans#plan_records'
     post '/plans/records' => 'plan_records#batch_update'
+
     get '/user/contacts' => 'users#contacts'
     post '/user/contacts' => 'users#add_contacts'
+
     resources :shares, only: ["create", "destroy", "update"]
     post "/shares/batch" => "shares#batch"
+
     resource :upload, only: ["create"]
     resource :token, only: ["create"] #only retrieve token
     match "/download/:id" => "downloads#download"
+
     post '/message' => 'messages#group'
     post '/message' => 'messages#group'
+
+    get '/submittals/:plan_id' => 'submittals#index'
   end
 
   get '/view' => 'pdf#index', as: "view_pdf"

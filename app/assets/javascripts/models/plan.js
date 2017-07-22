@@ -1,6 +1,7 @@
 PlanSource.Plan = Ember.Object.extend({
   statusOptions:['', 'Submitted', 'Approved', 'Approved as Corrected', 'Revise & Resubmit', 'Record Copy'],
   planRecords: [],
+  submittals: [],
 
   init:function(){
     // this.getPlanRecords();
@@ -87,6 +88,10 @@ PlanSource.Plan = Ember.Object.extend({
     });
   }.property(),
 
+  submittalsProp: function () {
+    return this.get('submittals');
+  }.property(),
+
   getPlanURI: function(){
     var planURL = this.get('plan');
     return planURL;
@@ -131,9 +136,28 @@ PlanSource.Plan = Ember.Object.extend({
     });
   },
 
+  getSubmittalsSync: function(callback) {
+    var self = this;
+    Em.Deferred.promise(function(p){
+      p.resolve($.get(PlanSource.Submittal.url(self.get('id'))).then(function(data){
+        self.clearSubmittals();
+        data.submittals.forEach(function(submittal){
+          self.submittals.push(PlanSource.Submittal.create(submittal));
+        });
+        callback();
+
+      }));
+    });
+  },
+
   clearPlanRecords: function() {
     var emptyArray = [];
     this.set('planRecords', emptyArray);
+  },
+
+  clearSubmittals: function() {
+    var emptyArray = [];
+    this.set('submittals', emptyArray);
   },
 
   upatePlanRecords : function(updateData){

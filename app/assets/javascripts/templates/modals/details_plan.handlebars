@@ -1,85 +1,67 @@
-<div class="modal fade bs-example-modal-lg" data-backdrop="static" style="display:block" data-keyboard="false" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" {{action "closeModal"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">Details {{this.plan_name}}</h4>
-			</div>
-			<div class="modal-body">
-				{{partial "modals/details_plan_partial"}}
-				<hr>
-				<div class="modal-section">
-					<h4 class="title">Plan History</h4>
-					<div class="container-fluid">
-						{{#each planRecordsArchivedProp}}
-						<div class="row" style="margin-bottom:20px">
-							<div class="col-sm-8">
-								<a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:110%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
-								<a style="word-wrap:break-word" href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
-							</div>
-							<div class="col-sm-4" style="padding-left:30px;">
-								<div> changed {{date created_at }}</div>
-							</div>
-						</div>
-						{{else}}
-						<div>
-							This plan has no plan history.
-						</div>
-						{{/each}}
-					</div>
-				</div>
-				<div class="modal-footer">
-					<div class="buttons">
-						<a class="button" {{action "closeModal"}}>Close</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="modal-wrapper">
+  <div class="overlay"></div>
+  <div class="dialog box box-border" style="width: 600px;">
+    <div class="header">
+      <div class="pull-right">
+        <button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <h4 class="modal-title">Details {{this.plan_name}}</h4>
+    </div>
+    <div class="body">
+      {{partial "modals/details_plan_partial"}}
+
+      <hr>
+
+      {{#if submittals}}
+        <div class="modal-section">
+          <h4 class="title">Submittals</h4>
+          <div class="container-fluid">
+            {{#each submittals}}
+              <div class="row margin-bottom">
+                <div class="col-sm-8">
+                  <a href="#" {{action "openSubmittalModal" this}}>{{data.description}}</a>
+                </div>
+                <div class="col-sm-4">
+                  submitted {{date created_at}}
+                </div>
+              </div>
+            {{else}}
+              <div>
+                This plan has no submittals.
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      {{/if}}
+
+      <hr>
+
+      <div class="modal-section">
+        <h4 class="title">Plan History</h4>
+        <div class="container-fluid">
+          {{#each planRecordsArchivedProp}}
+          <div class="row" style="margin-bottom:20px">
+            <div class="col-sm-8">
+              <a href="/api/download/{{unbound this.id}}?type=plan_record" title="{{unbound filename}}"><span style="font-size:110%;margin-right:10px" class="glyphicon glyphicon-download"></span></a>
+              <a style="word-wrap:break-word" href="/api/plans/embedded/{{unbound this.id}}?type=plan_record" target="_blank">{{this.filename}}</a>
+            </div>
+            <div class="col-sm-4" style="padding-left:30px;">
+              <div> changed {{date created_at }}</div>
+            </div>
+          </div>
+          {{else}}
+          <div>
+            This plan has no plan history.
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="buttons">
+        <a class="button" {{action "close"}}>Close</a>
+      </div>
+    </div>
+  </div>
 </div>
-<script>
-
-$('#myModal').modal('show');
-$('#myModal').on('shown.bs.modal', function () {
-	$('#edit-plan-name').focus();
-});
-
-$("#myModal").on('hide.bs.modal', function(){
-	// console.log(PlanSource.EditPlanController.send(''));
-});
-
-var initSelect = $('#init-select-status').val();
-$('#edit-select-status').val(initSelect);
-
-var formatCSI = function(thisObj) {
-	var current = thisObj.val().split('');
-
-	if (current.length > 2){
-		if (current[2] != " "){
-			current.splice(2, 0, " ");
-		}
-	}
-	if (current.length > 5){
-		if (current[5] != " "){
-			current.splice(5, 0, " ");
-		}
-	}
-	thisObj.val(current.join(""));
-}
-
-$('#edit-plan-csi').keyup(function(){
-	formatCSI($(this));
-});
-</script>
-<!-- Include the Quill library -->
-<script>
-if($("#details-plan-description").length > 0){
-	var editor = new Quill('#details-plan-description', {
-		theme: 'snow',
-    readOnly:true,
-    modules:{
-      toolbar:false
-    }
-	});
-}
-</script>

@@ -52,12 +52,22 @@ user.save
   )
 
   (1..15).each do |i|
-    Plan.create(
+    plan = Plan.create(
       job_id: job.id,
       plan_num: i,
       plan_name: Faker::Address.secondary_address,
       tab: Plan::TABS.sample
     )
+
+    (1..3).each do |j|
+      Submittal.create(
+        data: {
+          description: ["Floor 1 Trusses", "Floor 2 Wall Panels", "Floor 4 Trusses"].sample
+        },
+        plan_id: plan.id,
+        user_id: viewer.id,
+      )
+    end
   end
 
   Share.create(

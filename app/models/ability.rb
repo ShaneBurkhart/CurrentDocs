@@ -13,6 +13,8 @@ class Ability
       can :update, Share
       can :destroy, Share
       can :create, Share
+      can :read, Submittal
+      can :create, Submittal
     end
     # Define abilities for the passed in user here. For example:
     #

@@ -1,9 +1,10 @@
 PlanSource.JobRoute = Ember.Route.extend({
+  // Modal stack so we can open modals while in modals and come back.
+  _modalStack: [],
+
   events : {
     close : function(){
-      // this.render("nothing", {into : "jobs", outlet : "modal"});
-      this.controllerFor('plans');
-      this.clearOutlet('jobs', 'modal');
+      this.closeModal();
     },
 
     openAddPlanModal : function(){
@@ -33,13 +34,16 @@ PlanSource.JobRoute = Ember.Route.extend({
         self.render("modals/edit_plan", {into : "jobs", outlet : "modal", controller : "edit_plan"});
       });
     },
-    openDetailsPlanModal : function(model){
+    openDetailsPlanModal : function(plan){
       var self = this;
-      model.getPlanRecordsSync(function(){
-        self.controllerFor("details_plan").set("model", model);
-        self.controllerFor("details_plan").set("job", self.get("controller").get("model"));
-        self.controllerFor("details_plan").set("parent", self.controllerFor("plans"));
-        self.render("modals/details_plan", {into : "jobs", outlet : "modal", controller : "details_plan"});
+      plan.getPlanRecordsSync(function(){
+        plan.getSubmittalsSync(function(){
+          self.renderModal("details_plan", {
+            model: plan,
+            job: self.get("controller").get("model"),
+            parent: self.controllerFor("plans"),
+          });
+        });
       });
     },
 
@@ -49,13 +53,13 @@ PlanSource.JobRoute = Ember.Route.extend({
       this.render("modals/sub_share_link", {into : "jobs", outlet : "modal", controller : "sub_share_link"});
     },
 
-    openSubmittalModal: function() {
+    openSubmittalModal: function(submittal) {
       var job = this.get("controller").get("model");
-      if (job.get("isMyJob")) {
-      } else {
-        this.controllerFor("submittal").set("model", job);
-        this.render("modals/submittal", {into : "jobs", outlet : "modal", controller : "submittal"});
-      }
+
+      this.renderModal("submittal", {
+        model: submittal,
+        job: job,
+      });
     }
   },
 
@@ -90,6 +94,26 @@ PlanSource.JobRoute = Ember.Route.extend({
     });
   },
 
+  renderModal: function (modal, attrs) {
+    // Make sure outlet is clear before rendering. Previous modal is saved to stack.
+    this.clearOutlet("jobs", "modal");
+
+    this.controllerFor(modal).setProperties(attrs);
+    this.render("modals/" + modal, {into : "jobs", outlet : "modal", controller : modal});
+    this._modalStack.push(modal);
+  },
+
+  closeModal: function () {
+    this.clearOutlet('jobs', 'modal');
+    this._modalStack.pop();
+
+    var modalsRemaining = this._modalStack.length;
+    if (modalsRemaining) {
+      var nextModal = this._modalStack[modalsRemaining - 1];
+      this.render("modals/" + nextModal, {into : "jobs", outlet : "modal", controller : nextModal});
+    }
+  },
+
   model : function(param){
     return PlanSource.Job.find(param.job_id);
   },
@@ -98,6 +122,4 @@ PlanSource.JobRoute = Ember.Route.extend({
     parentView = this.router._lookupActiveView(container);
     parentView.disconnectOutlet(outlet);
   }
-
-
 });
