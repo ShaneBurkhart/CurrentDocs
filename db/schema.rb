@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20170722032125) do
     t.boolean  "is_accepted", :default => false
     t.integer  "user_id"
     t.integer  "plan_id"
+    t.integer  "job_id"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end
@@ -162,7 +163,7 @@ ActiveRecord::Schema.define(:version => 20170722032125) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-07-22 19:27:50'
+    t.datetime "last_seen",                            :default => '2017-07-22 20:03:51'
     t.boolean  "can_share_link",                       :default => false
   end
 

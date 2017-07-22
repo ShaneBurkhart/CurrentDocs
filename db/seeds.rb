@@ -52,22 +52,38 @@ user.save
   )
 
   (1..15).each do |i|
+    tab = Plan::TABS.sample
     plan = Plan.create(
       job_id: job.id,
       plan_num: i,
       plan_name: Faker::Address.secondary_address,
-      tab: Plan::TABS.sample
+      tab: tab
     )
 
-    (1..3).each do |j|
-      Submittal.create(
-        data: {
-          description: ["Floor 1 Trusses", "Floor 2 Wall Panels", "Floor 4 Trusses"].sample
-        },
-        plan_id: plan.id,
-        user_id: viewer.id,
-      )
+    # Accepted submittals for plan
+    if tab == "Shops"
+      (1..3).each do |j|
+        Submittal.create(
+          data: {
+            description: Faker::Address.street_address,
+          },
+          is_accepted: true,
+          plan_id: plan.id,
+          user_id: viewer.id,
+        )
+      end
     end
+  end
+
+  # In review submittals for job
+  (0..3).each do |i|
+    Submittal.create(
+      data: {
+        description: Faker::Address.street_address,
+      },
+      job_id: job.id,
+      user_id: viewer.id,
+    )
   end
 
   Share.create(

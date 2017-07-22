@@ -5,6 +5,7 @@ class CreateSubmittals < ActiveRecord::Migration
       t.boolean :is_accepted, default: false
       t.integer :user_id
       t.integer :plan_id
+      t.integer :job_id
 
       t.timestamps
     end

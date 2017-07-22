@@ -5,8 +5,17 @@
       <div class="pull-right">
         <button type="button" {{action "close"}} class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
-      <h4 class="modal-title">Shop Drawing Submission Form</h4>
-      <p>Please make sure all information is complete and accurate.</p>
+      {{#if isNew }}
+        <h4 class="modal-title">Shop Drawing Submission Form</h4>
+        <p>Please make sure all information is complete and accurate.</p>
+      {{else}}
+        {{#if isInReview }}
+          <h4 class="modal-title">Shop Drawing Review Form</h4>
+          <p>Please make sure all information is complete and accurate.</p>
+        {{else}}
+          <h4 class="modal-title">Shop Drawing Submittal</h4>
+        {{/if}}
+      {{/if}}
     </div>
     <div class="body">
       <div class="control-group">
