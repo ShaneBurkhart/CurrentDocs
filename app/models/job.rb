@@ -14,7 +14,7 @@ class Job < ActiveRecord::Base
   has_many :plans, order: "plan_num ASC"
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
-  has_many :submittals, conditions: "plan_id IS NULL"
+  has_many :submittals, conditions: "is_accepted = false"
   attr_accessible :name, :user_id, :archived, :subscribed
   attr_accessor :subscribed
   validates :user_id, presence: true

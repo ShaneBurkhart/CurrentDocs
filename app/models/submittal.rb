@@ -8,4 +8,7 @@ class Submittal < ActiveRecord::Base
   belongs_to :job
   # Keep data general so we can customize the submittal form easily
   serialize :data, JSON
+
+  validates :user_id, :job_id, :data, presence: true
+  validates :plan_id, presence: true, if: Proc.new { |s| s.is_accepted }
 end

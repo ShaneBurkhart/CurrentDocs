@@ -1,9 +1,11 @@
 <div class="table-responsive" id="plan-table">
-  {{#if controllers.job.isShopsTab}}
-    {{#if controllers.job.submittalCount}}
-      <p><a href="#" {{action "openSubmittalListModal" controllers.job.submittals}} class="button button-green">{{controllers.job.submittalCount}} Submittals For Review</a></p>
+  {{#unless controllers.job.isShared}}
+    {{#if controllers.job.isShopsTab}}
+      {{#if controllers.job.submittalCount}}
+        <p><a href="#" {{action "openSubmittalListModal"}} class="button button-green">{{controllers.job.submittalCount}} Submittals For Review</a></p>
+      {{/if}}
     {{/if}}
-  {{/if}}
+  {{/unless}}
 
   <table class="table table-hover">
     <thead>

@@ -31,7 +31,7 @@ PlanSource.JobController = Ember.ObjectController.extend({
 
   submittalCount: function () {
     return this.get('model').get('submittals').length;
-  }.property('model'),
+  }.property('model.submittals'),
 
   archiveJob: function() {
     this.get('model').set('archived', true);

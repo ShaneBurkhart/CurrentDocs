@@ -9,10 +9,10 @@
       <p>Select a submittal to review.</p>
     </div>
     <div class="body">
-      {{#if model}}
+      {{#if model.submittals}}
         <div class="modal-section">
           <div class="container-fluid">
-            {{#each model}}
+            {{#each model.submittals}}
               <div class="row margin-bottom" {{action "openSubmittalModal" this}}>
                 <div class="col-sm-8">
                   <a href="#">{{this.data.description}}</a>

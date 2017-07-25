@@ -61,9 +61,17 @@
 
     {{#if canViewShopsTab}}
         {{#if isShopsTab}}
+          {{#if submittalCount}}
+            <a class="active">Shops ({{ submittalCount }})</a>
+          {{else}}
             <a class="active">Shops</a>
+          {{/if}}
         {{else}}
+          {{#if submittalCount}}
+            <a {{action "changeTab" "Shops"}}>Shops ({{ submittalCount }})</a>
+          {{else}}
             <a {{action "changeTab" "Shops"}}>Shops</a>
+          {{/if}}
         {{/if}}
     {{/if}}
 

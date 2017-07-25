@@ -61,6 +61,9 @@ PlanSource.JobRoute = Ember.Route.extend({
 
     openSubmittalModal: function(submittal) {
       var job = this.get("controller").get("model");
+      // Create Submittal if doesn't exist. No submittal means new submittal modal.
+      // Only need job for project name.
+      var submittal = submittal || PlanSource.Submittal.create({ job: job });
 
       this.renderModal("submittal", {
         model: submittal,
@@ -68,13 +71,10 @@ PlanSource.JobRoute = Ember.Route.extend({
       });
     },
 
-    openSubmittalListModal: function(submittals) {
+    openSubmittalListModal: function() {
       var job = this.get("controller").get("model");
 
-      this.renderModal("submittal_list", {
-        model: submittals,
-        job: job,
-      });
+      this.renderModal("submittal_list", { model: job });
     }
   },
 

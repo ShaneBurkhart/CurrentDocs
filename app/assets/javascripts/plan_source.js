@@ -70,9 +70,7 @@ Handlebars.registerHelper('eq', function(one, two) {
 	return one === two
 });
 
-Ember.Handlebars.helper('ifCond', function(one, two, options) {
-	console.log(one)
-	console.log(two)
+Ember.Handlebars.registerBoundHelper('ifCond', function(one, two, options) {
 	if (one === two){
 		return options.fn(this);
 	}

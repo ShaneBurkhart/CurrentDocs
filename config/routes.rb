@@ -31,6 +31,8 @@ PlanSource::Application.routes.draw do
     post '/message' => 'messages#group'
 
     get '/submittals/:plan_id' => 'submittals#index'
+    post '/submittals' => 'submittals#create'
+    post '/submittals/:id' => 'submittals#update'
   end
 
   get '/view' => 'pdf#index', as: "view_pdf"

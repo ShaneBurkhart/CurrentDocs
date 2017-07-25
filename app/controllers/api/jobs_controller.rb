@@ -197,11 +197,11 @@ class Api::JobsController < ApplicationController
     # then run includes on the combination becuase ActiveRecord will try to tell you it's a array.
     # Alternatively, we could create a "meta" function that takes the object and calls the includes method on
     # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
-    user.jobs.includes(:user, :plans, :submittals, shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
+    user.jobs.includes(:user, :plans, submittals: [:user], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
   end
 
   def get_job(id)
-    Job.includes(:user, :plans, shares: [:user, :sharer]).find(id)
+    Job.includes(:user, :plans, submittals: [:user], shares: [:user, :sharer]).find(id)
   end
 
   def render_no_permission
