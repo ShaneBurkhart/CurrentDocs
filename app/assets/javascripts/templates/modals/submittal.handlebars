@@ -95,7 +95,7 @@
               {{else}}
                 <input class="form-control" id="submittal-description" value="{{ unbound data.description }}">
               {{/if}}
-              <span class="help-inline"></span>
+              <span class="help-inline error">{{ errors.data.description }}</span>
             </div>
           </div>
         </div>
@@ -116,10 +116,10 @@
                   {{/if}}
 
                   {{#each shopPlans}}
-                      <option value="{{unbound this.id}}">{{unbound this.plan_name}}</option>
+                    <option value="{{unbound this.id}}">{{unbound this.plan_name}}</option>
                   {{/each}}
                 </select>
-                <span class="help-inline"></span>
+                <span class="help-inline error">{{ errors.plan_id }}</span>
               </div>
             </div>
           </div>

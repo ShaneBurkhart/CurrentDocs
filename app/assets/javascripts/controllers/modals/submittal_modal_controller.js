@@ -4,18 +4,21 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
   // review - model exists but is in review
   // view - model exists and is not in review
 
+  // The errors for the submittal form.
+  errors: {},
+
   isNew: function () {
     return !this.get("model").get("id");
-  }.property(),
+  }.property("id"),
 
   isInReview: function () {
     var submittal = this.get("model");
     return submittal && !submittal.get("is_accepted");
-  }.property(),
+  }.property("is_accepted"),
 
   isAccepted: function () {
     return !this.get("isInReview");
-  }.property(),
+  }.property("isInReview"),
 
   shopPlans: function () {
     return this.get("job").getPlansByTab('Shops');
@@ -55,6 +58,13 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     submittal.set("plan_id", planId);
     submittal.set("is_accepted", shouldAccept);
 
+    var errors = submittal.validate();
+    this.set("errors", errors);
+    if (errors) {
+      submittal.set("is_accepted", false);
+      return;
+    }
+
     submittal.save(function (submittal) {
       if (submittal && submittal.get("is_accepted")) {
         // Don't need to add submittal to plan since opening the plan details
@@ -67,16 +77,11 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
         }, []);
         job.set("submittals", purgedSubmittals);
 
-        PlanSource.showNotification("Submittal accepted!");
         self.send("close");
       } else if (submittal && !submittal.get("is_accepted")) {
-        // Update submittal after saving
-        //
-        PlanSource.showNotification("Submittal updated!");
         self.send("close");
       } else {
         // Error
-        PlanSource.showNotification("There was a problem. Try again later!", "error");
       }
     });
   },

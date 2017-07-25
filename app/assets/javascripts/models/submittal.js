@@ -19,6 +19,21 @@ PlanSource.Submittal = Ember.Object.extend({
 		return moment(this.get("created_at")).fromNow();
   }.property("created_at"),
 
+  validate: function () {
+    var errors = { data: {} };
+    if (!this.get("data.description")) {
+      errors.data.description = "Can't be blank.";
+    }
+
+    if (this.get("is_accepted") && !this.get("plan_id")) {
+      errors.plan_id = "Select a plan before accepting.";
+    }
+
+    if ($.isEmptyObject(errors.data)) delete errors.data;
+
+    return $.isEmptyObject(errors) ? undefined : errors;
+  },
+
   submit: function (callback) {
     var self = this;
     this.set("job_id", this.get("job_id") || this.get("job").get("id"))
