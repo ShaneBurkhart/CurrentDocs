@@ -16,25 +16,12 @@
 // We create them in Ember.
 Dropzone.autoDiscover = false;
 
-Dropzone.options.submittalAttachments = {
-  paramName: "file", // The name that will be used to transfer the file
-  maxFilesize: 20, // MB
-  accept: function(file, done) {
-    if (file.name == "justinbieber.jpg") {
-      done("Naha, you don't.");
-    } else {
-      done();
-    }
-  }
-};
-
 PlanSource = Ember.Application.create({
 	rootElement : "#ember-job-app",
 	LOG_TRANSITIONS: true
 });
 
 PlanSource.isUploading = false;
-
 
 Ember.Handlebars.registerBoundHelper("encode_URL", function(url){
 	if(url){

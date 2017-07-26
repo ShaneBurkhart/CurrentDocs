@@ -41,7 +41,7 @@ PlanSource.Submittal = Ember.Object.extend({
     $.ajax({
         url: PlanSource.Submittal.url(),
         type: 'POST',
-        data : { submittal: this.getProperties(["job_id", "data", "attachments"]) },
+        data : { submittal: this.getProperties(["job_id", "data", "attachment_ids"]) },
     }).then(function(data, t, xhr){
       if (!$.isEmptyObject(data)) {
         self.setProperties(data.submittal);

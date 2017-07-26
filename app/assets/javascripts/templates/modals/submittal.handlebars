@@ -142,11 +142,22 @@
       </div>
       <div class="row margin-bottom">
         <div class="col-sm-12">
-          <p>Attachments (select to remove):</p>
+          {{#if isNew }}
+            <p>Attachments (select to remove):</p>
+          {{else}}
+            <p>Attachments (select to download):</p>
+          {{/if}}
           <div class="control-group">
-            <div id="submittal-attachments"></div>
-            <div id="attachments-dnd" class="dropzone">
+            <div id="submittal-attachments">
+              {{#each attachments}}
+                <p class="file-preview">
+                  <a href="/api/submittals/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
+                </p>
+              {{/each}}
             </div>
+            {{#if isNew }}
+              <div id="attachments-dnd" class="dropzone"></div>
+            {{/if}}
           </div>
         </div>
       </div>

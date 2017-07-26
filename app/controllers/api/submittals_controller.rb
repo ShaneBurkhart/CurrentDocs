@@ -64,7 +64,7 @@ class Api::SubmittalsController < ApplicationController
         end
 
         # Reload for includes
-        @submittal = Submittal.includes(:user).find(@submittal.id)
+        @submittal = Submittal.includes(:user, :attachments).find(@submittal.id)
 
         render json: @submittal
       else
@@ -98,5 +98,18 @@ class Api::SubmittalsController < ApplicationController
     end
 
     render json: returnData
+  end
+
+  def download_attachment
+    @attachment = Attachment.find(params[:id])
+
+    if @attachment
+      s3 = AWS::S3.new
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects[@attachment.s3_path];
+
+      send_data obj.read, filename: @attachment.filename, stream: 'true', buffer_size: '4096'
+    else
+      render_no_permission
+    end
   end
 end

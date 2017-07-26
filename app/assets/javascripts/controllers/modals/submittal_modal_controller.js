@@ -31,7 +31,7 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     var attachments = this.getAttachments();
 
     submittal.set("data", data);
-    submittal.set("attachments", attachments);
+    submittal.set("attachment_ids", attachments);
     submittal.submit(function (submittal) {
       if (submittal) {
         var job = self.get("job");
