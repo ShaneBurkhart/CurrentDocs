@@ -197,7 +197,9 @@ class Api::JobsController < ApplicationController
     # then run includes on the combination becuase ActiveRecord will try to tell you it's a array.
     # Alternatively, we could create a "meta" function that takes the object and calls the includes method on
     # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
-    user.jobs.includes(:user, :plans, submittals: [:user], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
+    # Only add submittals to jobs we own since the only submittals associated with a job are unaccepted submittals.
+    # After a submittal is accepted, it gets loaded via the plan details modal.
+    user.jobs.includes(:user, :plans, submittals: [:user, :attachments], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
   end
 
   def get_job(id)

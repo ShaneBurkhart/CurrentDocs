@@ -93,7 +93,7 @@
               {{#if isAccepted }}
                 <input disabled class="form-control" id="submittal-description" value="{{ unbound data.description }}">
               {{else}}
-                <input class="form-control" id="submittal-description" value="{{ unbound data.description }}">
+                <input class="form-control" id="submittal-description" value="{{ unbound data.description }}" placeholder="Give your submittal a name">
               {{/if}}
               <span class="help-inline error">{{ errors.data.description }}</span>
             </div>

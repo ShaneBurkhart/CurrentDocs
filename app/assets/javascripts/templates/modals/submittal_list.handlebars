@@ -14,10 +14,10 @@
           <div class="container-fluid">
             {{#each model.submittals}}
               <div class="row margin-bottom" {{action "openSubmittalModal" this}}>
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                   <a href="#">{{this.data.description}}</a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   submitted {{date created_at}}
                 </div>
               </div>
@@ -32,7 +32,6 @@
     </div>
     <div class="footer">
       <div class="buttons">
-        <a class="button button-blue" id="contact-share" {{action "shareWithContacts" target=controller}} >Update</a>
         <a class="button" {{action "close" }} >Cancel</a>
       </div>
     </div>

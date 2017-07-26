@@ -6,7 +6,7 @@ class Api::SubmittalsController < ApplicationController
 
   def index
     if user.can? :read, Submittal
-      @submittals = Submittal.where(plan_id: params[:plan_id], is_accepted: true).includes(:user).order("created_at DESC")
+      @submittals = Submittal.where(plan_id: params[:plan_id], is_accepted: true).includes(:user, :attachments).order("created_at DESC")
 
       render json: @submittals
     else
@@ -21,7 +21,7 @@ class Api::SubmittalsController < ApplicationController
         job_id: params["submittal"]["job_id"],
         user_id: user.id,
       )
-      attachments = params["submittal"]["attachments"] || []
+      attachments = params["submittal"]["attachment_ids"] || []
 
       if !@submittal.save
         render json: {}

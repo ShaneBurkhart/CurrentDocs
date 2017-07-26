@@ -16,7 +16,7 @@ PlanSource.Submittal = Ember.Object.extend({
   },
 
   dateSubmitted: function () {
-		return moment(this.get("created_at")).fromNow();
+		return moment(this.get("created_at")).format("LL");
   }.property("created_at"),
 
   validate: function () {

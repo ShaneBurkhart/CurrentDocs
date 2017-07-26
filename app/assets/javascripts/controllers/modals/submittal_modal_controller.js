@@ -9,16 +9,16 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
 
   isNew: function () {
     return !this.get("model").get("id");
-  }.property("id"),
+  }.property("model", "model.id"),
 
   isInReview: function () {
     var submittal = this.get("model");
     return !this.get("isNew") && !submittal.get("is_accepted");
-  }.property("model", "is_accepted", "isNew"),
+  }.property("isNew", "is_accepted"),
 
   isAccepted: function () {
-    return !this.get("isInReview");
-  }.property("isInReview"),
+    return this.get("is_accepted");
+  }.property("is_accepted"),
 
   shopPlans: function () {
     return this.get("job").getPlansByTab('Shops');
@@ -32,15 +32,15 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
 
     submittal.set("data", data);
     submittal.set("attachment_ids", attachments);
+
+    var errors = submittal.validate();
+    this.set("errors", errors);
+    if (errors) return;
+
     submittal.submit(function (submittal) {
       if (submittal) {
-        var job = self.get("job");
-        var submittals = job.get("submittals");
-
-        // Add submittal to job submittals
-        submittals.push(submittal);
-        job.set("submittals", submittals);
-
+        // No need to add submittal to job since submittals are submitted
+        // by viewers and not owners. Owners review submittals.
         PlanSource.showNotification("Thanks! Your shop drawing has been submitted.");
         self.send("close");
       } else {
