@@ -5,12 +5,19 @@ web:
     links:
         - pg
         - redis
+        - mailcatcher
     volumes:
         - ../../app:/app/app
         - ../../db:/app/db
         - ../../config:/app/config
     env_file:
         - ../../user.env
+
+mailcatcher:
+    image: shaneburkhart/plansource:dev
+    ports:
+        - "1080:1080"
+    command: "mailcatcher -f --ip=0.0.0.0"
 
 pg:
     image: postgres

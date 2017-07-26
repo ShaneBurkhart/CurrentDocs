@@ -13,6 +13,13 @@ class UserMailer < ActionMailer::Base
     mail(to: @share.user.email, subject: @subject)
   end
 
+  def submittal_notification(submittal)
+    @submittal = submittal
+    @to = @submittal.job.user.email
+    @subject = "New submittal for #{@submittal.job.name}"
+    mail(to: @to, subject: @subject)
+  end
+
   def share_link_notification(share_link, job, current_user)
     @link = "http://plansource.io/jobs/#{job.id}/share?share_link_token=#{share_link.token}"
     @job_name = job.name

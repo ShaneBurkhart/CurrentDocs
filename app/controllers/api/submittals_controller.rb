@@ -42,6 +42,9 @@ class Api::SubmittalsController < ApplicationController
       # Reload for includes
       @submittal = Submittal.includes(:user, :attachments).find(@submittal.id)
 
+      # Send notification to owner
+      UserMailer.submittal_notification(@submittal).deliver
+
       render json: @submittal
     else
       render_no_permission
