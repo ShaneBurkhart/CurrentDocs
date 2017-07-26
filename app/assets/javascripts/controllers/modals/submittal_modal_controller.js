@@ -13,8 +13,8 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
 
   isInReview: function () {
     var submittal = this.get("model");
-    return submittal && !submittal.get("is_accepted");
-  }.property("is_accepted"),
+    return !this.get("isNew") && !submittal.get("is_accepted");
+  }.property("model", "is_accepted", "isNew"),
 
   isAccepted: function () {
     return !this.get("isInReview");
@@ -28,8 +28,10 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     var self = this;
     var submittal = this.get("model");
     var data = this.getSubmittalData();
+    var attachments = this.getAttachments();
 
     submittal.set("data", data);
+    submittal.set("attachments", attachments);
     submittal.submit(function (submittal) {
       if (submittal) {
         var job = self.get("job");
@@ -92,6 +94,17 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
       description: $("#submittal-description").val(),
       notes: $("#submittal-notes").val(),
     };
+  },
+
+  getAttachments: function () {
+    var attachments = [];
+    var $attachments = $(".file-preview");
+
+    $attachments.each(function (i, el) {
+      attachments.push($(el).attr("data-id"));
+    });
+
+    return attachments;
   },
 
 	keyPress : function(e){

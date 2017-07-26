@@ -110,17 +110,25 @@ PlanSource.JobRoute = Ember.Route.extend({
   },
 
   renderModal: function (modal, attrs) {
+    var modalController = this.controllerFor(modal);
     // Make sure outlet is clear before rendering. Previous modal is saved to stack.
     this.clearOutlet("jobs", "modal");
 
-    this.controllerFor(modal).setProperties(attrs);
+    modalController.setProperties(attrs);
     this.render("modals/" + modal, {into : "jobs", outlet : "modal", controller : modal});
+    if (modalController.onOpen) modalController.onOpen();
+
     this._modalStack.push(modal);
   },
 
   closeModal: function () {
+    var currentModal = this._modalStack.pop();
+    var currentModalController = this.controllerFor(currentModal);
+    // Let the modal clean up
+    if (currentModalController.onClose) currentModalController.onClose();
+
+    // Clear modal
     this.clearOutlet('jobs', 'modal');
-    this._modalStack.pop();
 
     var modalsRemaining = this._modalStack.length;
     if (modalsRemaining) {

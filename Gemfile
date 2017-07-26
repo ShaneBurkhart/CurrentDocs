@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem "rake", "~> 10.1.0"
 gem 'pg', "0.18.2"
+gem 'redis', "3.3.3"
 
 gem 'test-unit', '~> 3.1', '>= 3.1.7'
 

@@ -4,10 +4,11 @@ web:
         - "3000:3000"
     links:
         - pg
+        - redis
     volumes:
         - ../../app:/app/app
         - ../../db:/app/db
-        - ../../config/routes.rb:/app/config/routes.rb
+        - ../../config:/app/config
     env_file:
         - ../../user.env
 
@@ -21,3 +22,6 @@ pg:
         - POSTGRES_DB=mydb
     volumes:
         - ../../data/pg:/var/lib/postgresql/data
+
+redis:
+        image: redis:3.2

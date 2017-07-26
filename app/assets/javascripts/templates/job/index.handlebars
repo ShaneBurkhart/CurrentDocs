@@ -61,11 +61,15 @@
 
     {{#if canViewShopsTab}}
         {{#if isShopsTab}}
-          {{#if submittalCount}}
-            <a class="active">Shops ({{ submittalCount }})</a>
+          {{#unless isShared}}
+            {{#if submittalCount}}
+              <a class="active">Shops ({{ submittalCount }})</a>
+            {{else}}
+              <a class="active">Shops</a>
+            {{/if}}
           {{else}}
-            <a class="active">Shops</a>
-          {{/if}}
+              <a class="active">Shops</a>
+          {{/unless}}
         {{else}}
           {{#if submittalCount}}
             <a {{action "changeTab" "Shops"}}>Shops ({{ submittalCount }})</a>

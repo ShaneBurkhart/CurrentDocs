@@ -1,6 +1,7 @@
 //= require handlebars
 //= require ember
 //= require ember-data
+//= require ./dropzone
 //= require_self
 //= require ./store
 //= require_tree ./models
@@ -10,6 +11,22 @@
 //= require_tree ./templates
 //= require ./router
 //= require_tree ./routes
+
+// Drag n Drop file upload.  Turn off auto discover forms.
+// We create them in Ember.
+Dropzone.autoDiscover = false;
+
+Dropzone.options.submittalAttachments = {
+  paramName: "file", // The name that will be used to transfer the file
+  maxFilesize: 20, // MB
+  accept: function(file, done) {
+    if (file.name == "justinbieber.jpg") {
+      done("Naha, you don't.");
+    } else {
+      done();
+    }
+  }
+};
 
 PlanSource = Ember.Application.create({
 	rootElement : "#ember-job-app",

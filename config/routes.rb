@@ -32,6 +32,7 @@ PlanSource::Application.routes.draw do
 
     get '/submittals/:plan_id' => 'submittals#index'
     post '/submittals' => 'submittals#create'
+    post '/submittals/upload_attachments' => 'submittals#upload_attachments'
     post '/submittals/:id' => 'submittals#update'
   end
 

@@ -1,5 +1,7 @@
 class Submittal < ActiveRecord::Base
   attr_accessible :data, :user_id, :plan_id, :job_id, :is_accepted
+
+  has_many :attachments
   belongs_to :user
   # Once accepted, the submittal gets added to a plan
   belongs_to :plan
