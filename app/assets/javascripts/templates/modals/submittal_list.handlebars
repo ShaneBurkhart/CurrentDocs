@@ -10,10 +10,10 @@
     </div>
     <div class="body">
       {{#if model.submittals}}
-        <div class="modal-section">
+        <div class="scroller-xlarge" style="padding-top: 10px;">
           <div class="container-fluid">
             {{#each model.submittals}}
-              <div class="row margin-bottom" {{action "openSubmittalModal" this}}>
+              <div class="row margin-bottom pointer" {{action "openSubmittalModal" this}}>
                 <div class="col-sm-7">
                   <a href="#">{{this.data.description}}</a>
                 </div>

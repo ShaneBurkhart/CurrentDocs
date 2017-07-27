@@ -50,6 +50,28 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     });
   },
 
+  promptDeleteSubmittal: function () {
+    var submittal = this.get("model");
+    var shouldDelete = window.confirm("Are you sure you want to delete '" + submittal.get("data.description") + "'?");
+    if (shouldDelete) this.deleteSubmittal();
+  },
+
+  deleteSubmittal: function () {
+    var self = this;
+    var submittal = this.get("model");
+
+    submittal.delete(function () {
+      var job = self.get("job");
+      var purgedSubmittals = job.get("submittals").reduce(function (subs, sub) {
+        if (sub.get("id") !== submittal.get("id")) subs.push(sub);
+        return subs;
+      }, []);
+      job.set("submittals", purgedSubmittals);
+
+      self.send("close");
+    });
+  },
+
   updateSubmittal: function (shouldAccept) {
     var self = this;
     var submittal = this.get("model");

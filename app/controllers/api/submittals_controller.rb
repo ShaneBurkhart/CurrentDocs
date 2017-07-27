@@ -78,6 +78,22 @@ class Api::SubmittalsController < ApplicationController
     end
   end
 
+  def destroy
+    if user.can? :destroy, Submittal
+      @submittal = Submittal.find(params[:id])
+
+      # Check if submittal belongs to a job the user owns
+      if @submittal && @submittal.job.user_id == user.id
+        @submittal.destroy
+        render json: @submittal
+      else
+        render_no_permission
+      end
+    else
+      render_no_permission
+    end
+  end
+
   def upload_attachments
     # Upload attachments to s3 and add to redis with expiration. On create
     # submittal, we fetch the attachments from redis from hidden inputs.

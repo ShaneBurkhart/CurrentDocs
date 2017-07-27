@@ -68,11 +68,24 @@ PlanSource.Submittal = Ember.Object.extend({
         return callback(undefined);
       }
     })
+  },
+
+  delete: function (callback) {
+    $.ajax({
+        url: PlanSource.Submittal.deleteUrl(this.get("id")),
+        type: 'POST',
+    }).then(function(data, t, xhr){
+      return callback();
+    })
   }
 });
 
 PlanSource.Submittal.reopenClass({
   baseUrl : "/api/submittals",
+
+  deleteUrl: function (id) {
+    return PlanSource.Submittal.url() + "/" + id + "/destroy";
+  },
 
   saveUrl: function (id) {
     return PlanSource.Submittal.url() + "/" + id;

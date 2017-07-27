@@ -34,6 +34,7 @@ PlanSource::Application.routes.draw do
     post '/submittals' => 'submittals#create'
     post '/submittals/upload_attachments' => 'submittals#upload_attachments'
     get '/submittals/download_attachment/:id' => 'submittals#download_attachment'
+    post '/submittals/:id/destroy' => 'submittals#destroy'
     post '/submittals/:id' => 'submittals#update'
   end
 
