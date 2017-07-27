@@ -41,11 +41,11 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
       if (submittal) {
         // No need to add submittal to job since submittals are submitted
         // by viewers and not owners. Owners review submittals.
-        PlanSource.showNotification("Thanks! Your shop drawing has been submitted.");
+        toastr.success("Submitted, thanks!");
         self.send("close");
       } else {
         // Error
-        PlanSource.showNotification("There was a problem. Try again later!", "error");
+        toastr.error("Sorry, try again later!", "error");
       }
     });
   },
@@ -68,6 +68,7 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
       }, []);
       job.set("submittals", purgedSubmittals);
 
+      toastr.success("Submittal deleted!");
       self.send("close");
     });
   },
@@ -101,6 +102,7 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
         }, []);
         job.set("submittals", purgedSubmittals);
 
+        toastr.success("Submittal accepted!");
         self.send("close");
       } else if (submittal && !submittal.get("is_accepted")) {
         self.send("close");
