@@ -234,11 +234,15 @@ $("#share-search-input-modal").keyup(function () {
     PlanSource.dropzone.on("success", function (file, responseData) {
       var returnFiles = responseData.files;
 
+      // Success is called for every file so might as well double check the
+      // filename was returned before adding element to DOM.
       for (var i = 0; i < returnFiles.length; i++) {
-        var file = returnFiles[i];
+        var returnFile = returnFiles[i];
+        if (returnFile.original_filename !== file.name) continue;
+
         $("#submittal-attachments").append([
-          '<p class="file-preview" data-id="' + file.id + '">',
-            file.original_filename,
+          '<p class="file-preview" data-id="' + returnFile.id + '">',
+            returnFile.original_filename,
           '</p>',
         ].join(""));
       }
