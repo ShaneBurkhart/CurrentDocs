@@ -68,6 +68,7 @@ PlanSource.JobRoute = Ember.Route.extend({
       this.renderModal("submittal", {
         model: submittal,
         job: job,
+        parent: this.controllerFor("plans"),
       });
     },
 

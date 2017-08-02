@@ -103,7 +103,7 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     submittal.save(function (submittal) {
       if (submittal && submittal.get("is_accepted")) {
         // Don't need to add submittal to plan since opening the plan details
-        // modal retches approved submittals for that plan.
+        // modal refetches approved submittals for that plan.
         // We do have to remove the submittal from the job though.
         var job = self.get("job");
         var purgedSubmittals = job.get("submittals").reduce(function (subs, sub) {
@@ -111,6 +111,10 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
           return subs;
         }, []);
         job.set("submittals", purgedSubmittals);
+
+        // And update plans. We can't cherry pick the plan and upgrade since
+        // status is unbound... Two-way binding bullshit.  React FTW!
+        self.get("parent").updatePlans();
 
         toastr.success("Submittal accepted!");
         self.send("close");

@@ -66,8 +66,15 @@ class Api::SubmittalsController < ApplicationController
           return
         end
 
+        if @submittal.is_accepted
+          # Update plan to have "Submitted" status when submittal is approved.
+          @plan = @submittal.plan
+          @plan.status = "Submitted"
+          @plan.save
+        end
+
         # Reload for includes
-        @submittal = Submittal.includes(:user, :attachments).find(@submittal.id)
+        @submittal = Submittal.includes(:user, :plan, :attachments).find(@submittal.id)
 
         render json: @submittal
       else
