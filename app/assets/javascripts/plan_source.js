@@ -61,6 +61,12 @@ Handlebars.registerHelper('manager', function(options) {
 		return options.inverse(this);
 });
 
+Handlebars.registerHelper('admin', function(options) {
+	if(PlanSource._user_type === "Admin")
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
 
 Handlebars.registerHelper('can_share_link', function(options) {
 	if(PlanSource._can_share_link)

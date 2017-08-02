@@ -167,6 +167,10 @@
         <div class="col-sm-6">
           {{#if isInReview }}
             <a class="button button-red" {{action "promptDeleteSubmittal" target=controller}} >Delete</a>
+          {{else}}
+            {{#admin}}
+              <a class="button button-red" {{action "promptDeleteSubmittal" target=controller}} >Delete</a>
+            {{/admin}}
           {{/if}}
         </div>
         <div class="col-sm-6 text-right">
