@@ -75,6 +75,12 @@ Handlebars.registerHelper('can_share_link', function(options) {
 		return options.inverse(this);
 });
 
+Handlebars.registerHelper('can_review_submittal', function(options) {
+	if(PlanSource._can_review_submittal)
+		return options.fn(this);
+	else
+		return options.inverse(this);
+});
 
 Handlebars.registerHelper('eq', function(one, two) {
 	return one === two

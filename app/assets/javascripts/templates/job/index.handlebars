@@ -61,7 +61,7 @@
 
     {{#if canViewShopsTab}}
         {{#if isShopsTab}}
-          {{#unless isShared}}
+          {{#can_review_submittal}}
             {{#if submittalCount}}
               <a class="active">Shops ({{ submittalCount }})</a>
             {{else}}
@@ -69,13 +69,17 @@
             {{/if}}
           {{else}}
               <a class="active">Shops</a>
-          {{/unless}}
+          {{/can_review_submittal}}
         {{else}}
-          {{#if submittalCount}}
-            <a {{action "changeTab" "Shops"}}>Shops ({{ submittalCount }})</a>
+          {{#can_review_submittal}}
+            {{#if submittalCount}}
+              <a {{action "changeTab" "Shops"}}>Shops ({{ submittalCount }})</a>
+            {{else}}
+              <a {{action "changeTab" "Shops"}}>Shops</a>
+            {{/if}}
           {{else}}
-            <a {{action "changeTab" "Shops"}}>Shops</a>
-          {{/if}}
+              <a {{action "changeTab" "Shops"}}>Shops</a>
+          {{/can_review_submittal}}
         {{/if}}
     {{/if}}
 

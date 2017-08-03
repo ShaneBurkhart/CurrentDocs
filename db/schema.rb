@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170726022433) do
+ActiveRecord::Schema.define(:version => 20170802220217) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -171,8 +171,9 @@ ActiveRecord::Schema.define(:version => 20170726022433) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-07-26 18:39:15'
+    t.datetime "last_seen",                            :default => '2017-08-03 01:16:33'
     t.boolean  "can_share_link",                       :default => false
+    t.boolean  "can_review_submittal",                 :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -16,6 +16,7 @@
 				  <%= f.input :email, :required => true,:input_html => {:class=>"form-control" } %>
 				  <%= f.input :type, :required => true, as: :select, collection: ["Admin", "Manager", "Viewer"],:input_html => {:class=>"form-control" }%>
 				  <%= f.input :can_share_link, :required => true, as: :boolean %>
+				  <%= f.input :can_review_submittal, :required => true, as: :boolean %>
 				  <%= f.button :submit, "Save Changes", :class => "button button-blue" %>
                   <%= link_to "Cancel", :back %>
 				<% end %>

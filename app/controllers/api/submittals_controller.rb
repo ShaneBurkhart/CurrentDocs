@@ -55,8 +55,8 @@ class Api::SubmittalsController < ApplicationController
     if user.can? :update, Submittal
       @submittal = Submittal.find(params[:id])
 
-      # Check if submittal belongs to a job the user owns
-      if @submittal && @submittal.job.user_id == user.id
+      # Check if user can review submittals
+      if user.can_review_submittal
         @submittal.is_accepted = params["submittal"]["is_accepted"];
         @submittal.plan_id = params["submittal"]["plan_id"];
         @submittal.data = params["submittal"]["data"];
@@ -90,7 +90,7 @@ class Api::SubmittalsController < ApplicationController
       @submittal = Submittal.find(params[:id])
 
       # Check if submittal belongs to a job the user owns
-      if @submittal && @submittal.job.user_id == user.id
+      if user.can_review_submittal
         @submittal.destroy
         render json: @submittal
       else
