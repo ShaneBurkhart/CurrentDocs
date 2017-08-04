@@ -22,7 +22,7 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
 
   shopPlans: function () {
     return this.get("job").getPlansByTab('Shops');
-  }.property("job"),
+  }.property("job.plans.@each"),
 
   submitSubmittal: function () {
     var self = this;
