@@ -178,13 +178,13 @@
             <a class="button" {{action "close" }} >Cancel</a>
             <a id="submit-submittal-button" class="button button-blue" {{ action "submitSubmittal" target=controller}}>Submit</a>
           {{else}}
+            <a class="button" {{ action "close" }} >Cancel</a>
+
             {{#if isInReview }}
-              <a class="button" {{ action "close" }} >Cancel</a>
               <a class="button button-green" {{ action "updateSubmittal" true target=controller }}>Accept</a>
-              <a class="button button-blue" {{ action "updateSubmittal" false target=controller }}>Save</a>
-            {{else}}
-              <a class="button" {{ action "close" }} >Cancel</a>
             {{/if}}
+
+            <a class="button button-blue" {{ action "updateSubmittal" false target=controller }}>Save</a>
           {{/if}}
         </div>
       </div>

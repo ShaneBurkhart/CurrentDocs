@@ -55,8 +55,10 @@ class Api::SubmittalsController < ApplicationController
     if user.can? :update, Submittal
       @submittal = Submittal.find(params[:id])
 
-      # Check if user can review submittals
-      if user.can_review_submittal
+      # Check if user can review submittals or is admin
+      # Admins need to edit plans after they are accepted
+      # Can Review Submittal users edit them to accept
+      if user.admin? or user.can_review_submittal
         @submittal.is_accepted = params["submittal"]["is_accepted"];
         @submittal.plan_id = params["submittal"]["plan_id"];
         @submittal.data = params["submittal"]["data"];
@@ -89,8 +91,9 @@ class Api::SubmittalsController < ApplicationController
     if user.can? :destroy, Submittal
       @submittal = Submittal.find(params[:id])
 
-      # Check if submittal belongs to a job the user owns
-      if user.can_review_submittal
+      # Check if can review submittal or if the user is admin
+      # There's a delete when reviewing and a delete after accepted for admin.
+      if user.admin? or user.can_review_submittal
         @submittal.destroy
         render json: @submittal
       else

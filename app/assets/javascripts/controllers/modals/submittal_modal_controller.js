@@ -72,11 +72,14 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
       var plan = job.get("plans").find(function (plan) {
         return plan.get("id") === submittal.get("plan_id");
       });
-      var purgedPlanSubmittals = plan.get("submittals").reduce(function (subs, sub) {
-        if (sub.get("id") !== submittal.get("id")) subs.push(sub);
-        return subs;
-      }, []);
-      plan.set("submittals", purgedPlanSubmittals);
+
+      if (plan) {
+        var purgedPlanSubmittals = plan.get("submittals").reduce(function (subs, sub) {
+          if (sub.get("id") !== submittal.get("id")) subs.push(sub);
+          return subs;
+        }, []);
+        plan.set("submittals", purgedPlanSubmittals);
+      }
 
       toastr.success("Submittal deleted!");
       self.send("close");
