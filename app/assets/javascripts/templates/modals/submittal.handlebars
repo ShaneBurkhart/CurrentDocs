@@ -74,7 +74,11 @@
           <div class="control-group">
             <div class="controls">
               {{#if isAccepted }}
-                <input disabled class="form-control" id="submittal-csi-code" value="{{ unbound data.csi_code }}">
+                {{#admin}}
+                  <input class="form-control" id="submittal-csi-code" value="{{ unbound data.csi_code }}">
+                {{else}}
+                  <input disabled class="form-control" id="submittal-csi-code" value="{{ unbound data.csi_code }}">
+                {{/admin}}
               {{else}}
                 <input class="form-control" id="submittal-csi-code" value="{{ unbound data.csi_code }}">
               {{/if}}
@@ -91,7 +95,11 @@
           <div class="control-group">
             <div class="controls">
               {{#if isAccepted }}
-                <input disabled class="form-control" id="submittal-description" value="{{ unbound data.description }}">
+                {{#admin}}
+                  <input class="form-control" id="submittal-description" value="{{ unbound data.description }}" placeholder="Give your submittal a name">
+                {{else}}
+                  <input disabled class="form-control" id="submittal-description" value="{{ unbound data.description }}">
+                {{/admin}}
               {{else}}
                 <input class="form-control" id="submittal-description" value="{{ unbound data.description }}" placeholder="Give your submittal a name">
               {{/if}}
@@ -131,7 +139,11 @@
           <div class="control-group">
             <div class="controls">
               {{#if isAccepted }}
-                <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+                {{#admin}}
+                  <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+                {{else}}
+                  <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+                {{/admin}}
               {{else}}
                 <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
               {{/if}}
@@ -182,9 +194,12 @@
 
             {{#if isInReview }}
               <a class="button button-green" {{ action "updateSubmittal" true target=controller }}>Accept</a>
+              <a class="button button-blue" {{ action "updateSubmittal" false target=controller }}>Save</a>
+            {{else}}
+              {{#admin}}
+                <a class="button button-blue" {{ action "updateSubmittal" false target=controller }}>Save</a>
+              {{/admin}}
             {{/if}}
-
-            <a class="button button-blue" {{ action "updateSubmittal" false target=controller }}>Save</a>
           {{/if}}
         </div>
       </div>
