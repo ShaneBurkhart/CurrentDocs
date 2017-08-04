@@ -1,11 +1,11 @@
 <div class="table-responsive" id="plan-table">
-  {{#unless controllers.job.isShared}}
+  {{#can_review_submittal}}
     {{#if controllers.job.isShopsTab}}
       {{#if controllers.job.submittalCount}}
         <p><a href="#" {{action "openSubmittalListModal"}} class="button button-green">{{controllers.job.submittalCount}} Submittals For Review</a></p>
       {{/if}}
     {{/if}}
-  {{/unless}}
+  {{/can_review_submittal}}
 
   <table class="table table-hover">
     <thead>
