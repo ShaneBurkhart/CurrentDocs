@@ -59,11 +59,11 @@ class Api::SubmittalsController < ApplicationController
       # Admins need to edit plans after they are accepted
       # Can Review Submittal users edit them to accept
       if user.admin? or user.can_review_submittal
-        # Only set accepted state if not already accepted
+        # Only update plan_id and is_accepted if not already accepted
         if !@submittal.is_accepted
+          @submittal.plan_id = params["submittal"]["plan_id"];
           @submittal.is_accepted = params["submittal"]["is_accepted"];
         end
-        @submittal.plan_id = params["submittal"]["plan_id"];
         @submittal.data = params["submittal"]["data"];
 
         if !@submittal.save
