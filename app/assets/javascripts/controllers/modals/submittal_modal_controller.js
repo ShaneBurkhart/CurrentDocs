@@ -93,8 +93,10 @@ PlanSource.SubmittalController = PlanSource.ModalController.extend({
     var planId = $("#submittal-job-id").val();
 
     submittal.set("data", data);
-    submittal.set("plan_id", planId);
-    submittal.set("is_accepted", shouldAccept);
+    if (!submittal.get("is_accepted")) {
+      submittal.set("plan_id", planId);
+      submittal.set("is_accepted", shouldAccept);
+    }
 
     var errors = submittal.validate();
     this.set("errors", errors);
