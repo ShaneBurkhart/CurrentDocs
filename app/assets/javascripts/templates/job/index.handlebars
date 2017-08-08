@@ -98,6 +98,14 @@
             <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
         {{/if}}
     {{/if}}
+
+    {{#if canViewPhotosTab}}
+        {{#if isPhotosTab}}
+            <a class="active">Photos & Reports</a>
+        {{else}}
+            <a {{action "changeTab" "Photos & Reports"}}>Photos & Reports</a>
+        {{/if}}
+    {{/if}}
 </nav>
 {{outlet}}
 

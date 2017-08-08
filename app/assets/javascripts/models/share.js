@@ -40,6 +40,11 @@ PlanSource.Share = Ember.Object.extend({
     return !!((permissions >> 3) % 2);
   }.property('permissions'),
 
+  hasPhotosShared: function() {
+    var permissions = this.get('permissions') || 0;
+    return !!((permissions >> 4) % 2);
+  }.property('permissions'),
+
   isSharer : function(){
     if(this.get("sharer"))
       return this.get("sharer").get("id") == user_id;

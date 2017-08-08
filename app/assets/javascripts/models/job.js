@@ -104,6 +104,10 @@ PlanSource.Job = Ember.Object.extend({
     return this.canViewTab('Calcs');
   }.property('shares.@each'),
 
+  canViewPhotosTab: function() {
+    return this.canViewTab('Photos');
+  }.property('shares.@each'),
+
   sorter : function(){ //either a 1 or 0 depending on isShared. Its for order
     var s = this.get("isShared") == false ? '0' : '1';
     return s + this.get("name").toLowerCase();

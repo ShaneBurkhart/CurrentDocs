@@ -29,6 +29,10 @@ PlanSource.JobController = Ember.ObjectController.extend({
     return this.get('tab') === 'Calcs & Misc';
   }.property('tab'),
 
+  isPhotosTab: function() {
+    return this.get('tab') === 'Photos & Reports';
+  }.property('tab'),
+
   submittalCount: function () {
     return this.get('model').get('submittals').length;
   }.property('model.submittals'),
