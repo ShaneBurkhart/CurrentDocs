@@ -163,5 +163,9 @@ PlanSource.ContactController = Ember.ObjectController.extend({
 
   isCalcsChecked: function(){
     return this.isAttrChecked('hasCalcsShared');
+  }.property(),
+
+  isPhotosChecked: function(){
+    return this.isAttrChecked('hasPhotosShared');
   }.property()
 });
