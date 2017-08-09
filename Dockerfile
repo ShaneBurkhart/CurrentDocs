@@ -6,6 +6,9 @@ RUN apt-get update && \
     apt-get install -y nodejs
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 
+# Install dependencies for image exif parsing
+RUN apt-get install libexif-dev
+
 ENV RAILS_ENV production
 
 RUN mkdir -p /app

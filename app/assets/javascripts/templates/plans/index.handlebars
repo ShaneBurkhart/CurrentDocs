@@ -7,6 +7,13 @@
     {{/if}}
   {{/can_review_submittal}}
 
+  {{#if controllers.job.isPhotosTab}}
+    <p>
+      <a href="#" {{action "openAddReportModal"}} class="button button-green">+ Add Report</a>
+      <a href="#" {{action "openUploadPhotosModal"}} class="button button-blue">Upload Photos</a>
+    </p>
+  {{/if}}
+
   <table class="table table-hover">
     <thead>
       <tr>

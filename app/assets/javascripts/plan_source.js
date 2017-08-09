@@ -2,6 +2,7 @@
 //= require ember
 //= require ember-data
 //= require ./dropzone
+//= require ./pikaday
 //= require_self
 //= require ./store
 //= require_tree ./models
