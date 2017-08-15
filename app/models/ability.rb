@@ -9,6 +9,7 @@ class Ability
       can :manage, :all
       cannot :manage, User
     elsif user.viewer?
+      can :manage, ShareLink
       can :read, Job
       can :update, Share
       can :destroy, Share
