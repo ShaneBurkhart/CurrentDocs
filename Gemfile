@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+ruby "2.2.1"
+
 gem 'rails', '3.2.13'
 gem "rake", "~> 10.1.0"
 gem 'pg', "0.18.2"
@@ -35,7 +37,6 @@ group :assets do
 end
 
 group :development do
-  gem 'colorize'
   gem 'faker'
   gem "quiet_assets", ">= 1.0.2"
   gem "better_errors", ">= 0.7.2"
