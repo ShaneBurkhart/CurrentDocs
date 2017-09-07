@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170802220217) do
+ActiveRecord::Schema.define(:version => 20170907144430) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(:version => 20170802220217) do
 
   add_index "notification_subscriptions", ["target_type", "target_id"], :name => "index_notification_subscriptions_on_target_type_and_target_id"
   add_index "notification_subscriptions", ["user_id"], :name => "index_notification_subscriptions_on_user_id"
+
+  create_table "photos", :force => true do |t|
+    t.string   "description"
+    t.string   "filename"
+    t.datetime "date_taken"
+    t.string   "aws_file_id"
+    t.integer  "job_id"
+    t.integer  "upload_user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "plan_records", :force => true do |t|
     t.string   "plan_name"
@@ -171,7 +182,7 @@ ActiveRecord::Schema.define(:version => 20170802220217) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-08-03 01:16:33'
+    t.datetime "last_seen",                            :default => '2017-09-07 15:16:13'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

@@ -33,11 +33,9 @@
         </div>
       </div>
       <div id="batch-set-date-container" class="row margin-bottom" style="display: none;">
-        <div class="col-sm-4 col-sm-offset-4">
-          <p>Date For All Photos (optional)</p>
-        </div>
-        <div class="col-sm-4">
-          <input type="text" class="form-control" id="batch-set-date-input">
+        <div class="col-sm-12 text-right">
+          <span><a class="button" id="set-all-dates">Set All Dates</a></span>
+          <span><a class="button" id="fill-dates">Fill Empty Dates</a></span>
         </div>
       </div>
     </div>
@@ -55,6 +53,7 @@
 </div>
 
 <script>
+  var batchPicker = null;
   var picker = null;
 
   Dropzone.options.photosDnd = {
@@ -80,9 +79,6 @@
     url: "/api/photos/upload"
   });
 
-// Set up date picker for click on hidden button
-// On select, update all rows of #uploaded-photos
-
   $("#uploaded-photos").delegate(".remove", "click", function (e) {
     $(e.target.parentNode.parentNode.parentNode).remove();
     var $remainingUploads = $("#uploaded-photos .file-preview");
@@ -100,6 +96,69 @@
       $button.hide();
       $dropzone.show();
     }
+  });
+
+  $("#uploaded-photos").delegate(".choose-date", "click", function (e) {
+    var $link = $(e.target);
+    var $tableCell = $(e.target.parentNode);
+    var $input = $('<input type="text" class="form-control" id="picker-input">');
+
+    $link.hide();
+    $tableCell.append($input);
+
+    new Pikaday({
+      field: $("#picker-input")[0],
+      onSelect: function (date) {
+        $link.data("date-taken", date.toJSON());
+        $link.text(moment(date).format('ll'));
+      },
+      onClose: function (e) {
+        $input.remove();
+        $link.show();
+      }
+    });
+
+    // Something weird happens with onClose getting called if you don't wait
+    // for the input to render before clicking it.
+    setTimeout(function () {
+      $input.click();
+    }, 0);
+  });
+
+  $("#set-all-dates, #fill-dates").click(function (e) {
+    var $button = $(e.target);
+    var $container = $(e.target.parentNode);
+    var $input = $('<input type="text" class="form-control" id="picker-input">');
+    var mode = $button.attr("id") === "set-all-dates" ? "set" : "fill";
+
+    $button.hide();
+    $container.append($input);
+
+    new Pikaday({
+      field: $("#picker-input")[0],
+      onSelect: function (date) {
+        $("#uploaded-photos .file-preview").each(function (i, row) {
+          var $filePreviewRow = $(row);
+          var $chooseDateLink = $filePreviewRow.find(".choose-date");
+
+          // Skip if fill mode and date is already set.
+          if (mode === "fill" && $chooseDateLink.data("date-taken")) return;
+
+          $chooseDateLink.data("date-taken", date.toJSON());
+          $chooseDateLink.text(moment(date).format('ll'));
+        });
+      },
+      onClose: function (e) {
+        $input.remove();
+        $button.show();
+      }
+    });
+
+    // Something weird happens with onClose getting called if you don't wait
+    // for the input to render before clicking it.
+    setTimeout(function () {
+      $input.click();
+    }, 0);
   });
 
   PlanSource.dropzone.on("sending", function (file, responseData) {
@@ -126,8 +185,8 @@
     $button.text("Submit");
 
     // Add picker if picker doesn't exist
-    if (!picker) {
-      picker = new Pikaday({
+    if (!batchPicker) {
+      batchPicker= new Pikaday({
         field: $("#batch-set-date-input")[0],
         onSelect: function(date) {
           console.log(date);
@@ -148,8 +207,15 @@
     // filename was returned before adding element to DOM.
     for (var i = 0; i < returnFiles.length; i++) {
       var returnFile = returnFiles[i];
+      var dateTaken = "", dateTakenJSON = "", dateTakenPretty = "Pick a date";
+
       if (returnFile.original_filename !== file.name) continue;
-      console.log(file);
+
+      if (returnFile.date_taken) {
+        dateTaken = moment(returnFile.date_taken);
+        dateTakenJSON = dateTaken.toJSON();
+        dateTakenPretty = dateTaken.format("ll");
+      }
 
       $("#uploaded-photos").append([
         '<tr class="file-preview" data-id="' + returnFile.id + '">',
@@ -157,12 +223,12 @@
             returnFile.original_filename,
           '</td>',
           '<td>',
-            returnFile.date_taken,
+            '<a class="choose-date" data-date-taken="' + dateTakenJSON + '">',
+              dateTakenPretty,
+            '</a>',
           '</td>',
           '<td>',
             '<span class="pull-right">',
-              '<a class="choose-date">Choose Date</a>',
-              ' | ',
               '<a class="remove">Remove</a>',
             '</span>',
           '</td>',

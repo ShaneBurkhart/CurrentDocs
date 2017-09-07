@@ -165,9 +165,12 @@ class User < ActiveRecord::Base
     share.user.id == self.id
   end
 
-  def is_shared_job(job)
-    self.shared_jobs.each do |j|
-      return true unless j != job
+  # Check that share has at least the given permissions.
+  def is_shared_job(job, permissions=0)
+    self.shares.each do |s|
+      if s.job = job
+        return (s.permissions & permissions) == permissions
+      end
     end
     false
   end

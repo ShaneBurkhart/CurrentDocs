@@ -5,8 +5,7 @@ class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
 
   def upload_photos
-    # Upload attachments to s3 and add to redis with expiration. On create
-    # submittal, we fetch the attachments from redis from hidden inputs.
+    # Upload photos to s3 and add to redis with expiration.
     # When record expires, we remove s3 file. Remove record manually when used.
     files = params["files"]
     returnData = { files: [] }
@@ -14,12 +13,12 @@ class Api::PhotosController < ApplicationController
     s3 = AWS::S3.new
     files.each do |key, file|
       uuid = SecureRandom.uuid
-      redis_key = "attachments:#{uuid}"
+      redis_key = "photos:#{uuid}"
       original_filename = file.original_filename
 
       exif_data = get_exif_data(file.tempfile.path)
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["attachments/#{uuid}"];
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{uuid}"];
       obj.write(file.tempfile)
 
       # Expire after a day
@@ -34,6 +33,38 @@ class Api::PhotosController < ApplicationController
 
     render json: returnData
   end
+
+  def submit_photos
+    job = Job.find(params["job_id"])
+
+    # I think the permissions passed to is_shared_job are photos permissions.
+    # Should work on refactoring to constants, but client side needs constants too.
+    if job && (user.is_my_job(job) || user.is_shared_job(job, 0b10000))
+      photos = params["photos"] || []
+      puts photos
+
+      photos.each do |i, photo|
+        aws_file_id = photo["id"]
+        filename = Redis.current.get("photos:#{aws_file_id}")
+
+        photo = Photo.create(
+          filename: filename,
+          date_taken: photo["date_taken"],
+          aws_file_id: aws_file_id,
+          job_id: job.id,
+          upload_user_id: user.id,
+        )
+      end
+
+      # Send notification to owner
+      #UserMailer.submittal_notification(@submittal).deliver
+
+      render json: { photos: job.photos }
+    else
+      render_no_permission
+    end
+  end
+
 
   private
 
