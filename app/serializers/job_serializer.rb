@@ -4,5 +4,6 @@ class JobSerializer < ActiveModel::Serializer
   has_many :plans
   has_many :submittals
   has_many :shares
+  has_many :photos
   has_one :user
 end

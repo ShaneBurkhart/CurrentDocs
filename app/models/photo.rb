@@ -1,5 +1,10 @@
 class Photo < ActiveRecord::Base
   attr_accessible :description, :filename, :date_taken, :aws_file_id, :job_id, :upload_user_id
-  has_one :job
+  belongs_to :job
+  belongs_to :upload_user, :class_name => "User", :foreign_key => "upload_user_id"
   validates :filename, :date_taken, :aws_file_id, :job_id, :upload_user_id, presence: true
+
+  def upload_user_email
+    return upload_user.email
+  end
 end
