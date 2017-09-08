@@ -4,7 +4,7 @@ class CreatePhotos < ActiveRecord::Migration
       t.string :description
       t.string :filename
       t.datetime :date_taken
-      t.string :aws_file_id
+      t.string :aws_filename
       t.integer :job_id
       t.integer :upload_user_id
 

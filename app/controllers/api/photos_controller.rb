@@ -1,6 +1,8 @@
 require 'securerandom'
 require "aws-sdk"
 
+VALID_PHOTO_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif'];
+
 class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
 
@@ -42,20 +44,24 @@ class Api::PhotosController < ApplicationController
 
     s3 = AWS::S3.new
     files.each do |key, file|
-      uuid = SecureRandom.uuid
-      redis_key = "photos:#{uuid}"
       original_filename = file.original_filename
+      file_ext = original_filename.split('.').pop
+      # Don't process image if not a valid file extension
+      next if !VALID_PHOTO_EXT.include?(file_ext)
+
+      aws_filename = "#{SecureRandom.uuid}.#{file_ext}"
+      redis_key = "photos:#{aws_filename}"
 
       exif_data = get_exif_data(file.tempfile.path)
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{uuid}"];
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{aws_filename}"];
       obj.write(file.tempfile)
 
       # Expire after a day
       Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
 
       returnData[:files].push({
-        id: uuid,
+        id: aws_filename,
         original_filename: original_filename,
         date_taken: exif_data && exif_data[:date_time] ? exif_data[:date_time] : nil,
       })
@@ -71,16 +77,15 @@ class Api::PhotosController < ApplicationController
     # Should work on refactoring to constants, but client side needs constants too.
     if job && (user.is_my_job(job) || user.is_shared_job(job, 0b10000))
       photos = params["photos"] || []
-      puts photos
 
       photos.each do |i, photo|
-        aws_file_id = photo["id"]
-        filename = Redis.current.get("photos:#{aws_file_id}")
+        aws_filename = photo["id"]
+        filename = Redis.current.get("photos:#{aws_filename}")
 
         photo = Photo.create(
           filename: filename,
           date_taken: photo["date_taken"],
-          aws_file_id: aws_file_id,
+          aws_filename: aws_filename,
           job_id: job.id,
           upload_user_id: user.id,
         )
@@ -100,7 +105,7 @@ class Api::PhotosController < ApplicationController
 
     if @photo
       s3 = AWS::S3.new
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{@photo.aws_file_id}"];
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{@photo.aws_filename}"];
 
       send_data obj.read, filename: @photo.filename, stream: 'true', buffer_size: '4096'
     else

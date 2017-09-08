@@ -42,12 +42,35 @@ PlanSource.Photo.reopenClass({
     return PlanSource.Photo.url() + "/" + id;
   },
 
+  submitUrl: function () {
+    return PlanSource.Photo.url() + "/submit";
+  },
+
   url : function(photo_id){
     var pathArray = window.location.href.split( '/' ),
       host = pathArray[2],
       u = PlanSource.getProtocol() + host + PlanSource.Photo.baseUrl;
     if(photo_id) return u + "/" + photo_id;
     return u;
-  }
+  },
 
+  submitPhotos: function (tempPhotos, jobId, callback) {
+    // id, date_taken
+    var tempPhotos = tempPhotos || [];
+
+    $.ajax({
+      url: PlanSource.Photo.submitUrl(),
+      type: 'POST',
+      data : {
+        photos: tempPhotos,
+        job_id: jobId,
+      },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        return callback(true);
+      } else {
+        return callback(undefined);
+      }
+    })
+  }
 });
