@@ -8,6 +8,7 @@ class Ability
     elsif user.manager?
       can :manage, :all
       cannot :manage, User
+      cannot :manage, Photo
     elsif user.viewer?
       can :manage, ShareLink
       can :read, Job

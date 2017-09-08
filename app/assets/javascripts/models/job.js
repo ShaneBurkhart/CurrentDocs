@@ -1,7 +1,7 @@
 PlanSource.Job = Ember.Object.extend({
 
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "shares", "submittals"));
+    this.setProperties(this.getProperties("user", "plans", "photos", "shares", "submittals"));
   },
 
   planCount:function(){
@@ -21,6 +21,16 @@ PlanSource.Job = Ember.Object.extend({
       this.set("plans", plans);
       delete hash.plans
     }
+
+    if(hash.photos){
+      var photos = Em.A();
+      hash.photos.forEach(function(photo){
+        photos.pushObject(PlanSource.Photo.create(photo));
+      });
+      this.set("photos", photos);
+      delete hash.photos
+    }
+
     if(hash.shares){
       var shares = Em.A();
       hash.shares.forEach(function(share){

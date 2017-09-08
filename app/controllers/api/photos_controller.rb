@@ -4,6 +4,18 @@ require "aws-sdk"
 class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
 
+  def destroy
+    # Only admins can destroy photos
+    if user.can? :destroy, Photo
+      @photo = Photo.find(params[:id])
+
+      @photo.destroy
+      render json: @photo
+    else
+      render_no_permission
+    end
+  end
+
   def upload_photos
     # Upload photos to s3 and add to redis with expiration.
     # When record expires, we remove s3 file. Remove record manually when used.

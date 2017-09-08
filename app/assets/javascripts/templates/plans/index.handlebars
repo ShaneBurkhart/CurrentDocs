@@ -56,14 +56,29 @@
       {{#if controllers.job.isPhotosTab}}
         {{#each controller}}
           <tr>
-            <td><!-- thumnail --></td>
+            <td>
+              <div class="photo-thumbnail-wrapper">
+                <img src="">
+              </div>
+            </td>
             <td>{{format-date date_taken}}</td>
             <td>{{upload_user_email}}</td>
             <td>{{description}}</td>
             <td>
               <a href="/api/photos/download/{{unbound id}}" title="{{unbound filename}}">{{truncate filename}}</a>
             </td>
-            <td><!-- controls --></td>
+            <td>
+              <ul style="padding-left:0px;" class="controls text-right unstyled">
+                {{#admin}}
+                  <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                  <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+                {{else}}
+                  {{#if current_user_is_owner}}
+                    <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                  {{/if}}
+                {{/admin}}
+              </ul>
+            </td>
           </tr>
         {{else}}
           <tr>

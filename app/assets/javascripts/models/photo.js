@@ -1,38 +1,53 @@
 PlanSource.Photo = Ember.Object.extend({
+  current_user_is_owner: function () {
+		return this.get("upload_user_id") === window.user_id;
+  }.property("upload_user_id"),
+
+  //save: function (callback) {
+    //var self = this;
+    //var submittalJson = this.getProperties(["plan_id", "data", "is_accepted"]);
+
+    //$.ajax({
+        //url: PlanSource.Submittal.saveUrl(this.get("id")),
+        //type: 'POST',
+        //data : { submittal: submittalJson },
+    //}).then(function(data, t, xhr){
+      //if (!$.isEmptyObject(data)) {
+        //self.setProperties(data.submittal);
+        //return callback(self);
+      //} else {
+        //return callback(undefined);
+      //}
+    //})
+  //},
+
+  deletePhoto: function (callback) {
+    $.ajax({
+        url: PlanSource.Photo.deleteUrl(this.get("id")),
+        type: 'POST',
+    }).then(function(data, t, xhr){
+      return callback();
+    })
+  }
 });
 
 PlanSource.Photo.reopenClass({
   baseUrl : "/api/photos",
 
-  submitUrl: function () {
-    return PlanSource.Photo.url() + "/submit";
+  deleteUrl: function (id) {
+    return PlanSource.Photo.url() + "/" + id + "/destroy";
   },
 
-  url : function(plan_id){
+  saveUrl: function (id) {
+    return PlanSource.Submittal.url() + "/" + id;
+  },
+
+  url : function(photo_id){
     var pathArray = window.location.href.split( '/' ),
       host = pathArray[2],
       u = PlanSource.getProtocol() + host + PlanSource.Photo.baseUrl;
-    if(plan_id) return u + "/" + plan_id;
+    if(photo_id) return u + "/" + photo_id;
     return u;
-  },
-
-  submitPhotos: function (tempPhotos, jobId, callback) {
-    // id, date_taken
-    var tempPhotos = tempPhotos || [];
-
-    $.ajax({
-      url: PlanSource.Photo.submitUrl(),
-      type: 'POST',
-      data : {
-        photos: tempPhotos,
-        job_id: jobId,
-      },
-    }).then(function(data, t, xhr){
-      if (!$.isEmptyObject(data)) {
-        return callback(true);
-      } else {
-        return callback(undefined);
-      }
-    })
   }
+
 });
