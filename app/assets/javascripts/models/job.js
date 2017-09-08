@@ -43,6 +43,8 @@ PlanSource.Job = Ember.Object.extend({
   },
 
   getPlansByTab: function(tab) {
+    if (tab === "Photos") return this.get('photos');
+
     var plansForTab = Em.A();
     var plans = this.get('plans');
     for(var i = 0; i < plans.length; i++) {

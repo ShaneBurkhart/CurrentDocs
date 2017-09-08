@@ -17,6 +17,7 @@ PlanSource.UploadPhotosController = PlanSource.ModalController.extend({
 
     PlanSource.Photo.submitPhotos(photos, job.get("id"), function (success) {
       self.get("parent").updatePlans();
+      self.send("close");
     });
   },
 

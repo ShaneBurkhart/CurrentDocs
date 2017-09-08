@@ -65,6 +65,18 @@ class Api::PhotosController < ApplicationController
     end
   end
 
+  def download_photo
+    @photo = Photo.find(params[:id])
+
+    if @photo
+      s3 = AWS::S3.new
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{@photo.aws_file_id}"];
+
+      send_data obj.read, filename: @photo.filename, stream: 'true', buffer_size: '4096'
+    else
+      render_no_permission
+    end
+  end
 
   private
 

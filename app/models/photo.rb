@@ -7,4 +7,8 @@ class Photo < ActiveRecord::Base
   def upload_user_email
     return upload_user.email
   end
+
+  def upload_user_id
+    return upload_user.id
+  end
 end

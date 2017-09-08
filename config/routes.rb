@@ -39,6 +39,7 @@ PlanSource::Application.routes.draw do
 
     post '/photos/upload' => 'photos#upload_photos'
     post '/photos/submit' => 'photos#submit_photos'
+    get '/photos/download/:id' => 'photos#download_photo'
   end
 
   get '/view' => 'pdf#index', as: "view_pdf"
