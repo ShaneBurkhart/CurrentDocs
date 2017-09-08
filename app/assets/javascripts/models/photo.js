@@ -3,23 +3,23 @@ PlanSource.Photo = Ember.Object.extend({
 		return this.get("upload_user_id") === window.user_id;
   }.property("upload_user_id"),
 
-  //save: function (callback) {
-    //var self = this;
-    //var submittalJson = this.getProperties(["plan_id", "data", "is_accepted"]);
+  save: function (callback) {
+    var self = this;
+    var photoJSON = this.getProperties(["description"]);
 
-    //$.ajax({
-        //url: PlanSource.Submittal.saveUrl(this.get("id")),
-        //type: 'POST',
-        //data : { submittal: submittalJson },
-    //}).then(function(data, t, xhr){
-      //if (!$.isEmptyObject(data)) {
-        //self.setProperties(data.submittal);
-        //return callback(self);
-      //} else {
-        //return callback(undefined);
-      //}
-    //})
-  //},
+    $.ajax({
+        url: PlanSource.Photo.saveUrl(this.get("id")),
+        type: 'POST',
+        data : { photo: photoJSON },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        self.setProperties(data.photo);
+        return callback(self);
+      } else {
+        return callback(undefined);
+      }
+    })
+  },
 
   deletePhoto: function (callback) {
     $.ajax({
@@ -39,7 +39,7 @@ PlanSource.Photo.reopenClass({
   },
 
   saveUrl: function (id) {
-    return PlanSource.Submittal.url() + "/" + id;
+    return PlanSource.Photo.url() + "/" + id;
   },
 
   url : function(photo_id){

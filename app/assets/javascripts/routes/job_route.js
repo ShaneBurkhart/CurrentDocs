@@ -86,12 +86,12 @@ PlanSource.JobRoute = Ember.Route.extend({
       });
     },
 
-    //openEditPhotoModal: function(photo) {
-      //this.renderModal("upload_photos", {
-        //model: this.get("controller").get("model"),
-        //parent: this.controllerFor("plans"),
-      //});
-    //},
+    openEditPhotoModal: function(photo) {
+      this.renderModal("edit_photo", {
+        model: photo,
+        parent: this.controllerFor("plans"),
+      });
+    },
 
     openDeletePhotoModal: function(photo) {
       this.renderModal("delete_photo", {

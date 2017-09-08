@@ -4,6 +4,24 @@ require "aws-sdk"
 class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
 
+  def update
+    @photo = Photo.find(params[:id])
+
+    # Admins and the user that uploaded the photos can update
+    if user.can?(:update, Photo) or @photo.upload_user_id == user.id
+      @photo.description = params["photo"]["description"]
+
+      if !@photo.save
+        render json: {}
+        return
+      end
+
+      render json: @photo
+    else
+      render_no_permission
+    end
+  end
+
   def destroy
     # Only admins can destroy photos
     if user.can? :destroy, Photo

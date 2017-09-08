@@ -63,7 +63,7 @@
             </td>
             <td>{{format-date date_taken}}</td>
             <td>{{upload_user_email}}</td>
-            <td>{{description}}</td>
+            <td title="{{unbound description}}">{{truncate description}}</td>
             <td>
               <a href="/api/photos/download/{{unbound id}}" title="{{unbound filename}}">{{truncate filename}}</a>
             </td>
