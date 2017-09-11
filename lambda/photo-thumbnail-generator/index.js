@@ -15,9 +15,10 @@ exports.handler = function (event, context, callback) {
   var bucket = event.Records[0].s3.bucket.name;
   var key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
   var keyParts = key.split("/");
+
+  // Change "directory" from photos/ to thumbnails/
   keyParts.splice(0, 1, "thumbnails");
   var destKey = keyParts.join("/")
-
 
   // Infer the image type.
   var ext = key.split(".").pop();
