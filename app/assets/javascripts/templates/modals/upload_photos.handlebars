@@ -64,6 +64,7 @@
     // Hide the previews.  We'll make our own.
     previewTemplate: '<div style="display:none"></div>',
     accept: function(file, done) {
+      // Should match lambda job
       var VALID_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif'];
       var extension = file.name.split('.').pop();
 

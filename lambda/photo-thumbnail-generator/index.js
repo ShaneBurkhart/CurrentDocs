@@ -7,6 +7,7 @@ var gm = require('gm').subClass({
 var util = require('util');
 var s3 = new AWS.S3();
 
+// Should match accept function for upload_photos modal
 var VALID_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif'];
 var MAX_WIDTH = 100;
 var MAX_HEIGHT = 100;
