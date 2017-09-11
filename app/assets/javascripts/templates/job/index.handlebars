@@ -136,10 +136,18 @@
 <script>
   function toggleResults(filter){
     jQuery("table tr").not('thead tr').each(function () {
-        if (jQuery(this).text().search(new RegExp(filter, "i")) < 0) {
-            jQuery(this).hide();
+        var $el = jQuery(this);
+        var searchText = "";
+        // Construct search text from title attr of cell or text inside
+        $el.find('td').each(function () {
+          var $cell = jQuery(this);
+          searchText += ($cell.attr("title") || $cell.text());
+        });
+
+        if (searchText.search(new RegExp(filter, "i")) < 0) {
+            $el.hide();
         } else {
-            jQuery(this).show()
+            $el.show()
         }
     });
   }
