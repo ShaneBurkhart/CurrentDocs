@@ -66,7 +66,8 @@ exports.handler = function (event, context, callback) {
         Bucket: bucket,
         Key: destKey,
         Body: data,
-        ContentType: contentType
+        ContentType: contentType,
+        ACL: 'public-read',
       }, next);
     }],
     function (err) {

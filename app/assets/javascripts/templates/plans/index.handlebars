@@ -56,10 +56,8 @@
       {{#if controllers.job.isPhotosTab}}
         {{#each controller}}
           <tr>
-            <td>
-              <div class="photo-thumbnail-wrapper">
-                <img src="">
-              </div>
+            <td class="photo-thumbnail-cell">
+              <img src="{{unbound thumbnail_url}}">
             </td>
             <td>{{format-date date_taken}}</td>
             <td>{{upload_user_email}}</td>

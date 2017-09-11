@@ -11,4 +11,8 @@ class Photo < ActiveRecord::Base
   def upload_user_id
     return upload_user.id
   end
+
+  def thumbnail_url
+    return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/thumbnails/#{self.aws_filename}"
+  end
 end
