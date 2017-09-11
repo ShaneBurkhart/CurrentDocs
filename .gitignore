@@ -73,6 +73,9 @@ pickle-email-*.html
 # vim artifacts
 **.swp
 
+# Lambda zip files
+**.zip
+
 # Ignore application configuration
 /config/application.yml
 /public/assets/**
