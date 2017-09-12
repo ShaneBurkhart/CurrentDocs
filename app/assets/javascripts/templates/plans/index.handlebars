@@ -56,7 +56,9 @@
         {{#each controller}}
           <tr>
             <td class="photo-thumbnail-cell">
-              <img src="{{unbound thumbnail_url}}">
+              <div class="photo-thumbnail-container">
+                <img src="{{unbound thumbnail_url}}">
+              </div>
             </td>
             <td>{{format-date date_taken}}</td>
             <td>{{upload_user_email}}</td>
