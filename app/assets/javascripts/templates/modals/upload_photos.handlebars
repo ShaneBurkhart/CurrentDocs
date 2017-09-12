@@ -17,7 +17,7 @@
         </div>
       </div>
       <div id="photos-dnd" class="dropzone"></div>
-      <div id="photos-list" class="scroller-xlarge" style="display: none;">
+      <div id="photos-list" class="scroller-large" style="display: none;">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -32,8 +32,8 @@
       </div>
       <div id="batch-set-date-container" class="row margin-bottom" style="display: none;">
         <div class="col-sm-12 text-right">
-          <span><a class="button" id="set-all-dates">Set All Dates</a></span>
-          <span><a class="button" id="fill-dates">Fill Empty Dates</a></span>
+          <span><button class="button" id="set-all-dates">Set All Dates</button></span>
+          <span><button class="button" id="fill-dates">Fill Empty Dates</button></span>
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@
     var $input = $('<input type="text" class="form-control" id="picker-input">');
     var mode = $button.attr("id") === "set-all-dates" ? "set" : "fill";
 
-    $button.hide();
+    $button.prop("disabled", true);
     $container.append($input);
 
     new Pikaday({
@@ -151,7 +151,7 @@
       },
       onClose: function (e) {
         $input.remove();
-        $button.show();
+        $button.prop("disabled", false);
       }
     });
 
@@ -166,12 +166,14 @@
     var $button = $("#submit-photos-button");
     var $dropzone = $("#photos-dnd");
     var $photosList = $("#photos-list");
+    var $batchSetDateContainer = $("#batch-set-date-container");
 
     $button.show();
     $button.prop("disabled", true);
     $button.text("Uploading...");
     $dropzone.hide();
     $photosList.show();
+    $batchSetDateContainer.hide();
   });
 
   PlanSource.dropzone.on("complete", function (file) {

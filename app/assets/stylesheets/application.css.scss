@@ -34,7 +34,15 @@
 // }
 
 .pika-single {
-    z-index: 100;
+  z-index: 100;
+}
+
+#picker-input {
+  display: inline-block;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: none;
 }
 
 #login-form .form-control{
