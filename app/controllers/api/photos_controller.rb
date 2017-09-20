@@ -56,7 +56,7 @@ class Api::PhotosController < ApplicationController
 
       obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{aws_filename}"];
       obj.write(file.tempfile)
-      obj.acl = "public-read"
+      obj.acl = :public_read
 
       # Expire after a day
       Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
