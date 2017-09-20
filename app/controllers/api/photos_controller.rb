@@ -55,6 +55,7 @@ class Api::PhotosController < ApplicationController
       exif_data = get_exif_data(file.tempfile.path)
 
       obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{aws_filename}"];
+      obj.acl = "public-read"
       obj.write(file.tempfile)
 
       # Expire after a day
