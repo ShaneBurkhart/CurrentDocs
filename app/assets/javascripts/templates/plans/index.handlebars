@@ -73,8 +73,14 @@
                   <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
                   <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
                 {{else}}
-                  {{#if current_user_is_owner}}
+                  {{#if controller.job.isMyJob}}
                     <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                    <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+                  {{else}}
+                    {{#if current_user_is_owner}}
+                      <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                      <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+                    {{/if}}
                   {{/if}}
                 {{/admin}}
               </ul>

@@ -9,8 +9,16 @@ class Api::PhotosController < ApplicationController
   def update
     @photo = Photo.find(params[:id])
 
-    # Admins and the user that uploaded the photos can update
-    if user.can?(:update, Photo) or @photo.upload_user_id == user.id
+    # If we don't find the photo, then we can't check for the job
+    if !@photo
+      return render_no_permission
+    end
+
+    is_my_job = @photo.job.user_id == user.id
+    is_my_photo = @photo.upload_user_id == user.id
+
+    # Admins, job owner and the user that uploaded the photos can update
+    if user.can?(:update, Photo) or is_my_job or is_my_photo
       @photo.description = params["photo"]["description"]
 
       if !@photo.save
@@ -25,9 +33,18 @@ class Api::PhotosController < ApplicationController
   end
 
   def destroy
-    # Only admins can destroy photos
-    if user.can? :destroy, Photo
-      @photo = Photo.find(params[:id])
+    @photo = Photo.find(params[:id])
+
+    # If we don't find the photo, then we can't check for the job
+    if !@photo
+      return render_no_permission
+    end
+
+    is_my_job = @photo.job.user_id == user.id
+    is_my_photo = @photo.upload_user_id == user.id
+
+    # Admins, job owner and the user that uploaded the photos can delete
+    if user.can?(:destroy, Photo) or is_my_job or is_my_photo
 
       @photo.destroy
       render json: @photo
