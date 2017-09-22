@@ -141,20 +141,30 @@ Contact.create(
   )
 end
 
+# Create contact for user (admin) and manager
+Contact.create(
+  user_id: @user.id,
+  contact_id: @manager.id
+)
+Contact.create(
+  user_id: @manager.id,
+  contact_id: @user.id
+)
+
 (1..100).each do
   u = User.new(
-  email: Faker::Internet.email,
-  password: "password",
-  first_name: Faker::Name.first_name,
-  last_name: Faker::Name.last_name,
-  company: Faker::Company.name,
+    email: Faker::Internet.email,
+    password: "password",
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    company: Faker::Company.name,
   )
   u.type = "Viewer"
   u.save
 
   Contact.create(
-  user_id: @user.id,
-  contact_id: u.id
+    user_id: @user.id,
+    contact_id: u.id
   )
 end
 
