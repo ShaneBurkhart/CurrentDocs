@@ -27,6 +27,17 @@ require 'faker'
 @viewer.type = "Viewer"
 @viewer.save
 
+@manager = User.new(
+  email: "manager@plansource.io",
+  password: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  company: Faker::Company.name,
+  can_share_link: true
+)
+@manager.type = "Manager"
+@manager.save
+
 @user = User.find_or_create_by_email(ENV["EMAIL"], {
   email: ENV["EMAIL"],
   password: "password",
@@ -83,6 +94,7 @@ Contact.create(
 
 # Shared jobs
 (1..10).each do |i|
+  # Create jobs for user (admin)
   job = Job.create(
     user_id: @user.id,
     name: Faker::Address.street_address,
@@ -93,7 +105,7 @@ Contact.create(
 
   Share.create(
     sharer_id: @user.id,
-    user_id: @viewer.id,
+    user_id: [@viewer.id, @manager.id].sample,
     job_id: job.id,
     can_reshare: false,
     permissions: Random.rand(6) + 1
@@ -102,6 +114,29 @@ Contact.create(
   ShareLink.create(
     job_id: job.id,
     user_id: @user.id,
+    email_shared_with: Faker::Internet.email
+  )
+
+  # Create jobs for manager (normal job owner)
+  manager_job = Job.create(
+    user_id: @manager.id,
+    name: Faker::Address.street_address,
+    archived: [true, false].sample
+  )
+
+  create_plans_for_job(manager_job)
+
+  Share.create(
+    sharer_id: @manager.id,
+    user_id: [@viewer.id, @user.id].sample,
+    job_id: manager_job.id,
+    can_reshare: false,
+    permissions: Random.rand(6) + 1
+  )
+
+  ShareLink.create(
+    job_id: manager_job.id,
+    user_id: @manager.id,
     email_shared_with: Faker::Internet.email
   )
 end
