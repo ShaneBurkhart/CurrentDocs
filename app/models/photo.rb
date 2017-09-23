@@ -16,7 +16,11 @@ class Photo < ActiveRecord::Base
     return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/photos/#{self.aws_filename}"
   end
 
+  def large_url
+    return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/photos-large/#{self.aws_filename}"
+  end
+
   def thumbnail_url
-    return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/thumbnails/#{self.aws_filename}"
+    return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/photos-thumbnail/#{self.aws_filename}"
   end
 end

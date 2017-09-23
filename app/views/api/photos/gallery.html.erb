@@ -64,7 +64,7 @@
           if (!photo) return;
 
           _currentPhotoId = photo_id;
-          $galleryPhoto.attr("src", photo["original_url"]);
+          $galleryPhoto.attr("src", photo["large_url"]);
 
           $previousPhotoButton.attr("disabled", !photo["previous_photo_id"]);
           $editPhotoButton.attr("disabled", !photo["can_edit"]);
