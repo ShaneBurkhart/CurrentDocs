@@ -14,6 +14,86 @@ var PHOTO_SIZES = [
   { name: 'large', max_width: 1600, max_height: 1200 },
 ];
 
+var getS3Object = function (bucket, key, callback) {
+  s3.getObject({
+    Bucket: bucket,
+    Key: key,
+  }, callback);
+};
+
+var putS3Object = function (bucket, key, buffer, contentType, callback) {
+  s3.putObject({
+    Bucket: bucket,
+    Key: key,
+    Body: buffer,
+    ContentType: contentType,
+    ACL: 'public-read',
+  }, callback);
+};
+
+var createResizeTask = function (bucket, key, extension, photoSize) {
+  return function (resizeCallback) {
+    var keyParts = key.split("/");
+
+    // Change "directory" from photos/ to photos-<name>/
+    keyParts.splice(0, 1, "photos-" + photoSize.name);
+    var destKey = keyParts.join("/");
+
+    async.waterfall([
+      function download(next) {
+        // Download the image from S3 into a buffer.
+        getS3Object(bucket, key, next);
+      },
+
+      function tranform(response, transformCallback) {
+        gm(response.Body).size(function(err, size) {
+          if (err) return transformCallback(err);
+
+          var scalingFactor = Math.min(
+            photoSize.max_width / size.width,
+            photoSize.max_height / size.height
+          );
+
+          var width = scalingFactor * size.width;
+          var height = scalingFactor * size.height;
+
+          // Infer the scaling factor to avoid stretching the image unnaturally.
+          // Transform the image buffer in memory.
+          this.resize(width, height)
+            .toBuffer(extension, function(err, buffer) {
+              if (err) return transformCallback(err);
+
+              // Stream the transformed image to a different S3 bucket.
+              transformCallback(null, response.ContentType, buffer);
+            });
+        });
+      },
+
+      function upload(contentType, data, next) {
+        // Stream the transformed image to a different S3 bucket.
+        putS3Object(bucket, destKey, data, contentType, next);
+      }],
+
+      function (err) {
+        if (err) {
+          console.error(
+            'Unable to resize ' + bucket + '/' + key +
+            ' and upload to ' + bucket + '/' + destKey +
+            ' due to an error: ' + err
+          );
+          return resizeCallback(err);
+        }
+
+        console.log(
+          'Successfully resized ' + bucket + '/' + key +
+          ' and uploaded to ' + bucket + '/' + destKey
+        );
+        resizeCallback();
+      }
+    );
+  };
+};
+
 exports.handler = function (event, context, callback) {
   var bucket = event.Records[0].s3.bucket.name;
   var key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
@@ -30,69 +110,15 @@ exports.handler = function (event, context, callback) {
     return;
   }
 
-  async.waterfall([
-    function download(next) {
-      // Download the image from S3 into a buffer.
-      s3.getObject({
-        Bucket: bucket,
-        Key: key,
-      }, next);
-    },
-    function tranform(response, next) {
-      var keyParts = key.split("/");
+  // Create tasks and run in parellel for all the photo sizes.
+  var tasks = [];
 
-      gm(response.Body).size(function(err, size) {
-        var self = this;
+  for (var i = 0; i < PHOTO_SIZES.length; i++) {
+    tasks.push(createResizeTask(bucket, key, ext, PHOTO_SIZES[i]));
+  }
 
-        var createResizeTask = function (photoSize) {
-          // Change "directory" from photos/ to photos-<name>/
-          keyParts.splice(0, 1, "photos-" + photoSize.name);
-          var destKey = keyParts.join("/");
-          var scalingFactor = Math.min(
-            photoSize.max_width / size.width,
-            photoSize.max_height / size.height
-          );
-
-          var width = scalingFactor * size.width;
-          var height = scalingFactor * size.height;
-
-          return function (doneScaling) {
-            // Infer the scaling factor to avoid stretching the image unnaturally.
-            // Transform the image buffer in memory.
-            self.resize(width, height)
-              .toBuffer(ext, function(err, buffer) {
-                if (err) return doneScaling(err);
-
-                // Stream the transformed image to a different S3 bucket.
-                s3.putObject({
-                  Bucket: bucket,
-                  Key: destKey,
-                  Body: buffer,
-                  ContentType: response.ContentType,
-                  ACL: 'public-read',
-                }, doneScaling);
-              });
-          };
-        };
-
-        // Create tasks and run in parellel for all the photo sizes.
-        var tasks = [];
-        for (var i = 0; i < PHOTO_SIZES.length; i++) { tasks.push(createResizeTask(PHOTO_SIZES[i])); }
-        async.series(tasks, next);
-      });
-    }],
-    function (err) {
-      if (err) {
-        console.error(
-          'Unable to resize ' + bucket + '/' + key +
-          ' due to an error: ' + err
-        );
-        return context.done();
-      }
-
-      console.log('Successfully resized ' + bucket + '/' + key);
-
-      context.done();
-    }
-  );
+  async.series(tasks, function (err) {
+    if (err) context.done(err);
+    context.done();
+  });
 }
