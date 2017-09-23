@@ -118,6 +118,54 @@ class Api::PhotosController < ApplicationController
     end
   end
 
+  def gallery
+    @photo_id = params[:id]
+    @photo = Photo.find(@photo_id)
+
+    # If we don't find the photo, then we can't check for the job
+    if !@photo
+      return render_no_permission
+    end
+
+    is_my_job = user.is_my_job(@photo.job)
+
+    # Make sure user can view this job.
+    # I think the permissions passed to is_shared_job are photos permissions.
+    # Should work on refactoring to constants, but client side needs constants too.
+    if is_my_job || user.is_shared_job(@photo.job, 0b10000)
+      @photos_map = {}
+
+      # Query for before and query for after current photo.  50 each way.
+      photos_before = Photo.where('job_id = ? AND date_taken >= ?', @photo.job_id, @photo.date_taken)
+        .order('date_taken DESC, created_at DESC')
+        .limit(50)
+      photos_after = Photo.where('job_id = ? AND date_taken <= ?', @photo.job_id, @photo.date_taken)
+        .order('date_taken DESC, created_at DESC')
+        .limit(50)
+
+      map_photos(@photos_map, photos_before)
+      map_photos(@photos_map, photos_after)
+
+      @photos_map.each_value do |photo|
+        is_my_photo = photo[:upload_user_id] == user.id
+
+        # Admins, job owner and the user that uploaded the photos can manage this photo
+        can_manage_photo = user.can?(:update, Photo) || is_my_job || is_my_photo
+        # Leaving edit and delete permissions separate under the assumption they
+        # might not be the same in the future.
+        photo["can_edit"] = can_manage_photo
+        photo["can_delete"] = can_manage_photo
+      end
+
+      respond_to do |format|
+        format.html { render :gallery, layout: false }
+        format.json { render json: { photos: @photos_map } }
+      end
+    else
+      return render_no_permission
+    end
+  end
+
   def download_photo
     @photo = Photo.find(params[:id])
 
@@ -132,6 +180,22 @@ class Api::PhotosController < ApplicationController
   end
 
   private
+
+    def map_photos(map_obj, ordered_photos)
+      ordered_photos.each_with_index do |photo, index|
+        if !map_obj[photo.id]
+          serializer = PhotoSerializer.new(photo, root: false)
+          map_obj[photo.id] = serializer.as_json
+        end
+
+        if index + 1 < ordered_photos.count
+          map_obj[photo.id]["next_photo_id"] = ordered_photos[index + 1].id
+        end
+        if index > 0
+          map_obj[photo.id]["previous_photo_id"] = ordered_photos[index - 1].id
+        end
+      end
+    end
 
     def get_exif_data(file_path)
       begin

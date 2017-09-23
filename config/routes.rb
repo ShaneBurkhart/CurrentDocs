@@ -45,6 +45,7 @@ PlanSource::Application.routes.draw do
   end
 
   get '/view' => 'pdf#index', as: "view_pdf"
+  get '/photos/:id/gallery' => 'api/photos#gallery'
 
   get '/notifications/unsubscribe/:id' => 'notification#unsubscribe', as: :unsubscribe
   get '/app#/jobs/:id' => 'home#index', as: :jobs_link
