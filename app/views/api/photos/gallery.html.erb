@@ -66,10 +66,10 @@
           _currentPhotoId = photo_id;
           $galleryPhoto.attr("src", photo["large_url"]);
 
-          $previousPhotoButton.attr("disabled", !photo["previous_photo_id"]);
+          $previousPhotoButton.attr("disabled", !getPreviousPhotoId(photo_id));
           $editPhotoButton.attr("disabled", !photo["can_edit"]);
           $deletePhotoButton.attr("disabled", !photo["can_delete"]);
-          $nextPhotoButton.attr("disabled", !photo["next_photo_id"]);
+          $nextPhotoButton.attr("disabled", !getNextPhotoId(photo_id));
         };
 
         var getUpcomingPhotoId = function (photo_id, direction) {
