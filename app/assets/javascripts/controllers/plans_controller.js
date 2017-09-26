@@ -68,8 +68,18 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 
   updateTab: function() {
     var jobController = this.get('controllers.job');
+    var job = jobController.get('model');
     var tab = jobController.get('tab');
-    this.set('content', jobController.get('model').getPlansByTab(tab));
+    var self = this;
+
+    if (tab === "Photos") {
+      job.getPhotos(function (photos) {
+        self.set('content', photos);
+      });
+    } else {
+      this.set('content', job.getPlansByTab(tab));
+    }
+
     if(tab == 'Shops') {
       this.set('sortProperties', ['csi']);
     } else if (tab == 'Photos') {

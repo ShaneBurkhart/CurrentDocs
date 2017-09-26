@@ -125,6 +125,23 @@ PlanSource.Job = Ember.Object.extend({
     return s + this.get("name").toLowerCase();
   }.property("isShared"),
 
+  getPhotos: function (callback) {
+    var self = this;
+
+    $.get("/api/jobs/" + this.get("id") + "/photos").then(function(data){
+      var photosJSON = data.photos;
+      var photos = [];
+
+      for (var i = 0; i < photosJSON.length; i++) {
+        photos.push(PlanSource.Photo.create(photosJSON[i]));
+      }
+
+      self.set("photos", photos);
+
+      callback(photos);
+    });
+  },
+
   deleteRecord : function(){
     this.destroy();
   },

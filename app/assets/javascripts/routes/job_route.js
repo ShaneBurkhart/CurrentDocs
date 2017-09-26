@@ -126,7 +126,13 @@ PlanSource.JobRoute = Ember.Route.extend({
     controller.set('tab', tab);
 
     plansController.set('tab', tab);
-    plansController.set('content', model.getPlansByTab(tab));
+    if (tab === "Photos") {
+      model.getPhotos(function (photos) {
+        plansController.set('content', photos);
+      });
+    } else {
+      plansController.set('content', model.getPlansByTab(tab));
+    }
     plansController.set('job', model);
   },
 

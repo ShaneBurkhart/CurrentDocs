@@ -41,6 +41,7 @@ PlanSource::Application.routes.draw do
     post '/photos/submit' => 'photos#submit_photos'
     get '/photos/download/:id' => 'photos#download_photo'
     post '/photos/:id/destroy' => 'photos#destroy'
+    get '/jobs/:job_id/photos' => 'photos#show'
     post '/photos/:id' => 'photos#update'
   end
 

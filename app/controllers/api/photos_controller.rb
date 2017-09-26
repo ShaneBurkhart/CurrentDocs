@@ -6,6 +6,22 @@ VALID_PHOTO_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif'];
 class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
 
+  def show
+    @job = Job.find(params[:job_id])
+
+    if !@job
+      return render_no_permission
+    end
+
+    if @job && (user.is_my_job(@job) || user.is_shared_job(@job, 0b10000))
+      @photos = Photo.where(job_id: @job.id).includes(:upload_user)
+
+      render json: @photos
+    else
+      return render_no_permission
+    end
+  end
+
   def update
     @photo = Photo.find(params[:id])
 
