@@ -43,6 +43,7 @@
     <img id="gallery-photo">
     <div id="overlay">
       <button href="#" id="previous-photo" class="button icon-arrow-left"></button>
+      <button href="#" id="download-photo" class="button icon-download"></button>
       <button href="#" id="edit-photo" class="button icon-pencil"></button>
       <button href="#" id="delete-photo" class="button icon-trash"></button>
       <button href="#" id="next-photo" class="button icon-arrow-right"></button>
@@ -55,6 +56,7 @@
 
         var $galleryPhoto = $("#gallery-photo");
         var $nextPhotoButton = $("#next-photo");
+        var $downloadPhotoButton = $("#download-photo");
         var $editPhotoButton = $("#edit-photo");
         var $deletePhotoButton = $("#delete-photo");
         var $previousPhotoButton = $("#previous-photo");
@@ -95,20 +97,10 @@
           renderPhoto(getPreviousPhotoId(_currentPhotoId));
         });
 
-        $deletePhotoButton.click(function () {
-          var areYouSure = confirm("Are you sure you want to delete this photo?");
-          if (!areYouSure) return;
-
+        $downloadPhotoButton.click(function () {
           var currentPhoto = _photosData[_currentPhotoId];
-          currentPhoto["deleted"] = true;
-          $.ajax({
-              url: "/api/photos/" + currentPhoto["id"] + "/destroy",
-              type: 'POST',
-          }).then(function(data, t, xhr){
-            console.log("Photo deleted.");
-          });
 
-          renderPhoto(getNextPhotoId(_currentPhotoId));
+          window.location = "/api/photos/download/" + currentPhoto["id"];
         });
 
         $editPhotoButton.click(function () {
@@ -124,6 +116,22 @@
           }).then(function(data, t, xhr){
             console.log("Photo updated.");
           });
+        });
+
+        $deletePhotoButton.click(function () {
+          var areYouSure = confirm("Are you sure you want to delete this photo?");
+          if (!areYouSure) return;
+
+          var currentPhoto = _photosData[_currentPhotoId];
+          currentPhoto["deleted"] = true;
+          $.ajax({
+              url: "/api/photos/" + currentPhoto["id"] + "/destroy",
+              type: 'POST',
+          }).then(function(data, t, xhr){
+            console.log("Photo deleted.");
+          });
+
+          renderPhoto(getNextPhotoId(_currentPhotoId));
         });
       });
     </script>
