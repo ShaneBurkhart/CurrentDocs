@@ -65,7 +65,4 @@ PlanSource::Application.routes.draw do
 
   match "/mobile" => "mobile#index"
   match "/app" => "app#index"
-  match "/ve_pictures" => "ve_pictures#index"
-  match "/ve_pictures/all" => "ve_pictures#images"
-  post "/ve_pictures/delete" => "ve_pictures#destroy"
 end
