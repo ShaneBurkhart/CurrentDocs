@@ -1,7 +1,7 @@
 require 'securerandom'
 require "aws-sdk"
 
-VALID_PHOTO_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif'];
+VALID_PHOTO_EXT = ['png', 'jpg', 'jpeg', 'tiff', 'gif']
 
 class Api::PhotosController < ApplicationController
 	before_filter :user_not_there!
@@ -149,18 +149,21 @@ class Api::PhotosController < ApplicationController
     # I think the permissions passed to is_shared_job are photos permissions.
     # Should work on refactoring to constants, but client side needs constants too.
     if is_my_job || user.is_shared_job(@photo.job, 0b10000)
-      @photos_map = {}
+      # Query for after and before current photo.  200 each way.
+      photos_after = Photo.where(
+        "job_id = ? AND date_taken >= ?::DATE",
+        @photo.job_id,
+        @photo.date_taken
+      ).order('date_taken DESC, created_at DESC').limit(200)
+      # Don't query date_taken with less than or equals.  Just less than since
+      # the above query handles equals. Then we can concat results.
+      photos_before = Photo.where(
+        "job_id = ? AND date_taken < ?::DATE",
+        @photo.job_id,
+        @photo.date_taken
+      ).order('date_taken DESC, created_at DESC').limit(200)
 
-      # Query for before and query for after current photo.  50 each way.
-      photos_before = Photo.where('job_id = ? AND date_taken >= ?', @photo.job_id, @photo.date_taken)
-        .order('date_taken DESC, created_at DESC')
-        .limit(50)
-      photos_after = Photo.where('job_id = ? AND date_taken <= ?', @photo.job_id, @photo.date_taken)
-        .order('date_taken DESC, created_at DESC')
-        .limit(50)
-
-      map_photos(@photos_map, photos_before)
-      map_photos(@photos_map, photos_after)
+      @photos_map = map_photos(photos_after.concat(photos_before))
 
       @photos_map.each_value do |photo|
         is_my_photo = photo[:upload_user_id] == user.id
@@ -197,13 +200,17 @@ class Api::PhotosController < ApplicationController
 
   private
 
-    def map_photos(map_obj, ordered_photos)
+    def map_photos(ordered_photos)
+      map_obj = {}
+
       ordered_photos.each_with_index do |photo, index|
         if !map_obj[photo.id]
           serializer = PhotoSerializer.new(photo, root: false)
           map_obj[photo.id] = serializer.as_json
         end
 
+        # The photos are in decending order (newest first).
+        # The "next" photo is taken before the current and vice versa for previous.
         if index + 1 < ordered_photos.count
           map_obj[photo.id]["next_photo_id"] = ordered_photos[index + 1].id
         end
@@ -211,6 +218,8 @@ class Api::PhotosController < ApplicationController
           map_obj[photo.id]["previous_photo_id"] = ordered_photos[index - 1].id
         end
       end
+
+      return map_obj
     end
 
     def get_exif_data(file_path)

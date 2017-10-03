@@ -3,10 +3,6 @@ PlanSource.Photo = Ember.Object.extend({
 		return this.get("upload_user_id") === window.user_id;
   }.property("upload_user_id"),
 
-  date_taken_sort_attr: function () {
-    return this.get("date_taken") + this.get("created_at");
-  }.property("date_taken", "create_at"),
-
   save: function (callback) {
     var self = this;
     var photoJSON = this.getProperties(["description"]);

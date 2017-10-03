@@ -83,7 +83,7 @@ PlanSource.PlansController = Ember.ArrayController.extend({
     if(tab == 'Shops') {
       this.set('sortProperties', ['csi']);
     } else if (tab == 'Photos') {
-      this.set('sortProperties', ['date_taken_sort_attr']);
+      this.set('sortProperties', ['date_taken', 'created_at', 'id']);
       this.set("sortAscending", false);
     } else {
       this.set('sortProperties', ['plan_num']);
