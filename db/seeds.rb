@@ -52,11 +52,18 @@ require 'faker'
 def create_plans_for_job(job)
   (1..15).each do |i|
     tab = Plan::TABS.sample
+    csi = nil
+
+    if tab == "Shops"
+      csi = Faker::Address.building_number
+    end
+
     plan = Plan.create(
       job_id: job.id,
       plan_num: i,
       plan_name: Faker::Address.secondary_address,
-      tab: tab
+      tab: tab,
+      csi: csi
     )
 
     # Accepted submittals for plan
@@ -64,6 +71,7 @@ def create_plans_for_job(job)
       (1..3).each do |j|
         Submittal.create(
           data: {
+            csi_code: Faker::Address.building_number,
             description: Faker::Address.street_address,
           },
           is_accepted: true,
@@ -78,6 +86,7 @@ def create_plans_for_job(job)
   (0..3).each do |i|
     Submittal.create(
       data: {
+        csi_code: Faker::Address.building_number,
         description: Faker::Address.street_address,
       },
       job_id: job.id,

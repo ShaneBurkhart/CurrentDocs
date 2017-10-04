@@ -1,0 +1,42 @@
+<% content_for :title, "Select Jobs for Shop Drawing Report" %>
+<div class="section">
+	<div class="container" style="margin-bottom:30px">
+		<h2>Select Jobs for Shop Drawings Report</h2>
+    <p>
+      <a id="select-all-jobs">Select All</a> - <a id="clear-jobs">Clear</a>
+    </p>
+
+		<div class="row">
+			<div class="col-sm-4">
+        <%= form_tag(admin_reports_shop_drawings_path, method: "post") do %>
+          <% @jobs.each do |job| %>
+            <% name = "job_ids_#{job.id}" %>
+
+            <%= check_box_tag "job_ids[]", job.id, true, class: "job-checkbox", id: name %>
+            <%= label_tag name, job.name %>
+
+            <br>
+          <% end %>
+
+          <%= submit_tag("Create Report") %>
+        <% end %>
+			</div>
+		</div>
+
+    <script>
+      $(document).ready(function () {
+        var $selectAll = $('#select-all-jobs');
+        var $clearAll = $('#clear-jobs');
+        var $jobCheckboxes = $('.job-checkbox');
+
+        $selectAll.click(function () {
+          $jobCheckboxes.prop("checked", true);
+        });
+
+        $clearAll.click(function () {
+          $jobCheckboxes.prop("checked", false);
+        });
+      });
+    </script>
+	</div>
+</div>

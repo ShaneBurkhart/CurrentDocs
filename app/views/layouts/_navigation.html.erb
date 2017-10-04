@@ -6,9 +6,6 @@
         <% if user_signed_in? %>
           <% if current_user.admin? %>
             <li>
-              <%= link_to 'VE Pictures', ve_pictures_path %>
-            </li>
-            <li>
               <%= link_to 'Admin', users_path %>
             </li>
           <% end %>
@@ -16,21 +13,23 @@
           <li class="<%= controller_name == "registrations" && action_name == "edit" ? "active" : "" %>">
           <%= link_to 'My Account', edit_user_registration_path %>
           </li>
-        <% else %>
-          <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
-          <%= link_to 'Sign up', new_user_registration_path %>
-          </li>
-        <% end %>
-        <% if user_signed_in? %>
+
           <li class="<%= controller_name == "app" ? "active" : "" %>">
           <%= link_to 'My Jobs', app_path %>
           </li>
-        <% end %>
-        <% if user_signed_in? %>
+
+          <li class="<%= controller_name == "admin_reports" ? "active" : "" %>">
+          <%= link_to 'Reports', admin_reports_shop_drawings_jobs_path %>
+          </li>
+
           <li>
           <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
           </li>
         <% else %>
+          <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
+          <%= link_to 'Sign up', new_user_registration_path %>
+          </li>
+
           <li class="<%= controller_name == "sessions" && action_name == "new" ? "active" : "" %>">
           <%= link_to 'Login', new_user_session_path %>
           </li>

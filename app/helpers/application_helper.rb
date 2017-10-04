@@ -44,4 +44,24 @@ module ApplicationHelper
     HTML
     html.html_safe
   end
+
+  def basic_date_format(date)
+    return "" unless date
+    date.strftime("%m/%d/%Y")
+  end
+
+  def format_csi(csi)
+    return "" unless csi
+    csi = csi.to_s
+
+    csiParts = csi.split('')
+    if csi.length > 4
+      csiParts = csiParts.insert(4, ' ')
+    end
+    if csi.length > 2
+      csiParts = csiParts.insert(2, ' ')
+    end
+
+    return csiParts.join('')
+  end
 end

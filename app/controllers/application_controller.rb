@@ -31,11 +31,17 @@ class ApplicationController < ActionController::Base
 	     render :text => "You don't have permission to do that"
     end
 
+    def check_admin!
+      if !user.admin?
+        not_found
+      end
+    end
+
     private
-	def last_seen
-	    if user_signed_in?
-		user.last_seen = Time.now
-		user.save
-	    end
-	end
+      def last_seen
+        if user_signed_in?
+          user.last_seen = Time.now
+          user.save
+        end
+      end
 end

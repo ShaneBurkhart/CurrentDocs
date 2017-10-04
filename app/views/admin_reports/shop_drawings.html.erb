@@ -1,0 +1,51 @@
+<% content_for :title, "Shop Drawings Report" %>
+
+<div class="section">
+	<div class="container" style="margin-bottom:30px">
+		<h1>Shop Drawings Report</h1>
+    <p><%= link_to "Change Jobs", admin_reports_shop_drawings_jobs_path %></p>
+
+		<div class="row">
+			<div class="col-sm-12">
+        <% @jobs.each do |job| %>
+          <h2><%= job.name %></h2>
+
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>CSI</th>
+                <th>Plan Name</th>
+                <th>Status</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% job.submittals.each do |submittal| %>
+                <tr>
+                  <td><span class="text-nowrap"><%= format_csi(submittal.data["csi_code"]) %></span></td>
+                  <td class="word">
+                    <span title="<%= submittal.data["description"] %>"><%= submittal.data["description"] %></span>
+                  </td>
+                  <td><span>Pending</span></td>
+                  <td><span><%= basic_date_format(submittal.updated_at) %></span></td>
+                </tr>
+              <% end %>
+
+              <% job.ordered_shop_drawings.each do |shop_drawing| %>
+                <tr>
+                  <td><span class="text-nowrap"><%= format_csi(shop_drawing.csi) %></span></td>
+                  <td class="word">
+                    <span title="<%= shop_drawing.plan_name %>"><%= shop_drawing.plan_name %></span>
+                  </td>
+                  <td><span><%= shop_drawing.status %></span></td>
+                  <td><span><%= basic_date_format(shop_drawing.plan_updated_at) %></span></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+			</div>
+		</div>
+	</div>
+</div>
+

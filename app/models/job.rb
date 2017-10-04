@@ -25,6 +25,9 @@ class Job < ActiveRecord::Base
   before_destroy :destroy_plans
   before_destroy :destroy_shares
 
+  # Blank and nil status goes last
+  SHOPS_REPORTS_STATUS_ORDER = ["Pending", "Submitted", "Approved", "Approved as Corrected", "Revise & Resubmit", "Record Copy", ""]
+
   # rendering json is done in two steps. as_json, then to_json.
   # This overrides as_json for a Job to include specified
   # non-persisting attributes.
@@ -41,6 +44,17 @@ class Job < ActiveRecord::Base
   def send_message_to_group(message)
     shared_users.each do |shared_user|
       shared_user.send_message user.email, "This message is to the #{name} group:\n\n#{message}"
+    end
+  end
+
+  def ordered_shop_drawings
+    last_index = SHOPS_REPORTS_STATUS_ORDER.count
+
+    return plans.where(tab: "Shops").sort do |a, b|
+      # Default to last index if didn't find index
+      aNum = SHOPS_REPORTS_STATUS_ORDER.find_index(a.status) || last_index
+      bNum = SHOPS_REPORTS_STATUS_ORDER.find_index(b.status) || last_index
+      next aNum <=> bNum
     end
   end
 

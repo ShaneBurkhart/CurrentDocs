@@ -22,11 +22,4 @@ class AdminController < ApplicationController
         redirect_to admin_sub_logins_path
     end
   end
-
-  private
-    def check_admin!
-      if !user.admin?
-        not_found
-      end
-    end
 end
