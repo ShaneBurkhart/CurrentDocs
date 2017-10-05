@@ -1,14 +1,13 @@
 <% content_for :title, "Select Jobs for Shop Drawing Report" %>
 <div class="section">
 	<div class="container" style="margin-bottom:30px">
-		<h2>Select Jobs for Shop Drawings Report</h2>
-    <p>
-      <a id="select-all-jobs">Select All</a> - <a id="clear-jobs">Clear</a>
-    </p>
+		<h2>Select Options for Shop Drawings Report</h2>
+    <%= form_tag(reports_shop_drawings_path, method: "post") do %>
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Jobs</h3>
+          <p><a id="select-all-jobs">Select All</a> - <a id="clear-jobs">Clear</a></p>
 
-		<div class="row">
-			<div class="col-sm-4">
-        <%= form_tag(reports_shop_drawings_path, method: "post") do %>
           <% @jobs.each do |job| %>
             <% name = "job_ids_#{job.id}" %>
 
@@ -17,24 +16,57 @@
 
             <br>
           <% end %>
+        </div>
+        <div class="col-sm-4">
+          <h3>Shop Drawing Statuses</h3>
+          <p><a id="select-all-statuses">Select All</a> - <a id="clear-statuses">Clear</a></p>
 
+          <% shop_drawing_statuses.each_with_index do |status, i| %>
+            <% name = "statuses_#{i}" %>
+
+            <%= check_box_tag "statuses[]", status, true, class: "status-checkbox", id: name %>
+            <% if status == "" %>
+              <% # Replace blank status with text name %>
+              <%= label_tag name, "(blank)" %>
+            <% else %>
+              <%= label_tag name, status %>
+            <% end %>
+
+            <br>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
           <%= submit_tag("Create Report") %>
-        <% end %>
-			</div>
-		</div>
+        </div>
+      </div>
+    <% end %>
 
     <script>
       $(document).ready(function () {
-        var $selectAll = $('#select-all-jobs');
-        var $clearAll = $('#clear-jobs');
+        var $selectAllJobs = $('#select-all-jobs');
+        var $clearAllJobs = $('#clear-jobs');
         var $jobCheckboxes = $('.job-checkbox');
 
-        $selectAll.click(function () {
+        var $selectAllStatuses = $('#select-all-statuses');
+        var $clearAllStatuses = $('#clear-statuses');
+        var $statusCheckboxes = $('.status-checkbox');
+
+        $selectAllJobs.click(function () {
           $jobCheckboxes.prop("checked", true);
         });
 
-        $clearAll.click(function () {
+        $clearAllJobs.click(function () {
           $jobCheckboxes.prop("checked", false);
+        });
+
+        $selectAllStatuses.click(function () {
+          $statusCheckboxes.prop("checked", true);
+        });
+
+        $clearAllStatuses.click(function () {
+          $statusCheckboxes.prop("checked", false);
         });
       });
     </script>

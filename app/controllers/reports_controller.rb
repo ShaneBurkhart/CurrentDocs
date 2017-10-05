@@ -15,9 +15,10 @@ class ReportsController < ApplicationController
   # Shows shop drawing reports for jobs.
   def shop_drawings
     @job_ids = params["job_ids"] || []
+    @statuses = params["statuses"] || []
 
-    if @job_ids.nil? or @job_ids.count == 0
-      # We need job ids for the report
+    if @job_ids.count == 0 or @statuses.count == 0
+      # We need job ids and statuses for the report
       return redirect_to reports_shop_drawings_jobs_path
     end
 
