@@ -60,8 +60,8 @@ PlanSource::Application.routes.draw do
   get "/users/signup_link/:key", to: "signup_links#edit", as: "signup_link"
   put "/users/signup_link/:key", to: "signup_links#update"
 
-  post "/admin/reports/shop_drawings" => "admin_reports#shop_drawings"
-  get "/admin/reports/shop_drawings/jobs" => "admin_reports#shop_drawing_jobs"
+  post "/reports/shop_drawings" => "reports#shop_drawings"
+  get "/reports/shop_drawings/jobs" => "reports#shop_drawing_jobs"
 
   get "/admin/sub_logins" => "admin#sub_logins"
   delete "/admin/sub_logins/:id" => "admin#delete_sub_login", as: "delete_sub_login"

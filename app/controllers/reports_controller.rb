@@ -1,6 +1,5 @@
-class AdminReportsController < ApplicationController
+class ReportsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :check_admin!
 
   SHOP_DRAWINGS_PERMISSION = 0b00010
 
@@ -19,7 +18,7 @@ class AdminReportsController < ApplicationController
 
     if @job_ids.nil? or @job_ids.count == 0
       # We need job ids for the report
-      return redirect_to admin_reports_shop_drawings_jobs_path
+      return redirect_to reports_shop_drawings_jobs_path
     end
 
     @jobs = Job.where(id: @job_ids, archived: false).select do |job|
