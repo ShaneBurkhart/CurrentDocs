@@ -24,7 +24,6 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 		this.get("controllers.job.model.plans").pushObject(plan);
     this.updateTab();
 
-
 		plan.save().then(function(data){
       if(data == false) {
         self.get("controller.job.model.plans").removeObject(plan);

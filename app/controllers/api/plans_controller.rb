@@ -16,16 +16,16 @@ class Api::PlansController < ApplicationController
 
 	def create
 		if user.can? :create, Plan
-			params["plan"].delete "updated_at"
-			next_plan_num = Plan.next_plan_num(
-			params["plan"]["job_id"],
-			params["plan"]["tab"]
-			)
-			params["plan"]["plan_num"] = next_plan_num
+      @plan_params = params["plan"]
+      # Clean this attr.  No idea why... but not changin' that ish
+      @plan_params.delete("updated_at")
 
-			puts "The current next #{params['plan']['tab']} num is #{next_plan_num}"
-			@plan = Plan.new params["plan"]
-			puts "PLAN ERRORS: #{@plan.errors.full_messages}"
+			@plan_params["plan_num"] = Plan.next_plan_num(
+        @plan_params["job_id"],
+        @plan_params["tab"]
+      )
+
+			@plan = Plan.new(@plan_params)
 
 			if @plan.save
 				render json: @plan
@@ -40,9 +40,12 @@ class Api::PlansController < ApplicationController
 	def update
 		if user.can? :update, Plan
 			@plan = Plan.find(params[:id])
-			if current_user.is_my_plan @plan
-				@plan.plan_name = params["plan"]["plan_name"]
-				csi = params["plan"]["csi"]
+			@plan_params = params["plan"]
+
+			if current_user.is_my_plan(@plan)
+				@plan.plan_name = @plan_params["plan_name"]
+				csi = @plan_params["csi"]
+
 				if csi == 0 || csi == nil || csi == ""
 					@plan.csi = nil
 				else
