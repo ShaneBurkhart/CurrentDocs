@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170907144430) do
+ActiveRecord::Schema.define(:version => 20171011181611) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20170907144430) do
     t.integer  "job_id"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.integer  "plan_num"
     t.string   "plan_file_name"
     t.string   "plan_content_type"
     t.integer  "plan_file_size"
@@ -110,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20170907144430) do
     t.text     "description"
     t.string   "code"
     t.string   "tags"
+    t.integer  "previous_plan_id"
+    t.integer  "next_plan_id"
   end
 
   create_table "share_links", :force => true do |t|
@@ -182,7 +183,7 @@ ActiveRecord::Schema.define(:version => 20170907144430) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-10-04 21:25:20'
+    t.datetime "last_seen",                            :default => '2017-10-11 21:20:08'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

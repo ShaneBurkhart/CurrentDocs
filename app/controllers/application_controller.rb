@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     end
 
     def user
-	current_user || User.find_by_authentication_token(params[:token])
+      current_user || User.find_by_authentication_token(params[:token])
     end
 
     def render_no_permission

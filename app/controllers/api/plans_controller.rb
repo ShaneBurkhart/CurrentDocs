@@ -4,7 +4,8 @@ class Api::PlansController < ApplicationController
 	def show
 		if user.can? :read, Plan
 			@plan = Plan.find(params[:id])
-			if current_user.is_my_plan(@plan) || current_user.is_shared_plan(@plan)
+
+			if user.is_my_plan(@plan) || user.is_shared_plan(@plan)
 				render json: @plan
 			else
 				render_no_permission
@@ -20,11 +21,6 @@ class Api::PlansController < ApplicationController
       # Clean this attr.  No idea why... but not changin' that ish
       @plan_params.delete("updated_at")
 
-			@plan_params["plan_num"] = Plan.next_plan_num(
-        @plan_params["job_id"],
-        @plan_params["tab"]
-      )
-
 			@plan = Plan.new(@plan_params)
 
 			if @plan.save
@@ -37,33 +33,24 @@ class Api::PlansController < ApplicationController
 		end
 	end
 
+  # Simply update attributes of plan.  No reordering!
 	def update
 		if user.can? :update, Plan
 			@plan = Plan.find(params[:id])
 			@plan_params = params["plan"]
 
-			if current_user.is_my_plan(@plan)
+			if user.is_my_plan(@plan)
 				@plan.plan_name = @plan_params["plan_name"]
-				csi = @plan_params["csi"]
-
-				if csi == 0 || csi == nil || csi == ""
-					@plan.csi = nil
-				else
-					@plan.csi = csi
-				end
-				plan_num = params["plan"]["plan_num"]
-				if not plan_num.blank? && plan_num.to_i != @plan.plan_num
-					@plan.set_plan_num(plan_num.to_i) # Saves all plans in tab based on renumbering
-				end
-				@plan.status 			= params["plan"]["status"]
-				@plan.code 				= params["plan"]["code"]
-				@plan.description = params["plan"]["description"]
-				@plan.tags 				= params["plan"]["tags"]
+        @plan.csi = @plan_params["csi"]
+				@plan.status = @plan_params["status"]
+				@plan.code = @plan_params["code"]
+				@plan.description = @plan_params["description"]
+				@plan.tags = @plan_params["tags"]
 
 				if @plan.save
 					render json: @plan
 				else
-					render json: @plan.errors.messages
+					render json: {}
 				end
 			else
 				render_no_permission
@@ -73,10 +60,33 @@ class Api::PlansController < ApplicationController
 		end
 	end
 
+  # Move plan to after plan with id in plan_id_before
+  def reorder
+		if user.can? :update, Plan
+			@plan = Plan.find(params[:id])
+			@plan_id_before = params["plan_id_before"]
+
+			if user.is_my_plan(@plan)
+        @plan.move_to_after_plan_id(@plan_id_before)
+
+				if @plan.save
+					render json: @plan
+				else
+					render json: {}
+				end
+			else
+				render_no_permission
+      end
+    else
+      render_no_permission
+    end
+  end
+
 	def destroy
 		if user.can? :destroy, Plan
 			@plan = Plan.find(params[:id])
-			if current_user.is_my_plan @plan
+
+			if user.is_my_plan(@plan)
 				@plan.destroy
 				render json: {}
 			else

@@ -19,19 +19,24 @@ include Common
 class Plan < ActiveRecord::Base
   belongs_to :job
   has_many :plan_records
+  has_one :next_plan, :class_name => "Plan", :foreign_key => "next_plan_id"
+  has_one :previous_plan, :class_name => "Plan", :foreign_key => "previous_plan_id"
 
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()
   TABS = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi,
+  attr_reader :previous_plan_id, :next_plan_id
+  attr_accessible :job_id, :plan_name, :num_pages, :tab, :csi,
     :plan_updated_at, :description, :code, :tags
-  validates :job_id, :plan_num, :plan_name, :tab, presence: true
+  validates :job_id, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_for_tab
   validate :check_for_valid_tab_name
-  before_destroy :delete_plan_num
   validates :status, :length => { :maximum => 50 }
   validates :description, :length => { :maximum => 20000 }
   validates :code, :length => { :maximum => 12 }
+
+  after_create :move_to_end_of_list
+  before_destroy :delete_plan_in_list
 
   if Rails.env.production?
     has_attached_file :plan, PAPERCLIP_OPTIONS
@@ -39,55 +44,106 @@ class Plan < ActiveRecord::Base
     has_attached_file :plan
   end
 
-  # Get the next plan num for the tab
-  def self.next_plan_num(job_id, tab)
-    plans = Plan.where(job_id: job_id, tab: tab)
-    return plans.length + 1
+  def csi=(csi_code)
+    if !csi_code or csi_code == 0 or csi_code == ""
+      self[:csi] = nil
+    else
+      self[:csi] = csi_code
+    end
   end
 
-  def delete_plan_num
-    plans = Plan.where(
+  # Insert plan at the beginning of the list
+  def move_to_front_of_list
+    # If this record doesn't have an id, then we can't add it to the list
+    return if !self.id
+
+    # Find first plan in list
+    first_plan = Plan.where(
+      job_id: self.job_id,
+      tab: self.tab,
+      previous_plan_id: nil
+    ).where('id != ?', self.id).first
+
+    if first_plan
+      self[:next_plan_id] = first_plan.id
+      first_plan[:previous_plan_id] = self.id
+    else
+      # The current plan is the only plan in list
+      self[:next_plan_id] = nil
+    end
+
+    # Moving to first plan in list so previous_plan_id is nil
+    self[:previous_plan_id] = nil
+    self.save
+  end
+
+  def move_to_end_of_list
+    # If this record doesn't have an id, then we can't add it to the list
+    return if !self.id
+
+    last_plan = Plan.where(
+      job_id: self.job_id,
+      tab: self.tab,
+      next_plan_id: nil
+    ).where('id != ?', self.id).first
+
+    if last_plan
+      last_plan[:next_plan_id] = self.id
+      self[:previous_plan_id] = last_plan.id
+
+      last_plan.save
+    else
+      # No plans in list so this is the first.  Nil previous_plan_id
+      self[:previous_plan_id] = nil
+    end
+
+    # Moving to Last plan in the list so setting next_plan_id to nil
+    self[:next_plan_id] = nil
+    self.save
+  end
+
+  # Reorder plans so that this plan is after the given plan_id
+  def move_to_after_plan_id(plan_id)
+    # If this record doesn't have an id, then we can't add it to the list
+    return if !self.id
+    # plan_id can't be the current id
+    return if self.id == plan_id
+
+    if !plan_id
+      # This really means we are inserting at the front of the list
+      return self.insert_at_beginning
+    end
+
+    # Select where job_id and tab match as a validation of plan_id
+    plan_before = Plan.where(
+      id: plan_id,
       job_id: self.job_id,
       tab: self.tab
-    ).where('id != ?', self.id)
+    ).first
+    # If we didn't find a plan_before, it's a validation issue.
+    # This method takes a plan_id specifically so not found isn't okay.
+    return if !plan_before
 
-    plans.each do |plan|
-      if plan.plan_num > self.plan_num
-        plan.update_attributes(plan_num: plan.plan_num - 1)
-      end
+    next_plan = plan_before.next_plan
+
+    if next_plan
+      self[:next_plan_id] = next_plan.id
+      next_plan[:previous_plan_id] = self.id
+
+      next_plan.save
+    else
+      # There is no next plan which means plan_before is last in list.
+      self[:next_plan_id] = nil
     end
-  end
 
-  def set_plan_num(num)
-    highest = highest_plan_num
-    newNum = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
-    puts "The new plan_num is #{self.plan_num}"
-    if newNum == self.plan_num
-      return #return if nothing changed
-    end
-    new_num_index = newNum - 1
-    p = Plan.find_all_by_job_id_and_tab(self.job_id, self.tab)
-    p = p.sort_by{ |plan| plan.plan_num }
-    old_num_index = p.index(self) # Find plan in sorted plans,
-    # this is done in case self.plan_num is not a valid index.
+    plan_before[:next_plan_id] = self.id
+    plan_before.save
 
-    # Remove and insert plan based on index to achieve shifting of plans.
-    temp = p.at(old_num_index)
-    p.delete_at(old_num_index)
-    p = p.insert(new_num_index, temp)
-
-    p.each_with_index do |plan, index|
-      # puts "Plan.inspect #{index}: #{plan.inspect}"
-      plan.plan_num = index + 1
-      plan.save
-    end
+    self[:previous_plan_id] = plan_before.id
+    self.save
   end
 
   private
-
-    def highest_plan_num
-      return self.job.plans.where(tab: self.tab).count;
-    end
 
     def check_for_valid_tab_name
       if !TABS.include?(self.tab)
@@ -104,6 +160,28 @@ class Plan < ActiveRecord::Base
 
       if plans.length != 0
         errors.add(:plan_name, 'already exists')
+      end
+    end
+
+    # When removing a plan, we need to update next_plan_id and previous_plan_id
+    def delete_plan_in_list
+      if self.previous_plan and self.next_plan
+        # Middle of list
+        self.next_plan[:previous_plan_id] = self.previous_plan_id
+        self.previous_plan[:next_plan_id] = self.next_plan_id
+
+        self.next_plan.save
+        self.previous_plan.save
+      elsif self.next_plan
+        # First in list
+        self.next_plan[:previous_plan_id] = nil
+
+        self.next_plan.save
+      elsif self.previous_plan
+        # Last in list
+        self.previous_plan[:next_plan_id] = nil
+
+        self.previous_plan.save
       end
     end
 end
