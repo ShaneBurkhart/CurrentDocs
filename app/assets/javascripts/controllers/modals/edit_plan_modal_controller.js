@@ -30,68 +30,66 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 	editPlan : function(){
 		var self = this;
 		var name = $("#edit-plan-name").val(),
-		num = $("#edit-plan-num").val(),
-		csi = $("#edit-plan-csi").val(),
-		status = $("#edit-select-status").val(),
-		code = $("#edit-plan-code").val(),
-		tags = $("#edit-plan-tags").val(),
-		description = $("#edit-plan-description").val();
+      num = $("#edit-plan-num").val(),
+      csi = $("#edit-plan-csi").val(),
+      status = $("#edit-select-status").val(),
+      code = $("#edit-plan-code").val(),
+      tags = $("#edit-plan-tags").val(),
+      description = $("#edit-plan-description").val();
+    var plan = this.get("model");
+    var plansController = this.get("parent");
 
 		this.clearAllErrors();
 		this.clearAllInfo();
 
-		if(name != this.get("plan_name") && this.get("parent").planExists(name)){
+		if (name != this.get("plan_name") && plansController.planExists(name)) {
 			this.error("#edit-plan-name", "That plan name already exists!");
 			return;
-		}else{
-			if(name && name != "")
-			this.get("model").set("plan_name", name);
+		} else {
+			if (name && name != "") plan.set("plan_name", name);
 		}
 
-		if(this.get('tab') == 'Shops'){ // Shops plan
-			if(csi != ""){
-				csi = csi.replace(/ +/g, '');
-			}
+		if (this.get('tab') == 'Shops') {
+			if (csi != "") csi = csi.replace(/ +/g, '');
+
 			// Ensure CSI code is either empty or a six digit number.
-			if( csi != "" && ( !csi.match(/^(\d*)$/) || csi.length != 6)) {
+			if (csi != "" && (!csi.match(/^(\d*)$/) || csi.length != 6)) {
 				this.error("#edit-plan-csi", "Must be six digit number or empty.");
 				return;
-			}else{
-				this.get("model").set("csi", csi);
-				this.get("model").set("status", status);
+			} else {
+				plan.set("csi", csi);
+				plan.set("status", status);
 			}
-		}else if(this.get('tab') == 'ASI'){ // ASI plan
-			if(code != ""){
-				code = code.replace(/ +/g, '');
-			}
+		} else if (this.get('tab') == 'ASI') {
+			if(code != "") code = code.replace(/ +/g, '');
+
 			// Ensure ASI code is either empty or a 12 digit number.
-			if( code.length > 12) {
+			if (code.length > 12) {
 				this.error("#edit-plan-code", "Must be 12 characters or less.");
 				return;
-			}else{
-				this.get("model").set("code", code);
-				this.get("model").set("description", JSON.stringify(editor.getContents()));
-				this.get("model").set("tags", tags);
+			} else {
+				plan.set("code", code);
+				plan.set("description", JSON.stringify(editor.getContents()));
+				plan.set("tags", tags);
 			}
-		}else{
-			if(!num.match(/^(0|[1-9]\d*)$/)){
+		} else {
+			if (!num.match(/^(0|[1-9]\d*)$/)) {
 				this.error("#edit-plan-name", "That is not a valid plan number!");
 				return;
-			}else{
-				if(num && num != ""){
-					this.get("model").set("plan_num", num);
+			} else {
+				if (num && num != ""){
+					plan.set("plan_num", num);
 				}
 			}
 		}
 
-		// Save plan
-		this.get("model").save().then(function(){
-			self.get("parent").updatePlans();
+		plan.save().then(function(){
+			plansController.updatePlans();
 		});
 
 		// Save file if file one exists
 		var file = $("#file");
-		if(file.val() || file.val() != ""){
+		if (file.val() || file.val() != "") {
 			this.send('uploadPlan');
 		}
 

@@ -48,7 +48,11 @@ class Api::PlansController < ApplicationController
 				@plan.tags = @plan_params["tags"]
 
 				if @plan.save
-					render json: @plan
+          if @plan.move_to_plan_num(@plan_params["plan_num"].to_i)
+            render json: @plan
+          else
+            render json: {}
+          end
 				else
 					render json: {}
 				end
@@ -59,28 +63,6 @@ class Api::PlansController < ApplicationController
 			render_no_permission
 		end
 	end
-
-  # Move plan to after plan with id in plan_id_before
-  def reorder
-		if user.can? :update, Plan
-			@plan = Plan.find(params[:id])
-			@plan_id_before = params["plan_id_before"]
-
-			if user.is_my_plan(@plan)
-        @plan.move_to_after_plan_id(@plan_id_before)
-
-				if @plan.save
-					render json: @plan
-				else
-					render json: {}
-				end
-			else
-				render_no_permission
-      end
-    else
-      render_no_permission
-    end
-  end
 
 	def destroy
 		if user.can? :destroy, Plan

@@ -196,8 +196,9 @@ _createRequest : function(){
       if(!$.isEmptyObject(data)){
         self.setProperties(data.plan);
         return true;
-      }else
-      return false;
+      } else {
+        return false;
+      }
     })
   );
 });

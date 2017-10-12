@@ -11,7 +11,7 @@
 class Job < ActiveRecord::Base
   belongs_to :user
   has_many :plan_records
-  has_many :plans, order: "plan_num ASC"
+  has_many :plans
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
   has_many :submittals, conditions: "is_accepted = false"
@@ -59,22 +59,23 @@ class Job < ActiveRecord::Base
   end
 
   private
-  def destroy_shares
-    self.shares.each do |share|
-      share.destroy
-    end
-  end
 
-  def destroy_plans
-    self.plans.each do |plan|
-      plan.destroy
+    def destroy_shares
+      self.shares.each do |share|
+        share.destroy
+      end
     end
-  end
 
-  def check_for_dubplicate_name_for_single_user
-    j = Job.find_all_by_user_id_and_name(self.user_id, self.name)
-    if j.count > 1 || (j.count == 1 && j.first.id != self.id) then
-      errors.add(:name, 'already exists')
+    def destroy_plans
+      self.plans.each do |plan|
+        plan.destroy
+      end
     end
-  end
+
+    def check_for_dubplicate_name_for_single_user
+      j = Job.find_all_by_user_id_and_name(self.user_id, self.name)
+      if j.count > 1 || (j.count == 1 && j.first.id != self.id) then
+        errors.add(:name, 'already exists')
+      end
+    end
 end
