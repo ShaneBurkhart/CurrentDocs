@@ -1,5 +1,4 @@
 PlanSource.Job = Ember.Object.extend({
-
   init : function(){
     this.setProperties(this.getProperties("user", "plans", "photos", "shares", "submittals"));
   },
@@ -13,6 +12,7 @@ PlanSource.Job = Ember.Object.extend({
       this.set("user", PlanSource.User.create(hash.user));
       delete hash.user
     }
+
     if(hash.plans){
       var plans = Em.A();
       hash.plans.forEach(function(plan){
@@ -57,11 +57,29 @@ PlanSource.Job = Ember.Object.extend({
 
     var plansForTab = Em.A();
     var plans = this.get('plans');
-    for(var i = 0; i < plans.length; i++) {
+
+    // Find plans for tab
+    for (var i = 0; i < plans.length; i++) {
       if(plans[i].get('tab') === tab) {
         plansForTab.pushObject(plans[i]);
       }
     }
+
+    var currentPlanId = null;
+    // Give plan_num to plans through the linked list data structure.
+    // First i loop is only to give us an index for the plan
+    for (var i = 0; i < plansForTab.length; i++) {
+      for (var j = 0; j < plansForTab.length; j++) {
+        var plan = plansForTab[j];
+
+        if (plan.get('previous_plan_id') === currentPlanId) {
+          plan.set('plan_num', i + 1);
+          currentPlanId = plan.get('id')
+          break;
+        }
+      }
+    }
+
     return plansForTab;
   },
 

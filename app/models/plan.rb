@@ -23,163 +23,208 @@ class Plan < ActiveRecord::Base
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()
   TABS = ["Plans", "ASI", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
 
+  # DON"T UPDATE previous_plan_id and next_plan_id MANUALLY!  Use other methods.
+  attr_accessible :job_id, :plan_name, :num_pages, :tab, :csi, :plan_updated_at,
+    :description, :code, :tags, :previous_plan_id, :next_plan_id
+  validates :job_id, :plan_name, :tab, presence: true
+  validate :check_for_duplicate_plan_name_for_tab
+  validate :check_for_valid_tab_name
+  validates :status, :length => { :maximum => 50 }
+  validates :description, :length => { :maximum => 20000 }
+  validates :code, :length => { :maximum => 12 }
+
+  after_create :move_to_end_of_list
+  before_destroy :delete_plan_in_list
+
   if Rails.env.production?
     has_attached_file :plan, PAPERCLIP_OPTIONS
   else
     has_attached_file :plan
   end
 
-  # validates_attachment_content_type :plan, :content_type => %w(application/pdf)
+  def next_plan
+    return Plan.where(id: self.next_plan_id).first
+  end
 
-  attr_accessible :job_id, :plan_name, :plan_num, :num_pages, :tab, :csi, :plan_updated_at, :description, :code, :tags
-  validates :job_id, :plan_num, :plan_name, :tab, presence: true
-  validate :check_for_duplicate_plan_name_in_job
-  validate :check_for_valid_tab_name
-  before_destroy :delete_file, :delete_plan_num
-  validates :status, :length => { :maximum => 50 }
-  validates :description, :length => { :maximum => 20000 }
-  validates :code, :length => { :maximum => 12 }
+  def previous_plan
+    return Plan.where(id: self.previous_plan_id).first
+  end
 
-  # validate :ensure_plans_have_unique_plan_nums, :on => :save
-  # validates_uniqueness_of :plan_num, scope: [:tab, :job_id]
-
-  def find_all_by_job_id_and_tab(job_id, desired_tab)
-    plans = Plan.find_all_by_job_id(job_id)
-    relavent_plans = plans.select do |plan| # Select all plans in desired tab
-      plan.tab == desired_tab
+  def csi=(csi_code)
+    if !csi_code or csi_code == 0 or csi_code == ""
+      self[:csi] = nil
+    else
+      self[:csi] = csi_code
     end
-    return relavent_plans
   end
 
-  def self.next_plan_num(job_id, tab)
-    plans = Plan.find_all_by_job_id_and_tab(job_id, tab)
-    return plans.count + 1
-  end
+  def move_to_plan_num(plan_num)
+    # If this record doesn't have an id, then we can't move it
+    return if !self.id
 
-  def delete_file
-    path = Rails.root.join("public", "_files", self.id.to_s)
-    return unless File.exists?(path)
-    File.delete path
-  end
+    # Make sure the plan_num is positive non-zero
+    plan_num = 1 if plan_num <= 0
 
-  def delete_plan_num
-    p = Plan.find_all_by_job_id(self.job_id)
-    p.each do |plan|
-      next unless(plan.id != self.id)
-      if plan.plan_num > self.plan_num
-        plan.update_attributes(:plan_num => plan.plan_num - 1)
+    plans_for_tab = Plan.where(job_id: self.job_id, tab: self.tab)
+    plans_by_id = plans_for_tab.map.with_index { |p, i| [p.id, p] }.to_h
+    first_plan = plans_for_tab.find { |plan| plan.previous_plan_id == nil }
+
+    current_plan = first_plan
+
+    # Go through linked list until index matches plan_num
+    # If we make it all the way through, then we'll insert after last plan
+    plans_for_tab.each_with_index do |plan, i|
+      # Add one to plan_num if we see self.id. Our new plan_num is after self's
+      # current position. Since we move self before, we need to go one spot more.
+      if self.id == current_plan.id
+        plan_num += 1
+      end
+
+      puts i + 1
+      puts current_plan.inspect
+
+      # We found the plan for the plan_num.  We'll insert before
+      break if plan_num == i + 1
+
+      # Set next plan as current plan to go through linked list
+      if current_plan.next_plan_id
+        current_plan = plans_by_id[current_plan.next_plan_id]
+      else
+        current_plan = nil
       end
     end
+
+    if !current_plan
+      return self.move_to_end_of_list
+    end
+
+    # The plan is already in the correct spot
+    if self.id == current_plan.id
+      return true
+    else
+      return self.move_to_before_plan_id(current_plan.id)
+    end
   end
 
-  def set_plan_num(num)
-    highest = highest_plan_num
-    newNum = num < 1 ? 1 : (num > highest ? highest : num) #check if greater than highests
-    puts "The new plan_num is #{self.plan_num}"
-    if newNum == self.plan_num
-      return #return if nothing changed
-    end
-    new_num_index = newNum - 1
-    p = Plan.find_all_by_job_id_and_tab(self.job_id, self.tab)
-    p = p.sort_by{ |plan| plan.plan_num }
-    old_num_index = p.index(self) # Find plan in sorted plans,
-    # this is done in case self.plan_num is not a valid index.
+  def move_to_end_of_list
+    # If this record doesn't have an id, then we can't add it to the list
+    return if !self.id
 
-    # Remove and insert plan based on index to achieve shifting of plans.
-    temp = p.at(old_num_index)
-    p.delete_at(old_num_index)
-    p = p.insert(new_num_index, temp)
+    last_plan = Plan.where(
+      job_id: self.job_id,
+      tab: self.tab,
+      next_plan_id: nil
+    ).where('id != ?', self.id).first
 
-    p.each_with_index do |plan, index|
-      # puts "Plan.inspect #{index}: #{plan.inspect}"
-      plan.plan_num = index + 1
-      plan.save
+    # Remove plan from list before moving
+    delete_plan_in_list
+
+    if last_plan
+      # Since we've updated the plans list by removing self, we need to reload
+      last_plan.reload
+
+      last_plan.next_plan_id = self.id
+      self.previous_plan_id = last_plan.id
+
+      last_plan.save
+    else
+      # No plans in list so this is the first.  Nil previous_plan_id
+      self.previous_plan_id = nil
     end
+
+    # Moving to Last plan in the list so setting next_plan_id to nil
+    self.next_plan_id = nil
+    return self.save
+  end
+
+  # Reorder plans so that this plan is after the given plan_id
+  def move_to_before_plan_id(plan_id)
+    # If this record doesn't have an id, then we can't add it to the list
+    return if !self.id
+    # plan_id can't be the current id
+    return if self.id == plan_id
+
+    if !plan_id
+      # This really means we are inserting at the end of the list
+      return self.move_to_end_of_list
+    end
+
+    # Select where job_id and tab match as a validation of plan_id
+    plan_after = Plan.where(
+      id: plan_id,
+      job_id: self.job_id,
+      tab: self.tab
+    ).first
+    # If we didn't find a plan_after, it's a validation issue.
+    # This method takes a plan_id specifically so not found isn't okay.
+    return if !plan_after
+
+    # Remove plan from list before moving
+    delete_plan_in_list
+    # Since we've updated the plans list by removing self, we need to reload
+    plan_after.reload
+
+    previous_plan = plan_after.previous_plan
+
+    if previous_plan
+      self.previous_plan_id = previous_plan.id
+      previous_plan.next_plan_id = self.id
+
+      previous_plan.save
+    else
+      # There is no next plan which means plan_after is first in list.
+      self.previous_plan_id = nil
+    end
+
+    plan_after.previous_plan_id = self.id
+    plan_after.save
+
+    self.next_plan_id = plan_after.id
+    return self.save
   end
 
   private
 
-  def highest_plan_num
-    return self.job.plans.where(tab: self.tab).count;
-  end
-
-  def plan_num_exists?
-    p = Plan.find_all_by_job_id(self.job_id)
-    p.each do |plan|
-      if(plan.id == self.id)
-        next
-      end
-      if(plan.plan_num == self.plan_num)
-        return true
+    def check_for_valid_tab_name
+      if !TABS.include?(self.tab)
+        errors.add(:tab, "isn't a valid tab")
       end
     end
-    return false
-  end
 
-  def check_for_valid_tab_name
-    if !TABS.include?(self.tab)
-      errors.add(:tab, "isn't a valid tab")
-    end
-  end
+    def check_for_duplicate_plan_name_for_tab
+      plans = Plan.where(
+        job_id: self.job_id,
+        tab: self.tab,
+        plan_name: self.plan_name
+      ).where('id != ?', self.id)
 
-  def check_for_duplicate_plan_num
-    p = Plan.find_all_by_job_id_and_tab(self.job_id, self.plan_num)
-    p.each do |plan|
-      next if (plan.id == self.id) # Skip if current plan
-      if(plan.plan_num == self.plan_num)
-        errors.add(:plan_num, 'already exists')
-        return false
-      end
-    end
-    return true
-  end
-
-  def check_for_duplicate_plan_name_in_job
-    p = Plan.find_all_by_job_id(self.job_id)
-    p.each do |plan|
-      if(plan.id == self.id)
-        next
-      end
-      next if plan.tab != self.tab
-      if(plan.plan_name == self.plan_name)
+      if plans.length != 0
         errors.add(:plan_name, 'already exists')
-        return
       end
     end
-  end
 
-  # Attempt to solve weird indexing bug
-  def ensure_plans_have_unique_plan_nums(plans)
-    puts "Attempting to ensure plans have unique plan nums"
-    tabs = {}
-    plans.each do |plan|
-      if tabs[plan.tab] == nil
-        tabs[plan.tab] = []
-      else
-        tabs[plan.tab] << plan
+    # When removing a plan, we need to update next_plan_id and previous_plan_id
+    def delete_plan_in_list
+      next_plan = self.next_plan
+      previous_plan = self.previous_plan
+
+      if previous_plan and next_plan
+        # Middle of list
+        next_plan.previous_plan_id = self.previous_plan_id
+        previous_plan.next_plan_id = self.next_plan_id
+
+        next_plan.save
+        previous_plan.save
+      elsif next_plan
+        # First in list
+        next_plan.previous_plan_id = nil
+
+        next_plan.save
+      elsif previous_plan
+        # Last in list
+        previous_plan.next_plan_id = nil
+
+        previous_plan.save
       end
     end
-    tabs.keys do |key| # Go through all the plans per tab
-      puts "Checking #{key}"
-      plan_nums = {} # Keep track if we've seen a plan_num yet
-      plans[key].each do |plan|
-        plan_num = plan.plan_num
-        if plan_nums[plan_num] == nil # If we've never seen the num, then good
-          plan_nums[plan_num] = true
-        elsif plan_nums[plan_num] == true # If we've seen the number before, then reorder.
-          puts "ERROR: Redordering plan nums!"
-          return reorder_plan_nums(plans[key])
-
-        end
-      end
-    end
-    return plans
-  end
-
-  def reorder_plan_nums(plans)
-    plans.each_with_index do |plan, index|
-      plan.plan_num == index + 1
-    end
-    return plans
-  end
 end

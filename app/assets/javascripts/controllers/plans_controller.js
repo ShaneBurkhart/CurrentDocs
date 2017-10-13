@@ -21,16 +21,16 @@ PlanSource.PlansController = Ember.ArrayController.extend({
   addPlan : function(plan){
   	if(this.planExists(plan)) return false;
   	var self = this;
-		this.get("controllers.job.model.plans").pushObject(plan);
-    this.updateTab();
-
+    this.get("controllers.job.model.plans").pushObject(plan);
 
 		plan.save().then(function(data){
-      if(data == false) {
+      if (data == false) {
         self.get("controller.job.model.plans").removeObject(plan);
-        this.updateTab();
       }
+
+      self.updateTab();
     });
+
     return true;
 	},
 
@@ -38,6 +38,7 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 		var self = this;
 		this.get("controllers.job.model.plans").removeObject(plan);
     this.updateTab();
+
 		plan.deleteRecord();
 		plan.save().then(function(){
 			self.updatePlans();
@@ -88,5 +89,5 @@ PlanSource.PlansController = Ember.ArrayController.extend({
     } else {
       this.set('sortProperties', ['plan_num']);
     }
-  }.observes('controllers.job.tab')
+  }.observes('controllers.job.tab', 'controllers.job.plans.@each')
 });

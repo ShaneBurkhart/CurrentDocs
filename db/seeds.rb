@@ -50,17 +50,16 @@ require 'faker'
 @user.save
 
 def create_plans_for_job(job)
-  (1..15).each do |i|
+  (1..20).each do |i|
     tab = Plan::TABS.sample
     csi = nil
 
     if tab == "Shops"
-      csi = Faker::Address.building_number
+      csi = Faker::Number.number(6)
     end
 
     plan = Plan.create(
       job_id: job.id,
-      plan_num: i,
       plan_name: Faker::Address.secondary_address,
       tab: tab,
       csi: csi
