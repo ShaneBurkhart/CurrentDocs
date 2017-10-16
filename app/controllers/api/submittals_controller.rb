@@ -114,14 +114,17 @@ class Api::SubmittalsController < ApplicationController
     files = params["files"]
     returnData = { files: [] }
 
-    s3 = AWS::S3.new
+    s3 = Aws::S3::Client.new
     files.each do |key, file|
       uuid = SecureRandom.uuid
       redis_key = "attachments:#{uuid}"
       original_filename = file.original_filename
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["attachments/#{uuid}"];
-      obj.write(file.tempfile)
+      obj = s3.put_object(
+        bucket: ENV["AWS_BUCKET"],
+        key: "attachments/#{uuid}",
+        body: file.tempfile,
+      )
 
       # Expire after a day
       Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
@@ -136,10 +139,10 @@ class Api::SubmittalsController < ApplicationController
     @attachment = Attachment.find(params[:id])
 
     if @attachment
-      s3 = AWS::S3.new
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects[@attachment.s3_path];
+      s3 = Aws::S3::Client.new
+      obj = s3.get_object(bucket: ENV["AWS_BUCKET"], key: @attachment.s3_path)
 
-      send_data obj.read, filename: @attachment.filename, stream: 'true', buffer_size: '4096'
+      send_data obj.body.read, filename: @attachment.filename, stream: 'true', buffer_size: '4096'
     else
       render_no_permission
     end

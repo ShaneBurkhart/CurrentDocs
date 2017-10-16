@@ -75,7 +75,7 @@ class Api::PhotosController < ApplicationController
     files = params["files"]
     returnData = { files: [] }
 
-    s3 = AWS::S3.new
+    s3 = Aws::S3::Client.new
     files.each do |key, file|
       original_filename = file.original_filename
       file_ext = original_filename.split('.').pop
@@ -87,9 +87,12 @@ class Api::PhotosController < ApplicationController
 
       exif_data = get_exif_data(file.tempfile.path)
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{aws_filename}"];
-      obj.write(file.tempfile)
-      obj.acl = :public_read
+      obj = s3.put_object(
+        bucket: ENV["AWS_BUCKET"],
+        key: "photos/#{aws_filename}",
+        body: file.tempfile,
+        acl: "public-read",
+      )
 
       # Expire after a day
       Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
@@ -97,7 +100,7 @@ class Api::PhotosController < ApplicationController
       returnData[:files].push({
         id: aws_filename,
         original_filename: original_filename,
-        date_taken: exif_data && exif_data[:date_time] ? exif_data[:date_time] : nil,
+        date_taken: exif_data && exif_data.date_time ? Date.parse(exif_data.date_time) : nil,
       })
     end
 
@@ -189,10 +192,10 @@ class Api::PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
 
     if @photo
-      s3 = AWS::S3.new
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["photos/#{@photo.aws_filename}"];
+      s3 = Aws::S3::Client.new
+      obj = s3.get_object(bucket: ENV["AWS_BUCKET"], key: "photos/#{@photo.aws_filename}")
 
-      send_data obj.read, filename: @photo.filename, stream: 'true', buffer_size: '4096'
+      send_data obj.body.read, filename: @photo.filename, stream: 'true', buffer_size: '4096'
     else
       render_no_permission
     end
@@ -224,8 +227,8 @@ class Api::PhotosController < ApplicationController
 
     def get_exif_data(file_path)
       begin
-        return Exif::Data.new(file_path)
-      rescue RuntimeError => e
+        return Exif::Data.new(File.new(file_path, 'r'))
+      rescue Exif::Error => e
         puts e
         return nil
       end
