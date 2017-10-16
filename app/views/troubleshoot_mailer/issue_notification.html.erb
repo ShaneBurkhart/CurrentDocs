@@ -19,9 +19,6 @@
       <li>ID: <%= @user.id %></li>
     </ul>
 
-    <p>Message:</p>
-    <p><%= @message %></p>
-
     <% if @job %>
       <p>Job:</p>
       <ul>
@@ -37,5 +34,8 @@
         <li><a href="<%= attachment[:url] %>"><%= attachment[:filename] %></a></li>
       <% end %>
     </ul>
+
+    <p>Message:</p>
+    <p><%= @message %></p>
   </body>
 </html>
