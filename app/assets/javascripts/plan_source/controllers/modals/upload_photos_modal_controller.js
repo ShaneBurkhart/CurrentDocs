@@ -23,7 +23,7 @@ PlanSource.UploadPhotosController = PlanSource.ModalController.extend({
 
   getPhotos: function () {
     var photos = [];
-    var $photos= $(".file-preview");
+    var $photos= $("#uploaded-photos .file-preview");
 
     $photos.each(function (i, el) {
       var $el = $(el);

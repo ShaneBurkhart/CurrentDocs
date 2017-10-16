@@ -23,9 +23,18 @@ module PlanSource
       g.helper_specs false
     end
 
+    # Don't remember why this was added but prevents app from being initialize on precompile.
+    # Probably something to do with deploy speeds.
     config.assets.initialize_on_precompile = false
 
+    # Add the main app source to precompile.
     config.assets.precompile += ['plan_source.js']
+
+    # Set handlebars templates_root to subdirectory containing templates
+    config.handlebars.templates_root = 'plan_source/templates/'
+
+    # Add JS and CSS for troubleshoot widget so we can include wherever
+    config.assets.precompile += ['troubleshoot-widget.css', 'troubleshoot-widget.js']
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

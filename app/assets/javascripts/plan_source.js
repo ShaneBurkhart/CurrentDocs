@@ -1,17 +1,17 @@
 //= require handlebars
 //= require ember
 //= require ember-data
-//= require ./dropzone
-//= require ./pikaday
+//= require ./plan_source/vendor/dropzone
+//= require ./plan_source/vendor/pikaday
 //= require_self
-//= require ./store
-//= require_tree ./models
-//= require_tree ./controllers
-//= require_tree ./views
-//= require_tree ./helpers
-//= require_tree ./templates
-//= require ./router
-//= require_tree ./routes
+//= require ./plan_source/store
+//= require_tree ./plan_source/models
+//= require_tree ./plan_source/controllers
+//= require_tree ./plan_source/views
+//= require_tree ./plan_source/helpers
+//= require_tree ./plan_source/templates
+//= require ./plan_source/router
+//= require_tree ./plan_source/routes
 
 // Drag n Drop file upload.  Turn off auto discover forms.
 // We create them in Ember.
