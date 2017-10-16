@@ -34,7 +34,7 @@ module PlanSource
     config.handlebars.templates_root = 'plan_source/templates/'
 
     # Add JS and CSS for troubleshoot widget so we can include wherever
-    config.assets.precompile += ['troubleshoot-widget.css', 'troubleshoot-widget.js']
+    config.assets.precompile += ['troubleshoot_widget.css', 'troubleshoot_widget.js']
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
