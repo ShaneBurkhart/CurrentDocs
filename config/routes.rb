@@ -43,6 +43,11 @@ PlanSource::Application.routes.draw do
     post '/photos/:id/destroy' => 'photos#destroy'
     get '/jobs/:job_id/photos' => 'photos#show'
     post '/photos/:id' => 'photos#update'
+
+    # Use submittals#upload_attachments for right now
+    # TODO move upload_attachments into a generic upload endpoint
+    post '/troubleshoot/upload_attachments' => 'submittals#upload_attachments'
+    post '/troubleshoot' => 'troubleshoot#create'
   end
 
   get '/view' => 'pdf#index', as: "view_pdf"

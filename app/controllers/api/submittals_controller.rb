@@ -36,7 +36,6 @@ class Api::SubmittalsController < ApplicationController
           s3_path: "attachments/#{id}",
           submittal_id: @submittal.id,
         )
-        puts attachment
       end
 
       # Reload for includes
