@@ -225,7 +225,7 @@ class Api::PhotosController < ApplicationController
     def get_exif_data(file_path)
       begin
         return Exif::Data.new(File.new(file_path, 'r'))
-      rescue Exif::Error => e
+      rescue StandardError => e
         puts e
         return nil
       end
