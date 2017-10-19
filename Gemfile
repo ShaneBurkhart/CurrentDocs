@@ -27,7 +27,7 @@ gem "simple_form", "2.1.1"
 gem 'paperclip', '3.5.2'
 gem 'aws-sdk', '1.32.0'
 gem 'colorize'
-gem 'exif'
+gem 'exif', '1.0.1'
 
 gem 'thin', group: :production
 
