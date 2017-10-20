@@ -41,6 +41,24 @@ class Job < ActiveRecord::Base
     self.plans.select{ |plan| tabs.include? plan.tab }
   end
 
+  def get_plans_for_tabs_with_plan_num(tabs)
+    plans = get_plans_for_tabs(tabs)
+
+    current_plan_id = nil
+    plans.each_with_index do |p, i|
+      plans.each_with_index do |plan, j|
+
+        if plan.previous_plan_id == current_plan_id
+          plan.plan_num = i + 1
+          current_plan_id = plan.id
+          break
+        end
+      end
+    end
+
+    return plans.sort { |a, b| a.plan_num <=> b.plan_num  }
+  end
+
   def send_message_to_group(message)
     shared_users.each do |shared_user|
       shared_user.send_message user.email, "This message is to the #{name} group:\n\n#{message}"

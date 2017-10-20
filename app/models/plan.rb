@@ -26,6 +26,7 @@ class Plan < ActiveRecord::Base
   # DON"T UPDATE previous_plan_id and next_plan_id MANUALLY!  Use other methods.
   attr_accessible :job_id, :plan_name, :num_pages, :tab, :csi, :plan_updated_at,
     :description, :code, :tags, :previous_plan_id, :next_plan_id
+  attr_accessor :plan_num
   validates :job_id, :plan_name, :tab, presence: true
   validate :check_for_duplicate_plan_name_for_tab
   validate :check_for_valid_tab_name

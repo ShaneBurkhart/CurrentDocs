@@ -130,7 +130,8 @@ class Api::JobsController < ApplicationController
   # If not, redirect to page to get the name and update our table.
   # If the cookie is set, we just want to update it right now.
   def show_sub_share_link
-    @job = Job.find params[:id]
+    @job = Job.find(params[:id])
+
     if @job
       # Record that someone opened the page
       render :sub_share_link

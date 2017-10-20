@@ -32,7 +32,7 @@
 							<th class="text-right">Controls</th>
 						</thead>
 						<tbody>
-							<% @job.get_plans_for_tabs("Plans").each do |plan|  %>
+							<% @job.get_plans_for_tabs_with_plan_num("Plans").each do |plan, i|  %>
 							<tr>
 								<td><%= plan.plan_num %></td>
 								<td>
@@ -68,7 +68,7 @@
 					</table>
 				</div>
 			</div>
-			<div id="tab-addendums" class="tab-pane fade in active">
+			<div id="tab-addendums" class="tab-pane fade in">
 				<div class="table-responsive" id="plan-table">
 					<table class="table table-responsive table-hover">
 						<thead>
@@ -79,7 +79,7 @@
 							<th class="text-right">Controls</th>
 						</thead>
 						<tbody>
-							<% @job.get_plans_for_tabs("Addendums").each do |plan|  %>
+							<% @job.get_plans_for_tabs_with_plan_num("Addendums").each do |plan|  %>
 							<tr>
 								<td><%= plan.plan_num %></td>
 								<td>
@@ -129,7 +129,7 @@
 							<th class="text-right">Controls</th>
 						</thead>
 						<tbody>
-							<% @job.get_plans_for_tabs("ASI").each do |plan|  %>
+							<% @job.get_plans_for_tabs_with_plan_num("ASI").each do |plan|  %>
 							<tr>
 								<td><%= plan.code %></td>
 								<td><p><%= plan.plan_name %></p></td>
