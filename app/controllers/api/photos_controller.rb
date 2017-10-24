@@ -94,10 +94,16 @@ class Api::PhotosController < ApplicationController
       # Expire after a day
       Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
 
+      date_taken = nil
+
+      if exif_data and exif_data.date_time_original
+        date_taken = Date.strptime(exif_data.date_time_original, "%Y:%m:%d")
+      end
+
       returnData[:files].push({
         id: aws_filename,
         original_filename: original_filename,
-        date_taken: exif_data && exif_data.date_time ? Date.parse(exif_data.date_time) : nil,
+        date_taken: date_taken,
       })
     end
 
