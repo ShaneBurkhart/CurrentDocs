@@ -6,15 +6,11 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 
   sort: function(sortProperty){
     if (sortProperty == this.sortProperties[0]){
-      if (this.sortAscending == true){
-        this.set("sortAscending", false);
-      }
-      else{
-        this.set("sortAscending", true);
-      }
-    }else{
+      this.set("sortAscending", !this.sortAscending);
+    } else {
       this.set("sortAscending", true);
     }
+
     this.set('sortProperties', [sortProperty]);
   },
 
@@ -75,7 +71,7 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 
     if (tab === "Photos") {
       job.getPhotos(function (photos) {
-        self.set('content', photos);
+        self.set('content', photos);
       });
     } else {
       this.set('content', job.getPlansByTab(tab));
@@ -83,11 +79,14 @@ PlanSource.PlansController = Ember.ArrayController.extend({
 
     if(tab == 'Shops') {
       this.set('sortProperties', ['csi']);
+      this.set("sortAscending", true);
     } else if (tab == 'Photos') {
       this.set('sortProperties', ['date_taken', 'created_at', 'id']);
       this.set("sortAscending", false);
     } else {
       this.set('sortProperties', ['plan_num']);
+      this.set("sortAscending", true);
     }
+
   }.observes('controllers.job.tab', 'controllers.job.plans.@each')
 });
