@@ -38,6 +38,7 @@ class Api::PlansController < ApplicationController
 		if user.can? :update, Plan
 			@plan = Plan.find(params[:id])
 			@plan_params = params["plan"]
+      @new_plan_num = @plan_params["plan_num"]
 
 			if user.is_my_plan(@plan)
 				@plan.plan_name = @plan_params["plan_name"]
@@ -48,7 +49,12 @@ class Api::PlansController < ApplicationController
 				@plan.tags = @plan_params["tags"]
 
 				if @plan.save
-          if @plan.move_to_plan_num(@plan_params["plan_num"].to_i)
+          if @new_plan_num.nil?
+            # No need to update plan_num
+            return render json: @plan
+          end
+
+          if @plan.move_to_plan_num(@new_plan_num.to_i)
             render json: @plan
           else
             render json: {}
