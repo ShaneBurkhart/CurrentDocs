@@ -107,6 +107,7 @@
         {{/if}}
     {{/if}}
 </nav>
+
 {{outlet}}
 
 <script>
@@ -156,6 +157,7 @@
       var filter = jQuery(this).val();
       toggleResults(filter);
   });
+
   $('#jobs-nav').bind('DOMSubtreeModified', function(e) {
       // console.log("Triggered")
       var filter = $("#search-input").val();

@@ -1,61 +1,52 @@
 PlanSource.JobController = Ember.ObjectController.extend({
-  tab: 'Plans',
+  addPlan : function(plan){
+  	if(this.planExists(plan)) return false;
 
-  changeTab: function(tab) {
-    this.set('tab', tab);
-  },
+  	var self = this;
+    this.get("model.plans").pushObject(plan);
 
-  isPlansTab: function() {
-    return this.get('tab') === 'Plans';
-  }.property('tab'),
+		plan.save().then(function(data){
+      if (data == false) {
+        self.get("model.plans").removeObject(plan);
+      }
+    });
 
-  isAddendumsTab: function() {
-    return this.get('tab') === 'Addendums';
-  }.property('tab'),
+    return true;
+	},
 
-  isShopsTab: function() {
-    return this.get('tab') === 'Shops';
-  }.property('tab'),
+	removePlan : function(plan){
+		var self = this;
+		this.get("model.plans").removeObject(plan);
 
-  isConsultantsTab: function() {
-    return this.get('tab') === 'Consultants';
-  }.property('tab'),
+		plan.deleteRecord();
+		plan.save().then(function(){
+			self.updatePlans();
+		});
+	},
 
-  isASITab: function() {
-    return this.get('tab') === 'ASI';
-  }.property('tab'),
+	updatePlans : function(){
+		var self = this;
+    var jobId = this.get("model.id");
 
-  isCalcTab: function() {
-    return this.get('tab') === 'Calcs & Misc';
-  }.property('tab'),
+		PlanSource.Job.find(jobId).then(function(job){
+			self.set("model", job);
+		});
+	},
 
-  isPhotosTab: function() {
-    return this.get('tab') === 'Photos';
-  }.property('tab'),
+	planExists : function(new_plan){
+		var name;
+		if (typeof new_plan == 'string' || new_plan instanceof String) {
+			name = new_plan;
+    } else {
+			name = new_plan.get("plan_name");
+    }
 
-  submittalCount: function () {
-    return this.get('model').get('submittals').length;
-  }.property('model.submittals'),
+    for(var i = 0 ; i < this.get("content").length ; i++){
+      var plan = this.get("content")[i];
+      if(plan.get("plan_name") == name)
+        return true;
+    }
 
-  archiveJob: function() {
-    this.get('model').set('archived', true);
-    this.get('model').save();
-  },
-  unarchiveJob: function() {
-    this.get('model').set('archived', false);
-    this.get('model').save();
-  },
-
-  subscribeJob:function(){
-    this.get('model').set('subscribed', true);
-    this.get('model').save();
-  },
-  unsubscribeJob:function(){
-    this.get('model').set('subscribed', false);
-    this.get('model').save();
-  },
-
-	back : function(){
-		window.history.go(-1);
-	}
+    return false;
+  }
 });

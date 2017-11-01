@@ -37,12 +37,12 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
       tags = $("#edit-plan-tags").val(),
       description = $("#edit-plan-description").val();
     var plan = this.get("model");
-    var plansController = this.get("parent");
+    var jobController = this.get("parent");
 
 		this.clearAllErrors();
 		this.clearAllInfo();
 
-		if (name != this.get("plan_name") && plansController.planExists(name)) {
+		if (name != this.get("plan_name") && jobController.planExists(name)) {
 			this.error("#edit-plan-name", "That plan name already exists!");
 			return;
 		} else {
@@ -84,7 +84,7 @@ PlanSource.EditPlanController = PlanSource.ModalController.extend({
 		}
 
 		plan.save().then(function(){
-			plansController.updatePlans();
+			jobController.updatePlans();
 		});
 
 		// Save file if file one exists
