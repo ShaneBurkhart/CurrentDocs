@@ -81,6 +81,25 @@ def create_plans_for_job(job)
     end
   end
 
+  # Create RFIs and ASIs
+  (1..15).each do |i|
+    RFI.create(job_id: job.id, status: "Open")
+
+    case rand(1..5)
+      # 1: RFI, Open, no ASI
+      when 1
+      # 2: RFI, Open, ASI
+      when 2
+        #RFI.create(job_id: job.id, status: "Open")
+      # 3: RFI, Closed, ASI
+      when 3
+      # 4: no RFI, Open, ASI
+      when 4
+      # 5: no RFI, Closed, ASI
+      when 5
+      end
+  end
+
   # In review submittals for job
   (0..3).each do |i|
     Submittal.create(

@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
   has_one :signup_link
   has_many :events
   has_many :notification_subscriptions
+  has_many :assigned_rfis, class_name: "RFI", foreign_key: "assigned_user_id"
 
   # Include default devise modules. Others available are:
   # , :confirmable,

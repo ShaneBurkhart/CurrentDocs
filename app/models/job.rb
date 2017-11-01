@@ -16,6 +16,7 @@ class Job < ActiveRecord::Base
   has_many :shared_users, through: :shares, source: :user
   has_many :submittals, conditions: "is_accepted = false"
   has_many :photos
+  has_many :rfis
   attr_accessible :name, :user_id, :archived, :subscribed
   attr_accessor :subscribed
   validates :user_id, presence: true

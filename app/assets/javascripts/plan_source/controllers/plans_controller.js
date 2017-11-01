@@ -73,6 +73,7 @@ PlanSource.PlansController = Ember.ArrayController.extend({
       job.getPhotos(function (photos) {
         self.set('content', photos);
       });
+    } else if (tab === "ASI") {
     } else {
       this.set('content', job.getPlansByTab(tab));
     }
