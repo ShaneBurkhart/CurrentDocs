@@ -198,11 +198,11 @@ class Api::JobsController < ApplicationController
     # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
     # Only add submittals to jobs we own since the only submittals associated with a job are unaccepted submittals.
     # After a submittal is accepted, it gets loaded via the plan details modal.
-    user.jobs.includes(:user, :plans, submittals: [:user, :attachments], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
+    user.jobs.includes(:user, :plans, :rfis, submittals: [:user, :attachments], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, :rfis, shares: [:user, :sharer])
   end
 
   def get_job(id)
-    Job.includes(:user, :plans, submittals: [:user], shares: [:user, :sharer]).find(id)
+    Job.includes(:user, :plans, :rfis, submittals: [:user], shares: [:user, :sharer]).find(id)
   end
 
   def render_no_permission
