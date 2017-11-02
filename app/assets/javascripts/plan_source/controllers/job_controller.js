@@ -17,17 +17,17 @@ PlanSource.JobController = Ember.ObjectController.extend({
     return true;
 	},
 
-	removePlan : function(plan){
+	removePlan: function(plan) {
 		var self = this;
 		this.get("model.plans").removeObject(plan);
 
 		plan.deleteRecord();
-		plan.save().then(function(){
+		plan.save().then(function() {
 			self.updatePlans();
 		});
 	},
 
-	updatePlans : function(){
+	updatePlans: function() {
 		var self = this;
     var jobId = this.get("model.id");
 
@@ -36,7 +36,7 @@ PlanSource.JobController = Ember.ObjectController.extend({
 		});
 	},
 
-	planExists : function(new_plan){
+	planExists: function(new_plan) {
 		var name;
 		if (typeof new_plan == 'string' || new_plan instanceof String) {
 			name = new_plan;
@@ -51,5 +51,33 @@ PlanSource.JobController = Ember.ObjectController.extend({
     }
 
     return false;
+  },
+
+  archiveJob: function () {
+    var job = this.get('model');
+
+    job.set('archived', true);
+    job.save();
+  },
+
+  unarchiveJob: function () {
+    var job = this.get('model');
+
+    job.set('archived', false);
+    job.save();
+  },
+
+  subscribeJob: function () {
+    var job = this.get('model');
+
+    job.set('subscribed', true);
+    job.save();
+  },
+
+  unsubscribeJob: function () {
+    var job = this.get('model');
+
+    job.set('subscribed', false);
+    job.save();
   }
 });

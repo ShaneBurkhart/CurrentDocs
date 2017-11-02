@@ -1,7 +1,7 @@
 <h2>{{name}} {{#if archived}}(Archived){{/if}}</h2>
 <div class="row">
   <div class="col-sm-12">
-    <p><a {{ action "back" target="controller" }}>Back to your jobs</a></p>
+    <p>{{#linkTo 'jobs'}}Back to your jobs{{/linkTo}}</p>
     {{#unless isShared}}
       {{#if archived}}
         {{#manager}}
