@@ -39,7 +39,7 @@
         {{#if isPlansTab}}
             <a class="active">Plans</a>
         {{else}}
-            <a {{action "changeTab" "Plans"}}>Plans</a>
+          {{#linkTo "job.plans" }}Plans{{/linkTo}}
         {{/if}}
     {{/if}}
 
@@ -47,7 +47,7 @@
         {{#if isAddendumsTab}}
             <a class="active">Addendums</a>
         {{else}}
-            <a {{action "changeTab" "Addendums"}}>Addendums</a>
+            {{#linkTo "job.addendums" }}Addendums{{/linkTo}}
         {{/if}}
     {{/if}}
 
@@ -55,7 +55,7 @@
         {{#if isASITab}}
             <a class="active">RFI/ASI</a>
         {{else}}
-            <a {{action "changeTab" "ASI"}}>RFI/ASI</a>
+            {{#linkTo "job.rfi-asi" }}RFI/ASI{{/linkTo}}
         {{/if}}
     {{/if}}
 
@@ -73,12 +73,12 @@
         {{else}}
           {{#can_review_submittal}}
             {{#if submittalCount}}
-              <a {{action "changeTab" "Shops"}}>Shops ({{ submittalCount }})</a>
+              {{#linkTo "job.shops" }}Shops ({{ submittalCount }}){{/linkTo}}
             {{else}}
-              <a {{action "changeTab" "Shops"}}>Shops</a>
+              {{#linkTo "job.shops" }}Shops{{/linkTo}}
             {{/if}}
           {{else}}
-              <a {{action "changeTab" "Shops"}}>Shops</a>
+            {{#linkTo "job.shops" }}Shops{{/linkTo}}
           {{/can_review_submittal}}
         {{/if}}
     {{/if}}
@@ -87,7 +87,7 @@
         {{#if isConsultantsTab}}
             <a class="active">Support</a>
         {{else}}
-            <a {{action "changeTab" "Consultants"}}>Support</a>
+            {{#linkTo "job.support" }}Support{{/linkTo}}
         {{/if}}
     {{/if}}
 
@@ -95,7 +95,7 @@
         {{#if isCalcTab}}
             <a class="active">Calcs & Misc</a>
         {{else}}
-            <a {{action "changeTab" "Calcs & Misc"}}>Calcs & Misc</a>
+            {{#linkTo "job.calcs" }}Calcs & Misc{{/linkTo}}
         {{/if}}
     {{/if}}
 
@@ -103,7 +103,7 @@
         {{#if isPhotosTab}}
             <a class="active">Photos</a>
         {{else}}
-            <a {{action "changeTab" "Photos"}}>Photos</a>
+            {{#linkTo "job.photos" }}Photos{{/linkTo}}
         {{/if}}
     {{/if}}
 </nav>

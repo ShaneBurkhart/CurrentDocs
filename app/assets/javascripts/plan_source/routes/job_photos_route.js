@@ -5,19 +5,36 @@ PlanSource.JobPhotosRoute = Ember.Route.extend({
     var jobController = this.controllerFor('job');
 
     controller.set('jobController', jobController);
-    controller.set('model', model);
+    controller.set('content', model);
   },
 
   model: function () {
     var jobPromise = this.modelFor('job');
+    var resolvedPhotos = Em.A();
 
-    return Em.Deferred.promise(function (p) {
-      // The parent controller (job) gives a promise for it's model.
-      jobPromise.then(function (job) {
-        job.getPhotos(function (photos) {
-          p.resolve(photos);
+    // Check if the model is a promise
+    if (jobPromise.then) {
+      // jobPromise is a promise
+      return Em.Deferred.promise(function (p) {
+        jobPromise.then(function (job) {
+          job.getPhotos(function (photos) {
+            for (var i = 0; i < photos.length; i++) {
+              resolvedPhotos.push(photos[i]);
+            }
+
+            p.resolve(photos);
+          });
         });
       });
-    });
+    } else {
+      // jobPromise is a Job object
+      jobPromise.getPhotos(function (photos) {
+        for (var i = 0; i < photos.length; i++) {
+          resolvedPhotos.push(photos[i]);
+        }
+      });
+    }
+
+    return resolvedPhotos;
   }
 });
