@@ -27,3 +27,7 @@ PlanSource.JobSupportController = PlanSource.JobPlansController.extend({
 PlanSource.JobCalcsController = PlanSource.JobPlansController.extend({
   tab: 'Calcs & Misc'
 });
+
+PlanSource.JobShopsController = PlanSource.JobPlansController.extend({
+  tab: 'Shops'
+});
