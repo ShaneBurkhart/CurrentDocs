@@ -1,0 +1,83 @@
+<div class="table-responsive" id="plan-table">
+  <p>
+    <a href="#" {{action "openUploadPhotosModal"}} class="button button-green">Create RFI</a>
+    <a href="#" {{action "openUploadPhotosModal"}} class="button button-blue">Create ASI (Unlinked)</a>
+  </p>
+
+  <nav id="rfi-asi-nav" class="rfi-asi-filters">
+    <span class="active">Filter: </span>
+    {{#if isOpenFilter }}
+        <a class="active">Open</a>
+    {{else}}
+      <a {{action "filter" "open"}}>Open</a>
+    {{/if}}
+
+    {{#if isClosedFilter }}
+        <a class="active">Closed</a>
+    {{else}}
+      <a {{action "filter" "closed"}}>Closed</a>
+    {{/if}}
+
+    {{#if isAllFilter }}
+        <a class="active">All</a>
+    {{else}}
+      <a {{action "filter" "all"}}>All</a>
+    {{/if}}
+
+    {{#if isMeFilter }}
+        <a class="active">Assigned To Me</a>
+    {{else}}
+      <a {{action "filter" "me"}}>Assigned To Me</a>
+    {{/if}}
+  </nav>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>RFI</th>
+        <th>ASI</th>
+        <th>Status</th>
+        <th>Target Response</th>
+        <th>Days Past Due</th>
+        <th>Assigned To</th>
+        <th>Subject</th>
+        <th>Plan Sheets Affected</th>
+        <th>In Addendum #</th>
+        <th>Last Updated</th>
+        <th>Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each controller}}
+        <tr>
+          <td>{{id}}</td>
+          <td>{{asi_id}}</td>
+          <td>{{status}}</td>
+          <td></td>
+          <td></td>
+          <td>{{user.first_name}}</td>
+          <td title="{{unbound subject}}">{{truncate subject}}</td>
+          <td>{{plan_sheets_affected}}</td>
+          <td>{{in_addendum}}</td>
+          <td>{{date updated_at}}</td>
+          <td></td>
+        </tr>
+      {{else}}
+        <tr>
+          <td>
+            <!-- add message to if they have permissions to create -->
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
+  })
+</script>
+
+
+

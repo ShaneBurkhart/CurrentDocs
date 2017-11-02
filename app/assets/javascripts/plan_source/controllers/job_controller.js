@@ -1,3 +1,7 @@
+var isTabProp = function (tab) {
+  return function () { return this.isTab(tab); }.property('currentTab');
+};
+
 PlanSource.JobController = Ember.ObjectController.extend({
   // Safe default
   currentTab: 'Plans',
@@ -83,5 +87,17 @@ PlanSource.JobController = Ember.ObjectController.extend({
 
     job.set('subscribed', false);
     job.save();
-  }
+  },
+
+  isTab: function (tab) {
+    return tab === this.get('currentTab');
+  },
+
+  isPlansTab: isTabProp('Plans'),
+  isAddendumsTab: isTabProp('Addendums'),
+  isASITab: isTabProp('ASI'),
+  isShopsTab: isTabProp('Shops'),
+  isConsultantsTab: isTabProp('Consultants'),
+  isCalcTab: isTabProp('Calcs'),
+  isPhotosTab: isTabProp('Photos'),
 });

@@ -10,7 +10,11 @@
       {{else}}
         {{#manager}}
           <a href="#" {{action "archiveJob"}} class="button button-red">Archive</a>
-          <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
+
+          {{#unless isASITab}}
+            <a href="#" {{action "openAddPlanModal"}} class="button button-green">+ Add Plan</a>
+          {{/unless}}
+
           <a href="#" {{action "openSubShareLinkModal"}} class="button button-blue">Share Link</a>
 
           {{#if subscribed}}
@@ -55,7 +59,7 @@
         {{#if isASITab}}
             <a class="active">RFI/ASI</a>
         {{else}}
-            {{#linkTo "job.rfi-asi" }}RFI/ASI{{/linkTo}}
+            {{#linkTo "job.rfi_asi" }}RFI/ASI{{/linkTo}}
         {{/if}}
     {{/if}}
 

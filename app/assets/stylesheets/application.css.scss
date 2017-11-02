@@ -179,13 +179,12 @@ iframe{
 	}
 }
 
-.jobs-controls {
+.jobs-controls, .rfi-asi-filters {
     padding: 8px 0;
     border-top: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
     margin: 13px 0 15px;
-
-    a {
+    a, span {
         margin-right: 15px;
 
         &.active {

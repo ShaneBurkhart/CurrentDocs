@@ -1,6 +1,6 @@
 PlanSource.Job = Ember.Object.extend({
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "photos", "shares", "submittals"));
+    this.setProperties(this.getProperties("user", "plans", "rfis", "photos", "shares", "submittals"));
   },
 
   planCount:function(){
@@ -20,6 +20,16 @@ PlanSource.Job = Ember.Object.extend({
       });
       this.set("plans", plans);
       delete hash.plans
+    }
+
+    if(hash.rfis){
+      var RFIs = Em.A();
+      hash.rfis.forEach(function(rfi){
+        RFIs.pushObject(PlanSource.RFI.create(rfi));
+      });
+      this.set("rfis", RFIs);
+      console.log(RFIs);
+      delete hash.rfis;
     }
 
     if(hash.photos){
@@ -81,6 +91,41 @@ PlanSource.Job = Ember.Object.extend({
     }
 
     return plansForTab;
+  },
+
+  getFilteredRFIsAndASIs: function (filter) {
+    var filter = filter || 'all';
+    var filterParams = {};
+    var plans = [];
+
+    switch (filter) {
+      case 'open':
+        filterParams['status'] = 'Open';
+        break;
+      case 'closed':
+        filterParams['status'] = 'Closed';
+        break;
+      case 'me':
+        filterParams['assigned_user_id'] = window.user_id;
+        break;
+      case 'all':
+      default:
+        break;
+    }
+
+    var RFIs = this.get('rfis');
+    for (var i = 0; i < RFIs.length; i++) {
+      var RFI = RFIs[i];
+      var shouldAdd = true;
+
+      Object.keys(filterParams).forEach(function (key) {
+        shouldAdd = shouldAdd && RFI.get(key) === filterParams[key];
+      });
+
+      if (shouldAdd) plans.push(RFI);
+    }
+
+    return plans;
   },
 
 	username : function(){
