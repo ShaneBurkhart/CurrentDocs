@@ -110,6 +110,27 @@ PlanSource.JobRoute = Ember.Route.extend({
       var job = this.get("controller").get("model");
 
       this.renderModal("submittal_list", { model: job });
+    },
+
+    openCreateRfiModal: function () {
+      this.renderModal("rfi_asi", {
+        model: PlanSource.RFI.create(),
+        parent: this.controllerFor("job"),
+      });
+    },
+
+    openCreateUnlinkedAsiModal: function () {
+      this.renderModal("rfi_asi", {
+        model: PlanSource.ASI.create(),
+        parent: this.controllerFor("job"),
+      });
+    },
+
+    openRfiAsiModal: function (rfiOrAsi) {
+      this.renderModal("rfi_asi", {
+        model: rfiOrAsi,
+        parent: this.controllerFor("job"),
+      });
     }
   },
 
