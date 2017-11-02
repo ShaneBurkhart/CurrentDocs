@@ -12,6 +12,22 @@ PlanSource.RFI = Ember.Object.extend({
     Ember.setProperties(this, hash);
   },
 
+  isNew: function () {
+    return !this.get('id');
+  }.property('id'),
+
+  isOpen: function () {
+    return this.get('status') === 'Open';
+  }.property('status'),
+
+  getASI: function () {
+    return this.get('asi');
+  }.property('asi'),
+
+  getRFI: function () {
+    return this;
+  }.property(),
+
   rfi_id: function () {
     return this.get('id');
   }.property('id'),

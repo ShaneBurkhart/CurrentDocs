@@ -1,51 +1,17 @@
 <div class="modal-wrapper">
 	<div class="overlay"></div>
 
-  <div class="modal-container">
-    <div class="split">
-      <div class="dialog box box-border">
-        <div class="header">
-          <p class="title">Enter a plan name.</p>
-        </div>
-        <div class="body">
-          <p>Enter a name for your new plan.</p>
-          <div class="control-group">
-            <div class="controls">
-              {{ view PlanSource.TextField class="form-control" placeholder="Plan name" focus=true id="new-plan-name" }}
-              <span class="help-inline"></span>
-            </div>
-          </div>
-        </div>
-        <div class="footer">
-          <div class="buttons">
-            <a class="button" {{action "close"}}>Cancel</a>
-            <a class="button button-blue" {{action "addPlan" target=controller}} >Create</a>
-          </div>
-        </div>
+  {{#if getASI}}
+    <div class="modal-container">
+      <div class="split">
+        {{partial "modals/rfi_partial"}}
       </div>
-    </div>
 
-    <div class="split">
-      <div class="dialog box box-border">
-        <div class="header">
-          <p class="title">Enter a plan name.</p>
-        </div>
-        <div class="body">
-          <p>Enter a name for your new plan.</p>
-          <div class="control-group">
-            <div class="controls">
-              {{ view PlanSource.TextField class="form-control" placeholder="Plan name" focus=true id="new-plan-name" }}
-              <span class="help-inline"></span>
-            </div>
-          </div>
-        </div>
-        <div class="footer">
-          <div class="buttons">
-            <a class="button" {{action "close"}}>Cancel</a>
-            <a class="button button-blue" {{action "addPlan" target=controller}} >Create</a>
-          </div>
-        </div>
+      <div class="split">
+        {{partial "modals/asi_partial"}}
       </div>
     </div>
-  </div>
+  {{else}}
+    {{partial "modals/rfi_partial"}}
+  {{/if}}
 </div>
