@@ -1,173 +1,77 @@
 <div class="table-responsive" id="plan-table">
   {{#can_review_submittal}}
-    {{#if controllers.job.isShopsTab}}
-      {{#if controllers.job.submittalCount}}
-        <p><a href="#" {{action "openSubmittalListModal"}} class="button button-green">{{controllers.job.submittalCount}} Submittals For Review</a></p>
-      {{/if}}
+    {{#if jobController.submittalCount}}
+      <p><a href="#" {{action "openSubmittalListModal"}} class="button button-green">{{jobController.submittalCount}} Submittals For Review</a></p>
     {{/if}}
   {{/can_review_submittal}}
-
-  {{#if controllers.job.isPhotosTab}}
-    <p>
-      <a href="#" {{action "openUploadPhotosModal"}} class="button button-blue">Upload Photos</a>
-    </p>
-  {{/if}}
 
   <table class="table table-hover">
     <thead>
       <tr>
-        {{#if controllers.job.isPhotosTab}}
-          <th></th>
-          <th>Date Taken</th>
-          <th>Uploaded By</th>
-          <th>Description</th>
-          <th>File</th>
-          <th>Controls</th>
-        {{else}}
-          {{#if controllers.job.isShopsTab}}
-            <th {{action "sort" "csi"}}><a>CSI</a></th>
-          {{else}}
-            {{#if controllers.job.isASITab}}
-            <th {{action "sort" "code"}}><a>ASI</a></th>
-            {{else}}
-            <th {{action "sort" "plan_num"}}><a>#</a></th>
-            {{/if}}
-          {{/if}}
-
-          <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
-  
-          {{#if controllers.job.isShopsTab}}
-          <th {{action "sort" "status"}}><a>Status</a></th>
-          {{else}}
-            {{#if controllers.job.isASITab}}
-            <th {{action "sort" "description"}}><a>Description</a></th>
-            <th {{action "sort" "affected"}}><a>Affects</a></th>
-            {{/if}}
-          {{/if}}
-  
-          <th {{action "sort" "plan_updated_at"}}><a>Updated</a></th>
-          <th {{action "sort" "filename"}}><a>Download File</a></th>
-          <th class="text-right">Controls</th>
-        {{/if}}
+        <th {{action "sort" "csi"}}><a>CSI</a></th>
+        <th {{action "sort" "plan_name"}}><a>Plan Name</a></th>
+        <th {{action "sort" "status"}}><a>Status</a></th>
+        <th {{action "sort" "plan_updated_at"}}><a>Updated</a></th>
+        <th {{action "sort" "filename"}}><a>Download File</a></th>
+        <th class="text-right">Controls</th>
       </tr>
     </thead>
     <tbody>
-      {{#if controllers.job.isPhotosTab}}
-        {{#each controller}}
-          <tr>
-            <td class="photo-thumbnail-cell">
-              <div class="photo-thumbnail-container">
-                <img src="{{unbound thumbnail_url}}">
-              </div>
-            </td>
-            <td>{{format-date date_taken}}</td>
-            <td>{{upload_user_email}}</td>
-            <td title="{{unbound description}}">{{truncate description}}</td>
-            <td>
-              <a href="/api/photos/download/{{unbound id}}" title="{{unbound filename}}">{{truncate filename}}</a>
-            </td>
-            <td>
-              <ul style="padding-left:0px;" class="controls text-right unstyled">
-                <li><a href="/photos/{{unbound id}}/gallery" target="_blank">View</a></li>
-                {{#admin}}
-                  <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
-                  <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
-                {{else}}
-                  {{#if controller.job.isMyJob}}
-                    <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
-                    <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
-                  {{else}}
-                    {{#if current_user_is_owner}}
-                      <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
-                      <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
-                    {{/if}}
-                  {{/if}}
-                {{/admin}}
-              </ul>
-            </td>
-          </tr>
+      {{#each controller}}
+        {{#if hasPlan}}
+          <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
         {{else}}
           <tr>
-            <td>
-              <!-- add message to upload image if they have permissions -->
-            </td>
-          </tr>
-        {{/each}}
-      {{else}}
-        {{#each controller}}
-          {{#if hasPlan}}
-            <tr class="table-row-button" data-link="/api/plans/embedded/{{unbound id}}">
-          {{else}}
-            <tr>
-          {{/if}}
+        {{/if}}
 
-          {{#if this.belongsToShops}}
-            <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
-          {{else}}
-            {{#if this.belongsToASI}}
-              <td><span>{{unbound code}}</span></td>
-            {{else}}
-              <td><span>{{plan_num}}</span></td>
-            {{/if}}
-          {{/if}} <!-- belongsToShops -->
+          <td><span class="text-nowrap">{{csi_formatter csi}}</span></td>
 
-            <td class="word"><span title="{{unbound plan_name}}">{{plan_name}}</span></td>
+          <td class="word"><span title="{{unbound plan_name}}">{{plan_name}}</span></td>
 
-            {{#if this.belongsToShops}}
-              <td><span>{{unbound status}}</span></td>
-            {{else}}
-              {{#if this.belongsToASI}}
-                <td><span>{{truncate getDescriptionString}}</span></td>
-                <td><span>{{unbound tags}}</span></td>
-              {{/if}}
-            {{/if}} <!-- belongsToShops -->
+          <td><span>{{unbound status}}</span></td>
 
-            <td><span>{{date plan_updated_at}}</span></td>
-            <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
-            <td>
-              <ul style="padding-left:0px;" class="controls text-right unstyled">
-                {{#if hasPlan}}
-                  {{#if fileIsPDF}}
-                    <li style="display:none"><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
-                  {{/if}}
+          <td><span>{{date plan_updated_at}}</span></td>
+          <td><a href="/api/download/{{unbound id}}" title="{{unbound plan_file_name}}">{{truncate plan_file_name}}</a></td>
 
-                  <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+          <td>
+            <ul style="padding-left:0px;" class="controls text-right unstyled">
+              {{#if hasPlan}}
+                {{#if fileIsPDF}}
+                  <li style="display:none"><a class="pdf-viewer" href="/web/viewer.html?file={{ unbound encode_URL getPlanURI }}" title="Beta PDF Viewer" data-content="This option is in beta testing and renders your PDF without using the browsers default viewer. This option is intended to remove cross-browser differences and can zoom. It may not work for older PDFs!" data-toggle="popover" target="_blank">PDF Viewer</a></li>
                 {{/if}}
-                {{#unless controller.job.isShared}}
-                  <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
-                  <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
-                {{/unless}}
-                <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
-              </ul>
-            </td>
-          </tr>
-        {{else}}
-          <tr>
-            <td>
-              {{#manager}}
-                {{#unless job.isShared}}
-                  <p>You need to add a plan to your job.</p>
-                {{else}}
-                  <p>The owner hasn't added any plans.</p>
-                {{/unless}}
+
+                <li><a href="/api/plans/embedded/{{unbound id}}" target="_blank">View</a></li>
+              {{/if}}
+              {{#unless jobController.isShared}}
+                <li><a {{action "openDeletePlanModal" this}}>Delete</a></li>
+                <li><a {{action "openEditPlanModal" this}} data-id="{{unbound id}}">Edit</a></li>
+              {{/unless}}
+              <li><a {{action "openDetailsPlanModal" this}} data-id="{{unbound id}}">Details</a></li>
+            </ul>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td>
+            {{#manager}}
+              {{#unless job.isShared}}
+                <p>You need to add a plan to your job.</p>
               {{else}}
-                <p>The owner of this plan has not added any plans.</p>
-              {{/manager}}
-            </td>
-  
-            {{#unless controllers.job.isShopsTab}}
-              <td>{{plan_num}}</td>
-            {{/unless}}
-  
-          </tr>
-        {{/each}}
-      {{/if}}
+                <p>The owner hasn't added any plans.</p>
+              {{/unless}}
+            {{else}}
+              <p>The owner of this plan has not added any plans.</p>
+            {{/manager}}
+          </td>
+        </tr>
+      {{/each}}
     </tbody>
   </table>
 </div>
+
 <script>
-$(function () {
-  $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
-})
+  $(function () {
+    $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
+  })
 </script>
 

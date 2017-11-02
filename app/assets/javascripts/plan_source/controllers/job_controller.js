@@ -1,4 +1,7 @@
 PlanSource.JobController = Ember.ObjectController.extend({
+  // Safe default
+  currentTab: 'Plans',
+
   addPlan : function(plan){
   	if(this.planExists(plan)) return false;
 

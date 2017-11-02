@@ -8,9 +8,12 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openAddPlanModal : function(){
+      var jobController = this.get("controller");
+
       this.renderModal("add_plan", {
-        model: this.get("controller").get("model"),
-        parent: this.controllerFor("job"),
+        model: jobController.get("model"),
+        parent: jobController,
+        tab: jobController.get('currentTab'),
       });
     },
 
@@ -29,12 +32,15 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openEditPlanModal : function(model){
+      var jobController = this.get("controller");
       var self = this;
+
       model.getPlanRecordsSync(function(){
         self.renderModal("edit_plan", {
           model: model,
-          job: self.get("controller").get("model"),
-          parent: self.controllerFor("job"),
+          job: jobController.get("model"),
+          parent: jobController,
+          tab: jobController.get('currentTab'),
         });
       });
     },

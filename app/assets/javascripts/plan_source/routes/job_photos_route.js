@@ -12,6 +12,7 @@ PlanSource.JobPhotosRoute = Ember.Route.extend({
       }
     });
 
+    jobController.set('currentTab', this.tab);
     controller.set('jobController', jobController);
     controller.set('content', resolvedPhotos);
   }

@@ -1,5 +1,5 @@
-PlanSource.JobPlansController = PlanSource.ArrayController.extend({
-  tab: 'Plans',
+PlanSource.JobShopsController = PlanSource.ArrayController.extend({
+  tab: 'Shops',
 	sortProperties: ['plan_num'],
   sortAscending: true,
 
@@ -10,9 +10,7 @@ PlanSource.JobPlansController = PlanSource.ArrayController.extend({
   }.observes(
     'jobController.model',
     'jobController.model.plans',
-    'jobController.model.plans.@each',
-    // Watching id is the same as watching for save
-    'jobController.model.plans.@each.id'
+    'jobController.model.plans.@each'
   )
 });
 
@@ -27,3 +25,4 @@ PlanSource.JobSupportController = PlanSource.JobPlansController.extend({
 PlanSource.JobCalcsController = PlanSource.JobPlansController.extend({
   tab: 'Calcs & Misc'
 });
+
