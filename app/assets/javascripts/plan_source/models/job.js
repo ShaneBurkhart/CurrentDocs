@@ -1,6 +1,7 @@
 PlanSource.Job = Ember.Object.extend({
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "rfis", "photos", "shares", "submittals"));
+    this.setProperties(this.getProperties("user", "plans", "unlinked_asis", "rfis",
+      "photos", "shares", "submittals"));
   },
 
   planCount:function(){
@@ -22,13 +23,21 @@ PlanSource.Job = Ember.Object.extend({
       delete hash.plans
     }
 
+    if(hash.unlinked_asis){
+      var unlinkedASIs = Em.A();
+      hash.unlinked_asis.forEach(function(asi){
+        unlinkedASIs.pushObject(PlanSource.ASI.create(asi));
+      });
+      this.set("unlinked_asis", unlinkedASIs);
+      delete hash.unlinked_asis;
+    }
+
     if(hash.rfis){
       var RFIs = Em.A();
       hash.rfis.forEach(function(rfi){
         RFIs.pushObject(PlanSource.RFI.create(rfi));
       });
       this.set("rfis", RFIs);
-      console.log(RFIs);
       delete hash.rfis;
     }
 
@@ -123,6 +132,18 @@ PlanSource.Job = Ember.Object.extend({
       });
 
       if (shouldAdd) plans.push(RFI);
+    }
+
+    var unlinkedASIs = this.get('unlinked_asis');
+    for (var i = 0; i < unlinkedASIs.length; i++) {
+      var ASI = unlinkedASIs[i];
+      var shouldAdd = true;
+
+      Object.keys(filterParams).forEach(function (key) {
+        shouldAdd = shouldAdd && ASI.get(key) === filterParams[key];
+      });
+
+      if (shouldAdd) plans.push(ASI);
     }
 
     return plans;

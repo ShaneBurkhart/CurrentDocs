@@ -1,5 +1,5 @@
 class ASI < ActiveRecord::Base
-  attr_accessible :status, :plan_sheets_affected, :in_addendum, :job_id, :rfi_id, :assigned_user_id
+  attr_accessible :status, :subject, :plan_sheets_affected, :in_addendum, :job_id, :rfi_id, :assigned_user_id
 
   STATUSES = ["Open", "Closed"]
 

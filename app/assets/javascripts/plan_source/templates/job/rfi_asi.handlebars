@@ -44,23 +44,31 @@
         <th>Plan Sheets Affected</th>
         <th>In Addendum #</th>
         <th>Last Updated</th>
-        <th>Controls</th>
       </tr>
     </thead>
     <tbody>
       {{#each controller}}
-        <tr>
-          <td>{{id}}</td>
-          <td>{{asi_id}}</td>
+        <tr class="pointer" {{action "openRfiAsiModal" this}}>
+          {{#if rfi_id}}
+            <td><a {{action "openRfiAsiModal" this}}>{{rfi_id}}</a></td>
+          {{else}}
+            <td style="text-align: center;">-</td>
+          {{/if}}
+
+          {{#if asi_id}}
+            <td><a {{action "openRfiAsiModal" this}}>{{asi_id}}</a></td>
+          {{else}}
+            <td></td>
+          {{/if}}
+
           <td>{{status}}</td>
           <td></td>
           <td></td>
-          <td>{{user.first_name}}</td>
+          <td>{{assigned_user.first_name}}</td>
           <td title="{{unbound subject}}">{{truncate subject}}</td>
           <td>{{plan_sheets_affected}}</td>
           <td>{{in_addendum}}</td>
           <td>{{date updated_at}}</td>
-          <td></td>
         </tr>
       {{else}}
         <tr>

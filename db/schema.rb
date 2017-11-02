@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 20171102190926) do
 
   create_table "asis", :force => true do |t|
     t.string   "status"
+    t.string   "subject"
     t.string   "plan_sheets_affected"
     t.string   "in_addendum"
     t.integer  "job_id"
@@ -203,7 +204,7 @@ ActiveRecord::Schema.define(:version => 20171102190926) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-02 19:30:43'
+    t.datetime "last_seen",                            :default => '2017-11-02 20:14:07'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

@@ -2,6 +2,7 @@ class CreateAsis < ActiveRecord::Migration
   def change
     create_table :asis do |t|
       t.string :status
+    	t.string :subject
     	t.string :plan_sheets_affected
     	t.string :in_addendum
     	t.integer :job_id

@@ -1,5 +1,7 @@
 class ASISerializer < ActiveModel::Serializer
   attributes :id,
+    :status,
+    :subject,
     :plan_sheets_affected,
     :in_addendum,
     :rfi_id,
