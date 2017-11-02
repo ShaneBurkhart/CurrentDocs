@@ -2,6 +2,10 @@ PlanSource.JobController = Ember.ObjectController.extend({
   // Safe default
   currentTab: 'Plans',
 
+  submittalCount: function () {
+    return this.get('model').get('submittals').length;
+  }.property('model.submittals'),
+
   addPlan : function(plan){
   	if(this.planExists(plan)) return false;
 
