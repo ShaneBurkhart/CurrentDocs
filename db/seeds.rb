@@ -82,21 +82,32 @@ def create_plans_for_job(job)
   end
 
   # Create RFIs and ASIs
-  (1..15).each do |i|
-    RFI.create(job_id: job.id, status: "Open")
+  (1..20).each do |i|
+    user_id = [nil, @user.id, @manager.id, @viewer.id].sample
+    rfi = RFI.new(job_id: job.id, assigned_user_id: user_id)
 
     case rand(1..5)
-      # 1: RFI, Open, no ASI
       when 1
-      # 2: RFI, Open, ASI
+        # 1: RFI, Open, no ASI
+        rfi.save
+
       when 2
-        #RFI.create(job_id: job.id, status: "Open")
-      # 3: RFI, Closed, ASI
+        # 2: RFI, Open, ASI
+        rfi.save
+        ASI.create(status: 'Open', job_id: job.id, rfi_id: rfi.id)
+
       when 3
-      # 4: no RFI, Open, ASI
+        # 3: RFI, Closed, ASI
+        rfi.save
+        ASI.create(status: 'Closed', job_id: job.id, rfi_id: rfi.id)
+
       when 4
-      # 5: no RFI, Closed, ASI
+        # 4: no RFI, Open, ASI
+        ASI.create(status: 'Open', job_id: job.id, assigned_user_id: user_id)
+
       when 5
+        # 5: no RFI, Closed, ASI
+        ASI.create(status: 'Closed', job_id: job.id, assigned_user_id: user_id)
       end
   end
 

@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171101161034) do
+ActiveRecord::Schema.define(:version => 20171102190926) do
+
+  create_table "asis", :force => true do |t|
+    t.string   "status"
+    t.string   "plan_sheets_affected"
+    t.string   "in_addendum"
+    t.integer  "job_id"
+    t.integer  "rfi_id"
+    t.integer  "assigned_user_id"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -114,16 +125,12 @@ ActiveRecord::Schema.define(:version => 20171101161034) do
   end
 
   create_table "rfis", :force => true do |t|
-    t.string   "status"
     t.string   "subject"
-    t.string   "plan_sheets_affected"
-    t.string   "in_addendum"
     t.datetime "due_date"
     t.integer  "job_id"
-    t.integer  "asi_id"
     t.integer  "assigned_user_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "share_links", :force => true do |t|
@@ -196,7 +203,7 @@ ActiveRecord::Schema.define(:version => 20171101161034) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-01 17:20:50'
+    t.datetime "last_seen",                            :default => '2017-11-02 19:30:43'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

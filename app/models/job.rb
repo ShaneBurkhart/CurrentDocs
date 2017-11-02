@@ -17,6 +17,7 @@ class Job < ActiveRecord::Base
   has_many :submittals, conditions: "is_accepted = false"
   has_many :photos
   has_many :rfis, class_name: "RFI", foreign_key: "job_id"
+  has_many :unlinked_asis, class_name: "ASI", foreign_key: "job_id", conditions: "rfi_id IS NULL"
   attr_accessible :name, :user_id, :archived, :subscribed
   attr_accessor :subscribed
   validates :user_id, presence: true

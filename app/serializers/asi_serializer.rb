@@ -1,9 +1,9 @@
-class RFISerializer < ActiveModel::Serializer
+class ASISerializer < ActiveModel::Serializer
   attributes :id,
-    :subject,
-    :due_date,
+    :plan_sheets_affected,
+    :in_addendum,
+    :rfi_id,
     :assigned_user_id
 
-  has_one :asi
   has_one :assigned_user, serializer: SimpleUserSerializer
 end
