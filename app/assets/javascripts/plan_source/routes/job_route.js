@@ -144,6 +144,9 @@ PlanSource.JobRoute = Ember.Route.extend({
     if (modalController.onOpen) modalController.onOpen();
 
     this._modalStack.push(modal);
+
+    // Prevent scrolling of the page when modal is open
+    document.body.style.overflow = 'hidden';
   },
 
   closeModal: function () {
@@ -159,6 +162,9 @@ PlanSource.JobRoute = Ember.Route.extend({
     if (modalsRemaining) {
       var nextModal = this._modalStack[modalsRemaining - 1];
       this.render("modals/" + nextModal, {into : "jobs", outlet : "modal", controller : nextModal});
+    } else {
+      // Restore scrolling when no modals are remaining
+      document.body.style.overflow = 'visible';
     }
   },
 
