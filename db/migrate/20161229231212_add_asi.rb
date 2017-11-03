@@ -1,4 +1,4 @@
-class AddAsi < ActiveRecord::Migration
+class AddASI < ActiveRecord::Migration
   def up
     add_column :plans, :description, :text
     add_column :plans, :code, :string

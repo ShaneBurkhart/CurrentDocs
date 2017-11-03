@@ -11,9 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171102190926) do
+ActiveRecord::Schema.define(:version => 20171103190121) do
+
+  create_table "asi_attachments", :force => true do |t|
+    t.string   "filename"
+    t.string   "s3_path"
+    t.integer  "rfi_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "asis", :force => true do |t|
+    t.string   "asi_num"
     t.string   "status"
     t.string   "subject"
     t.string   "plan_sheets_affected"
@@ -125,10 +134,21 @@ ActiveRecord::Schema.define(:version => 20171102190926) do
     t.integer  "next_plan_id"
   end
 
+  create_table "rfi_attachments", :force => true do |t|
+    t.string   "filename"
+    t.string   "s3_path"
+    t.integer  "rfi_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "rfis", :force => true do |t|
+    t.string   "rfi_num"
     t.string   "subject"
+    t.string   "notes"
     t.datetime "due_date"
     t.integer  "job_id"
+    t.integer  "user_id"
     t.integer  "assigned_user_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
@@ -204,7 +224,7 @@ ActiveRecord::Schema.define(:version => 20171102190926) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-02 20:14:07'
+    t.datetime "last_seen",                            :default => '2017-11-03 20:27:06'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

@@ -1,6 +1,7 @@
-class CreateAsis < ActiveRecord::Migration
+class CreateASIs < ActiveRecord::Migration
   def change
     create_table :asis do |t|
+      t.string :asi_num
       t.string :status
     	t.string :subject
     	t.string :plan_sheets_affected

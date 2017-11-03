@@ -4,7 +4,7 @@ var isFilterProp = function (filter) {
 
 PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
   tab: 'ASI',
-	sortProperties: ['status', 'asi_id', 'rfi_id'],
+	sortProperties: ['status', 'rfi_num', 'asi_num'],
   sortAscending: false,
   currentFilter: 'open',
 

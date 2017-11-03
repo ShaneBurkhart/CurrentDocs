@@ -28,12 +28,8 @@ PlanSource.RFI = Ember.Object.extend({
     return this;
   }.property(),
 
-  rfi_id: function () {
-    return this.get('id');
-  }.property('id'),
-
-  asi_id: function () {
-    return !this.get('asi') ? '' : this.get('asi.id');
+  asi_num: function () {
+    return !this.get('asi') ? null : this.get('asi.asi_num');
   }.property('asi', 'asi.id'),
 
   status: function () {
@@ -46,6 +42,61 @@ PlanSource.RFI = Ember.Object.extend({
 
   in_addendum: function () {
     return !this.get('asi') ? '' : this.get('asi.in_addendum');
-  }.property('asi', 'asi.in_addendum')
+  }.property('asi', 'asi.in_addendum'),
+
+  dateSubmitted: function () {
+		return moment(this.get("created_at")).format("LL");
+  }.property('created_at'),
+
+  validate: function () {
+    var errors = {};
+
+    if (!this.get("subject")) {
+      errors.subject = "Can't be blank.";
+    }
+
+    return $.isEmptyObject(errors) ? undefined : errors;
+  },
+
+  submit: function (callback) {
+    var self = this;
+
+    $.ajax({
+        url: PlanSource.RFI.url(),
+        type: 'POST',
+        data : { rfi: this.getProperties([
+          "job_id",
+          "subject",
+          "notes",
+          "attachment_ids"
+        ]) },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        self.setProperties(data.rfi);
+        return callback(self);
+      } else {
+        return callback(undefined);
+      }
+    })
+  }
 });
 
+PlanSource.RFI.reopenClass({
+  baseUrl : "/api/rfis",
+
+  deleteUrl: function (id) {
+    return PlanSource.RFI.url() + "/" + id + "/destroy";
+  },
+
+  saveUrl: function (id) {
+    return PlanSource.RFI.url() + "/" + id;
+  },
+
+  url : function(){
+    var pathArray = window.location.href.split( '/' ),
+      host = pathArray[2],
+      u = PlanSource.getProtocol() + host + PlanSource.RFI.baseUrl;
+    return u;
+  }
+
+});

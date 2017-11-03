@@ -1,15 +1,120 @@
-<div class="dialog box box-border">
+<div class="dialog box box-border" style="width: 600px;">
   <div class="header">
-    <p class="title">Enter a plan name.</p>
+    <p class="title">ASI - {{asi_num}}</p>
   </div>
   <div class="body">
-    <p>Enter a name for your new plan.</p>
-    <div class="control-group">
-      <div class="controls">
-        {{ view PlanSource.TextField class="form-control" placeholder="Plan name" focus=true id="new-plan-name" }}
-        <span class="help-inline"></span>
+    <div class="row margin-bottom">
+      <div class="col-sm-4">
+        <p>Date Submitted:</p>
+      </div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4">
+        <p>Response By:</p>
+      </div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4">
+        <p>Plan Sheets Affected:</p>
+      </div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4">
+        <p>Included In Addendum #:</p>
+      </div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-2">
+        <p>Subject:</p>
+      </div>
+      <div class="col-sm-10">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-12">
+        <p>Notes:</p>
+        <div class="control-group">
+          <div class="controls">
+            {{#if isAccepted }}
+              {{#admin}}
+                <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+              {{else}}
+                <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+              {{/admin}}
+            {{else}}
+              <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
+            {{/if}}
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-12">
+        {{#if isNew }}
+          <p>Attachments (select to remove):</p>
+        {{else}}
+          <p>Attachments (select to download):</p>
+        {{/if}}
+        <div class="control-group">
+          <div id="submittal-attachments">
+            {{#each attachments}}
+              <p class="file-preview">
+                <a href="/api/submittals/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
+              </p>
+            {{/each}}
+          </div>
+          {{#if isNew }}
+            <div id="attachments-dnd" class="dropzone"></div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="footer">
     <div class="buttons">

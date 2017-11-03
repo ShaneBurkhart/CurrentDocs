@@ -49,14 +49,14 @@
     <tbody>
       {{#each controller}}
         <tr class="pointer" {{action "openRfiAsiModal" this}}>
-          {{#if rfi_id}}
-            <td><a {{action "openRfiAsiModal" this}}>{{rfi_id}}</a></td>
+          {{#if rfi_num}}
+            <td><a {{action "openRfiAsiModal" this}}>{{rfi_num}}</a></td>
           {{else}}
             <td style="text-align: center;">-</td>
           {{/if}}
 
-          {{#if asi_id}}
-            <td><a {{action "openRfiAsiModal" this}}>{{asi_id}}</a></td>
+          {{#if asi_num}}
+            <td><a {{action "openRfiAsiModal" this}}>{{asi_num}}</a></td>
           {{else}}
             <td></td>
           {{/if}}

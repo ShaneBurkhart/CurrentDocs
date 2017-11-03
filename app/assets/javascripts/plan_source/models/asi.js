@@ -15,8 +15,12 @@ PlanSource.ASI = Ember.Object.extend({
     return null;
   }.property(),
 
-  asi_id: function () {
-    return this.get('id');
-  }.property('id'),
+  rfi_num: function () {
+    return null;
+  }.property(),
+
+  dateSubmitted: function () {
+		return moment(this.get("created_at")).format("LL");
+  }.property('created_at')
 });
 

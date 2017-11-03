@@ -2,9 +2,13 @@
 	<div class="overlay"></div>
 
   {{#if getASI}}
-    <div class="modal-container">
+    <div class="modal-container" style="max-width: 1300px;">
       <div class="split">
-        {{partial "modals/rfi_partial"}}
+        {{#if getRFI}}
+          {{partial "modals/rfi_partial"}}
+        {{else}}
+          {{partial "modals/no_rfi_partial"}}
+        {{/if}}
       </div>
 
       <div class="split">
@@ -12,6 +16,10 @@
       </div>
     </div>
   {{else}}
-    {{partial "modals/rfi_partial"}}
+    {{#if isNew}}
+      {{partial "modals/new_rfi_partial"}}
+    {{else}}
+      {{partial "modals/rfi_partial"}}
+    {{/if}}
   {{/if}}
 </div>

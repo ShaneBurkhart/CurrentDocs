@@ -37,6 +37,8 @@ PlanSource::Application.routes.draw do
     post '/submittals/:id/destroy' => 'submittals#destroy'
     post '/submittals/:id' => 'submittals#update'
 
+    post '/rfis' => 'rfis#create'
+
     post '/photos/upload' => 'photos#upload_photos'
     post '/photos/submit' => 'photos#submit_photos'
     get '/photos/download/:id' => 'photos#download_photo'
