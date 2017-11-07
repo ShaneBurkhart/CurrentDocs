@@ -180,6 +180,17 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   }.property('model.getRFI'),
 
   canEditASI: function () {
+    var rfi = this.get("model");
+    var job = this.get("parent.model");
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canEdit = false;
+
+    if (job && job.get('user.id') === currentUserId) canEdit = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
+    // TODO add assigned to user check
+
+    return canEdit;
   },
 
 	keyPress: function(e) {
