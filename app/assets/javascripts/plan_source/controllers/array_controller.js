@@ -9,6 +9,6 @@ PlanSource.ArrayController = Ember.ArrayController.extend({
       this.set("sortAscending", true);
     }
 
-    this.set('sortProperties', [sortProperty]);
+    this.set('sortProperties', [sortProperty, 'id']);
   },
 });

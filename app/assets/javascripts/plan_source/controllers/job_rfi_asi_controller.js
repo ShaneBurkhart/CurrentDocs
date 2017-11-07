@@ -9,6 +9,8 @@ PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
   currentFilter: 'open',
 
   filter: function (filter) {
+    // Reset filters to the default when going with a preset filter.
+    this.set('sortProperties', ['status', 'rfi_num', 'asi_num'])
     this.set('currentFilter', filter);
   },
 

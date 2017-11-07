@@ -10,7 +10,8 @@ $width: 690px;
 	height:100%;
 	overflow-y: scroll;
 
-	.overlay{
+	&::before {
+        content: '';
 		position:fixed;
 		left:0;
 		right:0;
