@@ -1,27 +1,128 @@
 PlanSource.RfiAsiController = PlanSource.ModalController.extend({
-  submitRFI: function () {
+  save: function () {
     var self = this;
-    var rfi = this.get("model");
-    var data = this.getRFIData();
-    var attachments = this.getRFIAttachments();
+    var RFI = this.get('model.getRFI');
+    var ASI = this.get('model.getASI');
+
+    var handlers = [];
+    var RFIHandler = this.updateRFI.bind(this);
+    var ASIHandler = this.updateASI.bind(this);
+
+    if (RFI && RFI.get('isNew')) RFIHandler = this.submitRFI.bind(this);
+    if (ASI && ASI.get('isNew')) ASIHandler = this.submitASI.bind(this);
+
+    if (RFI && ASI) {
+      handlers = [ RFIHandler, ASIHandler ];
+    } else if (RFI) {
+      handlers = [ RFIHandler ];
+    } else if (ASI) {
+      handlers = [ ASIHandler ];
+    }
+
+    async.parallel(handlers, function (err, results) {
+      var RFIResult = results[0];
+      var ASIResult = results[1];
+
+      if (err) return toastr.error(err);
+
+      // Since RFIs and ASIs get updated in place, rebuild the relationship.
+      if (RFIResult && ASIResult) {
+        RFIResult.set("asi", ASIResult);
+        ASIResult.set("rfi", RFIResult);
+      }
+
+      if (RFIResult) toastr.success("RFI saved, thanks!");
+      if (ASIResult) toastr.success("ASI saved, thanks!");
+
+      self.send("close");
+    });
+  },
+
+  submitRFI: function (callback) {
+    var self = this;
+    var rfi = this.get("model.getRFI");
     var job = this.get("parent.model");
 
-    rfi.setProperties(data);
     rfi.set("job_id", job.get("id"));
-    rfi.set("attachment_ids", attachments);
+    rfi.setProperties(this.getRFIData());
+    rfi.set("attachment_ids", this.getRFIAttachments());
 
     var errors = rfi.validate();
-    this.set("errors", errors);
+    this.set("rfiErrors", errors);
     if (errors) return;
 
     rfi.submit(function (rfi) {
       if (rfi) {
         job.get('rfis').pushObject(rfi);
-        toastr.success("Submitted, thanks!");
-        self.send("close");
+        callback(null, rfi);
       } else {
-        // Error
-        toastr.error("Sorry, try again later!", "error");
+        callback("Sorry, try again later!");
+      }
+    });
+  },
+
+  updateRFI: function (callback) {
+    var self = this;
+    var rfi = this.get("model.getRFI");
+
+    rfi.setProperties(this.getRFIData());
+
+    var errors = rfi.validate();
+    this.set("rfiErrors", errors);
+    if (errors) return;
+
+    rfi.update(function (rfi) {
+      if (rfi) {
+        callback(null, rfi);
+      } else {
+        callback("Sorry, try again later!");
+      }
+    });
+  },
+
+  submitASI: function (callback) {
+    var self = this;
+    var rfi = this.get("model.getRFI");
+    var asi = this.get("model.getASI");
+    var job = this.get("parent.model");
+
+    asi.set("job_id", job.get("id"));
+    asi.setProperties(this.getASIData());
+    asi.set("attachment_ids", this.getASIAttachments());
+
+    // Wire up RFI relationship if RFI exists
+    if (rfi) asi.set("rfi_id", rfi.get("id"));
+
+    var errors = asi.validate();
+    this.set("asiErrors", errors);
+    if (errors) return;
+
+    asi.submit(function (asi) {
+      if (asi) {
+        // If no RFI for this ASI, then it's unlinked and we need to push to list
+        if (!rfi) job.get('rfis').pushObject(asi);
+        callback(null, asi);
+      } else {
+        callback("Sorry, try again later!");
+      }
+    });
+  },
+
+  updateASI: function (callback) {
+    var self = this;
+    var asi = this.get("model.getASI");
+
+    asi.setProperties(this.getASIData());
+
+    var errors = asi.validate();
+    this.set("asiErrors", errors);
+    if (errors) return;
+
+    asi.update(function (asi) {
+      if (asi) {
+        callback(null, asi);
+      } else {
+        callback("Sorry, try again later!");
       }
     });
   },
@@ -34,6 +135,13 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     return {
       subject:  $("#rfi-subject").val(),
       notes: $("#rfi-notes").val(),
+    };
+  },
+
+  getASIData: function () {
+    return {
+      subject: $("#asi-subject").val(),
+      notes: $("#asi-notes").val(),
     };
   },
 
@@ -55,6 +163,23 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     });
 
     return attachments;
+  },
+
+  canEditRFI: function () {
+    var rfi = this.get("model");
+    var job = this.get("parent.model");
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canEdit = false;
+
+    if (job && job.get('user.id') === currentUserId) canEdit = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
+    if (rfi && rfi.get('user.id') === currentUserId) canEdit = true;
+
+    return canEdit;
+  }.property('model.getRFI'),
+
+  canEditASI: function () {
   },
 
 	keyPress: function(e) {

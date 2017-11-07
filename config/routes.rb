@@ -39,9 +39,11 @@ PlanSource::Application.routes.draw do
     post '/submittals/:id' => 'submittals#update'
 
     post '/rfis' => 'rfis#create'
+    put '/rfis/:id' => 'rfis#update'
     get '/rfis/download_attachment/:id' => 'rfis#download_attachment'
 
     post '/asis' => 'asis#create'
+    put '/asis/:id' => 'asis#update'
     get '/asis/download_attachment/:id' => 'asis#download_attachment'
 
     post '/photos/upload' => 'photos#upload_photos'

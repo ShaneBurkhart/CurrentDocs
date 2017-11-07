@@ -32,5 +32,77 @@ PlanSource.ASI = Ember.Object.extend({
 
 		return this.get('assigned_user.first_name') + " " + this.get('assigned_user.last_name');
   }.property('assigned_user'),
+
+  validate: function () {
+    var errors = {};
+
+    if (!this.get("subject")) {
+      errors.subject = "Can't be blank.";
+    }
+
+    return $.isEmptyObject(errors) ? undefined : errors;
+  },
+
+  submit: function (callback) {
+    var self = this;
+
+    $.ajax({
+      url: PlanSource.ASI.url(),
+      type: 'POST',
+      data : {
+        asi: this.getProperties([
+          "job_id",
+          "rfi_id",
+          "subject",
+          "notes",
+          "attachment_ids"
+        ])
+      },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        self.setProperties(data.asi);
+        return callback(self);
+      } else {
+        return callback(undefined);
+      }
+    })
+  },
+
+  update: function (callback) {
+    var self = this;
+
+    $.ajax({
+        url: PlanSource.ASI.saveUrl(this.get('id')),
+        type: 'PUT',
+        data : {
+          asi: this.getProperties([ "subject", "notes" ])
+        },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        self.setProperties(data.asi);
+        return callback(self);
+      } else {
+        return callback(undefined);
+      }
+    })
+  }
 });
 
+PlanSource.ASI.reopenClass({
+  baseUrl : "/api/asis",
+
+  deleteUrl: function (id) {
+    return PlanSource.ASI.url() + "/" + id + "/destroy";
+  },
+
+  saveUrl: function (id) {
+    return PlanSource.ASI.url() + "/" + id;
+  },
+
+  url : function(){
+    var pathArray = window.location.href.split( '/' ),
+      host = pathArray[2],
+      u = PlanSource.getProtocol() + host + PlanSource.ASI.baseUrl;
+    return u;
+  }
+});

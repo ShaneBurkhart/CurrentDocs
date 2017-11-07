@@ -15,8 +15,7 @@ class Api::RFIsController < ApplicationController
       attachments = params["rfi"]["attachment_ids"] || []
 
       if !@rfi.save
-        render json: {}
-        return
+        return render json: {}
       end
 
       attachments.each do |id|
@@ -39,36 +38,29 @@ class Api::RFIsController < ApplicationController
   end
 
   def update
-    if user.can? :update, Submittal
-      @submittal = Submittal.find(params[:id])
+    if user.can? :update, RFI
+      @rfi_params = params[:rfi]
+      @rfi = RFI.find(params[:id])
+      @job = @rfi.job
 
-      # Check if user can review submittals or is admin
-      # Admins need to edit plans after they are accepted
-      # Can Review Submittal users edit them to accept
-      if user.admin? or user.can_review_submittal
-        # Only update plan_id and is_accepted if not already accepted
-        if !@submittal.is_accepted
-          @submittal.plan_id = params["submittal"]["plan_id"];
-          @submittal.is_accepted = params["submittal"]["is_accepted"];
-        end
-        @submittal.data = params["submittal"]["data"];
+      is_job_owner = user.is_my_job(@job)
+      is_job_pm = user.is_project_manager(@job)
+      is_rfi_owner = user.id === @rfi.user_id
 
-        if !@submittal.save
-          render json: {}
-          return
-        end
+      # Check if current user is...
+      # job owner, job project manager, or rfi owner
+      if is_job_owner or is_job_pm or is_rfi_owner
+				@rfi.notes = @rfi_params["notes"]
+				@rfi.subject = @rfi_params["subject"]
 
-        if @submittal.is_accepted
-          # Update plan to have "Submitted" status when submittal is approved.
-          @plan = @submittal.plan
-          @plan.status = "Submitted"
-          @plan.save
+        if !@rfi.save
+          return render json: {}
         end
 
         # Reload for includes
-        @submittal = Submittal.includes(:user, :plan, :attachments).find(@submittal.id)
+        @rfi = RFI.includes(:asi, :attachments).find(@rfi.id)
 
-        render json: @submittal
+        render json: @rfi
       else
         render_no_permission
       end

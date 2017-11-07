@@ -7,16 +7,17 @@ class Api::ASIsController < ApplicationController
   def create
     if user.can? :create, ASI
       @asi = ASI.new(
+        status: "Open",
         subject: params["asi"]["subject"],
         notes: params["asi"]["notes"],
         job_id: params["asi"]["job_id"],
+        rfi_id: params["asi"]["rfi_id"],
         user_id: user.id,
       )
       attachments = params["asi"]["attachment_ids"] || []
 
       if !@asi.save
-        render json: {}
-        return
+        return render json: {}
       end
 
       attachments.each do |id|
@@ -39,36 +40,29 @@ class Api::ASIsController < ApplicationController
   end
 
   def update
-    if user.can? :update, Submittal
-      @submittal = Submittal.find(params[:id])
+    if user.can? :update, ASI
+      @asi_params = params[:asi]
+      @asi = RFI.find(params[:id])
+      @job = @asi.job
 
-      # Check if user can review submittals or is admin
-      # Admins need to edit plans after they are accepted
-      # Can Review Submittal users edit them to accept
-      if user.admin? or user.can_review_submittal
-        # Only update plan_id and is_accepted if not already accepted
-        if !@submittal.is_accepted
-          @submittal.plan_id = params["submittal"]["plan_id"];
-          @submittal.is_accepted = params["submittal"]["is_accepted"];
-        end
-        @submittal.data = params["submittal"]["data"];
+      is_job_owner = user.is_my_job(@job)
+      is_job_pm = user.is_project_manager(@job)
+      # TODO check for assigned to
 
-        if !@submittal.save
-          render json: {}
-          return
-        end
+      # Check if current user is...
+      # job owner, job project manager, or assigned to ASI
+      if is_job_owner or is_job_pm
+				@asi.notes = @asi_params["notes"]
+				@asi.subject = @asi_params["subject"]
 
-        if @submittal.is_accepted
-          # Update plan to have "Submitted" status when submittal is approved.
-          @plan = @submittal.plan
-          @plan.status = "Submitted"
-          @plan.save
+        if !@asi.save
+          return render json: {}
         end
 
         # Reload for includes
-        @submittal = Submittal.includes(:user, :plan, :attachments).find(@submittal.id)
+        @asi = ASI.includes(:attachments).find(@asi.id)
 
-        render json: @submittal
+        render json: @asi
       else
         render_no_permission
       end

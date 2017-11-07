@@ -147,6 +147,11 @@ class User < ActiveRecord::Base
     return true if share.can_reshare
   end
 
+  def is_project_manager(job)
+    pm = job.project_manager
+    return pm && pm.id == self.id
+  end
+
   def is_my_job(job)
     job.user.id == self.id
   end

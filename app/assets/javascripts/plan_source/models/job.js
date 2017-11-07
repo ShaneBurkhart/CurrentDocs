@@ -1,6 +1,6 @@
 PlanSource.Job = Ember.Object.extend({
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "unlinked_asis", "rfis",
+    this.setProperties(this.getProperties("user", "project_manager", "plans", "unlinked_asis", "rfis",
       "photos", "shares", "submittals"));
   },
 
@@ -12,6 +12,11 @@ PlanSource.Job = Ember.Object.extend({
     if(hash.user){
       this.set("user", PlanSource.User.create(hash.user));
       delete hash.user
+    }
+
+    if(hash.project_manager){
+      this.set("project_manager", Ember.Object.create(hash.project_manager));
+      delete hash.project_manager
     }
 
     if(hash.plans){

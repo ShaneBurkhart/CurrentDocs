@@ -4,6 +4,7 @@ class CreateASIs < ActiveRecord::Migration
       t.string :asi_num
       t.string :status
     	t.string :subject
+    	t.string :notes
     	t.string :plan_sheets_affected
     	t.string :in_addendum
     	t.integer :job_id

@@ -9,6 +9,7 @@ PlanSource.RFI = Ember.Object.extend({
       // Pass a reference of this RFI to ASI
       asi.set('rfi', this);
       this.set('asi', asi);
+
       delete hash.asi
     }
 
@@ -33,7 +34,7 @@ PlanSource.RFI = Ember.Object.extend({
 
   asi_num: function () {
     return !this.get('asi') ? null : this.get('asi.asi_num');
-  }.property('asi', 'asi.id'),
+  }.property('asi', 'asi.id', 'asi.asi_num'),
 
   status: function () {
     return !this.get('asi') ? 'Open' : this.get('asi.status');
@@ -91,6 +92,25 @@ PlanSource.RFI = Ember.Object.extend({
         return callback(undefined);
       }
     })
+  },
+
+  update: function (callback) {
+    var self = this;
+
+    $.ajax({
+        url: PlanSource.RFI.saveUrl(this.get('id')),
+        type: 'PUT',
+        data : {
+          rfi: this.getProperties([ "subject", "notes" ])
+        },
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        self.setProperties(data.rfi);
+        return callback(self);
+      } else {
+        return callback(undefined);
+      }
+    })
   }
 });
 
@@ -111,5 +131,4 @@ PlanSource.RFI.reopenClass({
       u = PlanSource.getProtocol() + host + PlanSource.RFI.baseUrl;
     return u;
   }
-
 });
