@@ -1,5 +1,6 @@
 PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   submitRFI: function () {
+    var self = this;
     var rfi = this.get("model");
     var data = this.getRFIData();
     var attachments = this.getRFIAttachments();
@@ -23,6 +24,10 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
         toastr.error("Sorry, try again later!", "error");
       }
     });
+  },
+
+  addASI: function () {
+    this.get("model").set("asi", PlanSource.ASI.create());
   },
 
   getRFIData: function () {

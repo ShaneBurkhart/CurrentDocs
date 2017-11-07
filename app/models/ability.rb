@@ -10,6 +10,7 @@ class Ability
       cannot :manage, User
       cannot :manage, Photo
       cannot :manage, RFI
+      cannot :manage, ASI
     elsif user.viewer?
       can :manage, ShareLink
       can :read, Job
@@ -20,6 +21,8 @@ class Ability
       can :create, Submittal
       can :read, RFI
       can :create, RFI
+      can :read, ASI
+      can :create, ASI
     end
     # Define abilities for the passed in user here. For example:
     #

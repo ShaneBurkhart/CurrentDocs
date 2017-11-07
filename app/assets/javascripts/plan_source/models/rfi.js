@@ -5,7 +5,10 @@ PlanSource.RFI = Ember.Object.extend({
 
   setProperties : function(hash) {
     if(hash.asi){
-      this.set('asi', PlanSource.ASI.create(hash.asi));
+      var asi = PlanSource.ASI.create(hash.asi);
+      // Pass a reference of this RFI to ASI
+      asi.set('rfi', this);
+      this.set('asi', asi);
       delete hash.asi
     }
 
@@ -47,6 +50,16 @@ PlanSource.RFI = Ember.Object.extend({
   dateSubmitted: function () {
 		return moment(this.get("created_at")).format("LL");
   }.property('created_at'),
+
+  submittedBy: function () {
+		return this.get('user.first_name') + " " + this.get('user.last_name');
+  }.property('user'),
+
+  assignedTo: function () {
+    if (!this.get('assigned_user')) return null;
+
+		return this.get('assigned_user.first_name') + " " + this.get('assigned_user.last_name');
+  }.property('assigned_user'),
 
   validate: function () {
     var errors = {};

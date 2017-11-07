@@ -202,14 +202,14 @@ class Api::JobsController < ApplicationController
       :user,
       :plans,
       :unlinked_asis,
-      rfis: [:asi],
+      rfis: [:asi, :user, :assigned_user],
       submittals: [:user, :attachments],
       shares: [:user, :sharer]
     ) + user.shared_jobs.includes(
       :user,
       :plans,
       :unlinked_asis,
-      rfis: [:asi],
+      rfis: [:asi, :user, :assigned_user],
       shares: [:user, :sharer]
     )
   end

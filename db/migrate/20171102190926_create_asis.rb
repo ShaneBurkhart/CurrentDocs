@@ -8,6 +8,7 @@ class CreateASIs < ActiveRecord::Migration
     	t.string :in_addendum
     	t.integer :job_id
     	t.integer :rfi_id
+    	t.integer :user_id
     	t.integer :assigned_user_id
 
       t.timestamps

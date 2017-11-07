@@ -1,14 +1,15 @@
 class ASI < ActiveRecord::Base
-  attr_accessible :asi_num, :status, :subject, :plan_sheets_affected, :in_addendum, :job_id, :rfi_id, :assigned_user_id
+  attr_accessible :asi_num, :status, :subject, :notes, :plan_sheets_affected, :in_addendum, :job_id, :rfi_id, :user_id, :assigned_user_id
 
   STATUSES = ["Open", "Closed"]
 
   belongs_to :job
+  belongs_to :user
   belongs_to :rfi, class_name: "RFI", foreign_key: "rfi_id"
   belongs_to :assigned_user, class_name: "User", foreign_key: "assigned_user_id"
   has_many :attachments, class_name: "ASIAttachment", foreign_key: "asi_id"
 
-  validates :job_id, presence: true
+  validates :subject, :job_id, :user_id, presence: true
   validate :check_status
 
   before_create :generate_asi_num

@@ -4,13 +4,23 @@
   </div>
   <div class="body">
     <div class="row margin-bottom">
-      <div class="col-sm-4">
-        <p>Date Submitted:</p>
-      </div>
+      <div class="col-sm-4"><p>Date Submitted:</p></div>
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4"><p>Submitted By:</p></div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            <input disabled class="form-control" id="asi-submitted-by" value="{{ unbound getASI.submittedBy }}">
             <span class="help-inline"></span>
           </div>
         </div>
@@ -19,54 +29,40 @@
 
     <div class="row margin-bottom">
       <div class="col-sm-4">
-        <p>Response By:</p>
+        <p>Response Requested:</p>
       </div>
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <input disabled class="form-control" id="asi-response-requested" value="">
             <span class="help-inline"></span>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row margin-bottom">
-      <div class="col-sm-4">
-        <p>Plan Sheets Affected:</p>
-      </div>
-      <div class="col-sm-8">
-        <div class="control-group">
-          <div class="controls">
-            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
-            <span class="help-inline"></span>
+    {{#unless getRFI}}
+      <div class="row margin-bottom">
+        <div class="col-sm-4">
+          <p>Assigned To:</p>
+        </div>
+        <div class="col-sm-8">
+          <div class="control-group">
+            <div class="controls">
+              <input disabled class="form-control" id="asi-assigned-to" value="{{ unbound getASI.assignedTo }}">
+              <span class="help-inline"></span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {{/unless}}
 
     <div class="row margin-bottom">
-      <div class="col-sm-4">
-        <p>Included In Addendum #:</p>
-      </div>
-      <div class="col-sm-8">
-        <div class="control-group">
-          <div class="controls">
-            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
-            <span class="help-inline"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row margin-bottom">
-      <div class="col-sm-2">
+      <div class="col-sm-12">
         <p>Subject:</p>
-      </div>
-      <div class="col-sm-10">
         <div class="control-group">
           <div class="controls">
-            <input disabled class="form-control" id="submittal-date-submitted" value="{{ unbound dateSubmitted }}">
+            <input disabled class="form-control" id="asi-subject" value="{{ unbound getASI.subject }}">
             <span class="help-inline"></span>
           </div>
         </div>
@@ -78,15 +74,7 @@
         <p>Notes:</p>
         <div class="control-group">
           <div class="controls">
-            {{#if isAccepted }}
-              {{#admin}}
-                <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
-              {{else}}
-                <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
-              {{/admin}}
-            {{else}}
-              <textarea style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your submittal, e.g. Is this a partial or full submittal?, Where is it used?, How soon do you need a response?, etc" id="submittal-notes">{{ unbound data.notes }}</textarea>
-            {{/if}}
+            <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your ASI, etc" id="asi-notes">{{ unbound getASI.notes }}</textarea>
             <span class="help-inline"></span>
           </div>
         </div>
@@ -95,22 +83,15 @@
 
     <div class="row margin-bottom">
       <div class="col-sm-12">
-        {{#if isNew }}
-          <p>Attachments (select to remove):</p>
-        {{else}}
-          <p>Attachments (select to download):</p>
-        {{/if}}
+        <p>Attachments (select to download):</p>
         <div class="control-group">
           <div id="submittal-attachments">
-            {{#each attachments}}
+            {{#each getASI.attachments}}
               <p class="file-preview">
-                <a href="/api/submittals/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
+                <a href="/api/asi/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
               </p>
             {{/each}}
           </div>
-          {{#if isNew }}
-            <div id="attachments-dnd" class="dropzone"></div>
-          {{/if}}
         </div>
       </div>
     </div>
@@ -119,7 +100,6 @@
   <div class="footer">
     <div class="buttons">
       <a class="button" {{action "close"}}>Cancel</a>
-      <a class="button button-blue" {{action "addPlan" target=controller}} >Create</a>
     </div>
   </div>
 </div>

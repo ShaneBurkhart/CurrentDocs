@@ -3,7 +3,7 @@ class CreateASIAttachments < ActiveRecord::Migration
     create_table :asi_attachments do |t|
       t.string :filename
       t.string :s3_path
-      t.integer :rfi_id
+      t.integer :asi_id
 
       t.timestamps
     end

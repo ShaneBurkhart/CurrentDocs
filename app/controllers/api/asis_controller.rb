@@ -1,20 +1,20 @@
 require 'securerandom'
 require "aws-sdk"
 
-class Api::RFIsController < ApplicationController
+class Api::ASIsController < ApplicationController
 	before_filter :user_not_there!
 
   def create
-    if user.can? :create, RFI
-      @rfi = RFI.new(
-        subject: params["rfi"]["subject"],
-        notes: params["rfi"]["notes"],
-        job_id: params["rfi"]["job_id"],
+    if user.can? :create, ASI
+      @asi = ASI.new(
+        subject: params["asi"]["subject"],
+        notes: params["asi"]["notes"],
+        job_id: params["asi"]["job_id"],
         user_id: user.id,
       )
-      attachments = params["rfi"]["attachment_ids"] || []
+      attachments = params["asi"]["attachment_ids"] || []
 
-      if !@rfi.save
+      if !@asi.save
         render json: {}
         return
       end
@@ -22,17 +22,17 @@ class Api::RFIsController < ApplicationController
       attachments.each do |id|
         filename = Redis.current.get("attachments:#{id}")
 
-        attachment = RFIAttachment.create(
+        attachment = ASIAttachment.create(
           filename: filename,
           s3_path: "attachments/#{id}",
-          rfi_id: @rfi.id,
+          asi_id: @asi.id,
         )
       end
 
       # Reload for includes
-      @rfi = RFI.includes(:asi, :attachments).find(@rfi.id)
+      @asi = ASI.includes(:attachments).find(@asi.id)
 
-      render json: @rfi
+      render json: @asi
     else
       render_no_permission
     end
@@ -95,7 +95,7 @@ class Api::RFIsController < ApplicationController
   end
 
   def download_attachment
-    @attachment = RFIAttachment.find(params[:id])
+    @attachment = ASIAttachment.find(params[:id])
 
     if @attachment
       s3 = AWS::S3.new

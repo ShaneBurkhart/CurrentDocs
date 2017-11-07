@@ -84,7 +84,14 @@ def create_plans_for_job(job)
   # Create RFIs and ASIs
   (1..20).each do |i|
     user_id = [nil, @user.id, @manager.id, @viewer.id].sample
-    rfi = RFI.new(job_id: job.id, assigned_user_id: user_id)
+    assigned_user_id = [nil, @user.id, @manager.id, @viewer.id].sample
+
+    rfi = RFI.new(
+      job_id: job.id,
+      user_id: user_id,
+      assigned_user_id: assigned_user_id,
+      subject: Faker::Address.street_address
+    )
 
     case rand(1..5)
       when 1
@@ -94,20 +101,44 @@ def create_plans_for_job(job)
       when 2
         # 2: RFI, Open, ASI
         rfi.save
-        ASI.create(status: 'Open', job_id: job.id, rfi_id: rfi.id)
+        ASI.create(
+          status: 'Open',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          rfi_id: rfi.id,
+          user_id: user_id,
+        )
 
       when 3
         # 3: RFI, Closed, ASI
         rfi.save
-        ASI.create(status: 'Closed', job_id: job.id, rfi_id: rfi.id)
+        ASI.create(
+          status: 'Closed',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          rfi_id: rfi.id,
+          user_id: user_id,
+        )
 
       when 4
         # 4: no RFI, Open, ASI
-        ASI.create(status: 'Open', job_id: job.id, assigned_user_id: user_id)
+        ASI.create(
+          status: 'Open',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          user_id: user_id,
+          assigned_user_id: assigned_user_id,
+        )
 
       when 5
         # 5: no RFI, Closed, ASI
-        ASI.create(status: 'Closed', job_id: job.id, assigned_user_id: user_id)
+        ASI.create(
+          status: 'Closed',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          user_id: user_id,
+          assigned_user_id: assigned_user_id,
+        )
       end
   end
 

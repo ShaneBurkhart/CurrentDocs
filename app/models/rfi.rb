@@ -7,7 +7,7 @@ class RFI < ActiveRecord::Base
   has_one :asi, class_name: "ASI", foreign_key: "rfi_id"
   has_many :attachments, class_name: "RFIAttachment", foreign_key: "rfi_id"
 
-  validates :job_id, presence: true
+  validates :subject, :job_id, :user_id, presence: true
 
   before_create :generate_rfi_num
 
