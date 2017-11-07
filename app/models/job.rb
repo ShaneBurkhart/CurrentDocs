@@ -10,6 +10,8 @@
 #
 class Job < ActiveRecord::Base
   belongs_to :user
+  has_one :project_manager_connection, class_name: "ProjectManager", foreign_key: "job_id"
+  has_one :project_manager, through: :project_manager_connection
   has_many :plan_records
   has_many :plans
   has_many :shares

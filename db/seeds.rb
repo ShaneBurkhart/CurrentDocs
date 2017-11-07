@@ -38,6 +38,17 @@ require 'faker'
 @manager.type = "Manager"
 @manager.save
 
+@project_manager = User.new(
+  email: "project_manager@plansource.io",
+  password: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  company: Faker::Company.name,
+  can_share_link: true
+)
+@project_manager.type = "Manager"
+@project_manager.save
+
 @user = User.find_or_create_by_email(ENV["EMAIL"], {
   email: ENV["EMAIL"],
   password: "password",
@@ -50,6 +61,11 @@ require 'faker'
 @user.save
 
 def create_plans_for_job(job)
+
+  if [true, false].sample
+    ProjectManager.create(job_id: job.id, user_id: @project_manager.id)
+  end
+
   (1..20).each do |i|
     tab = Plan::TABS.sample
     csi = nil

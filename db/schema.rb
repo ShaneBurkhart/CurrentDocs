@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171103190121) do
+ActiveRecord::Schema.define(:version => 20171107012750) do
 
   create_table "asi_attachments", :force => true do |t|
     t.string   "filename"
@@ -135,6 +135,13 @@ ActiveRecord::Schema.define(:version => 20171103190121) do
     t.integer  "next_plan_id"
   end
 
+  create_table "project_managers", :force => true do |t|
+    t.integer  "job_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "rfi_attachments", :force => true do |t|
     t.string   "filename"
     t.string   "s3_path"
@@ -225,7 +232,7 @@ ActiveRecord::Schema.define(:version => 20171103190121) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-07 01:05:50'
+    t.datetime "last_seen",                            :default => '2017-11-07 01:39:47'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end
