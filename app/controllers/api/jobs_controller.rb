@@ -172,6 +172,28 @@ class Api::JobsController < ApplicationController
     end
   end
 
+  def project_manager
+    @job = Job.find(params["id"])
+    project_manager_user_id = params["project_manager_user_id"]
+
+    # Only owners can update project managers
+    if !@job or current_user.is_my_job(@job)
+      # Get rid of all existing project managers (should be one)
+      ProjectManager.where(job_id: @job.id).destroy_all
+
+      @project_manager = ProjectManager.create(
+        job_id: @job.id,
+        user_id: project_manager_user_id
+      )
+
+      render json: {
+        project_manager: @project_manager.project_manager
+      }, each_serializer: SimpleUserSerializer
+    else
+      render_no_permission
+    end
+  end
+
   private
   def check_share_link_token!
     @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])

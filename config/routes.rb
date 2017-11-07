@@ -11,6 +11,7 @@ PlanSource::Application.routes.draw do
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job
     post '/jobs/share_link' => 'jobs#sub_share_link'
+    post '/jobs/:id/project_manager' => 'jobs#project_manager'
 
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'

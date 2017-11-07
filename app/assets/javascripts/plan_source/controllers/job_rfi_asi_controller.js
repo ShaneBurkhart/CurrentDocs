@@ -28,6 +28,10 @@ PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
     'jobController.model.asis.@each.id'
   ),
 
+  projectManager: function () {
+    return this.get('jobController.model.project_manager')
+  }.property("jobController.model.project_manager"),
+
   isFilter: function (filter) {
     return filter === this.get('currentFilter');
   },

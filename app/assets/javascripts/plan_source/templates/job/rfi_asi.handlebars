@@ -2,6 +2,12 @@
   <p>
     <a href="#" {{action "openCreateRfiModal"}} class="button button-green">Create RFI</a>
     <a href="#" {{action "openCreateUnlinkedAsiModal"}} class="button button-blue">Create ASI (Unlinked)</a>
+
+    {{#if projectManager}}
+      <a href="#" {{action "openProjectManagerModal"}} class="button button-default pull-right">Project Manager ({{projectManager.first_name}} {{projectManager.last_name}})</a>
+    {{else}}
+      <a href="#" {{action "openProjectManagerModal"}} class="button button-default pull-right">Project Manager (Pick One)</a>
+    {{/if}}
   </p>
 
   <nav id="rfi-asi-nav" class="rfi-asi-filters">

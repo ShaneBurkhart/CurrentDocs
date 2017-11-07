@@ -131,6 +131,16 @@ PlanSource.JobRoute = Ember.Route.extend({
         model: rfiOrAsi,
         parent: this.controllerFor("job"),
       });
+    },
+
+    openProjectManagerModal: function (job) {
+      var jobController = this.controllerFor("job");
+
+      this.renderModal("project_manager", {
+        content: PlanSource.Contact.findAll(),
+        projectManager: jobController.get("model.project_manager"),
+        parent: jobController,
+      });
     }
   },
 
