@@ -3,11 +3,13 @@
     <p class="title">No ASI for this RFI yet.</p>
   </div>
   <div class="body">
-    <p>This RFI doesn't have an associated ASI yet. Click the button below to create one.</p>
+    <p>This RFI doesn't have an associated ASI yet.</p>
   </div>
   <div class="footer">
     <div class="buttons" style="text-align: center;">
-      <a class="button button-blue" {{action "addASI" target=controller}}>Create ASI</a>
+      {{#if canCreateLinkedASI}}
+        <a class="button button-blue" {{action "addASI" target=controller}}>Create ASI</a>
+      {{/if}}
     </div>
   </div>
 </div>

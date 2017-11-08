@@ -147,6 +147,18 @@ class User < ActiveRecord::Base
     return true if share.can_reshare
   end
 
+  # Check if RFI or ASI is assigned to me
+  def is_assigned_to_me(rfi_asi)
+    assigned_user = rfi_asi.assigned_user
+
+    # If is ASI and has RFI, then assigned_user is on RFI
+    if rfi_asi.rfi
+      assigned_user = rfi_asi.rfi.assigned_user
+    end
+
+    return assigned_user && assigned_user.id == self.id
+  end
+
   def is_project_manager(job)
     pm = job.project_manager
     return pm && pm.id == self.id

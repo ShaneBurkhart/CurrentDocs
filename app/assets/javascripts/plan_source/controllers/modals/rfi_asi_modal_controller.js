@@ -107,6 +107,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var job = this.get("parent.model");
 
     if (!rfi && !this.get('canCreateUnlinkedASI')) return callback("You don't have permission.");
+    if (rfi && !this.get('canCreateLinkedASI')) return callback("You don't have permission.");
 
     asi.set("job_id", job.get("id"));
     asi.setProperties(this.getASIData());
@@ -150,6 +151,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   },
 
   addASI: function () {
+    if (!this.get('canCreateLinkedASI')) return;
     this.get("model").set("asi", PlanSource.ASI.create());
   },
 
@@ -225,19 +227,21 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     return canCreate;
   }.property('model', 'parent.model.project_manager'),
 
-  canEditASI: function () {
+  canCreateLinkedASI: function () {
     var rfi = this.get("model");
-    var job = this.get("parent.model");
-    var projectManager = job.get('project_manager');
+    var canCreate = this.get('canCreateUnlinkedASI');
     var currentUserId = window.user_id;
-    var canEdit = false;
+    var assignedUser = rfi.get('assigned_user');
 
-    if (job && job.get('user.id') === currentUserId) canEdit = true;
-    if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
-    // TODO add assigned to user check
+    if (assignedUser && assignedUser.get('id') == currentUserId) canCreate = true;
 
-    return canEdit;
-  },
+    return canCreate;
+  }.property('canCreateUnlinkedASI', 'model.assigned_user'),
+
+  canEditASI: function () {
+    // Same permissions as canCreateLinkedASI
+    return this.get('canCreateLinkedASI');
+  }.property('canCreateLinkedASI'),
 
 	keyPress: function(e) {
 		if (e.keyCode == 13) {

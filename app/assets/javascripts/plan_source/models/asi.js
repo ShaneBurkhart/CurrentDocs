@@ -1,4 +1,22 @@
 PlanSource.ASI = Ember.Object.extend({
+  init : function() {
+    this.setProperties(this.getProperties('assigned_user'));
+  },
+
+  setProperties : function(hash) {
+    // Make sure hash exists
+    hash = hash || {};
+
+    if(hash.assigned_user){
+      var assignedUser = PlanSource.User.create(hash.assigned_user);
+      this.set('assigned_user', assignedUser);
+
+      delete hash.assigned_user
+    }
+
+    Ember.setProperties(this, hash);
+  },
+
   isNew: function () {
     return !this.get('id');
   }.property('id'),

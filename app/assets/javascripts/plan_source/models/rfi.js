@@ -1,6 +1,6 @@
 PlanSource.RFI = Ember.Object.extend({
   init : function() {
-    this.setProperties(this.getProperties('asi'));
+    this.setProperties(this.getProperties('asi', 'assigned_user'));
   },
 
   setProperties : function(hash) {
@@ -14,6 +14,13 @@ PlanSource.RFI = Ember.Object.extend({
       this.set('asi', asi);
 
       delete hash.asi
+    }
+
+    if(hash.assigned_user){
+      var assignedUser = PlanSource.User.create(hash.assigned_user);
+      this.set('assigned_user', assignedUser);
+
+      delete hash.assigned_user
     }
 
     Ember.setProperties(this, hash);

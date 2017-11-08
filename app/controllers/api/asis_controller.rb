@@ -11,8 +11,6 @@ class Api::ASIsController < ApplicationController
 
       is_job_owner = user.is_my_job(@job)
       is_job_pm = user.is_project_manager(@job)
-      is_assigned = false
-      # TODO check for assigned user when rfi exists
 
       # If creating unlinked asi, we check if is owner or is pm
       if !@asi_params["rfi_id"] and !(is_job_owner or is_job_pm)
@@ -20,8 +18,13 @@ class Api::ASIsController < ApplicationController
       end
 
       # If creating linked asi, we check if is owner or is pm or is assigned
-      if @asi_params["rfi_id"] and !(is_job_owner or is_job_pm or is_assigned)
-        return render json: {}
+      if @asi_params["rfi_id"]
+        @rfi = RFI.find(@asi_params["rfi_id"])
+        is_assigned = user.is_assigned_to_me(@rfi)
+
+        if !(is_job_owner or is_job_pm or is_assigned)
+          return render json: {}
+        end
       end
 
       @asi = ASI.new(
@@ -65,8 +68,7 @@ class Api::ASIsController < ApplicationController
 
       is_job_owner = user.is_my_job(@job)
       is_job_pm = user.is_project_manager(@job)
-      is_assigned = false
-      # TODO check for assigned to
+      is_assigned = user.is_assigned_to_me(@asi)
 
       # Check if current user is...
       # job owner, job project manager, or assigned to ASI
