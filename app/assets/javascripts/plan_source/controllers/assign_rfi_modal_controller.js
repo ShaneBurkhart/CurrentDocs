@@ -1,4 +1,4 @@
-PlanSource.ProjectManagerController = Ember.ArrayController.extend({
+PlanSource.AssignRfiController = Ember.ArrayController.extend({
   sortProperties: ['first_name'],
   sortAscending: true,
 
@@ -8,15 +8,26 @@ PlanSource.ProjectManagerController = Ember.ArrayController.extend({
 
   selectContact: function (contact) {
     var self = this;
-    var job = this.get("parent.model");
+    var rfi_asi = this.get("rfiAsi");
+    var urlPrefix = "/api/rfis/";
 
-    $.post("/api/jobs/" + job.id + "/project_manager", {
-      project_manager_user_id: contact.id,
+    // Make sure we are setting RFI if it exsists
+    if (rfi_asi.get('getRFI')) {
+      rfi_asi = rfi_asi.get('getRFI');
+    } else {
+      rfi_asi = rfi_asi.get('getASI');
+      urlPrefix = "/api/asis/";
+    }
+
+    $.post(urlPrefix + rfi_asi.id + "/assign", {
+      assign_to_user_id: contact.id,
     }, function (data) {
-      if (data.project_manager) {
-        job.set("project_manager", data.project_manager)
+      var obj = data.rfi || data.asi;
 
-        toastr["success"]("Succesfully updated project manager!");
+      if (obj) {
+        rfi_asi.setProperties({ assigned_user: obj.assigned_user });
+
+        toastr["success"]("Succesfully updated assigned user!");
 
         self.send('close');
       } else {

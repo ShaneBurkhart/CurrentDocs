@@ -70,7 +70,7 @@ PlanSource.RFI = Ember.Object.extend({
     if (!this.get('assigned_user')) return null;
 
 		return this.get('assigned_user.first_name') + " " + this.get('assigned_user.last_name');
-  }.property('assigned_user'),
+  }.property('assigned_user', 'assigned_user.first_name', 'assigned_user.last_name'),
 
   validate: function () {
     var errors = {};

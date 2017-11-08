@@ -88,6 +88,26 @@ class Api::ASIsController < ApplicationController
     end
   end
 
+  def assign
+    @asi = ASI.find(params[:id])
+    @job = @asi.job
+
+    is_job_owner = user.is_my_job(@job)
+    is_job_pm = user.is_project_manager(@job)
+
+    if is_job_owner or is_job_pm
+      @asi.assigned_user_id = params["assign_to_user_id"]
+
+      if !@asi.save
+        return render json: {}
+      end
+
+      render json: @asi
+    else
+      render_no_permission
+    end
+  end
+
   def download_attachment
     @attachment = ASIAttachment.find(params[:id])
 

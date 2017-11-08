@@ -62,11 +62,7 @@
         <div class="col-sm-8">
           <div class="control-group">
             <div class="controls">
-              {{#if canEditASI}}
-                <input class="form-control" id="asi-assigned-to" value="{{ unbound getASI.assignedTo }}">
-              {{else}}
-                <input disabled class="form-control" id="asi-assigned-to" value="{{ unbound getASI.assignedTo }}">
-              {{/if}}
+              <input disabled class="form-control" id="asi-assigned-to" value="{{ unbound getASI.assignedTo }}">
               <span class="help-inline"></span>
             </div>
           </div>
@@ -125,6 +121,12 @@
   <div class="footer">
     <div class="buttons">
       <a class="button" {{action "close"}}>Cancel</a>
+      {{#unless getRFI}}
+        {{#if canEditAssignedTo}}
+          <a id="assign-asi-button" class="button button-green" {{action "openAssignRFIModal" model}}>Assign To</a>
+        {{/if}}
+      {{/unless}}
+
       {{#if canEditASI}}
         <a id="submit-asi-button" class="button button-blue" {{action "save" target=controller}}>Save</a>
       {{/if}}

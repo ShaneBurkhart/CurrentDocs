@@ -61,11 +61,7 @@
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            {{#if canEditRFI}}
-              <input class="form-control" id="rfi-assigned-to" value="{{ unbound assignedTo }}">
-            {{else}}
-              <input disabled class="form-control" id="rfi-assigned-to" value="{{ unbound assignedTo }}">
-            {{/if}}
+            <input disabled class="form-control" id="rfi-assigned-to" value="{{ unbound assignedTo }}">
             <span class="help-inline"></span>
           </div>
         </div>
@@ -126,6 +122,11 @@
       {{#if canDeleteRFI}}
         <a id="delete-rfi-button" class="button button-red" {{action "deleteRFI" target=controller}}>Delete</a>
       {{/if}}
+
+      {{#if canEditAssignedTo}}
+        <a id="assign-rfi-button" class="button button-green" {{action "openAssignRFIModal" model}}>Assign To</a>
+      {{/if}}
+
       {{#if canEditRFI}}
         <a id="submit-rfi-button" class="button button-blue" {{action "save" target=controller}}>Save</a>
       {{/if}}

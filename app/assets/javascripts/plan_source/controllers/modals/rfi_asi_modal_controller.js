@@ -209,6 +209,18 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     return canEdit;
   }.property('model', 'parent.model.project_manager'),
 
+  canEditAssignedTo: function () {
+    var job = this.get("parent.model");
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canEdit = false;
+
+    if (job && job.get('isMyJob')) canEdit = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
+
+    return canEdit;
+  }.property('model', 'parent.model.project_manager'),
+
   canDeleteRFI: function () {
     var job = this.get("parent.model");
     var projectManager = job.get('project_manager');
