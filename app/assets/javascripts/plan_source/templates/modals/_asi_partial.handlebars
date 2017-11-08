@@ -84,7 +84,7 @@
             {{else}}
               <input disabled class="form-control" id="asi-subject" value="{{ unbound getASI.subject }}">
             {{/if}}
-            <span class="help-inline"></span>
+            <span class="help-inline">{{asiErrors.subject}}</span>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
             {{else}}
               <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your ASI, etc" id="asi-notes">{{ unbound getASI.notes }}</textarea>
             {{/if}}
-            <span class="help-inline"></span>
+            <span class="help-inline">{{asiErrors.notes}}</span>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@
           <div id="submittal-attachments">
             {{#each getASI.attachments}}
               <p class="file-preview">
-                <a href="/api/asi/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
+                <a href="/api/asis/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
               </p>
             {{/each}}
           </div>

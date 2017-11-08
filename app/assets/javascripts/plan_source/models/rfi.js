@@ -26,7 +26,7 @@ PlanSource.RFI = Ember.Object.extend({
 
   getASI: function () {
     return this.get('asi');
-  }.property('asi'),
+  }.property('asi', 'asi.id'),
 
   getRFI: function () {
     return this;

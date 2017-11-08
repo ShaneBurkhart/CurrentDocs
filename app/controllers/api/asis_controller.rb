@@ -42,7 +42,7 @@ class Api::ASIsController < ApplicationController
   def update
     if user.can? :update, ASI
       @asi_params = params[:asi]
-      @asi = RFI.find(params[:id])
+      @asi = ASI.find(params[:id])
       @job = @asi.job
 
       is_job_owner = user.is_my_job(@job)

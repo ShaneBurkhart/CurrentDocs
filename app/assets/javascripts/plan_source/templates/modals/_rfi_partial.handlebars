@@ -82,7 +82,7 @@
             {{else}}
               <input disabled class="form-control" id="rfi-subject" value="{{ unbound subject }}">
             {{/if}}
-            <span class="help-inline"></span>
+            <span class="help-inline">{{rfiErrors.subject}}</span>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
             {{else}}
               <textarea disabled style="width: 100%; max-width: 100%; height: 150px; padding: 10px;" placeholder="Tell us about your RFI, etc" id="rfi-notes">{{ unbound notes }}</textarea>
             {{/if}}
-            <span class="help-inline"></span>
+            <span class="help-inline">{{rfiErrors.notes}}</span>
           </div>
         </div>
       </div>
