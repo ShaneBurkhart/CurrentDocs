@@ -91,6 +91,12 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     // Not an error, but we don't want to do anything
     if (!this.get('canDeleteRFI')) return callback(null);
 
+    var shouldDelete = window.confirm(
+      "Are you sure you want to delete RFI '" + rfi.get("rfi_num") + "'?"
+    );
+
+    if (!shouldDelete) return callback(null);
+
     rfi.destroy(function (success) {
       if (success) {
         job.get("rfis").removeObject(rfi);
