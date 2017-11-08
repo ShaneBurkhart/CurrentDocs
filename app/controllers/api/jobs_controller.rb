@@ -177,7 +177,7 @@ class Api::JobsController < ApplicationController
     project_manager_user_id = params["project_manager_user_id"]
 
     # Only owners can update project managers
-    if !@job or current_user.is_my_job(@job)
+    if current_user.is_my_job(@job)
       # Get rid of all existing project managers (should be one)
       ProjectManager.where(job_id: @job.id).destroy_all
 
