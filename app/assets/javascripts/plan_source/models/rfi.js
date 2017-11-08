@@ -4,6 +4,9 @@ PlanSource.RFI = Ember.Object.extend({
   },
 
   setProperties : function(hash) {
+    // Make sure hash exists
+    hash = hash || {};
+
     if(hash.asi){
       var asi = PlanSource.ASI.create(hash.asi);
       // Pass a reference of this RFI to ASI
