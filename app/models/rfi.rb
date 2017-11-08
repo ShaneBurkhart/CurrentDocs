@@ -10,6 +10,7 @@ class RFI < ActiveRecord::Base
   validates :subject, :job_id, :user_id, presence: true
 
   before_create :generate_rfi_num
+  after_destroy :remove_asi
 
   private
 
@@ -26,5 +27,9 @@ class RFI < ActiveRecord::Base
       else
         self.rfi_num = formatted_date
       end
+    end
+
+    def remove_asi
+      self.asi.destroy if self.asi
     end
 end

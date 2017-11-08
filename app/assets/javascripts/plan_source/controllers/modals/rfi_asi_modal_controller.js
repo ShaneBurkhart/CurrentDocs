@@ -82,6 +82,24 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     });
   },
 
+  deleteRFI: function () {
+    var self = this;
+    var rfi = this.get("model.getRFI");
+    var job = this.get("parent.model");
+
+    if (!this.get('canDeleteRFI')) return callback("You don't have permission.");
+
+    rfi.destroy(function (success) {
+      if (success) {
+        job.get("rfis").removeObject(rfi);
+        toastr.success("RFI deleted, thanks!");
+        self.send("close");
+      } else {
+        toastr.error("Sorry, try again later!");
+      }
+    });
+  },
+
   submitASI: function (callback) {
     var self = this;
     var rfi = this.get("model.getRFI");
@@ -180,6 +198,19 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
 
     return canEdit;
   }.property('model'),
+
+  canDeleteRFI: function () {
+    var job = this.get("parent.model");
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canDelete = false;
+
+    if (job && job.get('isMyJob')) canDelete = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canDelete = true;
+
+    return canDelete;
+  }.property('model'),
+
 
   canEditASI: function () {
     var rfi = this.get("model");

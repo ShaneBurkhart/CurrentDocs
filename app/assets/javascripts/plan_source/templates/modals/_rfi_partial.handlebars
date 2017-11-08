@@ -123,6 +123,9 @@
   <div class="footer">
     <div class="buttons">
       <a class="button" {{action "close"}}>Cancel</a>
+      {{#if canDeleteRFI}}
+        <a id="delete-rfi-button" class="button button-red" {{action "deleteRFI" target=controller}}>Delete</a>
+      {{/if}}
       {{#if canEditRFI}}
         <a id="submit-rfi-button" class="button button-blue" {{action "save" target=controller}}>Save</a>
       {{/if}}

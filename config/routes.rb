@@ -40,6 +40,7 @@ PlanSource::Application.routes.draw do
 
     post '/rfis' => 'rfis#create'
     put '/rfis/:id' => 'rfis#update'
+    delete '/rfis/:id' => 'rfis#destroy'
     get '/rfis/download_attachment/:id' => 'rfis#download_attachment'
 
     post '/asis' => 'asis#create'

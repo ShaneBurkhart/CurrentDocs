@@ -71,23 +71,6 @@ class Api::ASIsController < ApplicationController
     end
   end
 
-  def destroy
-    if user.can? :destroy, Submittal
-      @submittal = Submittal.find(params[:id])
-
-      # Check if can review submittal or if the user is admin
-      # There's a delete when reviewing and a delete after accepted for admin.
-      if user.admin? or user.can_review_submittal
-        @submittal.destroy
-        render json: @submittal
-      else
-        render_no_permission
-      end
-    else
-      render_no_permission
-    end
-  end
-
   def download_attachment
     @attachment = ASIAttachment.find(params[:id])
 

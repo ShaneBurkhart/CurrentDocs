@@ -70,14 +70,16 @@ class Api::RFIsController < ApplicationController
   end
 
   def destroy
-    if user.can? :destroy, Submittal
-      @submittal = Submittal.find(params[:id])
+    if user.can? :destroy, RFI
+      @rfi = RFI.find(params[:id])
+      @job = @rfi.job
 
-      # Check if can review submittal or if the user is admin
-      # There's a delete when reviewing and a delete after accepted for admin.
-      if user.admin? or user.can_review_submittal
-        @submittal.destroy
-        render json: @submittal
+      is_job_owner = user.is_my_job(@job)
+      is_job_pm = user.is_project_manager(@job)
+
+      if is_job_owner or is_job_pm
+        @rfi.destroy
+        render json: @rfi
       else
         render_no_permission
       end

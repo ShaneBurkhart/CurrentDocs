@@ -114,6 +114,22 @@ PlanSource.RFI = Ember.Object.extend({
         return callback(undefined);
       }
     })
+  },
+
+  destroy: function (callback) {
+    var self = this;
+
+    $.ajax({
+      url: PlanSource.RFI.saveUrl(this.get('id')),
+      type: 'DELETE',
+      data : {},
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        return callback(true);
+      } else {
+        return callback(undefined);
+      }
+    })
   }
 });
 
