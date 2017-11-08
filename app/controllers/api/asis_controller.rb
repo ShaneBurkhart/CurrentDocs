@@ -6,15 +6,33 @@ class Api::ASIsController < ApplicationController
 
   def create
     if user.can? :create, ASI
+      @asi_params = params["asi"]
+      @job = Job.find(@asi_params["job_id"])
+
+      is_job_owner = user.is_my_job(@job)
+      is_job_pm = user.is_project_manager(@job)
+      is_assigned = false
+      # TODO check for assigned user when rfi exists
+
+      # If creating unlinked asi, we check if is owner or is pm
+      if !@asi_params["rfi_id"] and !(is_job_owner or is_job_pm)
+        return render json: {}
+      end
+
+      # If creating linked asi, we check if is owner or is pm or is assigned
+      if @asi_params["rfi_id"] and !(is_job_owner or is_job_pm or is_assigned)
+        return render json: {}
+      end
+
       @asi = ASI.new(
         status: "Open",
-        subject: params["asi"]["subject"],
-        notes: params["asi"]["notes"],
-        job_id: params["asi"]["job_id"],
-        rfi_id: params["asi"]["rfi_id"],
+        subject: @asi_params["subject"],
+        notes: @asi_params["notes"],
+        job_id: @asi_params["job_id"],
+        rfi_id: @asi_params["rfi_id"],
         user_id: user.id,
       )
-      attachments = params["asi"]["attachment_ids"] || []
+      attachments = @asi_params["attachment_ids"] || []
 
       if !@asi.save
         return render json: {}
@@ -47,11 +65,12 @@ class Api::ASIsController < ApplicationController
 
       is_job_owner = user.is_my_job(@job)
       is_job_pm = user.is_project_manager(@job)
+      is_assigned = false
       # TODO check for assigned to
 
       # Check if current user is...
       # job owner, job project manager, or assigned to ASI
-      if is_job_owner or is_job_pm
+      if is_job_owner or is_job_pm or is_assigned
 				@asi.notes = @asi_params["notes"]
 				@asi.subject = @asi_params["subject"]
 

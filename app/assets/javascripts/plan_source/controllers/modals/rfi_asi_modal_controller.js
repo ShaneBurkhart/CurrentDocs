@@ -106,6 +106,8 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var asi = this.get("model.getASI");
     var job = this.get("parent.model");
 
+    if (!rfi && !this.get('canCreateUnlinkedASI')) return callback("You don't have permission.");
+
     asi.set("job_id", job.get("id"));
     asi.setProperties(this.getASIData());
     asi.set("attachment_ids", this.getASIAttachments());
@@ -197,7 +199,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     if (rfi && rfi.get('user.id') === currentUserId) canEdit = true;
 
     return canEdit;
-  }.property('model'),
+  }.property('model', 'parent.model.project_manager'),
 
   canDeleteRFI: function () {
     var job = this.get("parent.model");
@@ -209,8 +211,19 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     if (projectManager && projectManager.get('id') === currentUserId) canDelete = true;
 
     return canDelete;
-  }.property('model'),
+  }.property('model', 'parent.model.project_manager'),
 
+  canCreateUnlinkedASI: function () {
+    var job = this.get("parent.model");
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canCreate = false;
+
+    if (job && job.get('isMyJob')) canCreate = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canCreate = true;
+
+    return canCreate;
+  }.property('model', 'parent.model.project_manager'),
 
   canEditASI: function () {
     var rfi = this.get("model");

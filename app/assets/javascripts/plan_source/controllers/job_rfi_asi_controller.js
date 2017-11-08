@@ -30,6 +30,18 @@ PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
     'jobController.model.asis.@each.id'
   ),
 
+  canCreateUnlinkedASI: function () {
+    var job = this.get('jobController.model');
+    var projectManager = job.get('project_manager');
+    var currentUserId = window.user_id;
+    var canCreate = false;
+
+    if (job && job.get('isMyJob')) canCreate = true;
+    if (projectManager && projectManager.get('id') === currentUserId) canCreate = true;
+
+    return canCreate;
+  }.property('jobController.model', 'jobController.model.project_manager'),
+
   projectManager: function () {
     return this.get('jobController.model.project_manager')
   }.property("jobController.model.project_manager"),
