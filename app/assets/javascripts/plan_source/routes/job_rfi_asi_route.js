@@ -4,10 +4,11 @@ PlanSource.JobRfiAsiRoute = Ember.Route.extend({
   setupController: function (controller) {
     var jobController = this.controllerFor('job');
     var job = jobController.get('model');
+    var currentFilter = controller.get('currentFilter') || 'open';
 
     jobController.set('currentTab', this.tab);
     controller.set('jobController', jobController);
-    controller.set('content', job.getFilteredRFIsAndASIs('open'));
+    controller.set('content', job.getFilteredRFIsAndASIs(currentFilter));
   }
 });
 
