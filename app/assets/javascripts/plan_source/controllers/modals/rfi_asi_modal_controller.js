@@ -65,6 +65,8 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var self = this;
     var rfi = this.get("model.getRFI");
 
+    if (!this.get('canEditRFI')) return callback("You don't have permission.");
+
     rfi.setProperties(this.getRFIData());
 
     var errors = rfi.validate();
@@ -172,12 +174,12 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var currentUserId = window.user_id;
     var canEdit = false;
 
-    if (job && job.get('user.id') === currentUserId) canEdit = true;
+    if (job && job.get('isMyJob')) canEdit = true;
     if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
     if (rfi && rfi.get('user.id') === currentUserId) canEdit = true;
 
     return canEdit;
-  }.property('model.getRFI'),
+  }.property('model'),
 
   canEditASI: function () {
     var rfi = this.get("model");

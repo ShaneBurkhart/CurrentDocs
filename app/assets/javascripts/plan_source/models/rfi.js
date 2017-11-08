@@ -101,11 +101,11 @@ PlanSource.RFI = Ember.Object.extend({
     var self = this;
 
     $.ajax({
-        url: PlanSource.RFI.saveUrl(this.get('id')),
-        type: 'PUT',
-        data : {
-          rfi: this.getProperties([ "subject", "notes" ])
-        },
+      url: PlanSource.RFI.saveUrl(this.get('id')),
+      type: 'PUT',
+      data : {
+        rfi: this.getProperties([ "subject", "notes" ])
+      },
     }).then(function(data, t, xhr){
       if (!$.isEmptyObject(data)) {
         self.setProperties(data.rfi);
