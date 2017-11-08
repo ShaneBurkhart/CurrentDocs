@@ -65,7 +65,8 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var self = this;
     var rfi = this.get("model.getRFI");
 
-    if (!this.get('canEditRFI')) return callback("You don't have permission.");
+    // Not an error, but we don't want to do anything
+    if (!this.get('canEditRFI')) return callback(null);
 
     rfi.setProperties(this.getRFIData());
 
@@ -87,7 +88,8 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var rfi = this.get("model.getRFI");
     var job = this.get("parent.model");
 
-    if (!this.get('canDeleteRFI')) return callback("You don't have permission.");
+    // Not an error, but we don't want to do anything
+    if (!this.get('canDeleteRFI')) return callback(null);
 
     rfi.destroy(function (success) {
       if (success) {
@@ -106,8 +108,9 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var asi = this.get("model.getASI");
     var job = this.get("parent.model");
 
-    if (!rfi && !this.get('canCreateUnlinkedASI')) return callback("You don't have permission.");
-    if (rfi && !this.get('canCreateLinkedASI')) return callback("You don't have permission.");
+    // Not errors, but we don't want to do anything
+    if (!rfi && !this.get('canCreateUnlinkedASI')) return callback(null);
+    if (rfi && !this.get('canCreateLinkedASI')) return callback(null);
 
     asi.set("job_id", job.get("id"));
     asi.setProperties(this.getASIData());
@@ -134,6 +137,9 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   updateASI: function (callback) {
     var self = this;
     var asi = this.get("model.getASI");
+
+    // Not an error, but we don't want to do anything
+    if (!this.get('canEditASI')) return callback(null);
 
     asi.setProperties(this.getASIData());
 

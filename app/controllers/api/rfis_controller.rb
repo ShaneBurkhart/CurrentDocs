@@ -38,51 +38,43 @@ class Api::RFIsController < ApplicationController
   end
 
   def update
-    if user.can? :update, RFI
-      @rfi_params = params[:rfi]
-      @rfi = RFI.find(params[:id])
-      @job = @rfi.job
+    @rfi_params = params[:rfi]
+    @rfi = RFI.find(params[:id])
+    @job = @rfi.job
 
-      is_job_owner = user.is_my_job(@job)
-      is_job_pm = user.is_project_manager(@job)
-      is_rfi_owner = user.id === @rfi.user_id
+    is_job_owner = user.is_my_job(@job)
+    is_job_pm = user.is_project_manager(@job)
+    is_rfi_owner = user.id === @rfi.user_id
 
-      # Check if current user is...
-      # job owner, job project manager, or rfi owner
-      if is_job_owner or is_job_pm or is_rfi_owner
-				@rfi.notes = @rfi_params["notes"]
-				@rfi.subject = @rfi_params["subject"]
+    # Check if current user is...
+    # job owner, job project manager, or rfi owner
+    if is_job_owner or is_job_pm or is_rfi_owner
+      @rfi.notes = @rfi_params["notes"]
+      @rfi.subject = @rfi_params["subject"]
 
-        if !@rfi.save
-          return render json: {}
-        end
-
-        # Reload for includes
-        @rfi = RFI.includes(:asi, :attachments).find(@rfi.id)
-
-        render json: @rfi
-      else
-        render_no_permission
+      if !@rfi.save
+        return render json: {}
       end
+
+      # Reload for includes
+      @rfi = RFI.includes(:asi, :attachments).find(@rfi.id)
+
+      render json: @rfi
     else
       render_no_permission
     end
   end
 
   def destroy
-    if user.can? :destroy, RFI
-      @rfi = RFI.find(params[:id])
-      @job = @rfi.job
+    @rfi = RFI.find(params[:id])
+    @job = @rfi.job
 
-      is_job_owner = user.is_my_job(@job)
-      is_job_pm = user.is_project_manager(@job)
+    is_job_owner = user.is_my_job(@job)
+    is_job_pm = user.is_project_manager(@job)
 
-      if is_job_owner or is_job_pm
-        @rfi.destroy
-        render json: @rfi
-      else
-        render_no_permission
-      end
+    if is_job_owner or is_job_pm
+      @rfi.destroy
+      render json: @rfi
     else
       render_no_permission
     end

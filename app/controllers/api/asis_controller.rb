@@ -61,32 +61,28 @@ class Api::ASIsController < ApplicationController
   end
 
   def update
-    if user.can? :update, ASI
-      @asi_params = params[:asi]
-      @asi = ASI.find(params[:id])
-      @job = @asi.job
+    @asi_params = params[:asi]
+    @asi = ASI.find(params[:id])
+    @job = @asi.job
 
-      is_job_owner = user.is_my_job(@job)
-      is_job_pm = user.is_project_manager(@job)
-      is_assigned = user.is_assigned_to_me(@asi)
+    is_job_owner = user.is_my_job(@job)
+    is_job_pm = user.is_project_manager(@job)
+    is_assigned = user.is_assigned_to_me(@asi)
 
-      # Check if current user is...
-      # job owner, job project manager, or assigned to ASI
-      if is_job_owner or is_job_pm or is_assigned
-				@asi.notes = @asi_params["notes"]
-				@asi.subject = @asi_params["subject"]
+    # Check if current user is...
+    # job owner, job project manager, or assigned to ASI
+    if is_job_owner or is_job_pm or is_assigned
+      @asi.notes = @asi_params["notes"]
+      @asi.subject = @asi_params["subject"]
 
-        if !@asi.save
-          return render json: {}
-        end
-
-        # Reload for includes
-        @asi = ASI.includes(:attachments).find(@asi.id)
-
-        render json: @asi
-      else
-        render_no_permission
+      if !@asi.save
+        return render json: {}
       end
+
+      # Reload for includes
+      @asi = ASI.includes(:attachments).find(@asi.id)
+
+      render json: @asi
     else
       render_no_permission
     end
