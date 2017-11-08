@@ -162,9 +162,17 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   },
 
   getRFIData: function () {
+    var responseRequested = $("#rfi-response-requested").val();
+    var due_date = undefined;
+
+    if (responseRequested) {
+      due_date = moment(responseRequested).format();
+    }
+
     return {
       subject:  $("#rfi-subject").val(),
       notes: $("#rfi-notes").val(),
+      due_date: due_date,
     };
   },
 

@@ -47,8 +47,8 @@
         <th {{action "sort" "rfi_num"}}><a>RFI</a></th>
         <th {{action "sort" "asi_num"}}><a>ASI</a></th>
         <th {{action "sort" "status"}}><a>Status</a></th>
-        <th>Target Response</th>
-        <th>Days Past Due</th>
+        <th {{action "sort" "targetResponseSort"}}><a>Target Response</a></th>
+        <th {{action "sort" "daysPastDueSort"}}><a>Days Past Due</a></th>
         <th {{action "sort" "assigned_user.first_name"}}><a>Assigned To</a></th>
         <th {{action "sort" "subject"}}><a>Subject</a></th>
         <th {{action "sort" "plan_sheets_affected"}}><a>Plan Sheets Affected</a></th>
@@ -72,9 +72,9 @@
           {{/if}}
 
           <td>{{status}}</td>
-          <td></td>
-          <td></td>
-          <td>{{assigned_user.first_name}}</td>
+          <td>{{targetResponse}}</td>
+          <td>{{daysPastDue}}</td>
+          <td title="{{unbound assigned_user.first_name}} {{unbound assigned_user.last_name}}">{{assigned_user.first_name}}</td>
           <td title="{{unbound subject}}">{{truncate subject}}</td>
           <td>{{plan_sheets_affected}}</td>
           <td>{{in_addendum}}</td>

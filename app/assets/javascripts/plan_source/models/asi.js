@@ -37,6 +37,26 @@ PlanSource.ASI = Ember.Object.extend({
     return null;
   }.property(),
 
+  targetResponse: function () {
+    // No due date
+    return "";
+  }.property('due_date'),
+
+  targetResponseSort: function () {
+    // No due date.  0 means zero milliseconds (start of dates)
+    return 0;
+  }.property(),
+
+  daysPastDue: function () {
+    // No due date
+    return "";
+  }.property('due_date'),
+
+  daysPastDueSort: function () {
+    // No due date.  Group as lowest
+    return -99999;
+  }.property(),
+
   dateSubmitted: function () {
 		return moment(this.get("created_at")).format("LL");
   }.property('created_at'),

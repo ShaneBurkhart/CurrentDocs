@@ -51,6 +51,7 @@ class Api::RFIsController < ApplicationController
     if is_job_owner or is_job_pm or is_rfi_owner
       @rfi.notes = @rfi_params["notes"]
       @rfi.subject = @rfi_params["subject"]
+      @rfi.due_date = @rfi_params["due_date"]
 
       if !@rfi.save
         return render json: {}

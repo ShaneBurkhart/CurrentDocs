@@ -58,6 +58,29 @@ PlanSource.RFI = Ember.Object.extend({
     return !this.get('asi') ? '' : this.get('asi.in_addendum');
   }.property('asi', 'asi.in_addendum'),
 
+  targetResponse: function () {
+    if (!this.get("due_date")) return "";
+		return moment(this.get("due_date")).format("ll");
+  }.property('due_date'),
+
+  targetResponseSort: function () {
+    // No due date.  0 means zero milliseconds (start of dates)
+    if (!this.get("due_date")) return 0;
+		return moment(this.get("due_date")).valueOf();
+  }.property('due_date'),
+
+  daysPastDue: function () {
+    if (!this.get("due_date")) return "";
+		var daysPast = moment().diff(moment(this.get("due_date")), 'days')
+    return daysPast > 0 ? daysPast : "";
+  }.property('due_date'),
+
+  daysPastDueSort: function () {
+    // No due date.  Group as lowest
+    if (!this.get("due_date")) return -99999;
+		return moment().diff(moment(this.get("due_date")), 'days')
+  }.property('due_date'),
+
   dateSubmitted: function () {
 		return moment(this.get("created_at")).format("LL");
   }.property('created_at'),
@@ -111,7 +134,7 @@ PlanSource.RFI = Ember.Object.extend({
       url: PlanSource.RFI.saveUrl(this.get('id')),
       type: 'PUT',
       data : {
-        rfi: this.getProperties([ "subject", "notes" ])
+        rfi: this.getProperties([ "subject", "notes", "due_date" ])
       },
     }).then(function(data, t, xhr){
       if (!$.isEmptyObject(data)) {
