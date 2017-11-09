@@ -3,6 +3,7 @@ class ASISerializer < ActiveModel::Serializer
     :asi_num,
     :status,
     :subject,
+    :notes,
     :plan_sheets_affected,
     :in_addendum,
     :rfi_id,
