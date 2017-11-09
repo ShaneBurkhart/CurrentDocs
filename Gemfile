@@ -19,6 +19,7 @@ gem 'ember-rails', "0.14.1"
 gem 'ember-source', '1.0.0.rc5' # or the version you need
 gem 'handlebars-source', '1.0.0.rc4' # or the version you need
 gem 'momentjs-rails'
+gem 'async-rails'
 
 gem "devise", "3.2.2"
 gem "cancan", "1.6.10"

@@ -10,7 +10,8 @@ $width: 690px;
 	height:100%;
 	overflow-y: scroll;
 
-	.overlay{
+	&::before {
+        content: '';
 		position:fixed;
 		left:0;
 		right:0;
@@ -27,6 +28,19 @@ $width: 690px;
 		filter:alpha(opacity=60); /* More IE transparency */
 	}
 
+    .modal-container {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+
+        .split {
+            display: inline-block;
+            width: 50%;
+            float: left;
+            padding: 0 10px;
+        }
+    }
+
 	.dialog{
 		opacity:1; /* Sets opacity so it's partly transparent */
 		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; /* IE transparency */
@@ -37,7 +51,6 @@ $width: 690px;
 		position: relative;
 		top:0;
 		margin: 5% auto;
-
 
 		.header{
 			padding-bottom:15px;
@@ -52,4 +65,18 @@ $width: 690px;
 			padding-bottom: 15px;
 		}
 	}
+}
+
+@media (max-width: 800px) {
+    .modal-wrapper {
+        .modal-container {
+            .split {
+                width: 100%;
+                display: block;
+                float: none;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+        }
+    }
 }

@@ -11,6 +11,7 @@ PlanSource::Application.routes.draw do
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job
     post '/jobs/share_link' => 'jobs#sub_share_link'
+    post '/jobs/:id/project_manager' => 'jobs#project_manager'
 
     resources :plans, except: ["new", "edit", "index"]
     get '/plans/embedded/:id' => 'plans#show_embedded'
@@ -36,6 +37,17 @@ PlanSource::Application.routes.draw do
     get '/submittals/download_attachment/:id' => 'submittals#download_attachment'
     post '/submittals/:id/destroy' => 'submittals#destroy'
     post '/submittals/:id' => 'submittals#update'
+
+    post '/rfis' => 'rfis#create'
+    put '/rfis/:id' => 'rfis#update'
+    delete '/rfis/:id' => 'rfis#destroy'
+    post '/rfis/:id/assign' => 'rfis#assign'
+    get '/rfis/download_attachment/:id' => 'rfis#download_attachment'
+
+    post '/asis' => 'asis#create'
+    put '/asis/:id' => 'asis#update'
+    post '/asis/:id/assign' => 'asis#assign'
+    get '/asis/download_attachment/:id' => 'asis#download_attachment'
 
     post '/photos/upload' => 'photos#upload_photos'
     post '/photos/submit' => 'photos#submit_photos'

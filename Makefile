@@ -24,10 +24,16 @@ up:
 	eval $(docker-machine env)
 
 stop:
-	docker stop $$(docker ps -q)
+	docker stop $$(docker ps -q) || echo "Nothing to stop..."
 
 clean: stop
-	docker rm $$(docker ps -aq)
+	docker rm $$(docker ps -aq) || echo "Nothing to remove..."
+
+wipe: clean
+	rm -rf data
+	$(MAKE) db || echo "\n\nDatabase needs a minute to start...\nWaiting 7 seconds for Postgres to start...\n\n"
+	sleep 7
+	$(MAKE) db
 
 ps:
 	docker ps -a

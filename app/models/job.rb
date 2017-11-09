@@ -10,12 +10,16 @@
 #
 class Job < ActiveRecord::Base
   belongs_to :user
+  has_one :project_manager_connection, class_name: "ProjectManager", foreign_key: "job_id"
+  has_one :project_manager, through: :project_manager_connection
   has_many :plan_records
   has_many :plans
   has_many :shares
   has_many :shared_users, through: :shares, source: :user
   has_many :submittals, conditions: "is_accepted = false"
   has_many :photos
+  has_many :rfis, class_name: "RFI", foreign_key: "job_id"
+  has_many :unlinked_asis, class_name: "ASI", foreign_key: "job_id", conditions: "rfi_id IS NULL"
   attr_accessible :name, :user_id, :archived, :subscribed
   attr_accessor :subscribed
   validates :user_id, presence: true

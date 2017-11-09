@@ -172,6 +172,28 @@ class Api::JobsController < ApplicationController
     end
   end
 
+  def project_manager
+    @job = Job.find(params["id"])
+    project_manager_user_id = params["project_manager_user_id"]
+
+    # Only owners can update project managers
+    if current_user.is_my_job(@job)
+      # Get rid of all existing project managers (should be one)
+      ProjectManager.where(job_id: @job.id).destroy_all
+
+      @project_manager = ProjectManager.create(
+        job_id: @job.id,
+        user_id: project_manager_user_id
+      )
+
+      render json: {
+        project_manager: @project_manager.project_manager
+      }, each_serializer: SimpleUserSerializer
+    else
+      render_no_permission
+    end
+  end
+
   private
   def check_share_link_token!
     @share_link = ShareLink.find_by_token_and_job_id(params[:share_link_token], params[:id])
@@ -198,11 +220,24 @@ class Api::JobsController < ApplicationController
     # the object passed in.  Not nearly as intuitive as this, so I'm keeping it this way.
     # Only add submittals to jobs we own since the only submittals associated with a job are unaccepted submittals.
     # After a submittal is accepted, it gets loaded via the plan details modal.
-    user.jobs.includes(:user, :plans, submittals: [:user, :attachments], shares: [:user, :sharer]) + user.shared_jobs.includes(:user, :plans, shares: [:user, :sharer])
+    user.jobs.includes(
+      :user,
+      :plans,
+      :unlinked_asis,
+      rfis: [:asi, :user, :assigned_user],
+      submittals: [:user, :attachments],
+      shares: [:user, :sharer]
+    ) + user.shared_jobs.includes(
+      :user,
+      :plans,
+      :unlinked_asis,
+      rfis: [:asi, :user, :assigned_user],
+      shares: [:user, :sharer]
+    )
   end
 
   def get_job(id)
-    Job.includes(:user, :plans, submittals: [:user], shares: [:user, :sharer]).find(id)
+    Job.includes(:user, :plans, :rfis, submittals: [:user], shares: [:user, :sharer]).find(id)
   end
 
   def render_no_permission

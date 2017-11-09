@@ -1,0 +1,68 @@
+<div class="table-responsive" id="plan-table">
+  <p>
+    <a href="#" {{action "openUploadPhotosModal"}} class="button button-blue">Upload Photos</a>
+  </p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Date Taken</th>
+        <th>Uploaded By</th>
+        <th>Description</th>
+        <th>File</th>
+        <th>Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each controller}}
+        <tr>
+          <td class="photo-thumbnail-cell">
+            <div class="photo-thumbnail-container">
+              <img src="{{unbound thumbnail_url}}">
+            </div>
+          </td>
+          <td>{{format-date date_taken}}</td>
+          <td>{{upload_user_email}}</td>
+          <td title="{{unbound description}}">{{truncate description}}</td>
+          <td>
+            <a href="/api/photos/download/{{unbound id}}" title="{{unbound filename}}">{{truncate filename}}</a>
+          </td>
+          <td>
+            <ul style="padding-left:0px;" class="controls text-right unstyled">
+              <li><a href="/photos/{{unbound id}}/gallery" target="_blank">View</a></li>
+              {{#admin}}
+                <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+              {{else}}
+                {{#if controller.job.isMyJob}}
+                  <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                  <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+                {{else}}
+                  {{#if current_user_is_owner}}
+                    <li><a {{action "openEditPhotoModal" this}} data-id="{{unbound id}}">Edit</a></li>
+                    <li><a {{action "openDeletePhotoModal" this}}>Delete</a></li>
+                  {{/if}}
+                {{/if}}
+              {{/admin}}
+            </ul>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td>
+            <!-- add message to upload image if they have permissions -->
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover({trigger:"hover", placement:"top", delay:500})
+  })
+</script>
+
+

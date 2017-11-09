@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
     before_filter :last_seen
 
     rescue_from CanCan::AccessDenied do |exception|
-	redirect_to root_path, :alert => exception.message
+      redirect_to root_path, :alert => exception.message
     end
 
     def not_found
@@ -28,7 +28,9 @@ class ApplicationController < ActionController::Base
     end
 
     def render_no_permission
-	     render :text => "You don't have permission to do that"
+      # This used to send test "You don't have permission" but empty braces
+      # mean error in most cases. Sorry...
+	    render json: {}
     end
 
     def check_admin!

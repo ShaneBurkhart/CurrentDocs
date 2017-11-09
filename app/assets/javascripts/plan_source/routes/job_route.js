@@ -8,33 +8,39 @@ PlanSource.JobRoute = Ember.Route.extend({
     },
 
     openAddPlanModal : function(){
+      var jobController = this.get("controller");
+
       this.renderModal("add_plan", {
-        model: this.get("controller").get("model"),
-        parent: this.controllerFor("plans"),
+        model: jobController.get("model"),
+        parent: jobController,
+        tab: jobController.get('currentTab'),
       });
     },
 
     openUploadPlanModal : function(model){
       this.renderModal("upload_plan", {
         model: model,
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
     openDeletePlanModal : function(model){
       this.renderModal("delete_plan", {
         model: model,
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
     openEditPlanModal : function(model){
+      var jobController = this.get("controller");
       var self = this;
+
       model.getPlanRecordsSync(function(){
         self.renderModal("edit_plan", {
           model: model,
-          job: self.get("controller").get("model"),
-          parent: self.controllerFor("plans"),
+          job: jobController.get("model"),
+          parent: jobController,
+          tab: jobController.get('currentTab'),
         });
       });
     },
@@ -46,7 +52,7 @@ PlanSource.JobRoute = Ember.Route.extend({
           self.renderModal("details_plan", {
             model: plan,
             job: self.get("controller").get("model"),
-            parent: self.controllerFor("plans"),
+            parent: self.controllerFor("job"),
           });
         });
       });
@@ -55,7 +61,7 @@ PlanSource.JobRoute = Ember.Route.extend({
     openSubShareLinkModal: function(){
       this.renderModal("sub_share_link", {
         model: this.get("controller").get("model"),
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
@@ -68,7 +74,7 @@ PlanSource.JobRoute = Ember.Route.extend({
       this.renderModal("submittal", {
         model: submittal,
         job: job,
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
@@ -82,21 +88,21 @@ PlanSource.JobRoute = Ember.Route.extend({
     openUploadPhotosModal: function() {
       this.renderModal("upload_photos", {
         model: this.get("controller").get("model"),
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
     openEditPhotoModal: function(photo) {
       this.renderModal("edit_photo", {
         model: photo,
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
     openDeletePhotoModal: function(photo) {
       this.renderModal("delete_photo", {
         model: photo,
-        parent: this.controllerFor("plans"),
+        parent: this.controllerFor("job"),
       });
     },
 
@@ -104,44 +110,48 @@ PlanSource.JobRoute = Ember.Route.extend({
       var job = this.get("controller").get("model");
 
       this.renderModal("submittal_list", { model: job });
-    }
-  },
+    },
 
-  setupController: function(controller, model) {
-    var plansController = this.controllerFor('plans');
-    var tab = plansController.get('tab') || 'Plans';
-    switch(true) {
-      case model.get('canViewPlansTab'):
-      tab = 'Plans';
-      break;
-      case model.get('canViewShopsTab'):
-      tab = 'Shops';
-      break;
-      case model.get('canViewConsultantsTab'):
-      tab = 'Consultants';
-      break;
-    }
-
-    controller.set("model", model);
-    controller.set('tab', tab);
-
-    plansController.set('tab', tab);
-    if (tab === "Photos") {
-      model.getPhotos(function (photos) {
-        plansController.set('content', photos);
+    openCreateRfiModal: function () {
+      this.renderModal("rfi_asi", {
+        model: PlanSource.RFI.create(),
+        parent: this.controllerFor("job"),
       });
-    } else {
-      plansController.set('content', model.getPlansByTab(tab));
-    }
-    plansController.set('job', model);
-  },
+    },
 
-  renderTemplate : function(){
-    this.render("job.index");
-    this.render("plans.index", {
-      into : "job.index",
-      controller : "plans"
-    });
+    openCreateUnlinkedAsiModal: function () {
+      this.renderModal("rfi_asi", {
+        model: PlanSource.ASI.create(),
+        parent: this.controllerFor("job"),
+      });
+    },
+
+    openRfiAsiModal: function (rfiOrAsi) {
+      this.renderModal("rfi_asi", {
+        model: rfiOrAsi,
+        parent: this.controllerFor("job"),
+      });
+    },
+
+    openProjectManagerModal: function (job) {
+      var jobController = this.controllerFor("job");
+
+      this.renderModal("project_manager", {
+        content: PlanSource.Contact.findAll(),
+        projectManager: jobController.get("model.project_manager"),
+        parent: jobController,
+      });
+    },
+
+    openAssignRFIModal: function (rfi_asi) {
+      var jobController = this.controllerFor("job");
+
+      this.renderModal("assign_rfi", {
+        content: PlanSource.Contact.findAll(),
+        rfiAsi: rfi_asi,
+        parent: jobController,
+      });
+    }
   },
 
   renderModal: function (modal, attrs) {
@@ -154,6 +164,9 @@ PlanSource.JobRoute = Ember.Route.extend({
     if (modalController.onOpen) modalController.onOpen();
 
     this._modalStack.push(modal);
+
+    // Prevent scrolling of the page when modal is open
+    document.body.style.overflow = 'hidden';
   },
 
   closeModal: function () {
@@ -169,15 +182,18 @@ PlanSource.JobRoute = Ember.Route.extend({
     if (modalsRemaining) {
       var nextModal = this._modalStack[modalsRemaining - 1];
       this.render("modals/" + nextModal, {into : "jobs", outlet : "modal", controller : nextModal});
+    } else {
+      // Restore scrolling when no modals are remaining
+      document.body.style.overflow = 'visible';
     }
-  },
-
-  model : function(param){
-    return PlanSource.Job.find(param.job_id);
   },
 
   clearOutlet: function(container, outlet) {
     parentView = this.router._lookupActiveView(container);
     parentView.disconnectOutlet(outlet);
+  },
+
+  model : function(param){
+    return PlanSource.Job.find(param.job_id);
   }
 });

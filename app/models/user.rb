@@ -41,6 +41,8 @@ class User < ActiveRecord::Base
   has_one :signup_link
   has_many :events
   has_many :notification_subscriptions
+  has_many :submitted_rfis, class_name: "RFI", foreign_key: "user_id"
+  has_many :assigned_rfis, class_name: "RFI", foreign_key: "assigned_user_id"
 
   # Include default devise modules. Others available are:
   # , :confirmable,
@@ -143,6 +145,23 @@ class User < ActiveRecord::Base
     share = Share.find_by_job_id_and_user_id job.id, self.id
     return false if share.nil?
     return true if share.can_reshare
+  end
+
+  # Check if RFI or ASI is assigned to me
+  def is_assigned_to_me(rfi_asi)
+    assigned_user = rfi_asi.assigned_user
+
+    # If is ASI and has RFI, then assigned_user is on RFI
+    if rfi_asi.rfi
+      assigned_user = rfi_asi.rfi.assigned_user
+    end
+
+    return assigned_user && assigned_user.id == self.id
+  end
+
+  def is_project_manager(job)
+    pm = job.project_manager
+    return pm && pm.id == self.id
   end
 
   def is_my_job(job)

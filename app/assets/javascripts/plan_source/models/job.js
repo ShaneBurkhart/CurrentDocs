@@ -1,6 +1,7 @@
 PlanSource.Job = Ember.Object.extend({
   init : function(){
-    this.setProperties(this.getProperties("user", "plans", "photos", "shares", "submittals"));
+    this.setProperties(this.getProperties("user", "project_manager", "plans", "unlinked_asis", "rfis",
+      "photos", "shares", "submittals"));
   },
 
   planCount:function(){
@@ -13,6 +14,11 @@ PlanSource.Job = Ember.Object.extend({
       delete hash.user
     }
 
+    if(hash.project_manager){
+      this.set("project_manager", Ember.Object.create(hash.project_manager));
+      delete hash.project_manager
+    }
+
     if(hash.plans){
       var plans = Em.A();
       hash.plans.forEach(function(plan){
@@ -20,6 +26,24 @@ PlanSource.Job = Ember.Object.extend({
       });
       this.set("plans", plans);
       delete hash.plans
+    }
+
+    if(hash.unlinked_asis){
+      var unlinkedASIs = Em.A();
+      hash.unlinked_asis.forEach(function(asi){
+        unlinkedASIs.pushObject(PlanSource.ASI.create(asi));
+      });
+      this.set("unlinked_asis", unlinkedASIs);
+      delete hash.unlinked_asis;
+    }
+
+    if(hash.rfis){
+      var RFIs = Em.A();
+      hash.rfis.forEach(function(rfi){
+        RFIs.pushObject(PlanSource.RFI.create(rfi));
+      });
+      this.set("rfis", RFIs);
+      delete hash.rfis;
     }
 
     if(hash.photos){
@@ -81,6 +105,53 @@ PlanSource.Job = Ember.Object.extend({
     }
 
     return plansForTab;
+  },
+
+  getFilteredRFIsAndASIs: function (filter) {
+    var filter = filter || 'all';
+    var filterParams = {};
+    var plans = [];
+
+    switch (filter) {
+      case 'open':
+        filterParams['status'] = 'Open';
+        break;
+      case 'closed':
+        filterParams['status'] = 'Closed';
+        break;
+      case 'me':
+        filterParams['assigned_user_id'] = window.user_id;
+        break;
+      case 'all':
+      default:
+        break;
+    }
+
+    var RFIs = this.get('rfis');
+    for (var i = 0; i < RFIs.length; i++) {
+      var RFI = RFIs[i];
+      var shouldAdd = true;
+
+      Object.keys(filterParams).forEach(function (key) {
+        shouldAdd = shouldAdd && RFI.get(key) === filterParams[key];
+      });
+
+      if (shouldAdd) plans.push(RFI);
+    }
+
+    var unlinkedASIs = this.get('unlinked_asis');
+    for (var i = 0; i < unlinkedASIs.length; i++) {
+      var ASI = unlinkedASIs[i];
+      var shouldAdd = true;
+
+      Object.keys(filterParams).forEach(function (key) {
+        shouldAdd = shouldAdd && ASI.get(key) === filterParams[key];
+      });
+
+      if (shouldAdd) plans.push(ASI);
+    }
+
+    return plans;
   },
 
 	username : function(){

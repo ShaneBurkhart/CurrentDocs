@@ -38,6 +38,17 @@ require 'faker'
 @manager.type = "Manager"
 @manager.save
 
+@project_manager = User.new(
+  email: "project_manager@plansource.io",
+  password: "password",
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  company: Faker::Company.name,
+  can_share_link: true
+)
+@project_manager.type = "Manager"
+@project_manager.save
+
 @user = User.find_or_create_by_email(ENV["EMAIL"], {
   email: ENV["EMAIL"],
   password: "password",
@@ -50,6 +61,11 @@ require 'faker'
 @user.save
 
 def create_plans_for_job(job)
+
+  if [true, false].sample
+    ProjectManager.create(job_id: job.id, user_id: @project_manager.id)
+  end
+
   (1..20).each do |i|
     tab = Plan::TABS.sample
     csi = nil
@@ -79,6 +95,67 @@ def create_plans_for_job(job)
         )
       end
     end
+  end
+
+  # Create RFIs and ASIs
+  (1..20).each do |i|
+    user_id = [nil, @user.id, @manager.id, @viewer.id].sample
+    assigned_user_id = [nil, @user.id, @manager.id, @viewer.id].sample
+
+    rfi = RFI.new(
+      job_id: job.id,
+      user_id: user_id,
+      assigned_user_id: assigned_user_id,
+      subject: Faker::Address.street_address
+    )
+
+    case rand(1..5)
+      when 1
+        # 1: RFI, Open, no ASI
+        rfi.save
+
+      when 2
+        # 2: RFI, Open, ASI
+        rfi.save
+        ASI.create(
+          status: 'Open',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          rfi_id: rfi.id,
+          user_id: user_id,
+        )
+
+      when 3
+        # 3: RFI, Closed, ASI
+        rfi.save
+        ASI.create(
+          status: 'Closed',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          rfi_id: rfi.id,
+          user_id: user_id,
+        )
+
+      when 4
+        # 4: no RFI, Open, ASI
+        ASI.create(
+          status: 'Open',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          user_id: user_id,
+          assigned_user_id: assigned_user_id,
+        )
+
+      when 5
+        # 5: no RFI, Closed, ASI
+        ASI.create(
+          status: 'Closed',
+          subject: Faker::Address.street_address,
+          job_id: job.id,
+          user_id: user_id,
+          assigned_user_id: assigned_user_id,
+        )
+      end
   end
 
   # In review submittals for job

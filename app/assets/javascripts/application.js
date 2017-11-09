@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require moment
+//= require async
 //= require ./application/vendor/toastr.min.js
 //= require ./application/vendor/quill.min.js
 
