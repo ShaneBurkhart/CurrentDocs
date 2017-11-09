@@ -29,6 +29,8 @@ class Api::ASIsController < ApplicationController
 
       @asi = ASI.new(
         status: "Open",
+        plan_sheets_affected: @asi_params["plan_sheets_affected"],
+        in_addendum: @asi_params["in_addendum"],
         subject: @asi_params["subject"],
         notes: @asi_params["notes"],
         job_id: @asi_params["job_id"],
@@ -74,6 +76,8 @@ class Api::ASIsController < ApplicationController
     if is_job_owner or is_job_pm or is_assigned
       @asi.notes = @asi_params["notes"]
       @asi.subject = @asi_params["subject"]
+      @asi.plan_sheets_affected = @asi_params["plan_sheets_affected"]
+      @asi.in_addendum = @asi_params["in_addendum"]
 
       if !@asi.save
         return render json: {}

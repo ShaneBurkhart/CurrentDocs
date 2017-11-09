@@ -9,11 +9,7 @@
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            {{#if canEditASI}}
-              <input class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
-            {{else}}
-              <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
-            {{/if}}
+            <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
             <span class="help-inline"></span>
           </div>
         </div>
@@ -21,29 +17,11 @@
     </div>
 
     <div class="row margin-bottom">
-      <div class="col-sm-4"><p>Submitted By:</p></div>
+      <div class="col-sm-4"><p>Response By:</p></div>
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
             <input disabled class="form-control" id="asi-submitted-by" value="{{ unbound getASI.submittedBy }}">
-            <span class="help-inline"></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row margin-bottom">
-      <div class="col-sm-4">
-        <p>Response Requested:</p>
-      </div>
-      <div class="col-sm-8">
-        <div class="control-group">
-          <div class="controls">
-            {{#if canEditASI}}
-              <input class="form-control" id="asi-response-requested" value="">
-            {{else}}
-              <input disabled class="form-control" id="asi-response-requested" value="">
-            {{/if}}
             <span class="help-inline"></span>
           </div>
         </div>
@@ -65,6 +43,38 @@
         </div>
       </div>
     {{/unless}}
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4"><p>Plan Sheets Affected:</p></div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            {{#if canEditASI}}
+              <input class="form-control" id="asi-plan-sheets-affected" value="{{ unbound getASI.plan_sheets_affected }}">
+            {{else}}
+              <input disabled class="form-control" id="asi-plan-sheets-affected" value="{{ unbound getASI.plan_sheets_affected }}">
+            {{/if}}
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4"><p>Included in Addendum #:</p></div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            {{#if canEditASI}}
+              <input class="form-control" id="asi-in-addendum" value="{{ unbound getASI.in_addendum }}">
+            {{else}}
+              <input disabled class="form-control" id="asi-included-in" value="{{ unbound getASI.in_addendum }}">
+            {{/if}}
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="row margin-bottom">
       <div class="col-sm-12">

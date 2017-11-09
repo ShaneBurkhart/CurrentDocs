@@ -91,6 +91,8 @@ PlanSource.ASI = Ember.Object.extend({
         asi: this.getProperties([
           "job_id",
           "rfi_id",
+          "plan_sheets_affected",
+          "in_addendum",
           "subject",
           "notes",
           "attachment_ids"
@@ -113,7 +115,12 @@ PlanSource.ASI = Ember.Object.extend({
         url: PlanSource.ASI.saveUrl(this.get('id')),
         type: 'PUT',
         data : {
-          asi: this.getProperties([ "subject", "notes" ])
+          asi: this.getProperties([
+            "plan_sheets_affected",
+            "in_addendum",
+            "subject",
+            "notes"
+          ])
         },
     }).then(function(data, t, xhr){
       if (!$.isEmptyObject(data)) {

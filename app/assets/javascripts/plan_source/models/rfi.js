@@ -47,7 +47,7 @@ PlanSource.RFI = Ember.Object.extend({
   }.property('asi', 'asi.id', 'asi.asi_num'),
 
   status: function () {
-    return !this.get('asi') ? 'Open' : this.get('asi.status');
+    return !this.get('asi') ? 'Open' : this.get('asi.status') || 'Open';
   }.property('asi', 'asi.status'),
 
   plan_sheets_affected: function () {

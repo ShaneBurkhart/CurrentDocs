@@ -186,6 +186,8 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     return {
       subject: $("#asi-subject").val(),
       notes: $("#asi-notes").val(),
+      plan_sheets_affected: $("#asi-plan-sheets-affected").val(),
+      in_addendum: $("#asi-in-addendum").val(),
     };
   },
 

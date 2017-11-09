@@ -9,11 +9,7 @@
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            {{#if canEditRFI}}
-              <input class="form-control" id="rfi-date-submitted" value="{{ unbound dateSubmitted }}">
-            {{else}}
-              <input disabled class="form-control" id="rfi-date-submitted" value="{{ unbound dateSubmitted }}">
-            {{/if}}
+            <input disabled class="form-control" id="rfi-date-submitted" value="{{ unbound dateSubmitted }}">
             <span class="help-inline"></span>
           </div>
         </div>

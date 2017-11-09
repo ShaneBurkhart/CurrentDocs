@@ -3,7 +3,11 @@
   <div class="dialog box box-border" style="width: 95%;">
     <div class="header">
       <h4 class="modal-title">
-        Current Project Manager: {{ projectManager.first_name }} {{ projectManager.last_name }} ({{ projectManager.email }})
+        {{#if projectManager}}
+          Current Project Manager: {{ projectManager.first_name }} {{ projectManager.last_name }} ({{ projectManager.email }})
+        {{else}}
+          Select A Project Manager
+        {{/if}}
       </h4>
     </div>
     <div class="body">

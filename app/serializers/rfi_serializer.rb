@@ -4,7 +4,8 @@ class RFISerializer < ActiveModel::Serializer
     :subject,
     :notes,
     :due_date,
-    :assigned_user_id
+    :assigned_user_id,
+    :updated_at
 
   has_one :asi
   has_one :user, serializer: SimpleUserSerializer
