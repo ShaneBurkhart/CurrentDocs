@@ -30,8 +30,6 @@ class CreateASIs < ActiveRecord::Migration
           notes: "Imported from 'ASI' tab."
         )
       end
-
-      plans.destroy_all
     end
   end
 end
