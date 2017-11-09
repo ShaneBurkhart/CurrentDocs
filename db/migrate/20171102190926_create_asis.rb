@@ -24,7 +24,7 @@ class CreateASIs < ActiveRecord::Migration
       plans.each do |plan|
         ASI.create(
           job_id: job_id,
-          user_id: job.user_id,
+          user_id: plan.job.user_id,
           status: "Open",
           subject: plan.plan_name,
           notes: "Imported from 'ASI' tab."
