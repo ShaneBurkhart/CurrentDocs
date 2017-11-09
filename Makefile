@@ -41,6 +41,9 @@ ps:
 c:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web /bin/bash
 
+t:
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec
+
 pg:
 	echo "Enter 'postgres'..."
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm pg psql -h pg -d mydb -U postgres --password

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby "2.2.1"
 
-gem 'rails', '3.2.13'
+gem 'rails', '~> 3.2.13'
 gem "rake", "~> 10.1.0"
 gem 'pg', "0.18.2"
 gem 'redis', "3.3.3"

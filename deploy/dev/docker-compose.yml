@@ -8,6 +8,7 @@ web:
         - mailcatcher
     volumes:
         - ../../app:/app/app
+        - ../../spec:/app/spec
         - ../../db:/app/db
         - ../../config:/app/config
     env_file:
