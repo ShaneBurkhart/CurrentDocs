@@ -18,6 +18,13 @@
 include Common
 class Plan < ActiveRecord::Base
   belongs_to :job
+
+  has_one :plan_document
+  has_one :document, through: :plan_document
+
+  has_many :plan_document_histories
+  has_many :document_histories, through: :plan_document_histories, source: :document
+
   has_many :plan_records
 
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()

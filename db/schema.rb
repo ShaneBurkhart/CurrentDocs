@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171107012750) do
+ActiveRecord::Schema.define(:version => 20171110222752) do
 
   create_table "asi_attachments", :force => true do |t|
     t.string   "filename"
@@ -53,6 +53,13 @@ ActiveRecord::Schema.define(:version => 20171107012750) do
 
   add_index "contacts", ["contact_id"], :name => "index_contacts_on_contact_id"
   add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
+
+  create_table "documents", :force => true do |t|
+    t.string   "original_filename", :null => false
+    t.string   "s3_path",           :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
@@ -97,6 +104,20 @@ ActiveRecord::Schema.define(:version => 20171107012750) do
     t.integer  "upload_user_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "plan_document_histories", :force => true do |t|
+    t.integer  "plan_id",     :null => false
+    t.integer  "document_id", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "plan_documents", :force => true do |t|
+    t.integer  "plan_id",     :null => false
+    t.integer  "document_id", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "plan_records", :force => true do |t|
@@ -233,7 +254,7 @@ ActiveRecord::Schema.define(:version => 20171107012750) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-08 21:13:44'
+    t.datetime "last_seen",                            :default => '2017-11-10 22:33:59'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end
