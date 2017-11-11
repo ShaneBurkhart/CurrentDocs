@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
-  it { should have_many(:jobs) }
+  it { expect(subject).to have_many(:jobs) }
 
   # TODO validations
 end

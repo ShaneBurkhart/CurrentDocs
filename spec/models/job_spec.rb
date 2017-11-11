@@ -1,9 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe Job, :type => :model do
-  it { should belong_to(:user) }
-  it { should have_many(:plans) }
-  it { should have_many(:share_links) }
+  it { expect(subject).to belong_to(:user) }
+  it { expect(subject).to have_many(:plans) }
+  it { expect(subject).to have_many(:share_links) }
 
-  # TODO validations
+  describe "validations" do
+    subject { create(:job) }
+    it { expect(subject).to validate_presence_of(:user_id) }
+    it { expect(subject).to validate_presence_of(:name) }
+
+    it "should not allow same name for tab" do
+      new_job = build(:job, name: subject.name, tab: subject.tab)
+
+      expect(new_job).not_to be_valid
+    end
+  end
 end
