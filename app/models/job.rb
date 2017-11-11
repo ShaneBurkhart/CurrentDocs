@@ -6,7 +6,7 @@ class Job < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :name, presence: true
-  validate :check_for_dubplicate_name_for_user
+  validate :check_for_duplicate_name_for_user
 
   before_destroy :destroy_plans
 
@@ -38,14 +38,14 @@ class Job < ActiveRecord::Base
       self.plans.destroy_all
     end
 
-    def check_for_dubplicate_name_for_user
+    def check_for_duplicate_name_for_user
       j = Job.where(user_id: self.user_id, name: self.name)
 
       if self.id
         j = j.where('id != ?', self.id)
       end
 
-      if j.count > 1 then
+      if j.count != 0
         errors.add(:name, 'already exists')
       end
     end
