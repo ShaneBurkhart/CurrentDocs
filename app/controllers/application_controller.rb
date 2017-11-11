@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
     before_filter :last_seen
 
+    rescue_from ActiveRecord::RecordNotFound, :with => :not_authorized
+
     rescue_from CanCan::AccessDenied do |exception|
       redirect_to root_path, :alert => exception.message
     end
@@ -21,6 +23,20 @@ class ApplicationController < ActionController::Base
 
     def user_not_there!
 	     render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token]) || params[:share_token]
+    end
+
+    def authenticate_user
+      if !user_signed_in?
+        render json: { error: "You need to login before doing that." }, status: 401
+      end
+    end
+
+    def not_authorized
+      render json: { error: "You don't have permission to do that." }, status: 403
+    end
+
+    def error(message)
+      render json: { error: message }
     end
 
     def user

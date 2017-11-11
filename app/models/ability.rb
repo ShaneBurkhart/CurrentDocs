@@ -3,27 +3,31 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    if user.admin?
-      can :manage, :all
-    elsif user.manager?
-      can :manage, :all
-      cannot :manage, User
-      cannot :manage, Photo
-      cannot :manage, RFI
-      cannot :manage, ASI
-    elsif user.viewer?
-      can :manage, ShareLink
-      can :read, Job
-      can :update, Share
-      can :destroy, Share
-      can :create, Share
-      can :read, Submittal
-      can :create, Submittal
-      can :read, RFI
-      can :create, RFI
-      can :read, ASI
-      can :create, ASI
-    end
+
+    # Can manage jobs that belong to them
+    can :manage, Job, user_id: user.id
+
+    #if user.admin?
+      #can :manage, :all
+    #elsif user.manager?
+      #can :manage, :all
+      #cannot :manage, User
+      #cannot :manage, Photo
+      #cannot :manage, RFI
+      #cannot :manage, ASI
+    #elsif user.viewer?
+      #can :manage, ShareLink
+      #can :read, Job
+      #can :update, Share
+      #can :destroy, Share
+      #can :create, Share
+      #can :read, Submittal
+      #can :create, Submittal
+      #can :read, RFI
+      #can :create, RFI
+      #can :read, ASI
+      #can :create, ASI
+    #end
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

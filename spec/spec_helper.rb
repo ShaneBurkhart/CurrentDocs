@@ -14,9 +14,11 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'factory_bot'
+require 'devise'
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -39,6 +41,8 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+    # So we don't mispell constant names for doubles.
+    mocks.verify_doubled_constant_names = true
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
