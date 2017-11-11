@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password, :can_share_link, :can_review_submittal,
    :password_confirmation, :remember_me, :guest, :company, :authentication_token
 
-  validates :authentication_token, :first_name, :last_name, :company, presence: true
+  validates :first_name, :last_name, :company, presence: true
   validate :check_type
 
   before_destroy :destroy_shares

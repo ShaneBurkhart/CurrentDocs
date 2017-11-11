@@ -10,8 +10,8 @@ RSpec.describe Job, :type => :model do
     it { expect(subject).to validate_presence_of(:user_id) }
     it { expect(subject).to validate_presence_of(:name) }
 
-    it "should not allow same name for tab" do
-      new_job = build(:job, name: subject.name, tab: subject.tab)
+    it "should check for duplicate name for user" do
+      new_job = build(:job, name: subject.name, user: subject.user)
 
       expect(new_job).not_to be_valid
     end
