@@ -147,8 +147,6 @@ PlanSource.RFI = Ember.Object.extend({
   },
 
   destroy: function (callback) {
-    var self = this;
-
     $.ajax({
       url: PlanSource.RFI.saveUrl(this.get('id')),
       type: 'DELETE',
