@@ -183,7 +183,15 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   },
 
   getASIData: function () {
+    var dateSubmitted = $("#asi-date-submitted").val();
+    var date_submitted = undefined;
+
+    if (dateSubmitted) {
+      date_submitted = moment(dateSubmitted, 'll').format();
+    }
+
     return {
+      date_submitted: date_submitted,
       subject: $("#asi-subject").val(),
       notes: $("#asi-notes").val(),
       plan_sheets_affected: $("#asi-plan-sheets-affected").val(),

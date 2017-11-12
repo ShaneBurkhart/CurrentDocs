@@ -1,5 +1,5 @@
 class ASI < ActiveRecord::Base
-  attr_accessible :asi_num, :status, :subject, :notes, :plan_sheets_affected, :in_addendum, :job_id, :rfi_id, :user_id, :assigned_user_id
+  attr_accessible :asi_num, :status, :subject, :notes, :plan_sheets_affected, :in_addendum, :date_submitted, :job_id, :rfi_id, :user_id, :assigned_user_id
 
   STATUSES = ["Open", "Closed"]
 
@@ -12,7 +12,7 @@ class ASI < ActiveRecord::Base
   validates :subject, :job_id, :user_id, presence: true
   validate :check_status
 
-  before_create :generate_asi_num
+  before_save :generate_asi_num
 
   private
 
@@ -23,21 +23,34 @@ class ASI < ActiveRecord::Base
     end
 
     def generate_asi_num
-      # If asi_num is present, don't do anything.
-      # We set it manually
-      return if self.asi_num
+      # If ASI is new and has asi_num, we are manually setting it
+      return if self.new_record? and self.asi_num
 
-      now = DateTime.now
-      formatted_date = now.strftime("%y%m%d")
+      date = DateTime.now
 
-      asis = ASI.where(job_id: self.job_id).where(
-        "asi_num LIKE ?", "#{formatted_date}%"
-      )
-
-      if asis.length != 0
-        self.asi_num = "#{formatted_date}-#{asis.length}"
-      else
-        self.asi_num = formatted_date
+      # If there is a date_submitted, then we update asi_num based on that.
+      # Otherwise, we use DateTime.now
+      if self.date_submitted
+        date = self.date_submitted
       end
+
+      formatted_date = date.strftime("%y%m%d")
+
+      asis = ASI.where(job_id: self.job_id)
+      asi_num = formatted_date
+      extension_num = 1
+
+      loop do
+        exists = asis.find { |asi| asi.asi_num == asi_num && asi.id != self.id }
+        break if !exists
+
+        extension = extension_num
+        extension = "0#{extension_num}" if extension_num < 10
+
+        asi_num = "#{formatted_date}-#{extension}"
+        extension_num += 1
+      end
+
+      self.asi_num = asi_num
     end
 end

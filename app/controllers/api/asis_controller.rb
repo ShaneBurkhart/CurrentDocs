@@ -78,6 +78,7 @@ class Api::ASIsController < ApplicationController
       @asi.subject = @asi_params["subject"]
       @asi.plan_sheets_affected = @asi_params["plan_sheets_affected"]
       @asi.in_addendum = @asi_params["in_addendum"]
+      @asi.date_submitted = @asi_params["date_submitted"]
 
       if !@asi.save
         return render json: {}

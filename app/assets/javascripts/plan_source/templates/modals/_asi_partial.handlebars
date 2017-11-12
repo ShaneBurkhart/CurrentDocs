@@ -9,7 +9,11 @@
       <div class="col-sm-8">
         <div class="control-group">
           <div class="controls">
-            <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+            {{#if canEditASI}}
+              <input class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+            {{else}}
+              <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+            {{/if}}
             <span class="help-inline"></span>
           </div>
         </div>
@@ -139,3 +143,9 @@
     </div>
   </div>
 </div>
+
+{{#if canEditASI}}
+  <script>
+    var asiPicker = new Pikaday({ field: $("#asi-date-submitted")[0], format: 'll' });
+  </script>
+{{/if}}

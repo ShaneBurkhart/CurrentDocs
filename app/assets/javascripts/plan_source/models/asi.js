@@ -58,8 +58,10 @@ PlanSource.ASI = Ember.Object.extend({
   }.property(),
 
   dateSubmitted: function () {
-		return moment(this.get("created_at")).format("LL");
-  }.property('created_at'),
+    var date = this.get('date_submitted');
+    if (!date) date = this.get('created_at');
+		return moment(date).format("ll");
+  }.property('date_submitted', 'created_at'),
 
   submittedBy: function () {
 		return this.get('user.first_name') + " " + this.get('user.last_name');
@@ -116,6 +118,7 @@ PlanSource.ASI = Ember.Object.extend({
         type: 'PUT',
         data : {
           asi: this.getProperties([
+            "date_submitted",
             "plan_sheets_affected",
             "in_addendum",
             "subject",
