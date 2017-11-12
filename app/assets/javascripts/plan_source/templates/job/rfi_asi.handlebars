@@ -11,6 +11,12 @@
       {{else}}
         <a href="#" {{action "openProjectManagerModal"}} class="button button-default pull-right">Project Manager (Pick One)</a>
       {{/if}}
+    {{else}}
+      {{#if projectManager}}
+        <a href="#" onClick="return false;" class="button button-default pull-right">Project Manager ({{projectManager.first_name}} {{projectManager.last_name}})</a>
+      {{else}}
+        <a href="#" onClick="return false;" class="button button-default pull-right">Project Manager (Not Selected)</a>
+      {{/if}}
     {{/if}}
   </p>
 
