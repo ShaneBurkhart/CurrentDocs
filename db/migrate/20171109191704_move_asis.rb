@@ -10,12 +10,12 @@ class MoveASIs < ActiveRecord::Migration
     job_ids.each do |job_id|
       plans = Plan.where(job_id: job_id, tab: "ASI").order("id ASC")
 
-      description_json = JSON.parse(plan.description)
-      description = description_json["ops"].first["insert"]
-
-      code = plan.code.gsub("ASI-", "")
-
       plans.each do |plan|
+        description_json = JSON.parse(plan.description)
+        description = description_json["ops"].first["insert"]
+
+        code = plan.code.gsub("ASI-", "")
+
         asi = ASI.create(
           job_id: job_id,
           user_id: plan.job.user_id,
