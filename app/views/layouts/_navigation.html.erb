@@ -23,7 +23,11 @@
           </li>
 
           <li>
-          <%= link_to 'Logout', destroy_user_session_path, :method=>'delete' %>
+            <% if current_user %>
+              <%= link_to "Logout (#{current_user.first_name})", destroy_user_session_path, :method=>'delete' %>
+            <% else %>
+              <%= link_to "Logout", destroy_user_session_path, :method=>'delete' %>
+            <% end %>
           </li>
         <% else %>
           <li class="<%= controller_name == "registrations" && action_name == "new" ? "active" : "" %>">
