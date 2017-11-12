@@ -14,7 +14,7 @@ class MoveASIs < ActiveRecord::Migration
           subject: plan.plan_name,
           asi_num: plan.code,
           notes: plan.description,
-          plan_sheets_affected: plan.tag
+          plan_sheets_affected: plan.tags
         )
 
         break if !asi
