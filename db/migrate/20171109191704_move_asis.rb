@@ -1,5 +1,9 @@
 class MoveASIs < ActiveRecord::Migration
   def up
+    # Column was a string.  It needs to be text.
+    remove_column :asis, :notes
+    add_column :asis, :notes, :text
+
     # Get all job ids and go through one by one to not overdo memory
     job_ids = Job.pluck(:id)
 
