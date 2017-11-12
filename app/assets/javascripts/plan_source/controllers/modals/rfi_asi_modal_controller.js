@@ -172,7 +172,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var due_date = undefined;
 
     if (responseRequested) {
-      due_date = moment(responseRequested).format();
+      due_date = moment(responseRequested, 'll').format();
     }
 
     return {

@@ -36,9 +36,9 @@
         <div class="control-group">
           <div class="controls">
             {{#if canEditRFI}}
-              <input class="form-control" id="rfi-response-requested" value="{{ unbound due_date }}">
+              <input class="form-control" id="rfi-response-requested" value="{{ unbound targetResponse }}">
             {{else}}
-              <input disabled class="form-control" id="rfi-response-requested" value="{{ unbound due_date }}">
+              <input disabled class="form-control" id="rfi-response-requested" value="{{ unbound targetResponse }}">
             {{/if}}
             <span class="help-inline"></span>
           </div>
@@ -128,6 +128,6 @@
 
 {{#if canEditRFI}}
   <script>
-    var rfiPicker = new Pikaday({ field: $("#rfi-response-requested")[0] });
+    var rfiPicker = new Pikaday({ field: $("#rfi-response-requested")[0], format: 'll' });
   </script>
 {{/if}}

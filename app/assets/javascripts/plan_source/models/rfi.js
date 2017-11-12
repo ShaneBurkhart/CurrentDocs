@@ -82,7 +82,7 @@ PlanSource.RFI = Ember.Object.extend({
   }.property('due_date'),
 
   dateSubmitted: function () {
-		return moment(this.get("created_at")).format("LL");
+		return moment(this.get("created_at")).format("ll");
   }.property('created_at'),
 
   submittedBy: function () {
