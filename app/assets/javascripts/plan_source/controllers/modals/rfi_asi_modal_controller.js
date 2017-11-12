@@ -231,6 +231,9 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var currentUserId = window.user_id;
     var canEdit = false;
 
+    // If RFI is closed, we can't edit.
+    if (!rfi.get("isOpen")) return false;
+
     if (job && job.get('isMyJob')) canEdit = true;
     if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
     if (rfi && rfi.get('user.id') === currentUserId) canEdit = true;
@@ -239,10 +242,14 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   }.property('model', 'parent.model.project_manager'),
 
   canEditAssignedTo: function () {
+    var rfi = this.get("model");
     var job = this.get("parent.model");
     var projectManager = job.get('project_manager');
     var currentUserId = window.user_id;
     var canEdit = false;
+
+    // If RFI is closed, we can't edit.
+    if (!rfi.get("isOpen")) return false;
 
     if (job && job.get('isMyJob')) canEdit = true;
     if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
@@ -286,17 +293,18 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   }.property('canCreateUnlinkedASI', 'model.assigned_user'),
 
   canEditASI: function () {
-    // Same permissions as canCreateLinkedASI
+    var rfi = this.get("model");
+
+    // If ASI is closed, we can't edit.
+    if (!rfi.get("isOpen")) return false;
+
+    // Same permissions as canCreateLinkedASI minus isOpen check
     return this.get('canCreateLinkedASI');
   }.property('canCreateLinkedASI'),
 
 	keyPress: function(e) {
 		if (e.keyCode == 13) {
-      if (this.get('model.isNew')) {
-        this.submitRFI();
-      } else {
-        this.updateRFI();
-      }
+      this.save();
     }
 	}
 });
