@@ -10,9 +10,9 @@
         <div class="control-group">
           <div class="controls">
             {{#if canEditASI}}
-              <input class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+              <input class="form-control" id="asi-date-submitted" data-has-date-submitted="{{ unbound boolean getASI.date_submitted }}" value="{{ unbound getASI.dateSubmitted }}">
             {{else}}
-              <input disabled class="form-control" id="asi-date-submitted" value="{{ unbound getASI.dateSubmitted }}">
+              <input disabled class="form-control" id="asi-date-submitted" data-has-date-submitted="{{ unbound boolean getASI.date_submitted }}" value="{{ unbound getASI.dateSubmitted }}">
             {{/if}}
             <span class="help-inline"></span>
           </div>
@@ -47,6 +47,28 @@
         </div>
       </div>
     {{/unless}}
+
+    <div class="row margin-bottom">
+      <div class="col-sm-4"><p>Status:</p></div>
+      <div class="col-sm-8">
+        <div class="control-group">
+          <div class="controls">
+            {{#if canEditASI}}
+              <select class="form-control" id="asi-status" value="{{ unbound status }}">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            {{else}}
+              <select disabled class="form-control" id="asi-status" value="{{ unbound status }}">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+              </select>
+            {{/if}}
+            <span class="help-inline"></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="row margin-bottom">
       <div class="col-sm-4"><p>Plan Sheets Affected:</p></div>
@@ -146,6 +168,12 @@
 
 {{#if canEditASI}}
   <script>
-    var asiPicker = new Pikaday({ field: $("#asi-date-submitted")[0], format: 'll' });
+    var asiPicker = new Pikaday({
+      field: $("#asi-date-submitted")[0],
+      format: 'll',
+      onSelect: function () {
+        $("#asi-date-submitted").attr('data-has-date-submitted', true);
+      }
+    });
   </script>
 {{/if}}

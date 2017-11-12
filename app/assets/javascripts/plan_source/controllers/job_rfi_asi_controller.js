@@ -25,9 +25,13 @@ PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
     'jobController.model.rfis',
     'jobController.model.rfis.@each',
     'jobController.model.rfis.@each.id',
-    'jobController.model.asis',
-    'jobController.model.asis.@each',
-    'jobController.model.asis.@each.id'
+    'jobController.model.rfis.@each.assigned_user.id',
+    'jobController.model.rfis.@each.asi.status',
+    'jobController.model.unlinked_asis',
+    'jobController.model.unlinked_asis.@each',
+    'jobController.model.unlinked_asis.@each.id',
+    'jobController.model.unlinked_asis.@each.status',
+    'jobController.model.unlinked_asis.@each.assigned_user.id'
   ),
 
   canCreateUnlinkedASI: function () {

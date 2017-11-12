@@ -118,6 +118,7 @@ PlanSource.ASI = Ember.Object.extend({
         type: 'PUT',
         data : {
           asi: this.getProperties([
+            "status",
             "date_submitted",
             "plan_sheets_affected",
             "in_addendum",

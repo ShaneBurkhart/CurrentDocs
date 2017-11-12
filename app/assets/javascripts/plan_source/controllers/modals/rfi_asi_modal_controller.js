@@ -183,15 +183,20 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   },
 
   getASIData: function () {
-    var dateSubmitted = $("#asi-date-submitted").val();
+    var $dateSubmitted = $("#asi-date-submitted");
+    var dateSubmitted = $dateSubmitted.val();
+    // This data attr is used to check if date submitted has been selected
+    // or is created_at date.
+    var hasDateSubmitted = $dateSubmitted.attr('data-has-date-submitted');
     var date_submitted = undefined;
 
-    if (dateSubmitted) {
+    if (hasDateSubmitted && dateSubmitted) {
       date_submitted = moment(dateSubmitted, 'll').format();
     }
 
     return {
       date_submitted: date_submitted,
+      status: $("#asi-status").val(),
       subject: $("#asi-subject").val(),
       notes: $("#asi-notes").val(),
       plan_sheets_affected: $("#asi-plan-sheets-affected").val(),

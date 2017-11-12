@@ -25,6 +25,8 @@ class ASI < ActiveRecord::Base
     def generate_asi_num
       # If ASI is new and has asi_num, we are manually setting it
       return if self.new_record? and self.asi_num
+      # If ASI is not new, we only update if date_submitted has changed
+      return if !self.new_record? and !self.date_submitted_changed?
 
       date = DateTime.now
 
