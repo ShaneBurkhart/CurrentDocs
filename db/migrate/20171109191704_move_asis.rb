@@ -10,9 +10,11 @@ class MoveASIs < ActiveRecord::Migration
         asi = ASI.create(
           job_id: job_id,
           user_id: plan.job.user_id,
-          status: "Open",
+          status: "Closed",
           subject: plan.plan_name,
-          notes: "Imported from 'ASI' tab."
+          asi_num: plan.code,
+          notes: plan.description,
+          plan_sheets_affected: plan.tag
         )
 
         break if !asi
@@ -22,6 +24,15 @@ class MoveASIs < ActiveRecord::Migration
           filename: plan.plan_file_name,
           s3_path: plan.plan.path
         )
+
+        # Move over history
+        plan.plan_records.each do |plan_record|
+          ASIAttachment.create(
+            asi_id: asi.id,
+            filename: plan_record.plan_record_file_name,
+            s3_path: plan_record.plan_record.path
+          )
+        end
       end
     end
   end

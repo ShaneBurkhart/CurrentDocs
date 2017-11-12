@@ -23,6 +23,10 @@ class ASI < ActiveRecord::Base
     end
 
     def generate_asi_num
+      # If asi_num is present, don't do anything.
+      # We set it manually
+      return if self.asi_num
+
       now = DateTime.now
       formatted_date = now.strftime("%y%m%d")
 
