@@ -12,13 +12,16 @@ class MoveASIs < ActiveRecord::Migration
 
       plans.each do |plan|
         description = nil
+        code = nil
 
         if plan.description
           description_json = JSON.parse(plan.description)
           description = description_json["ops"].first["insert"]
         end
 
-        code = plan.code.gsub("ASI-", "")
+        if plan.code
+          code = plan.code.gsub("ASI-", "")
+        end
 
         asi = ASI.create(
           job_id: job_id,
