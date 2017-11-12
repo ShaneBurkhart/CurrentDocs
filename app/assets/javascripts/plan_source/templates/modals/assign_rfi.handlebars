@@ -46,7 +46,7 @@
             </thead>
             <tbody>
               {{#each controller }}
-                <tr {{ action "selectContact" this }}>
+                <tr {{ action "selectContact" this }} style="cursor: pointer;">
                   <td>{{ unbound first_name }}</td>
                   <td>{{ unbound last_name}}</td>
                   <td>{{ unbound email }}</td>
@@ -59,7 +59,6 @@
     </div>
     <div class="footer">
       <div class="buttons">
-        <a class="button button-blue" id="contact-share" {{action "shareWithContacts" target=controller}} >Update</a>
         <a class="button" {{action "close" }} >Cancel</a>
       </div>
     </div>

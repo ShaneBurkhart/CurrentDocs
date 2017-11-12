@@ -14,7 +14,7 @@ PlanSource.ProjectManagerController = Ember.ArrayController.extend({
       project_manager_user_id: contact.id,
     }, function (data) {
       if (data.project_manager) {
-        job.set("project_manager", data.project_manager)
+        job.setProperties({ "project_manager": data.project_manager })
 
         toastr["success"]("Succesfully updated project manager!");
 
