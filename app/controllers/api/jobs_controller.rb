@@ -4,7 +4,7 @@ class Api::JobsController < ApplicationController
   def index
     @jobs = user.jobs
 
-    return not_authorized unless user.can? :read, @jobs
+    return not_authorized unless user.can? :read_multiple, @jobs
 
     render json: @jobs
   end

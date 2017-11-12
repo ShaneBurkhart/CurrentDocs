@@ -2,8 +2,15 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new # guest user (not logged in)
+    # :manage = [:read, :create, :update, :destroy]
+    # You can't use :read for array of instances, so adding :read_multiple
 
+    user ||= User.new
+
+    can :read_multiple, Job do |r|
+      puts 'asdf'
+      r.all? { |j| can?(:read, j) }
+    end
     # Can manage jobs that belong to them
     can :manage, Job, user_id: user.id
 

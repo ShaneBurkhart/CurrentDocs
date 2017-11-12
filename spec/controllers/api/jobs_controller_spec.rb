@@ -153,7 +153,7 @@ RSpec.describe Api::JobsController, :type => :controller do
 
       describe "GET #index" do
         before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:read, all(be_a(Job)))
+          expect_any_instance_of(User).to receive(:can?).with(:read_multiple, all(be_a(Job)))
           get :index
         end
 

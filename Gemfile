@@ -22,7 +22,7 @@ gem 'momentjs-rails'
 gem 'async-rails'
 
 gem "devise", "3.2.2"
-gem "cancan", "1.6.10"
+gem "cancancan", "~> 1.15"
 gem "simple_form", "2.1.1"
 
 gem 'paperclip', '3.5.2'
