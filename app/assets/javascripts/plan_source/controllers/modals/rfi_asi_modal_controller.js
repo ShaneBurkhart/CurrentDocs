@@ -45,7 +45,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
 
     rfi.set("job_id", job.get("id"));
     rfi.setProperties(this.getRFIData());
-    rfi.set("attachment_ids", this.getRFIAttachments());
+    rfi.set("updated_attachments", this.getRFIAttachments());
 
     var errors = rfi.validate();
     this.set("rfiErrors", errors);
@@ -120,7 +120,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
 
     asi.set("job_id", job.get("id"));
     asi.setProperties(this.getASIData());
-    asi.set("attachment_ids", this.getASIAttachments());
+    asi.set("updated_attachments", this.getASIAttachments());
 
     // Wire up RFI relationship if RFI exists
     if (rfi) asi.set("rfi_id", rfi.get("id"));
@@ -148,6 +148,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     if (!this.get('canEditASI')) return callback(null);
 
     asi.setProperties(this.getASIData());
+    asi.set('updated_attachments', this.getASIAttachments());
 
     var errors = asi.validate();
     this.set("asiErrors", errors);
@@ -218,7 +219,16 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var $attachments = $(id + " .file-preview");
 
     $attachments.each(function (i, el) {
-      attachments.push($(el).attr("data-id"));
+      var $filePreview = $(el);
+      var $description = $filePreview.find(".file-preview-description");
+      var uploadId = $filePreview.attr("data-upload-id");
+      var attachmentId = $filePreview.attr("data-attachment-id");
+
+      attachments.push({
+        id: attachmentId,
+        upload_id: uploadId,
+        description: $description.val(),
+      });
     });
 
     return attachments;

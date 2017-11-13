@@ -115,7 +115,7 @@ PlanSource.RFI = Ember.Object.extend({
           "job_id",
           "subject",
           "notes",
-          "attachment_ids"
+          "updated_attachments"
         ]) },
     }).then(function(data, t, xhr){
       if (!$.isEmptyObject(data)) {

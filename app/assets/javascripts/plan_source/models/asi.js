@@ -97,7 +97,7 @@ PlanSource.ASI = Ember.Object.extend({
           "in_addendum",
           "subject",
           "notes",
-          "attachment_ids"
+          "updated_attachments"
         ])
       },
     }).then(function(data, t, xhr){
@@ -123,7 +123,8 @@ PlanSource.ASI = Ember.Object.extend({
             "plan_sheets_affected",
             "in_addendum",
             "subject",
-            "notes"
+            "notes",
+            "updated_attachments"
           ])
         },
     }).then(function(data, t, xhr){

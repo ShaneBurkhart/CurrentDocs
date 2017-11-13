@@ -11,14 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171112205343) do
+ActiveRecord::Schema.define(:version => 20171113001441) do
 
   create_table "asi_attachments", :force => true do |t|
     t.string   "filename"
     t.string   "s3_path"
     t.integer  "asi_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
   end
 
   create_table "asis", :force => true do |t|

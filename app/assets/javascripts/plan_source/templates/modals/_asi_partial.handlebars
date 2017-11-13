@@ -134,21 +134,7 @@
       </div>
     </div>
 
-    <div class="row margin-bottom">
-      <div class="col-sm-12">
-        <p>Attachments (select to download):</p>
-        <div class="control-group">
-          <div id="submittal-attachments">
-            {{#each getASI.attachments}}
-              <p class="file-preview">
-                <a href="/api/asis/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
-              </p>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-    </div>
-
+    {{partial "modals/asi_attachments_partial"}}
   </div>
   <div class="footer">
     <div class="buttons">
@@ -176,4 +162,6 @@
       }
     });
   </script>
+
+  {{partial "modals/asi_dropzone_partial"}}
 {{/if}}

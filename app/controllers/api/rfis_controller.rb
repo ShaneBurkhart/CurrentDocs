@@ -12,18 +12,19 @@ class Api::RFIsController < ApplicationController
         job_id: params["rfi"]["job_id"],
         user_id: user.id,
       )
-      attachments = params["rfi"]["attachment_ids"] || []
+      attachments = params["rfi"]["updated_attachments"] || {}
 
       if !@rfi.save
         return render json: {}
       end
 
-      attachments.each do |id|
-        filename = Redis.current.get("attachments:#{id}")
+      attachments.each do |i, a|
+        upload_id = a["upload_id"]
+        filename = Redis.current.get("attachments:#{upload_id}")
 
         attachment = RFIAttachment.create(
           filename: filename,
-          s3_path: "attachments/#{id}",
+          s3_path: "attachments/#{upload_id}",
           rfi_id: @rfi.id,
         )
       end

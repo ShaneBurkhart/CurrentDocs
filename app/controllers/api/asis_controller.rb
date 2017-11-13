@@ -37,18 +37,20 @@ class Api::ASIsController < ApplicationController
         rfi_id: @asi_params["rfi_id"],
         user_id: user.id,
       )
-      attachments = @asi_params["attachment_ids"] || []
+      attachments = @asi_params["updated_attachments"] || {}
 
       if !@asi.save
         return render json: {}
       end
 
-      attachments.each do |id|
-        filename = Redis.current.get("attachments:#{id}")
+      attachments.each do |i, a|
+        upload_id = a["upload_id"]
+        filename = Redis.current.get("attachments:#{upload_id}")
 
         attachment = ASIAttachment.create(
           filename: filename,
-          s3_path: "attachments/#{id}",
+          description: a["description"],
+          s3_path: "attachments/#{upload_id}",
           asi_id: @asi.id,
         )
       end
@@ -84,6 +86,31 @@ class Api::ASIsController < ApplicationController
       if !@asi.save
         return render json: {}
       end
+
+      attachments = @asi_params["updated_attachments"]
+
+      attachments.each do |i, a|
+        id = a["id"]
+        upload_id = a["upload_id"]
+
+        if upload_id
+          # New attachment
+          filename = Redis.current.get("attachments:#{upload_id}")
+
+          attachment = ASIAttachment.create(
+            filename: filename,
+            description: a["description"],
+            s3_path: "attachments/#{upload_id}",
+            asi_id: @asi.id,
+          )
+        else
+          # Not a new attachment.  We are updating the description
+          asiAttachment = ASIAttachment.find(id)
+          asiAttachment.description = a["description"]
+          asiAttachment.save
+        end
+      end
+
 
       # Reload for includes
       @asi = ASI.includes(:attachments).find(@asi.id)

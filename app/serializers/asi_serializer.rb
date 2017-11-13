@@ -14,5 +14,5 @@ class ASISerializer < ActiveModel::Serializer
 
   has_one :user, serializer: SimpleUserSerializer
   has_one :assigned_user, serializer: SimpleUserSerializer
-  has_many :attachments, serializer: SimpleAttachmentSerializer
+  has_many :attachments, serializer: ASIAttachmentSerializer
 end
