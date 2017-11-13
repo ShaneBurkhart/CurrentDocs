@@ -92,21 +92,7 @@
       </div>
     </div>
 
-    <div class="row margin-bottom">
-      <div class="col-sm-12">
-        <p>Attachments (select to download):</p>
-        <div class="control-group">
-          <div id="submittal-attachments">
-            {{#each attachments}}
-              <p class="file-preview">
-                <a href="/api/rfis/download_attachment/{{unbound this.id}}" title="{{unbound this.filename}}">{{truncate this.filename}}</a>
-              </p>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-    </div>
-
+    {{partial "modals/rfi_attachments_partial"}}
   </div>
   <div class="footer">
     <div class="buttons">
