@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
     assigned_user = rfi_asi.assigned_user
 
     # If is ASI and has RFI, then assigned_user is on RFI
-    if rfi_asi.rfi
+    if rfi_asi.is_a?(ASI) and rfi_asi.rfi
       assigned_user = rfi_asi.rfi.assigned_user
     end
 
