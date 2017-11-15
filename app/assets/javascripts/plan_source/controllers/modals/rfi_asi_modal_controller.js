@@ -311,19 +311,19 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   }.property('canCreateUnlinkedASI', 'model.assigned_user'),
 
   canEditASI: function () {
-    var rfi = this.get("model");
-
     // If ASI is closed, we can't edit.
-    if (!rfi.get("isOpen")) return false;
+    if (!this.get("model.isOpen")) return false;
 
     // Same permissions as canCreateLinkedASI minus isOpen check
     return this.get('canCreateLinkedASI');
   }.property('model.isOpen', 'canCreateLinkedASI'),
 
   canReopenASI: function () {
+    if (this.get('model.isOpen')) return false;
+
     // Same permissions as canCreateLinkedASI.
     return this.get('canCreateUnlinkedASI')
-  },
+  }.property('model.isOpen', 'canCreateUnlinkedASI'),
 
 	keyPress: function(e) {
 		if (e.keyCode == 13) {
