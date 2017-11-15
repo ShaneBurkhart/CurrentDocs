@@ -94,14 +94,17 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
   deleteRFI: function () {
     var self = this;
     var rfi = this.get("model.getRFI");
+    var asi = this.get("model.getASI");
     var job = this.get("parent.model");
 
     // Not an error, but we don't want to do anything
     if (!this.get('canDeleteRFI')) return;
 
-    var shouldDelete = window.confirm(
-      "Are you sure you want to delete RFI '" + rfi.get("rfi_num") + "'?"
-    );
+    var message = "Are you sure you want to delete RFI '" + rfi.get("rfi_num") + "'";
+    if (asi) message += " and ASI '" + asi.get("asi_num") + "'";
+    message += "?";
+
+    var shouldDelete = window.confirm(message);
 
     if (!shouldDelete) return;
 
