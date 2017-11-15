@@ -116,6 +116,31 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     });
   },
 
+  deleteASI: function () {
+    var self = this;
+    var asi = this.get("model.getASI");
+    var job = this.get("parent.model");
+
+    // Not an error, but we don't want to do anything
+    if (!asi || !this.get('canDeleteASI')) return;
+
+    var shouldDelete = window.confirm(
+      "Are you sure you want to delete ASI '" + asi.get("asi_num") + "'?"
+    );
+
+    if (!shouldDelete) return;
+
+    asi.destroy(function (success) {
+      if (success) {
+        job.get("unlinked_asis").removeObject(asi);
+        toastr.success("ASI deleted, thanks!");
+        self.send("close");
+      } else {
+        toastr.error("Sorry, try again later!");
+      }
+    });
+  },
+
   submitASI: function (callback) {
     var self = this;
     var rfi = this.get("model.getRFI");
@@ -286,6 +311,10 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
 
     return canDelete;
   }.property('model', 'parent.model.project_manager'),
+
+  canDeleteASI: function () {
+    return this.get('canDeleteRFI');
+  }.property('canDeleteRFI'),
 
   canCreateUnlinkedASI: function () {
     var job = this.get("parent.model");

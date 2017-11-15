@@ -140,6 +140,10 @@
     <div class="buttons">
       <a class="button" {{action "close"}}>Cancel</a>
       {{#unless getRFI}}
+        {{#if canDeleteASI}}
+          <a id="delete-asi-button" class="button button-red" {{action "deleteASI" target=controller}}>Delete</a>
+        {{/if}}
+
         {{#if canEditAssignedTo}}
           <a id="assign-asi-button" class="button button-green" {{action "openAssignRFIModal" model}}>Assign To</a>
         {{/if}}

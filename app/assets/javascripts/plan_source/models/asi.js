@@ -135,6 +135,20 @@ PlanSource.ASI = Ember.Object.extend({
         return callback(undefined);
       }
     })
+  },
+
+  destroy: function (callback) {
+    $.ajax({
+      url: PlanSource.ASI.saveUrl(this.get('id')),
+      type: 'DELETE',
+      data : {},
+    }).then(function(data, t, xhr){
+      if (!$.isEmptyObject(data)) {
+        return callback(true);
+      } else {
+        return callback(undefined);
+      }
+    })
   }
 });
 

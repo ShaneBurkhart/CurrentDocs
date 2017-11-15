@@ -47,6 +47,7 @@ PlanSource::Application.routes.draw do
 
     post '/asis' => 'asis#create'
     put '/asis/:id' => 'asis#update'
+    delete '/asis/:id' => 'asis#destroy'
     post '/asis/:id/assign' => 'asis#assign'
     get '/asis/download_attachment/:id' => 'asis#download_attachment'
 
