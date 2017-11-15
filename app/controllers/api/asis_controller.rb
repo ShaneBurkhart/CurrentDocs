@@ -87,7 +87,7 @@ class Api::ASIsController < ApplicationController
         return render json: {}
       end
 
-      attachments = @asi_params["updated_attachments"]
+      attachments = @asi_params["updated_attachments"] || {}
 
       attachments.each do |i, a|
         id = a["id"]

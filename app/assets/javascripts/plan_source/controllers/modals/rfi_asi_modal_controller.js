@@ -1,4 +1,12 @@
 PlanSource.RfiAsiController = PlanSource.ModalController.extend({
+  reopen: function () {
+    var asi = this.get('model.getASI');
+
+    if (!this.get('canReopenASI')) return;
+
+    asi.set('status', 'Open');
+  },
+
   save: function () {
     var self = this;
     var RFI = this.get('model.getRFI');
@@ -249,7 +257,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     if (rfi && rfi.get('user.id') === currentUserId) canEdit = true;
 
     return canEdit;
-  }.property('model', 'parent.model.project_manager'),
+  }.property('model.isOpen', 'parent.model.project_manager'),
 
   canEditAssignedTo: function () {
     var rfi = this.get("model");
@@ -265,7 +273,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     if (projectManager && projectManager.get('id') === currentUserId) canEdit = true;
 
     return canEdit;
-  }.property('model', 'parent.model.project_manager'),
+  }.property('model.isOpen', 'parent.model.project_manager'),
 
   canDeleteRFI: function () {
     var job = this.get("parent.model");
@@ -310,12 +318,17 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
 
     // Same permissions as canCreateLinkedASI minus isOpen check
     return this.get('canCreateLinkedASI');
-  }.property('canCreateLinkedASI'),
+  }.property('model.isOpen', 'canCreateLinkedASI'),
+
+  canReopenASI: function () {
+    // Same permissions as canCreateLinkedASI.
+    return this.get('canCreateUnlinkedASI')
+  },
 
 	keyPress: function(e) {
 		if (e.keyCode == 13) {
       this.save();
     }
-	}
+	},
 });
 

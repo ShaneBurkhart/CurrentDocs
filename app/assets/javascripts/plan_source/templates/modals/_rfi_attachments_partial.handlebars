@@ -4,7 +4,7 @@
 
     <div class="control-group">
       {{#if getRFI.isNew}}
-        <div id="rfi-attachments-dnd" class="dropzone"></div>
+        {{partial "modals/rfi_dropzone_partial"}}
       {{/if}}
       <table class="table table-hover">
         <thead>
