@@ -196,7 +196,7 @@ PlanSource.RfiAsiController = PlanSource.ModalController.extend({
     var dateSubmitted = $dateSubmitted.val();
     // This data attr is used to check if date submitted has been selected
     // or is created_at date.
-    var hasDateSubmitted = $dateSubmitted.attr('data-has-date-submitted');
+    var hasDateSubmitted = $dateSubmitted.attr('data-has-date-submitted') === 'true';
     var date_submitted = undefined;
 
     if (hasDateSubmitted && dateSubmitted) {
