@@ -148,6 +148,10 @@
       {{#if canEditASI}}
         <a id="submit-asi-button" class="button button-blue" {{action "save" target=controller}}>Save</a>
       {{/if}}
+
+      {{#if canReopenASI}}
+        <a id="reopen-asi-button" class="button button-green" {{action "reopen" target=controller}}>Reopen</a>
+      {{/if}}
     </div>
   </div>
 </div>
@@ -162,6 +166,4 @@
       }
     });
   </script>
-
-  {{partial "modals/asi_dropzone_partial"}}
 {{/if}}

@@ -6,7 +6,7 @@ PlanSource.JobRfiAsiController = PlanSource.ArrayController.extend({
   tab: 'ASI',
 	sortProperties: ['status', 'rfi_num', 'asi_num'],
   sortAscending: false,
-  currentFilter: 'open',
+  currentFilter: 'all',
 
   filter: function (filter) {
     // Reset filters to the default when going with a preset filter.

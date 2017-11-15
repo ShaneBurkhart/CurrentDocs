@@ -22,6 +22,12 @@
 
   <nav id="rfi-asi-nav" class="rfi-asi-filters">
     <span class="active">Filter: </span>
+    {{#if isAllFilter }}
+        <a class="active">All</a>
+    {{else}}
+      <a {{action "filter" "all"}}>All</a>
+    {{/if}}
+
     {{#if isOpenFilter }}
         <a class="active">Open</a>
     {{else}}
@@ -32,12 +38,6 @@
         <a class="active">Closed</a>
     {{else}}
       <a {{action "filter" "closed"}}>Closed</a>
-    {{/if}}
-
-    {{#if isAllFilter }}
-        <a class="active">All</a>
-    {{else}}
-      <a {{action "filter" "all"}}>All</a>
     {{/if}}
 
     {{#if isMeFilter }}
