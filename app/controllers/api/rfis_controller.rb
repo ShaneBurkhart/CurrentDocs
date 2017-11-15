@@ -85,12 +85,15 @@ class Api::RFIsController < ApplicationController
   def assign
     @rfi = RFI.find(params[:id])
     @job = @rfi.job
+    @user = User.find(params["assign_to_user_id"])
 
     is_job_owner = user.is_my_job(@job)
     is_job_pm = user.is_project_manager(@job)
 
-    if is_job_owner or is_job_pm
-      @rfi.assigned_user_id = params["assign_to_user_id"]
+    # Make sure is owner or is PM and that the assigned user is shared
+    # with Plans tab.
+    if (is_job_owner or is_job_pm) and @user.is_shared_job(@job, 0b100)
+      @rfi.assigned_user_id = @user.id
 
       if !@rfi.save
         return render json: {}

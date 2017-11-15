@@ -146,9 +146,13 @@ PlanSource.JobRoute = Ember.Route.extend({
 
     openAssignRFIModal: function (rfi_asi) {
       var jobController = this.controllerFor("job");
+      var job = jobController.get('model');
 
       this.renderModal("assign_rfi", {
-        content: PlanSource.Contact.findAll(),
+        // Right now, anyone shared with the Plans tab can be a project
+        // manager or be assigned to an RFI.  Using getEligibleProjectManagers()
+        // so we don't have to duplicate the route until logic changes.
+        content: job.getEligibleProjectManagers(),
         rfiAsi: rfi_asi,
         parent: jobController,
       });
