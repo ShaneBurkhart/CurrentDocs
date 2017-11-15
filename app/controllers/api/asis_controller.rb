@@ -89,6 +89,15 @@ class Api::ASIsController < ApplicationController
 
       attachments = @asi_params["updated_attachments"] || {}
 
+      # Remove attachments that no longer exist in updated list.
+      @asi.attachments.each do |attachment|
+        should_delete = !attachments.find do |i, a|
+          next attachment.id == a['id'].to_i
+        end
+
+        attachment.destroy if should_delete
+      end
+
       attachments.each do |i, a|
         id = a["id"]
         upload_id = a["upload_id"]
@@ -110,7 +119,6 @@ class Api::ASIsController < ApplicationController
           asiAttachment.save
         end
       end
-
 
       # Reload for includes
       @asi = ASI.includes(:attachments).find(@asi.id)

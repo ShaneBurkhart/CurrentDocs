@@ -31,6 +31,10 @@
                 <td>
                   <span class="pull-right">
                     <a href="/api/asis/download_attachment/{{unbound this.id}}">Download</a>
+
+                    {{#if controller.canEditASI}}
+                      | <a class="remove">Remove</a>
+                    {{/if}}
                   </span>
                 </td>
               </tr>
