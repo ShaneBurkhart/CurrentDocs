@@ -81,6 +81,7 @@ $(document).ready(function(){
     createImageThumbnails: false,
     // Hide the previews.  We'll make our own.
     previewTemplate: '<div style="display:none"></div>',
+    dictDefaultMessage: 'Drop files here or click to upload.',
   };
 
   PlanSource.troubleshootDropzone = new Dropzone("div#troubleshoot-files-dnd", {
