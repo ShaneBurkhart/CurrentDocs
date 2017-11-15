@@ -25,31 +25,6 @@ PlanSource.ProjectManagerController = Ember.ArrayController.extend({
     }, "json");
   },
 
-  addContact: function(){
-    var self = this;
-    var container = $("#contact-email");
-    var email = container.val().trim();
-
-    if(!email || email == "" || !email.match(/^\S+@\S+\.\S+$/)) return;
-
-    $.post("/api/user/contacts", {
-      contact: { email: email }
-    }, function (data) {
-      if (data.contact && data.contact.id) {
-        self.get("content").pushObject(
-          PlanSource.Contact.create(data.contact.contact)
-        );
-
-        toastr["success"]("Succesfully added contact. " +
-          "Sent email with share details to " + email);
-      } else {
-        toastr["error"]("The email '" + email + "' already exists or is invalid.")
-      }
-    }, "json");
-
-    container.val("");
-  },
-
   keyPress : function(e){
     if (e.keyCode == 13)
       this.addContact();

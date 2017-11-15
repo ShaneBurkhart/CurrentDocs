@@ -133,11 +133,12 @@ PlanSource.JobRoute = Ember.Route.extend({
       });
     },
 
-    openProjectManagerModal: function (job) {
+    openProjectManagerModal: function () {
       var jobController = this.controllerFor("job");
+      var job = jobController.get('model');
 
       this.renderModal("project_manager", {
-        content: PlanSource.Contact.findAll(),
+        content: job.getEligibleProjectManagers(),
         projectManager: jobController.get("model.project_manager"),
         parent: jobController,
       });

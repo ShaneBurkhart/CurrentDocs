@@ -231,6 +231,21 @@ PlanSource.Job = Ember.Object.extend({
     });
   },
 
+  getEligibleProjectManagers: function(){
+    var users = Em.A();
+    var url = PlanSource.Job.url(this.get('id')) + '/eligible_project_managers';
+
+    $.get(url).then(function(data){
+      data.users.forEach(function(user){
+        users.pushObject(PlanSource.Contact.create(user));
+      });
+
+      return true;
+    });
+
+    return users;
+  },
+
   deleteRecord : function(){
     this.destroy();
   },
@@ -386,5 +401,5 @@ PlanSource.Job.reopenClass({
         return PlanSource.Job.create(data.job);
       }));
     });
-  }
+  },
 });

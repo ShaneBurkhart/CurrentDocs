@@ -174,17 +174,15 @@ class Api::JobsController < ApplicationController
 
   def project_manager
     @job = Job.find(params["id"])
-    project_manager_user_id = params["project_manager_user_id"]
+    @user = User.find(params["project_manager_user_id"])
 
-    # Only owners can update project managers
-    if current_user.is_my_job(@job)
+    # Only owners can update project managers and project manager
+    # needs to be a shared user with access to Plans tab.
+    if current_user.is_my_job(@job) and @user.is_shared_job(@job, 0b100)
       # Get rid of all existing project managers (should be one)
       ProjectManager.where(job_id: @job.id).destroy_all
 
-      @project_manager = ProjectManager.create(
-        job_id: @job.id,
-        user_id: project_manager_user_id
-      )
+      @project_manager = ProjectManager.create(job_id: @job.id, user_id: @user.id)
 
       render json: {
         project_manager: @project_manager.project_manager

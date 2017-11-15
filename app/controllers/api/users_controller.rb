@@ -25,4 +25,23 @@ class Api::UsersController < ApplicationController
       end
     end
   end
+
+  # Anyone that has the job shared with them is eligible to be a project manager.
+  def eligible_project_managers
+    @job = Job.find(params["id"])
+
+    # Only owners can update project managers
+    if current_user.is_my_job(@job)
+      eligible_shares = @job.shares.select do |share|
+        # Mask permissions with Plans share place
+        next (share.permissions & 0b100) != 0
+      end
+
+      eligible_users = eligible_shares.map{ |share| share.user }
+
+      render json: eligible_users, each_serializer: SimpleUserSerializer
+    else
+      render_no_permission
+    end
+  end
 end
