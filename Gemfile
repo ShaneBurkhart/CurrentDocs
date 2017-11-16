@@ -6,6 +6,8 @@ gem "rake", "~> 10.1.0"
 gem 'pg', "0.18.2"
 gem 'redis', "3.3.3"
 
+gem 'haml', '~> 5.0'
+
 gem 'test-unit', '~> 3.1', '>= 3.1.7'
 
 gem "figaro", ">= 0.6.3"

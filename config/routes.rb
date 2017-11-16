@@ -8,6 +8,9 @@ PlanSource::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
+  resources :jobs, except: ["new", "edit"]
+  get '/jobs/:id/:tab' => 'jobs#show', as: :job_tab
+
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job
     post '/jobs/share_link' => 'jobs#sub_share_link'

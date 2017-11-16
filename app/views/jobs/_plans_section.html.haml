@@ -1,0 +1,22 @@
+.table-resonsive{ id: "#{tab}-table" }
+  %table.table.table-hover
+    %thead
+      %tr
+        %th #
+        %th Name
+        %th Updated
+        %th Download File
+        %th Controls
+    %tbody
+      - plans.each do |plan|
+        %tr{ onclick: "window.location.href = '/api/plans/embedded/#{plan.id}'" }
+          %td= plan.plan_num
+          %td.word{ title: plan.plan_num }= plan.plan_num
+          %td= plan.updated_at
+          %td= link_to plan.plan_file_name, "/api/download/#{plan.id}"
+          %td
+            %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
+              %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
+              %li= link_to "Delete", "#"
+              %li= link_to "Edit", "#"
+              %li= link_to "Details", "#"

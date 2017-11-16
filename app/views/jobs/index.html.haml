@@ -1,0 +1,36 @@
+.section
+  .container
+    .row
+      .col-md-12
+        %h2 My Jobs
+
+    .row
+      .col-md-6
+        - if current_user.can? :create, Job
+          %a.button.button-green{ href: "#" } + Add Job
+      .col-md-6
+        %form.share-search-form
+          %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
+
+    .row
+      .col-md-12
+        %nav.jobs-controls
+          %a{ href: jobs_path } My Jobs
+          %a{ href: jobs_path(archived: true) } Archived
+
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %th Job Name
+              %th Owner
+              %th.text-right Controls
+
+            %tbody
+              - @jobs.each do |job|
+                %tr.job{ onclick: "window.location.href = '#{job_path(job)}'" }
+                  %td= job.name
+                  %td= job.user.full_name
+                  %td
+                    %ul.controls.pull-right.unstyled
+                      %li Edit
+                      %li Delete

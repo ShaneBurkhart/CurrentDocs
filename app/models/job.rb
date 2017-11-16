@@ -2,17 +2,15 @@ class Job < ActiveRecord::Base
   attr_accessible :name, :user_id, :archived
 
   belongs_to :user
-  has_many :plans
+  has_many :all_plans, class_name: "Plan", foreign_key: "job_id"
+  has_many :plans, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "Plans" }
+  has_many :addendums, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "Addendums" }
 
   validates :user_id, presence: true
   validates :name, presence: true
   validate :check_for_duplicate_name_for_user
 
   before_destroy :destroy_plans
-
-  def get_plans_for_tabs(tabs)
-    self.plans.select{ |plan| tabs.include? plan.tab }
-  end
 
   def get_plans_for_tabs_with_plan_num(tabs)
     plans = get_plans_for_tabs(tabs)

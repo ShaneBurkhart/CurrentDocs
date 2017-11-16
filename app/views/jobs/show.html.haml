@@ -1,0 +1,26 @@
+.section
+  .container
+    .row
+      .col-md-12
+        %h2= "#{@job.name} #{@job.archived ? '(Archived)' : ''}"
+        %p= link_to "Back to your jobs", jobs_path(archived: @job.archived || nil)
+
+        %nav
+          - if @job.archived
+            %a.button.button-green{ href: "#" } Unarchive
+          - else
+            %a.button.button-red{ href: "#" } Archive
+            %a.button.button-blue{ href: "#" } Share Link
+
+        %nav.jobs-controls
+          = plans_tab_link('plans', @tab)
+          = plans_tab_link('addendums', @tab)
+
+          %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
+
+        %nav
+          - if !@job.archived
+            %a.button.button-blue{ href: "#" } Add Plan
+
+        - if ['plans', 'addendums'].include? @tab
+          = render partial: "plans_section", locals: { tab: @tab, plans: @job.send(@tab) }

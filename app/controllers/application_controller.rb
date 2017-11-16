@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-    #protect_from_forgery
+    protect_from_forgery
 
     before_filter :last_seen
 
@@ -7,6 +7,31 @@ class ApplicationController < ActionController::Base
 
     rescue_from CanCan::AccessDenied do |exception|
       redirect_to root_path, :alert => exception.message
+    end
+
+    def devise_current_user
+      @devise_current_user ||= warden.authenticate(:scope => :user)
+    end
+
+    # TODO add login for tokens and shared users, links, etc.
+    def current_user
+      devise_current_user
+    end
+
+    def authenticate_user
+      if !user_signed_in?
+        render json: { error: "You need to login before doing that." }, status: 401
+      end
+    end
+
+    def not_authorized
+      render json: { error: "You don't have permission to do that." }, status: 403
+    end
+
+    ###### OLD BUT NOT IRRELEVENT ######
+
+    def user
+      current_user || User.find_by_authentication_token(params[:token])
     end
 
     def not_found
@@ -25,22 +50,8 @@ class ApplicationController < ActionController::Base
 	     render text: "No user signed in" unless user_signed_in? || User.find_by_authentication_token(params[:token]) || params[:share_token]
     end
 
-    def authenticate_user
-      if !user_signed_in?
-        render json: { error: "You need to login before doing that." }, status: 401
-      end
-    end
-
-    def not_authorized
-      render json: { error: "You don't have permission to do that." }, status: 403
-    end
-
     def error(message)
       render json: { error: message }
-    end
-
-    def user
-      current_user || User.find_by_authentication_token(params[:token])
     end
 
     def render_no_permission
