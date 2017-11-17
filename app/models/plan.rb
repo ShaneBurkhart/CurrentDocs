@@ -15,14 +15,14 @@ class Plan < ActiveRecord::Base
   TABS = ["plans", "addendums"]
 
   # DON"T UPDATE previous_plan_id and next_plan_id MANUALLY!  Use other methods.
-  attr_accessible :job_id, :plan_name, :num_pages, :tab, :csi, :plan_updated_at,
+  attr_accessible :job_id, :name, :num_pages, :tab, :csi, :plan_updated_at,
     :description, :code, :tags, :previous_plan_id, :next_plan_id
   attr_accessor :plan_num
-  validates :job_id, :plan_name, :tab, presence: true
+  validates :job_id, :name, :tab, presence: true
   validates :status, :length => { :maximum => 50 }
   validates :description, :length => { :maximum => 20000 }
   validates :code, :length => { :maximum => 12 }
-  validate :check_for_duplicate_plan_name_for_tab
+  validate :check_for_duplicate_name_for_tab
   validate :check_for_valid_tab_name
 
   after_create :add_to_end_of_list
@@ -163,11 +163,11 @@ class Plan < ActiveRecord::Base
       end
     end
 
-    def check_for_duplicate_plan_name_for_tab
+    def check_for_duplicate_name_for_tab
       plans = Plan.where(
         job_id: self.job_id,
         tab: self.tab,
-        plan_name: self.plan_name
+        name: self.name
       )
 
       if self.id
@@ -175,7 +175,7 @@ class Plan < ActiveRecord::Base
       end
 
       if plans.count != 0
-        errors.add(:plan_name, 'already exists')
+        errors.add(:name, 'already exists')
       end
     end
 

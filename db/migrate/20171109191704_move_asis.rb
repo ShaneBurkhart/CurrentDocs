@@ -11,7 +11,7 @@ class MoveASIs < ActiveRecord::Migration
           job_id: job_id,
           user_id: plan.job.user_id,
           status: "Open",
-          subject: plan.plan_name,
+          subject: plan.name,
           notes: "Imported from 'ASI' tab."
         )
 

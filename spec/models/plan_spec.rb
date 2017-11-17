@@ -10,7 +10,7 @@ RSpec.describe Plan, :type => :model do
   describe "validations" do
     subject { create(:plan) }
     it { expect(subject).to validate_presence_of(:job_id) }
-    it { expect(subject).to validate_presence_of(:plan_name) }
+    it { expect(subject).to validate_presence_of(:name) }
     it { expect(subject).to validate_presence_of(:tab) }
     it { expect(subject).to validate_length_of(:status).is_at_most(50) }
     it { expect(subject).to validate_length_of(:description).is_at_most(20000) }
@@ -20,7 +20,7 @@ RSpec.describe Plan, :type => :model do
       new_plan = build(
         :plan,
         job_id: subject.job_id,
-        plan_name: subject.plan_name,
+        name: subject.name,
         tab: subject.tab
       )
 

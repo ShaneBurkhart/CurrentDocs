@@ -1,7 +1,7 @@
 class PlanSerializer < ActiveModel::Serializer
   attributes :id,
   :job_id,
-  :plan_name,
+  :name,
   :previous_plan_id,
   :next_plan_id,
   :filename,

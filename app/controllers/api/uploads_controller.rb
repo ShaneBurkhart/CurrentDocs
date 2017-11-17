@@ -7,7 +7,7 @@ class Api::UploadsController < ApplicationController
 		plan = Plan.find(params[:plan_id])
 		if plan.filename
 			# Already got a plan, need to make plan file history
-			# relevant_attr = ['plan_name', 'job_id', 'tab', 'filename', 'plan_num', 'csi']
+			# relevant_attr = ['name', 'job_id', 'tab', 'filename', 'plan_num', 'csi']
 			# new_data = plan.attributes.select{ |key, _| relevant_attr.include? key }
 
 			# new_data["plan_id"] = plan.id

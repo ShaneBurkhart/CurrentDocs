@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :plan do
     job
-    plan_name { Faker::Address.secondary_address }
+    name { Faker::Address.secondary_address }
     tab { Plan::TABS.sample }
 
     transient do

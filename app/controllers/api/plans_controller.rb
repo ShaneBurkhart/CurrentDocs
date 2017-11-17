@@ -41,7 +41,7 @@ class Api::PlansController < ApplicationController
       @new_plan_num = @plan_params["plan_num"]
 
 			if user.is_my_plan(@plan)
-				@plan.plan_name = @plan_params["plan_name"]
+				@plan.name = @plan_params["name"]
         @plan.csi = @plan_params["csi"]
 				@plan.status = @plan_params["status"]
 				@plan.code = @plan_params["code"]

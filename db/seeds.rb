@@ -76,7 +76,7 @@ def create_plans_for_job(job)
 
     plan = Plan.create(
       job_id: job.id,
-      plan_name: Faker::Address.secondary_address,
+      name: Faker::Address.secondary_address,
       tab: tab,
       csi: csi
     )

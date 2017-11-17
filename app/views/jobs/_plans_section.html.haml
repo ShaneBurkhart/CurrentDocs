@@ -11,7 +11,7 @@
       - plans.each do |plan|
         %tr
           %td= plan.plan_num
-          %td.word{ title: plan.plan_name }= plan.plan_name
+          %td.word{ title: plan.name }= plan.name
           %td{ data: { value: plan.updated_at } }= plan.updated_at.strftime("%b %e, %Y")
           %td
             - if plan.plan_file_name

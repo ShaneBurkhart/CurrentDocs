@@ -120,25 +120,8 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "plan_records", :force => true do |t|
-    t.string   "plan_name"
-    t.string   "filename"
-    t.integer  "plan_id",                                       :null => false
-    t.integer  "job_id"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
-    t.integer  "plan_num"
-    t.string   "plan_record_file_name"
-    t.string   "plan_record_content_type"
-    t.integer  "plan_record_file_size"
-    t.datetime "plan_updated_at"
-    t.string   "tab",                      :default => "Plans"
-    t.string   "csi"
-    t.boolean  "archived",                 :default => false
-  end
-
   create_table "plans", :force => true do |t|
-    t.string   "plan_name"
+    t.string   "name"
     t.string   "filename"
     t.integer  "job_id"
     t.datetime "created_at",                             :null => false
@@ -254,7 +237,7 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                                                                 :null => false
-    t.datetime "last_seen",                            :default => '2017-11-17 18:28:29'
+    t.datetime "last_seen",                            :default => '2017-11-17 20:15:54'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end
