@@ -12,11 +12,14 @@
         %tr
           %td= plan.plan_num
           %td.word{ title: plan.plan_name }= plan.plan_name
-          %td= plan.updated_at
-          %td= link_to plan.plan_file_name, "/api/download/#{plan.id}"
+          %td{ data: { value: plan.updated_at } }= plan.updated_at.strftime("%b %e, %Y")
+          %td
+            - if plan.plan_file_name
+              = link_to plan.plan_file_name, "/api/download/#{plan.id}"
           %td
             %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
-              %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
+              - if plan.plan_file_name
+                %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
               %li= link_to "Delete", "#", class: "open-modal", data: { "modal-url": should_delete_plan_path(plan) }
               %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
-              %li= link_to "Details", "#"
+              %li= link_to "Details", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
