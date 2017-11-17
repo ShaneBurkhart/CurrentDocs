@@ -40,8 +40,19 @@ class PlansController < ApplicationController
   end
 
   def should_delete
+    @plan = Plan.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.modal{ render :should_delete, formats: [:html], layout: false }
+    end
   end
 
   def destroy
+    @plan = Plan.find(params[:id])
+
+    @plan.destroy
+
+    redirect_to job_tab_path(@plan.job_id, @plan.tab)
   end
 end

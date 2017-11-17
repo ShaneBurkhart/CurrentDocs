@@ -17,6 +17,6 @@
           %td
             %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
               %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
-              %li= link_to "Delete", "#"
+              %li= link_to "Delete", "#", class: "open-modal", data: { "modal-url": should_delete_plan_path(plan) }
               %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
               %li= link_to "Details", "#"
