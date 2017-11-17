@@ -78,7 +78,6 @@ PlanSource::Application.routes.draw do
   get '/photos/:id/gallery' => 'api/photos#gallery'
 
   get '/notifications/unsubscribe/:id' => 'notification#unsubscribe', as: :unsubscribe
-  get '/app#/jobs/:id' => 'home#index', as: :jobs_link
 
   get '/jobs/:id/share' => 'api/jobs#show_sub_share_link'
   get '/share_link/company_name' => 'api/jobs#share_link_company_name'
@@ -96,5 +95,4 @@ PlanSource::Application.routes.draw do
   delete "/admin/sub_logins/:id" => "admin#delete_sub_login", as: "delete_sub_login"
 
   match "/mobile" => "mobile#index"
-  match "/app" => "app#index"
 end

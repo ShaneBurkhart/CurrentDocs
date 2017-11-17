@@ -15,7 +15,7 @@
           </li>
 
           <li class="<%= controller_name == "app" ? "active" : "" %>">
-          <%= link_to 'My Jobs', app_path %>
+          <%= link_to 'My Jobs', jobs_path %>
           </li>
 
           <li class="<%= controller_name == "reports" ? "active" : "" %>">
@@ -45,6 +45,6 @@
 
 <div class="brand-container">
   <div class="container">
-      <h3><%= link_to (image_tag "logo.png"), !current_user ? root_path : app_path, :class => 'logo' %></h3>
+      <h3><%= link_to (image_tag "logo.png"), !current_user ? root_path : jobs_path, :class => 'logo' %></h3>
   </div>
 </div>

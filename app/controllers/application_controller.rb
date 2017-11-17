@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
     end
 
     def go_to_app?
-      redirect_to app_path if current_user
+      redirect_to jobs_path if current_user
     end
 
     def after_sign_in_path_for(resource_or_scope)
