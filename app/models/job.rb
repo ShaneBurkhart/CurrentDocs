@@ -3,8 +3,8 @@ class Job < ActiveRecord::Base
 
   belongs_to :user
   has_many :all_plans, class_name: "Plan", foreign_key: "job_id"
-  has_many :plans, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "Plans" }
-  has_many :addendums, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "Addendums" }
+  has_many :plans, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "plans" }
+  has_many :addendums, class_name: "Plan", foreign_key: "job_id", conditions: { tab: "addendums" }
 
   validates :user_id, presence: true
   validates :name, presence: true

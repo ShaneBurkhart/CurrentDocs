@@ -1,0 +1,27 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    - form_url = @plan.new_record? ? job_tab_plans_path(@plan.job_id, @plan.tab) : plan_path
+
+    = form_for @plan, url: form_url do |f|
+      .header
+        %p.title Enter a plan name.
+
+      .body
+        %p Enter a name for your plan.
+        .control-group
+          .controls
+            = f.text_field :plan_name, placeholder: "Plan name"
+            .help-inline
+
+      .footer
+        .buttons
+          %button.button.button-blue{ type: "submit" }
+            = @plan.new_record? ? "Create" : "Update"
+
+          - if request.format == 'modal'
+            %a.button.close-modal Cancel
+          - else
+            %a.button{ href: job_tab_path(@plan.job_id, @plan.tab) } Cancel
+

@@ -9,7 +9,7 @@
         %th.text-right Controls
     %tbody
       - plans.each do |plan|
-        %tr{ onclick: "window.location.href = '/api/plans/embedded/#{plan.id}'" }
+        %tr
           %td= plan.plan_num
           %td.word{ title: plan.plan_name }= plan.plan_name
           %td= plan.updated_at
@@ -18,5 +18,5 @@
             %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
               %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
               %li= link_to "Delete", "#"
-              %li= link_to "Edit", "#"
+              %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
               %li= link_to "Details", "#"

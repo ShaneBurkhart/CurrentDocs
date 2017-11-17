@@ -74,8 +74,8 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "jobs", :force => true do |t|
-    t.string   "name"
-    t.integer  "user_id"
+    t.string   "name",                          :null => false
+    t.integer  "user_id",                       :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.boolean  "archived",   :default => false
@@ -237,8 +237,8 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                                              :null => false
     t.datetime "updated_at",                                                              :null => false
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "first_name",                                                              :null => false
+    t.string   "last_name",                                                               :null => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
@@ -250,11 +250,11 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.string   "type"
-    t.string   "authentication_token"
+    t.string   "authentication_token",                                                    :null => false
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
-    t.string   "company",                              :default => "Company"
-    t.datetime "last_seen",                            :default => '2017-11-10 22:33:59'
+    t.string   "company",                                                                 :null => false
+    t.datetime "last_seen",                            :default => '2017-11-17 03:35:42'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

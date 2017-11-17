@@ -26,7 +26,7 @@
 
         %nav
           - if !@job.archived
-            %a.button.button-blue{ href: "#" } Add Plan
+            %a.button.button-blue.open-modal{ href: "#", data: { "modal-url": new_job_tab_plan_path(@job, @tab) } } Add Plan
 
         - if ['plans', 'addendums'].include? @tab
           = render partial: "plans_section", locals: { tab: @tab, plans: @job.send(@tab) }

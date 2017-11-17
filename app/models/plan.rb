@@ -12,7 +12,7 @@ class Plan < ActiveRecord::Base
   has_many :plan_records
 
   PAPERCLIP_OPTIONS = get_s3_paperclip_options()
-  TABS = ["Plans", "Shops", "Consultants", "Calcs & Misc", "Addendums"]
+  TABS = ["plans", "addendums"]
 
   # DON"T UPDATE previous_plan_id and next_plan_id MANUALLY!  Use other methods.
   attr_accessible :job_id, :plan_name, :num_pages, :tab, :csi, :plan_updated_at,
@@ -40,6 +40,10 @@ class Plan < ActiveRecord::Base
 
   def previous_plan
     return Plan.where(id: self.previous_plan_id).first
+  end
+
+  def tab=(tab)
+    self[:tab] = tab.downcase
   end
 
   def csi=(csi_code)

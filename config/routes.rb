@@ -12,6 +12,14 @@ PlanSource::Application.routes.draw do
   get '/jobs/:id/should_delete' => 'jobs#should_delete', as: :should_delete_job
   get '/jobs/:id/:tab' => 'jobs#show', as: :job_tab
 
+  scope '/jobs/:job_id/:tab', as: :job_tab do
+    resources :plans, only: [:new, :create]
+  end
+
+  resources :plans, only: [:edit, :update, :destroy]
+  get '/plans/:id/should_delete' => 'plans#should_delete', as: :should_delete_plan
+
+
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job
     post '/jobs/share_link' => 'jobs#sub_share_link'
