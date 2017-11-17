@@ -1,0 +1,24 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    = form_for @job do |f|
+      .header
+        %p.title Enter a job name.
+
+      .body
+        %p Enter a name for your job.
+        .control-group
+          .controls
+            = f.text_field :name, placeholder: "Job name"
+            .help-inline
+
+      .footer
+        .buttons
+          %button.button.button-blue{ type: "submit" }
+            = @job.new_record? ? "Create" : "Update"
+
+          - if request.format == 'modal'
+            %a.button.close-modal Cancel
+          - else
+            %a.button{ href: jobs_path } Cancel

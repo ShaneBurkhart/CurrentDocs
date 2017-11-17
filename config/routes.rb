@@ -8,7 +8,8 @@ PlanSource::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
-  resources :jobs, except: ["new", "edit"]
+  resources :jobs
+  get '/jobs/:id/should_delete' => 'jobs#should_delete', as: :should_delete_job
   get '/jobs/:id/:tab' => 'jobs#show', as: :job_tab
 
   namespace :api do

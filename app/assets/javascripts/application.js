@@ -19,11 +19,31 @@
 //= require ./application/vendor/quill.min.js
 
 $(document).ready(function(){
-	var xhr2 = ( window.FormData !== undefined );
-	if(!xhr2){
-		$(".browser-error").attr("class", "browser-error");
-		$("body").css("padding-top", "40px");
-	}
+  var _$currentModal = null;
+
+  $('body').on('click', '.close-modal', function (e) {
+    if (_$currentModal) _$currentModal.remove();
+    _$currentModal = null;
+  });
+
+  $('body').on('click', '.open-modal', function (e) {
+    var $link = $(this);
+    var modalURL = $link.attr('data-modal-url');
+
+    e.preventDefault();
+
+    if (!modalURL) return;
+
+    // Add .modal extension to get only the modal html
+    $.get(modalURL + ".modal").then(function (data) {
+      var $modal = $(data);
+
+      if (_$currentModal) _$currentModal.remove();
+      $(document.body).append($modal);
+
+      _$currentModal = $modal;
+    });
+  })
 });
 
 // Toaster options!

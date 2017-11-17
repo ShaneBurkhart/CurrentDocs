@@ -1,0 +1,17 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    .header
+      %p.title Are you sure?
+
+    .body
+      %p Are you sure you want to delete #{@job.name}?
+
+    .footer
+      .buttons
+        = link_to "Delete", job_path(@job), method: :delete, class: "button button-red"
+        - if request.format == 'modal'
+          %a.button Cancel
+        - else
+          %a.button{ href: jobs_path } Cancel

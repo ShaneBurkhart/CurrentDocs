@@ -7,9 +7,15 @@
 
         %nav
           - if @job.archived
-            %a.button.button-green{ href: "#" } Unarchive
+            = form_for @job, html: { style: "display: inline" } do |f|
+              = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
+              = f.hidden_field :archived, value: false
+              %button.button.button-green{ href: "#", type: 'submit' } Unarchive
           - else
-            %a.button.button-red{ href: "#" } Archive
+            = form_for @job, html: { style: "display: inline" } do |f|
+              = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
+              = f.hidden_field :archived, value: true
+              %button.button.button-red{ href: "#", type: 'submit' } Archive
             %a.button.button-blue{ href: "#" } Share Link
 
         %nav.jobs-controls

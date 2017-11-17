@@ -7,7 +7,7 @@
     .row
       .col-md-6
         - if current_user.can? :create, Job
-          %a.button.button-green{ href: "#" } + Add Job
+          %a.button.button-green.open-modal{ href: "#", data: { "modal-url": new_job_path } } + Add Job
       .col-md-6
         %form.share-search-form
           %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
@@ -15,8 +15,8 @@
     .row
       .col-md-12
         %nav.jobs-controls
-          %a{ href: jobs_path } My Jobs
-          %a{ href: jobs_path(archived: true) } Archived
+          %a{ href: jobs_path, class: active_class(false, @is_archived) } My Jobs
+          %a{ href: jobs_path(archived: true), class: active_class(true, @is_archived) } Archived
 
         .table-responsive
           %table.table.table-hover
@@ -27,10 +27,13 @@
 
             %tbody
               - @jobs.each do |job|
-                %tr.job{ onclick: "window.location.href = '#{job_path(job)}'" }
-                  %td= job.name
+                %tr
+                  %td= link_to job.name, job_path(job)
                   %td= job.user.full_name
                   %td
                     %ul.controls.pull-right.unstyled
-                      %li Edit
-                      %li Delete
+                      %li= link_to "View", job_path(job)
+                      %li
+                        %a.open-modal{ href: "#", data: { "modal-url": edit_job_path(job) } } Edit
+                      %li
+                        %a.open-modal{ href: "#", data: { "modal-url": should_delete_job_path(job) } } Delete
