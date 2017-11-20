@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
       devise_current_user
     end
 
+    def render_modal(template)
+      render template, formats: [:html], layout: false
+    end
+
     def not_authorized
       render json: { error: "You don't have permission to do that." }, status: 403
     end

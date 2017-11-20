@@ -31,7 +31,7 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.modal { render :new, formats: [:html], layout: false }
+      format.modal { render_modal :new }
     end
   end
 
@@ -55,7 +55,7 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       format.html{ render :new }
-      format.modal{ render :new, formats: [:html], layout: false }
+      format.modal{ render_modal :new }
     end
   end
 
@@ -80,7 +80,7 @@ class JobsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.modal{ render :should_delete, formats: [:html], layout: false }
+      format.modal{ render_modal :should_delete }
     end
   end
 
