@@ -8,7 +8,10 @@ require 'rspec/rails'
 
 require 'shoulda/matchers'
 require "cancan/matchers"
+require 'factory_bot'
 require 'faker'
+require 'devise'
+
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -28,7 +31,14 @@ require 'faker'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  config.include SpecLoginHepers, :type => :controller
+  config.include FactoryBot::Syntax::Methods
+
+  config.include SpecUserControllerHelpers, :type => :controller
+  config.include SpecUserRequestHelpers, :type => :request
+
+  config.mock_with :rspec do |mocks|
+    mocks.allow_message_expectations_on_nil = true
+  end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

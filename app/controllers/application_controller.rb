@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, :with => :not_authorized
 
     rescue_from CanCan::AccessDenied do |exception|
-      redirect_to root_path, :alert => exception.message
+      redirect_to jobs_path, :alert => exception.message
     end
 
     def devise_current_user
@@ -16,12 +16,6 @@ class ApplicationController < ActionController::Base
     # TODO add login for tokens and shared users, links, etc.
     def current_user
       devise_current_user
-    end
-
-    def authenticate_user
-      if !user_signed_in?
-        render json: { error: "You need to login before doing that." }, status: 401
-      end
     end
 
     def not_authorized

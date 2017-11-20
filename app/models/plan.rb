@@ -43,7 +43,7 @@ class Plan < ActiveRecord::Base
   end
 
   def tab=(tab)
-    self[:tab] = tab.downcase
+    self[:tab] = tab.nil? ? tab : tab.downcase
   end
 
   def csi=(csi_code)

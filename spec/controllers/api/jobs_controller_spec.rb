@@ -1,229 +1,225 @@
 require 'rails_helper'
 
 RSpec.describe Api::JobsController, :type => :controller do
-  context "when a user is logged in" do
-    let(:user) { create(:user) }
-    let(:job) { user.jobs.first }
-    before(:each) { login user }
+  #let(:user) { create(:user) }
 
-    context "and is authorized" do
-      before(:each) { allow_any_instance_of(User).to receive(:can?).and_return(true) }
+  #describe "GET #index" do
+    #let (:action) { get :index }
+    #before(:each) do
+      #login user
+      #action
+    #end
 
-      describe "GET #index" do
-        before(:each) { get :index }
-        it { expect(response).to be_authorized }
+    #include_examples 'unauthenticated_request'
+    #include_examples 'unauthorized_request' do
+      #let (:can_action) { :read_multiple }
+      #let (:can_param) { all(be_a(Job)) }
+    #end
 
-        it "should return the user's jobs with includes" do
-          responseJSON = JSON.parse(response.body)
-          jobs = responseJSON["jobs"]
+    #include_examples 'authorized_request' do
+      #let (:template) { :index }
 
-          expect(jobs).to be_an_instance_of(Array)
-          jobs.each do |j|
-            # Verify has includes
-            expect(j["user"]).to be_an_instance_of(Hash)
-            expect(j["plans"]).to be_an_instance_of(Array)
+      #describe "for open jobs" do
+        #it { expect(assigns(:jobs)).to all(have_attributes(archived: false)) }
+      #end
 
-            expect(j["user"]["id"]).to eq(subject.user.id)
-          end
-        end
-      end
+      #describe "for archived jobs" do
+        #it { expect(assigns(:jobs)).to all(have_attributes(archived: true)) }
+      #end
+    #end
+  #end
 
-      describe "GET #show" do
-        context "when job belongs to user" do
-          let(:job) { create(:job, user: subject.user) }
-          before(:each) { get :show, id: job.id }
+  #describe "GET #show" do
+    #context "when job belongs to user" do
+      #let(:job) { create(:job, user: subject.user) }
+      #before(:each) { get :show, id: job.id }
 
-          it { expect(response).to be_authorized }
+      #it { expect(response).to be_authorized }
 
-          it "should return the user's job with includes" do
-            responseJSON = JSON.parse(response.body)
-            j = responseJSON["job"]
+      #it "should return the user's job with includes" do
+        #responseJSON = JSON.parse(response.body)
+        #j = responseJSON["job"]
 
-            expect(j).to be_an_instance_of(Hash)
-            expect(j["id"]).to eq(job.id)
+        #expect(j).to be_an_instance_of(Hash)
+        #expect(j["id"]).to eq(job.id)
 
-            expect(j["user"]).to be_an_instance_of(Hash)
-            expect(j["plans"]).to be_an_instance_of(Array)
-          end
-        end
+        #expect(j["user"]).to be_an_instance_of(Hash)
+        #expect(j["plans"]).to be_an_instance_of(Array)
+      #end
+    #end
 
-        context "when job doesn't exist" do
-          before(:each) { get :show, id: 0 }
-          it { expect(response).not_to be_authorized }
-        end
-      end
+    #context "when job doesn't exist" do
+      #before(:each) { get :show, id: 0 }
+      #it { expect(response).not_to be_authorized }
+    #end
+  #end
 
-      describe "POST #create" do
-        context "when new job is valid" do
-          before(:each) { post :create, job: { name: "Job name" } }
-          it { expect(response).to be_authorized }
+  #context "when a user is logged in" do
+    #let(:user) { create(:user) }
+    #let(:job) { user.jobs.first }
+    #before(:each) { login user }
 
-          it "should return a new job with includes" do
-            responseJSON = JSON.parse(response.body)
-            j = responseJSON["job"]
+    #context "and is authorized" do
+      #before(:each) { allow_any_instance_of(User).to receive(:can?).and_return(true) }
 
-            expect(j).to be_an_instance_of(Hash)
-            expect(j["name"]).to eq("Job name")
+      #describe "GET #show" do
+        #context "when job belongs to user" do
+          #let(:job) { create(:job, user: subject.user) }
+          #before(:each) { get :show, id: job.id }
 
-            expect(j["user"]).to be_an_instance_of(Hash)
-            expect(j["plans"]).to be_an_instance_of(Array)
-          end
-        end
+          #it { expect(response).to be_authorized }
 
-        context "when new job is not valid" do
-          before(:each) do
-            allow_any_instance_of(Job).to receive(:save).and_return(false)
-            post :create, job: { name: "Job name" }
-          end
+          #it "should return the user's job with includes" do
+            #responseJSON = JSON.parse(response.body)
+            #j = responseJSON["job"]
 
-          it { expect(response).to be_authorized }
+            #expect(j).to be_an_instance_of(Hash)
+            #expect(j["id"]).to eq(job.id)
 
-          it "should return an error" do
-            responseJSON = JSON.parse(response.body)
-            expect(responseJSON["error"]).not_to be_nil
-          end
-        end
-      end
+            #expect(j["user"]).to be_an_instance_of(Hash)
+            #expect(j["plans"]).to be_an_instance_of(Array)
+          #end
+        #end
 
-      describe "PUT #update" do
-        context "when updated job is valid" do
-          before(:each) { put :update, id: job.id, job: { name: "Some job name" } }
-          it { expect(response).to be_authorized }
+        #context "when job doesn't exist" do
+          #before(:each) { get :show, id: 0 }
+          #it { expect(response).not_to be_authorized }
+        #end
+      #end
 
-          it "should return the updated job with includes" do
-            responseJSON = JSON.parse(response.body)
-            j = responseJSON["job"]
+      #describe "POST #create" do
+        #context "when new job is valid" do
+          #before(:each) { post :create, job: { name: "Job name" } }
+          #it { expect(response).to be_authorized }
 
-            expect(j).to be_an_instance_of(Hash)
-            expect(j["name"]).to eq("Some job name")
+          #it "should return a new job with includes" do
+            #responseJSON = JSON.parse(response.body)
+            #j = responseJSON["job"]
 
-            expect(j["user"]).to be_an_instance_of(Hash)
-            expect(j["plans"]).to be_an_instance_of(Array)
-          end
-        end
+            #expect(j).to be_an_instance_of(Hash)
+            #expect(j["name"]).to eq("Job name")
 
-        context "when updated job is not valid" do
-          before(:each) do
-            allow_any_instance_of(Job).to(
-              receive(:update_attributes).and_return(false)
-            )
-            put :update, id: job.id, job: { name: "Job name" }
-          end
+            #expect(j["user"]).to be_an_instance_of(Hash)
+            #expect(j["plans"]).to be_an_instance_of(Array)
+          #end
+        #end
 
-          it { expect(response).to be_authorized }
+        #context "when new job is not valid" do
+          #before(:each) do
+            #allow_any_instance_of(Job).to receive(:save).and_return(false)
+            #post :create, job: { name: "Job name" }
+          #end
 
-          it "should return an error" do
-            responseJSON = JSON.parse(response.body)
-            expect(responseJSON["error"]).not_to be_nil
-          end
-        end
+          #it { expect(response).to be_authorized }
 
-        context "when job doesn't exist" do
-          before(:each) { put :update, id: 0, job: { name: "Job name" } }
-          it { expect(response).not_to be_authorized }
-        end
-      end
+          #it "should return an error" do
+            #responseJSON = JSON.parse(response.body)
+            #expect(responseJSON["error"]).not_to be_nil
+          #end
+        #end
+      #end
 
-      describe "DELETE #destroy" do
-        context "when job exists" do
-          before(:each) do
-            expect_any_instance_of(Job).to receive(:destroy)
-            delete :destroy, id: job.id
-          end
+      #describe "PUT #update" do
+        #context "when updated job is valid" do
+          #before(:each) { put :update, id: job.id, job: { name: "Some job name" } }
+          #it { expect(response).to be_authorized }
 
-          it { expect(response).to be_authorized }
+          #it "should return the updated job with includes" do
+            #responseJSON = JSON.parse(response.body)
+            #j = responseJSON["job"]
 
-          it "should return nothing" do
-            responseJSON = JSON.parse(response.body)
-            expect(responseJSON).to be_empty
-          end
-        end
+            #expect(j).to be_an_instance_of(Hash)
+            #expect(j["name"]).to eq("Some job name")
 
-        context "when job doesn't exist" do
-          before(:each) { delete :destroy, id: 0 }
-          it { expect(response).not_to be_authorized }
-        end
-      end
-    end
+            #expect(j["user"]).to be_an_instance_of(Hash)
+            #expect(j["plans"]).to be_an_instance_of(Array)
+          #end
+        #end
 
-    context "but is not authorized" do
-      before(:each) {
-        allow_any_instance_of(User).to receive(:can?).and_return(false)
-      }
+        #context "when updated job is not valid" do
+          #before(:each) do
+            #allow_any_instance_of(Job).to(
+              #receive(:update_attributes).and_return(false)
+            #)
+            #put :update, id: job.id, job: { name: "Job name" }
+          #end
 
-      describe "GET #index" do
-        before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:read_multiple, all(be_a(Job)))
-          get :index
-        end
+          #it { expect(response).to be_authorized }
 
-        it { expect(response).not_to be_authorized }
-      end
+          #it "should return an error" do
+            #responseJSON = JSON.parse(response.body)
+            #expect(responseJSON["error"]).not_to be_nil
+          #end
+        #end
 
-      describe "GET #show" do
-        before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:read, be_a(Job))
-          get :show, id: 1
-        end
+        #context "when job doesn't exist" do
+          #before(:each) { put :update, id: 0, job: { name: "Job name" } }
+          #it { expect(response).not_to be_authorized }
+        #end
+      #end
 
-        it { expect(response).not_to be_authorized }
-      end
+      #describe "DELETE #destroy" do
+        #context "when job exists" do
+          #before(:each) do
+            #expect_any_instance_of(Job).to receive(:destroy)
+            #delete :destroy, id: job.id
+          #end
 
-      describe "POST #create" do
-        before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:create, eq(Job))
-          post :create, job: { name: "Job name" }
-        end
+          #it { expect(response).to be_authorized }
 
-        it { expect(response).not_to be_authorized }
-      end
+          #it "should return nothing" do
+            #responseJSON = JSON.parse(response.body)
+            #expect(responseJSON).to be_empty
+          #end
+        #end
 
-      describe "PUT #update" do
-        before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:update, be_a(Job))
-          put :update, id: 1, job: { name: "New job name" }
-        end
+        #context "when job doesn't exist" do
+          #before(:each) { delete :destroy, id: 0 }
+          #it { expect(response).not_to be_authorized }
+        #end
+      #end
+    #end
 
-        it { expect(response).not_to be_authorized }
-      end
+    #context "but is not authorized" do
+      #before(:each) {
+        #allow_any_instance_of(User).to receive(:can?).and_return(false)
+      #}
 
-      describe "DELETE #destroy" do
-        before(:each) do
-          expect_any_instance_of(User).to receive(:can?).with(:destroy, be_a(Job))
-          delete :destroy, id: 1
-        end
+      #describe "GET #show" do
+        #before(:each) do
+          #expect_any_instance_of(User).to receive(:can?).with(:read, be_a(Job))
+          #get :show, id: 1
+        #end
 
-        it { expect(response).not_to be_authorized }
-      end
-    end
-  end
+        #it { expect(response).not_to be_authorized }
+      #end
 
-  describe "when a user is not logged in" do
-    before(:each) { logout }
+      #describe "POST #create" do
+        #before(:each) do
+          #expect_any_instance_of(User).to receive(:can?).with(:create, eq(Job))
+          #post :create, job: { name: "Job name" }
+        #end
 
-    describe "GET #index" do
-      before(:each) { get :index }
-      it { expect(response).not_to be_authenticated }
-    end
+        #it { expect(response).not_to be_authorized }
+      #end
 
-    describe "GET #show" do
-      before(:each) { get :show, id: 1 }
-      it { expect(response).not_to be_authenticated }
-    end
+      #describe "PUT #update" do
+        #before(:each) do
+          #expect_any_instance_of(User).to receive(:can?).with(:update, be_a(Job))
+          #put :update, id: 1, job: { name: "New job name" }
+        #end
 
-    describe "POST #create" do
-      before(:each) { post :create, job: { name: "Job name" } }
-      it { expect(response).not_to be_authenticated }
-    end
+        #it { expect(response).not_to be_authorized }
+      #end
 
-    describe "PUT #update" do
-      before(:each) { put :update, id: 1 }
-      it { expect(response).not_to be_authenticated }
-    end
+      #describe "DELETE #destroy" do
+        #before(:each) do
+          #expect_any_instance_of(User).to receive(:can?).with(:destroy, be_a(Job))
+          #delete :destroy, id: 1
+        #end
 
-    describe "DELETE #destroy" do
-      before(:each) { delete :destroy, id: 1 }
-      it { expect(response).not_to be_authenticated }
-    end
-  end
+        #it { expect(response).not_to be_authorized }
+      #end
+    #end
+  #end
 end

@@ -7,10 +7,12 @@ class Ability
 
     user ||= User.new
 
-    can :read_multiple, Job do |r|
-      puts 'asdf'
-      r.all? { |j| can?(:read, j) }
+    # :read_multiple checks each object of any array of models against
+    # the :read ability for that model.
+    can :read_multiple, Array do |array|
+      array.all? { |o| can?(:read, o) }
     end
+
     # Can manage jobs that belong to them
     can :manage, Job, user_id: user.id
 

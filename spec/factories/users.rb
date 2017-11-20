@@ -9,19 +9,26 @@ FactoryBot.define do
 
     transient do
       job_count 5
+      archived_job_count 5
     end
 
     trait :no_jobs do
       job_count 0
+      archived_job_count 0
     end
 
     factory :user_without_jobs, traits: [:no_jobs]
 
     after(:create) do |user, evaluator|
       job_count = evaluator.job_count
+      archived_job_count = evaluator.archived_job_count
 
       if job_count > 0
         create_list(:job, job_count, user: user)
+      end
+
+      if job_count > 0
+        create_list(:archived_job, archived_job_count, user: user)
       end
     end
   end
