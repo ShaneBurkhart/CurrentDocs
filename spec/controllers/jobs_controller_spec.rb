@@ -5,8 +5,11 @@ RSpec.describe JobsController, :type => :controller do
   let(:job) { user.open_jobs.first }
 
   describe "GET #index" do
+    let (:action) { get :index }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { get :index }
       let (:template) { :index }
       let (:can_action) { :read_multiple }
       let (:can_param) { all(be_a(Job)) }
@@ -23,8 +26,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "GET #show" do
+    let (:action) { get :show, id: job.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { get :show, id: job.id }
       let (:template) { :show }
       let (:can_action) { :read }
       let (:can_param) { be_a(Job) }
@@ -46,8 +52,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "GET #new" do
+    let (:action) { get :new }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { get :new }
       let (:template) { :new }
       let (:can_action) { :create }
       let (:can_param) { Job }
@@ -61,8 +70,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "POST #create" do
+    let (:action) { post :create, job: { name: build(:job).name } }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { post :create, job: { name: build(:job).name } }
       let (:redirect_path) { jobs_path }
       let (:can_action) { :create }
       let (:can_param) { Job }
@@ -80,8 +92,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "GET #edit" do
+    let (:action) { get :edit, id: job.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { get :edit, id: job.id }
       let (:template) { :new }
       let (:can_action) { :update }
       let (:can_param) { eq(job) }
@@ -95,9 +110,12 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "PUT #update" do
+    let (:new_job_name) { build(:job).name }
+    let (:action) { put :update, id: job.id, job: { name: new_job_name } }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:new_job_name) { build(:job).name }
-      let (:action) { put :update, id: job.id, job: { name: new_job_name } }
       let (:redirect_path) { jobs_path }
       let (:can_action) { :update }
       let (:can_param) { eq(job) }
@@ -128,8 +146,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "GET #should_delete" do
+    let (:action) { get :should_delete, id: job.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { get :should_delete, id: job.id }
       let (:template) { :should_delete }
       let (:can_action) { :delete }
       let (:can_param) { eq(job) }
@@ -143,8 +164,11 @@ RSpec.describe JobsController, :type => :controller do
   end
 
   describe "DELETE #destroy" do
+    let (:action) { delete :destroy, id: job.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
     it_behaves_like 'an authorized controller action' do
-      let (:action) { delete :destroy, id: job.id }
       let (:redirect_path) { jobs_path }
       let (:can_action) { :destroy }
       let (:can_param) { eq(job) }

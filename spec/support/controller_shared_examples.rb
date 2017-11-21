@@ -1,3 +1,12 @@
+shared_examples "an unauthenticated controller action" do
+  before(:each) do
+    logout
+    action
+  end
+
+  it { expect(response).to redirect_to(new_user_session_path) }
+end
+
 shared_examples "an authorized controller action" do
   before(:each) do
     authorize_can_action = anything

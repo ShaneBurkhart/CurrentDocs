@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     end
 
     def after_sign_in_path_for(resource_or_scope)
-	session[:user_return_to] || app_path
+      session[:user_return_to] || jobs_path
     end
 
     def user_not_there!

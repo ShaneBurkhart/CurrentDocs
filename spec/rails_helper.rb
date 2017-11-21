@@ -34,7 +34,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.include SpecUserControllerHelpers, :type => :controller
-  config.include SpecUserRequestHelpers, :type => :request
 
   config.mock_with :rspec do |mocks|
     mocks.allow_message_expectations_on_nil = true
