@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
     protect_from_forgery
 
-    before_filter :last_seen
-
-    rescue_from ActiveRecord::RecordNotFound, :with => :not_authorized
+    rescue_from ActiveRecord::RecordNotFound do |exception|
+      redirect_to jobs_path, :alert => exception.message
+    end
 
     rescue_from CanCan::AccessDenied do |exception|
       redirect_to jobs_path, :alert => exception.message
@@ -22,11 +22,11 @@ class ApplicationController < ActionController::Base
       render template, formats: [:html], layout: false
     end
 
+    ###### OLD BUT NOT IRRELEVENT ######
+
     def not_authorized
       render json: { error: "You don't have permission to do that." }, status: 403
     end
-
-    ###### OLD BUT NOT IRRELEVENT ######
 
     def user
       current_user || User.find_by_authentication_token(params[:token])
@@ -63,12 +63,4 @@ class ApplicationController < ActionController::Base
         not_found
       end
     end
-
-    private
-      def last_seen
-        if user_signed_in?
-          user.last_seen = Time.now
-          user.save
-        end
-      end
 end
