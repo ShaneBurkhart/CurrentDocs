@@ -1,25 +1,37 @@
 class PlanDocument < ActiveRecord::Base
-  attr_accessible :plan_id, :document_id
+  attr_accessible :plan_id, :is_current
 
   belongs_to :plan
-  belongs_to :document
+  has_one :document, as: :document_association
 
-  validates :plan_id, :document_id, presence: true, uniqueness: true
-  validate :not_in_plan_document_histories_for_plan
+  validates :plan_id, presence: true
+  validates :is_current, inclusion: { in: [ true, false ] }
+  validate :one_current_document_for_plan, if: :is_current
 
   private
 
-    def not_in_plan_document_histories_for_plan
-      doc_history_count = PlanDocumentHistory.where(
+    def one_current_document_for_plan
+      docs = PlanDocument.where(
         plan_id: self.plan_id,
-        document_id: self.document_id
-      ).count
+        is_current: true,
+      )
 
-      if doc_history_count > 0
-        errors.add(
-          :document_id,
-          'is in document histories for plan with ID #{self.plan_id}'
-        )
+      if self.new_record?
+        if docs.count > 0
+          errors.add(
+            :is_current,
+            "is already set for plan with ID #{self.plan_id}"
+          )
+        end
+      else
+        docs.where(["id != ?", self.id])
+
+        if docs.count > 0
+          errors.add(
+            :is_current,
+            "is already set for plan with ID #{self.plan_id}"
+          )
+        end
       end
     end
 end

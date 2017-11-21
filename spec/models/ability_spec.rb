@@ -23,4 +23,13 @@ RSpec.describe "User Permissions for", :type => :model do
     it { expect(user).to be_able_to(:destroy, user.jobs.first) }
     it { expect(user).not_to be_able_to(:destroy, create(:user).jobs.first) }
   end
+
+  describe "Document" do
+    let(:job) { user.open_jobs.first }
+    let(:plan) { create(:plan, job: job) }
+
+    # Download
+    it { expect(user).to be_able_to(:download, plan.document) }
+    it { expect(user).not_to be_able_to(:download, create(:plan).document) }
+  end
 end

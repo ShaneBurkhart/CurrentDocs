@@ -16,6 +16,15 @@ class Ability
     # Can manage jobs that belong to them
     can :manage, Job, user_id: user.id
 
+    # If we are given a Document, then we delegate to the
+    # document_association permissions.
+    can :download, Document do |document|
+      can?(:download, document.document_association)
+    end
+
+    can :download, PlanDocument, plan: { job: { user_id: user.id } }
+
+
     #if user.admin?
       #can :manage, :all
     #elsif user.manager?

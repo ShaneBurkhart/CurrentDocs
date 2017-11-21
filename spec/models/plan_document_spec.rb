@@ -1,22 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe PlanDocument, :type => :model do
+  let(:plan_document) { create(:plan_document) }
+
   it { expect(subject).to belong_to(:plan) }
-  it { expect(subject).to belong_to(:document) }
+  it { expect(subject).to have_one(:document) }
 
   describe "validations" do
-    subject { create(:plan_document) }
-    it { expect(subject).to validate_presence_of(:plan_id) }
-    it { expect(subject).to validate_uniqueness_of(:plan_id) }
-    it { expect(subject).to validate_presence_of(:document_id) }
-    it { expect(subject).to validate_uniqueness_of(:document_id) }
+    subject { plan_document }
 
-    it "should not allow document that is in doc histories" do
-      doc_history = create(:plan_document_history)
+    it { expect(subject).to validate_presence_of(:plan_id) }
+
+    it "should not allow multiple current plan documents for plan" do
+      plan_doc = create(:plan_document)
       current_doc = build(
         :plan_document,
-        plan_id: doc_history.plan_id,
-        document_id: doc_history.document_id
+        plan_id: plan_doc.plan_id,
+        is_current: true
       )
 
       expect(current_doc).not_to be_valid

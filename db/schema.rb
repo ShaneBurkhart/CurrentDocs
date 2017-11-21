@@ -55,10 +55,12 @@ ActiveRecord::Schema.define(:version => 20171121200458) do
   add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
 
   create_table "documents", :force => true do |t|
-    t.string   "original_filename", :null => false
-    t.string   "s3_path",           :null => false
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.string   "original_filename",         :null => false
+    t.string   "s3_path",                   :null => false
+    t.integer  "document_association_id"
+    t.string   "document_association_type"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "events", :force => true do |t|
@@ -106,18 +108,11 @@ ActiveRecord::Schema.define(:version => 20171121200458) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "plan_document_histories", :force => true do |t|
-    t.integer  "plan_id",     :null => false
-    t.integer  "document_id", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "plan_documents", :force => true do |t|
-    t.integer  "plan_id",     :null => false
-    t.integer  "document_id", :null => false
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "plan_id",    :null => false
+    t.boolean  "is_current", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "plans", :force => true do |t|
@@ -236,7 +231,7 @@ ActiveRecord::Schema.define(:version => 20171121200458) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                                                                 :null => false
-    t.datetime "last_seen",                            :default => '2017-11-21 20:07:26'
+    t.datetime "last_seen",                            :default => '2017-11-21 22:26:32'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end

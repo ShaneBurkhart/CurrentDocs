@@ -26,7 +26,9 @@ FactoryBot.define do
       end
 
       if document_history_count > 0
-        create_list(:plan_document_history, document_history_count, plan: plan)
+        create_list(:plan_document, document_history_count, {
+          plan: plan, is_current: false
+        })
       end
     end
   end

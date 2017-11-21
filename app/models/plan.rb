@@ -5,11 +5,11 @@ class Plan < ActiveRecord::Base
 
   belongs_to :job
 
-  has_one :plan_document
-  has_one :document, through: :plan_document
+  has_one :plan_document, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: true }
+  has_many :plan_document_histories, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: false }
 
-  has_many :plan_document_histories
-  has_many :document_histories, through: :plan_document_histories, source: :document
+  has_one :document, class_name: "Document", through: :plan_document, as: :document
+  has_many :document_histories, class_name: "Document", through: :plan_document_histories, as: :document
 
   attr_accessible :job_id, :name, :order_num, :num_pages, :tab, :csi,
     :plan_updated_at, :description, :code, :tags
