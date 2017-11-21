@@ -6,6 +6,7 @@ RSpec.describe JobsController, :type => :controller do
 
   describe "GET #index" do
     let (:action) { get :index }
+    let (:user) { create(:user, job_count: 2, archived_job_count: 2) }
 
     it_behaves_like 'an unauthenticated controller action'
 
@@ -33,7 +34,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:template) { :show }
       let (:can_action) { :read }
-      let (:can_param) { be_a(Job) }
+      let (:can_param) { job }
 
       context "with no tab param" do
         it { expect(assigns(:job)).to have_attributes(id: job.id, name: job.name) }
@@ -99,7 +100,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:template) { :new }
       let (:can_action) { :update }
-      let (:can_param) { eq(job) }
+      let (:can_param) { job }
 
       it { expect(assigns(:job)).to eq(job) }
 
@@ -118,7 +119,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:redirect_path) { jobs_path }
       let (:can_action) { :update }
-      let (:can_param) { eq(job) }
+      let (:can_param) { job }
 
       it { expect(assigns(:job).id).to eq(job.id) }
       it { expect(assigns(:job).name).to eq(new_job_name) }
@@ -153,7 +154,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:template) { :should_delete }
       let (:can_action) { :delete }
-      let (:can_param) { eq(job) }
+      let (:can_param) { job }
 
       it { expect(assigns(:job)).to eq(job) }
 
@@ -171,7 +172,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:redirect_path) { jobs_path }
       let (:can_action) { :destroy }
-      let (:can_param) { eq(job) }
+      let (:can_param) { job }
 
       it { expect(assigns(:job)).to eq(job) }
       it { expect(assigns(:job).destroyed?).to be(true) }

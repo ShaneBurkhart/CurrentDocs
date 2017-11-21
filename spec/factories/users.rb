@@ -8,8 +8,8 @@ FactoryBot.define do
     password_confirmation "password"
 
     transient do
-      job_count 5
-      archived_job_count 5
+      job_count 1
+      archived_job_count 0
     end
 
     trait :no_jobs do
@@ -27,7 +27,7 @@ FactoryBot.define do
         create_list(:job, job_count, user: user)
       end
 
-      if job_count > 0
+      if archived_job_count > 0
         create_list(:archived_job, archived_job_count, user: user)
       end
     end

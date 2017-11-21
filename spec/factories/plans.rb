@@ -1,12 +1,12 @@
 FactoryBot.define do
   factory :plan do
     job
-    name { Faker::Address.secondary_address }
+    name { Faker::Address.street_address }
     tab { Plan::TABS.sample }
 
     transient do
       has_current_doc true
-      document_history_count 5
+      document_history_count 2
     end
 
     trait :no_documents do
