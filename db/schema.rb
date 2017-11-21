@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171110222752) do
+ActiveRecord::Schema.define(:version => 20171121200458) do
 
   create_table "asi_attachments", :force => true do |t|
     t.string   "filename"
@@ -136,8 +136,7 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.text     "description"
     t.string   "code"
     t.string   "tags"
-    t.integer  "previous_plan_id"
-    t.integer  "next_plan_id"
+    t.integer  "order_num",                              :null => false
   end
 
   create_table "project_managers", :force => true do |t|
@@ -237,7 +236,7 @@ ActiveRecord::Schema.define(:version => 20171110222752) do
     t.boolean  "expired",                              :default => false
     t.boolean  "cancelled"
     t.string   "company",                                                                 :null => false
-    t.datetime "last_seen",                            :default => '2017-11-17 20:15:54'
+    t.datetime "last_seen",                            :default => '2017-11-21 20:07:26'
     t.boolean  "can_share_link",                       :default => false
     t.boolean  "can_review_submittal",                 :default => false
   end
