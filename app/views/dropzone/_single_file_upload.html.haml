@@ -1,0 +1,46 @@
+.control-group
+  #single-document-dnd.dropzone
+  %p
+    %span#single-document-name= current_document_name
+    %input{ type: "hidden", id: 'single-document-input', name: "document_id", value: current_document_id }
+
+
+:javascript
+  Dropzone.options.rfiAttachmentsDnd = {
+    paramName: "files",
+    maxFilesize: 20, // MB
+    uploadMultiple: true,
+    createImageThumbnails: false,
+    // Hide the previews.  We'll make our own.
+    previewTemplate: '<div style="display:none"></div>',
+  };
+
+  PlanSource.singleDocumentDropzone = new Dropzone("div#single-document-dnd", {
+    url: "/document/upload"
+  });
+
+  PlanSource.singleDocumentDropzone.on("sending", function (file, responseData) {
+    // TODO set a loading message
+    console.log("Uploading...");
+  });
+
+  PlanSource.singleDocumentDropzone.on("complete", function (file, responseData) {
+    // TODO set a done message
+    console.log("Done.");
+  });
+
+  PlanSource.singleDocumentDropzone.on("success", function (file, responseData) {
+    var returnFiles = responseData.files;
+    var firstFile = returnFiles[0];
+    var $name = $("#single-document-name");
+    var $input = $("#single-document-input");
+
+    console.log('success');
+
+    if (firstFile) {
+      if (firstFile.original_filename !== file.name) return;
+
+      $name.text(firstFile.original_filename);
+      $input.val(firstFile.id);
+    }
+  });

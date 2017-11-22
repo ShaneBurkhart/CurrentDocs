@@ -24,7 +24,7 @@ shared_examples "an authorized controller action" do
     overrides if defined? overrides
 
     expect(controller)
-      .to receive(:authorize!)
+      .to receive(:authorize!).once
       .with(authorize_can_action, authorize_can_param)
 
     action

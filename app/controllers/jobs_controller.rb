@@ -26,8 +26,9 @@ class JobsController < ApplicationController
 
   def new
     @job = Job.new
+    @job.user_id = current_user.id
 
-    authorize! :create, Job
+    authorize! :create, @job
 
     respond_to do |format|
       format.html
@@ -39,7 +40,7 @@ class JobsController < ApplicationController
     @job = Job.new(params[:job])
     @job.user_id = current_user.id
 
-    authorize! :create, Job
+    authorize! :create, @job
 
     if !@job.save
       return render :new
@@ -76,7 +77,7 @@ class JobsController < ApplicationController
   def should_delete
     @job = Job.find(params[:id])
 
-    authorize! :delete, @job
+    authorize! :destroy, @job
 
     respond_to do |format|
       format.html

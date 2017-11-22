@@ -16,7 +16,10 @@
 //= require moment
 //= require async
 //= require ./application/vendor/toastr.min.js
-//= require ./application/vendor/quill.min.js
+//= require ./application/vendor/dropzone
+//= require ./application/vendor/pikaday
+
+var PlanSource = PlanSource || {};
 
 $(document).ready(function(){
   var _$currentModal = null;

@@ -10,7 +10,7 @@
     %tbody
       - plans.each do |plan|
         %tr
-          %td= plan.plan_num
+          %td= plan.order_num + 1
           %td.word{ title: plan.name }= plan.name
           %td{ data: { value: plan.updated_at } }= plan.updated_at.strftime("%b %e, %Y")
           %td

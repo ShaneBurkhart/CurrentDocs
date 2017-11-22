@@ -14,7 +14,7 @@ RSpec.describe PlansController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:template) { :new }
       let (:can_action) { :create }
-      let (:can_param) { Plan }
+      let (:can_param) { be_a_new(Plan) }
 
       it { expect(assigns(:plan)).to be_a_new(Plan) }
       it { expect(assigns(:plan))
@@ -38,7 +38,7 @@ RSpec.describe PlansController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:redirect_path) { job_tab_path(job.id, addendum.tab) }
       let (:can_action) { :create }
-      let (:can_param) { Plan }
+      let (:can_param) { be_a_new(Plan) }
 
       it { expect(assigns(:plan)).not_to be_a_new(Plan) }
       it { expect(assigns(:plan))

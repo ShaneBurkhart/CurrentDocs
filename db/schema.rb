@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171121200458) do
+ActiveRecord::Schema.define(:version => 20171122213023) do
 
   create_table "asi_attachments", :force => true do |t|
     t.string   "filename"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20171121200458) do
     t.string   "document_association_type"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.integer  "user_id",                   :null => false
   end
 
   create_table "events", :force => true do |t|

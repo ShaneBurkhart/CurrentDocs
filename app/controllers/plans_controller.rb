@@ -4,7 +4,7 @@ class PlansController < ApplicationController
   def new
     @plan = Plan.new(job_id: params[:job_id], tab: params[:tab])
 
-    authorize! :create, Plan
+    authorize! :create, @plan
 
     respond_to do |format|
       format.html
@@ -17,7 +17,7 @@ class PlansController < ApplicationController
     @plan.job_id = params[:job_id]
     @plan.tab = params[:tab]
 
-    authorize! :create, Plan
+    authorize! :create, @plan
 
     if !@plan.save
       return render :new

@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe DocumentController, :type => :controller do
   let (:user) { create(:user) }
+  let (:document) { create(:document, user: user) }
 
   describe "POST #upload" do
     let (:file_upload) { fixture_file_upload('/upload_fixture.pdf', 'applicatino/pdf') }
-    let (:original_filename) { file_upload.original_filename }
     let (:action) { post :upload, files: { "0": file_upload, "1": file_upload } }
 
     it_behaves_like 'an unauthenticated controller action'
@@ -19,16 +19,19 @@ RSpec.describe DocumentController, :type => :controller do
 
         expect(object_double).to receive(:write).twice
           .with(file_upload.tempfile)
+
+        expect(Document).to receive(:create).twice
+          .and_return(document)
       end
 
       it { expect(response_json['files'].length).to eq(2) }
+      it { expect(response_json['files'].first['id']).to eq(document.id) }
       it { expect(response_json['files'].first['original_filename'])
-        .to eq(original_filename) }
+        .to eq(document.original_filename) }
     end
   end
 
   describe "GET #download" do
-    let (:document) { create(:document) }
     let (:action) { get :download, id: document.id }
 
     it_behaves_like 'an unauthenticated controller action'

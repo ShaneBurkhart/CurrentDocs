@@ -60,7 +60,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:template) { :new }
       let (:can_action) { :create }
-      let (:can_param) { Job }
+      let (:can_param) { be_a_new(Job) }
 
       it { expect(assigns(:job)).to be_a_new(Job) }
 
@@ -78,7 +78,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an authorized controller action' do
       let (:redirect_path) { jobs_path }
       let (:can_action) { :create }
-      let (:can_param) { Job }
+      let (:can_param) { be_a_new(Job) }
 
       it { expect(assigns(:job)).not_to be_a_new(Job) }
       it { expect(assigns(:job).user_id).to eq(user.id) }
@@ -153,7 +153,7 @@ RSpec.describe JobsController, :type => :controller do
 
     it_behaves_like 'an authorized controller action' do
       let (:template) { :should_delete }
-      let (:can_action) { :delete }
+      let (:can_action) { :destroy }
       let (:can_param) { job }
 
       it { expect(assigns(:job)).to eq(job) }

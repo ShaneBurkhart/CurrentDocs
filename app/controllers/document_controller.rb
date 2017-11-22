@@ -15,16 +15,21 @@ class DocumentController < ApplicationController
 
     files.each do |key, file|
       uuid = SecureRandom.uuid
-      redis_key = "documents:#{uuid}"
-      original_filename = file.original_filename
+      document = Document.create(
+        s3_path: "documents/#{uuid}",
+        original_filename: file.original_filename,
+        user_id: user.id
+      )
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["documents/#{uuid}"];
+      next if document.new_record?
+
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects[document.s3_path];
       obj.write(file.tempfile)
 
-      # Expire after a day
-      Redis.current.setex(redis_key, 24 * 60 * 60, original_filename)
-
-      returnData[:files].push({ id: uuid, original_filename: original_filename })
+      returnData[:files].push({
+        id: document.id,
+        original_filename: document.original_filename
+      })
     end
 
     render json: returnData

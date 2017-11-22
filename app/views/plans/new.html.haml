@@ -15,6 +15,12 @@
             = f.text_field :name, placeholder: "Plan name"
             .help-inline
 
+        - current_document_id = @plan.document.nil? ? nil : @plan.document.id
+        - current_document_name = @plan.document.nil? ? nil : @plan.document.original_filename
+        = render partial: "/dropzone/single_file_upload",
+            locals: { current_document_name: current_document_name,
+              current_document_id: current_document_id }
+
       .footer
         .buttons
           %button.button.button-blue{ type: "submit" }
