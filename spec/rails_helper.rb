@@ -32,8 +32,10 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  config.include ActionDispatch::TestProcess
 
   config.include SpecUserControllerHelpers, :type => :controller
+  config.include AWSHelper, :type => :controller
 
   config.mock_with :rspec do |mocks|
     mocks.allow_message_expectations_on_nil = true

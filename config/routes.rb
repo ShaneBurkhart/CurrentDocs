@@ -19,6 +19,8 @@ PlanSource::Application.routes.draw do
   resources :plans, only: [:edit, :update, :destroy]
   get '/plans/:id/should_delete' => 'plans#should_delete', as: :should_delete_plan
 
+  get '/document/:id/download' => 'document#download', as: :download_document
+  post '/document/upload' => 'document#upload', as: :upload_document
 
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job

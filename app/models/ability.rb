@@ -24,6 +24,9 @@ class Ability
 
     can :download, PlanDocument, plan: { job: { user_id: user.id } }
 
+    if !user.new_record?
+      can :upload, Document
+    end
 
     #if user.admin?
       #can :manage, :all

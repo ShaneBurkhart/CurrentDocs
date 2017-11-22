@@ -1,18 +1,24 @@
 class DocumentController < ApplicationController
+  before_filter :authenticate_user!
+
   def upload
+    # TODO Add expiration for uploaded files that aren't associated later.
     # Upload attachments to s3 and add to redis with expiration. On create
-    # submittal, we fetch the attachments from redis from hidden inputs.
-    # When record expires, we remove s3 file. Remove record manually when used.
+    # plan association (PlanDocument, etc), we fetch the attachments from
+    # redis from hidden inputs. When record expires, we remove s3 file.
+    # Remove record manually when used.
+    s3 = AWS::S3.new
     files = params["files"]
     returnData = { files: [] }
 
-    s3 = AWS::S3.new
+    authorize! :upload, Document
+
     files.each do |key, file|
       uuid = SecureRandom.uuid
-      redis_key = "attachments:#{uuid}"
+      redis_key = "documents:#{uuid}"
       original_filename = file.original_filename
 
-      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["attachments/#{uuid}"];
+      obj = s3.buckets[ENV["AWS_BUCKET"]].objects["documents/#{uuid}"];
       obj.write(file.tempfile)
 
       # Expire after a day

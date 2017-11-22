@@ -31,5 +31,8 @@ RSpec.describe "User Permissions for", :type => :model do
     # Download
     it { expect(user).to be_able_to(:download, plan.document) }
     it { expect(user).not_to be_able_to(:download, create(:plan).document) }
+
+    it { expect(user).to be_able_to(:upload, Document) }
+    it { expect(build(:user)).not_to be_able_to(:upload, Document) }
   end
 end
