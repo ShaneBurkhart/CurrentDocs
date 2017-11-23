@@ -49,6 +49,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'rspec-rails', '~> 3.6'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers', '~> 2.8.0', require: false

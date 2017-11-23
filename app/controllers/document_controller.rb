@@ -1,5 +1,6 @@
 class DocumentController < ApplicationController
   before_filter :authenticate_user!
+  skip_before_filter :verify_authenticity_token, :only => [:upload]
 
   def upload
     # TODO Add expiration for uploaded files that aren't associated later.
@@ -9,6 +10,9 @@ class DocumentController < ApplicationController
     # Remove record manually when used.
     s3 = AWS::S3.new
     files = params["files"]
+    # Make sure files is an multi file hash even when only uploading one file.
+    # This happens when you turn off the multi file upload on dropzone.
+    files = { "0": files } unless files.is_a?(Hash)
     returnData = { files: [] }
 
     authorize! :upload, Document
@@ -17,11 +21,11 @@ class DocumentController < ApplicationController
       uuid = SecureRandom.uuid
       document = Document.create(
         s3_path: "documents/#{uuid}",
-        original_filename: file.original_filename,
-        user_id: user.id
+        original_filename: file.original_filename
       )
+      document.user_id = current_user.id
 
-      next if document.new_record?
+      next if !document.save
 
       obj = s3.buckets[ENV["AWS_BUCKET"]].objects[document.s3_path];
       obj.write(file.tempfile)

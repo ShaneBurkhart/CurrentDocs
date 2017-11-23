@@ -9,7 +9,7 @@ class Plan < ActiveRecord::Base
   has_many :plan_document_histories, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: false }
 
   has_one :document, class_name: "Document", through: :plan_document, as: :document
-  has_many :document_histories, class_name: "Document", through: :plan_document_histories, as: :document
+  has_many :document_histories, class_name: "Document", through: :plan_document_histories, source: :document
 
   attr_accessible :job_id, :name, :order_num, :num_pages, :tab, :csi,
     :plan_updated_at, :description, :code, :tags
@@ -35,6 +35,39 @@ class Plan < ActiveRecord::Base
     else
       self[:csi] = csi_code
     end
+  end
+
+  def update_document(document)
+    return false if document.nil?
+    return true if self.document == document
+
+    if self.document
+      self.plan_document.is_current = false
+
+      if !self.plan_document.save
+        errors.add(:document, "couldn't be set to current document")
+        return false
+      end
+    end
+
+    current_doc = PlanDocument.new(plan_id: self.id, is_current: true)
+
+    if !current_doc.save
+      errors.add(:document, "couldn't be set to current document")
+      return false
+    end
+
+    document.document_association = current_doc
+
+    if !document.save
+      errors.add(:document, "couldn't be set to current document")
+      return false
+    end
+
+    # Now that we have updated everything, we need to reload
+    self.reload
+
+    return true
   end
 
   def move_to_position(pos)

@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
     :company, :authentication_token
 
   has_many :jobs
-  has_many :open_jobs, class_name: "Job", foreign_key: "user_id", conditions: "archived = false"
-  has_many :archived_jobs, class_name: "Job", foreign_key: "user_id", conditions: "archived = true"
+  has_many :open_jobs, class_name: "Job", foreign_key: "user_id", conditions: { archived: false }
+  has_many :archived_jobs, class_name: "Job", foreign_key: "user_id", conditions: { archived: true }
   has_many :shares
   has_many :shared_jobs, through: :shares, source: :job
   has_many :user_contact_connection, class_name: "Contact", foreign_key: "user_id"

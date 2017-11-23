@@ -18,3 +18,4 @@ production:
     encoding: unicode
     database: mydb
     pool: 5
+

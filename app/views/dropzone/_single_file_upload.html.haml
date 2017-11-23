@@ -1,18 +1,34 @@
-.control-group
-  #single-document-dnd.dropzone
+- document = document || Document.new
+- remove_file_display = document.new_record? ? 'none' : 'inline'
+- dnd_display = document.new_record? ? 'block' : 'none'
+
+- doc_errors = @plan.errors.messages[:document]
+
+.form-group{ class: doc_errors.nil? ? "" : "has-error" }
+  %label Upload a file. (Optional)
+  - if !doc_errors.nil?
+    %br
+    %label.control-label= "Uploaded file #{doc_errors.join(' and ')}"
+
+  %input{ type: "hidden", id: 'single-document-input', name: "document_id", value: document.id }
+
+  %p#single-document-name.bold= document.original_filename
   %p
-    %span#single-document-name= current_document_name
-    %input{ type: "hidden", id: 'single-document-input', name: "document_id", value: current_document_id }
+    %a#single-document-remove-file{ style: "display: #{remove_file_display}" } Remove File
+  #single-document-dnd.dropzone{ style: "display: #{dnd_display}" }
 
 
 :javascript
-  Dropzone.options.rfiAttachmentsDnd = {
+  Dropzone.autoDiscover = false;
+  Dropzone.options.singleDocumentDnd = {
     paramName: "files",
+    maxFiles: 1,
     maxFilesize: 20, // MB
-    uploadMultiple: true,
+    uploadMultiple: false,
     createImageThumbnails: false,
     // Hide the previews.  We'll make our own.
     previewTemplate: '<div style="display:none"></div>',
+    dictDefaultMessage: 'Drop files here or click to upload.',
   };
 
   PlanSource.singleDocumentDropzone = new Dropzone("div#single-document-dnd", {
@@ -34,6 +50,8 @@
     var firstFile = returnFiles[0];
     var $name = $("#single-document-name");
     var $input = $("#single-document-input");
+    var $dnd = $("#single-document-dnd");
+    var $removeFile = $("#single-document-remove-file");
 
     console.log('success');
 
@@ -42,5 +60,25 @@
 
       $name.text(firstFile.original_filename);
       $input.val(firstFile.id);
+      $dnd.hide();
+      $removeFile.show();
     }
   });
+
+  $(document).ready(function () {
+    var $name = $("#single-document-name");
+    var $input = $("#single-document-input");
+    var $dnd = $("#single-document-dnd");
+    var $removeFile = $('#single-document-remove-file');
+
+    $removeFile.click(function () {
+      PlanSource.singleDocumentDropzone.removeAllFiles();
+
+      $name.text("");
+      $input.val("");
+
+      $dnd.show();
+      $removeFile.hide();
+    });
+  });
+

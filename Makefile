@@ -42,7 +42,7 @@ c:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web /bin/bash
 
 t:
-	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec ${FILE}
 
 tr:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec spec/requests

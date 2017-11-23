@@ -16,10 +16,15 @@ class PlansController < ApplicationController
     @plan = Plan.new(params[:plan])
     @plan.job_id = params[:job_id]
     @plan.tab = params[:tab]
+    @document = Document.find_by_id(params[:document_id])
 
     authorize! :create, @plan
 
     if !@plan.save
+      return render :new
+    end
+
+    if @document and !@plan.update_document(@document)
       return render :new
     end
 
@@ -39,10 +44,15 @@ class PlansController < ApplicationController
 
   def update
     @plan = Plan.find(params[:id])
+    @document = Document.find_by_id(params[:document_id])
 
     authorize! :update, @plan
 
     if !@plan.update_attributes(params[:plan])
+      return render :new
+    end
+
+    if @document and !@plan.update_document(@document)
       return render :new
     end
 

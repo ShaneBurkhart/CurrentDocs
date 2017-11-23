@@ -1,4 +1,6 @@
 class Document < ActiveRecord::Base
+  attr_accessible :s3_path, :original_filename
+
   belongs_to :document_association, polymorphic: true
   belongs_to :user
 

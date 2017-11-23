@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Plan, :type => :model do
   let(:plan) { create(:plan) }
+  let(:document) { create(:document) }
 
   it { expect(subject).to belong_to(:job) }
   it { expect(subject).to have_one(:plan_document) }
@@ -94,6 +95,42 @@ RSpec.describe Plan, :type => :model do
     it "assigns csi" do
       plan.csi = "121212"
       expect(plan.csi).to eq("121212")
+    end
+  end
+
+  describe "update_document" do
+    let(:action) { plan.update_document(document) }
+    let(:expected_return_value) { true }
+
+    before(:each) do
+      @previous_current_document = plan.document
+      expect(action).to be(expected_return_value)
+    end
+
+    it "updates document to current document" do
+      expect(plan.document).to eq(document)
+    end
+
+    it "moves current plan to plan history" do
+      expect(plan.document_histories).to include(@previous_current_document)
+    end
+
+    context "when passed the current document" do
+      let(:action) { plan.update_document(plan.document) }
+      let(:expected_return_value) { true }
+
+      it "does nothing when given nil" do
+        expect(plan.document).to eq(@previous_current_document)
+      end
+    end
+
+    context "when passed a nil document" do
+      let(:action) { plan.update_document(nil) }
+      let(:expected_return_value) { false }
+
+      it "does nothing when given nil" do
+        expect(plan.document).to eq(@previous_current_document)
+      end
     end
   end
 

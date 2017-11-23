@@ -14,20 +14,27 @@ RSpec.describe DocumentController, :type => :controller do
       let (:can_action) { :upload }
       let (:can_param) { Document }
       let (:response_json) { JSON.parse(response.body) }
+      let (:document_count) { 2 }
       let (:overrides) do
         object_double = mock_s3_object()
 
-        expect(object_double).to receive(:write).twice
+        expect(object_double).to receive(:write).exactly(document_count).times
           .with(file_upload.tempfile)
 
-        expect(Document).to receive(:create).twice
+        expect(Document).to receive(:create).exactly(document_count).times
           .and_return(document)
       end
 
-      it { expect(response_json['files'].length).to eq(2) }
+      it { expect(response_json['files'].length).to eq(document_count) }
       it { expect(response_json['files'].first['id']).to eq(document.id) }
       it { expect(response_json['files'].first['original_filename'])
         .to eq(document.original_filename) }
+
+      context "with a single file uploaded" do
+        let (:document_count) { 1 }
+        let (:action) { post :upload, files: file_upload }
+        it { expect(response_json['files'].length).to eq(document_count) }
+      end
     end
   end
 

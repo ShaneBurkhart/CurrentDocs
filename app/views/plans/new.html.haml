@@ -9,22 +9,23 @@
         %p.title Enter a plan name.
 
       .body
-        %p Enter a name for your plan.
-        .control-group
-          .controls
-            = f.text_field :name, placeholder: "Plan name"
-            .help-inline
+        - name_errors = @plan.errors.messages[:name]
+        .form-group{ class: name_errors.nil? ? "" : "has-error" }
+          %label.control-label Enter a name for your plan.
 
-        - current_document_id = @plan.document.nil? ? nil : @plan.document.id
-        - current_document_name = @plan.document.nil? ? nil : @plan.document.original_filename
-        = render partial: "/dropzone/single_file_upload",
-            locals: { current_document_name: current_document_name,
-              current_document_id: current_document_id }
+          = f.text_field :name, placeholder: "Plan name", class: "form-control"
+
+          - if !name_errors.nil?
+            %label.control-label= "Plan name #{name_errors.join(' and ')}"
+
+
+        = render partial: "/dropzone/single_file_upload", locals: { document: @plan.document || @document }
+
 
       .footer
         .buttons
           %button.button.button-blue{ type: "submit" }
-            = @plan.new_record? ? "Create" : "Update"
+            = @plan.new_record? ? "Create" : "Save"
 
           - if request.format == 'modal'
             %a.button.close-modal Cancel

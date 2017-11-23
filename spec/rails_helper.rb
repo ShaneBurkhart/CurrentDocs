@@ -12,6 +12,11 @@ require 'factory_bot'
 require 'faker'
 require 'devise'
 
+# In order to keep the same RAILS_ENV for rspec and cucumber, and to make rspec
+# faster, patch the connection to use sqlite in memory when running rspec
+ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+ActiveRecord::Schema.verbose = false
+load "#{Rails.root.to_s}/db/schema.rb"
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -68,4 +73,5 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
 end

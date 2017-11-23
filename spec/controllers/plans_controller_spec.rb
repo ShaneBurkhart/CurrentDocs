@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe PlansController, :type => :controller do
   let(:user) { create(:user) }
   let(:job) { user.open_jobs.first }
-  let(:plan) { job.plans.first}
-  let(:addendum) { job.addendums.first}
+  let(:plan) { job.plans.first }
+  let(:addendum) { job.addendums.first }
+  let(:document) { create(:document) }
 
   describe "GET #new" do
     let (:action) { get :new, job_id: job.id, tab: addendum.tab }
@@ -30,6 +31,7 @@ RSpec.describe PlansController, :type => :controller do
     let (:action) { post :create, {
       job_id: job.id,
       tab: addendum.tab,
+      document_id: document.id,
       plan: build(:plan).attributes.slice('name')
     } }
 
@@ -48,6 +50,16 @@ RSpec.describe PlansController, :type => :controller do
         let (:template) { :new }
         let(:overrides) do
           allow_any_instance_of(Plan).to receive(:save).and_return(false)
+        end
+      end
+
+      it_behaves_like "an invalid model action" do
+        let (:template) { :new }
+        let(:overrides) do
+          allow_any_instance_of(Plan)
+            .to receive(:save).and_return(true)
+          allow_any_instance_of(Plan)
+            .to receive(:update_document).and_return(false)
         end
       end
     end
@@ -73,7 +85,7 @@ RSpec.describe PlansController, :type => :controller do
 
   describe "PUT #update" do
     let (:new_plan_name) { build(:plan).name }
-    let (:action) { put :update, id: addendum.id, plan: { name: new_plan_name } }
+    let (:action) { put :update, id: addendum.id, document_id: document.id, plan: { name: new_plan_name } }
 
     it_behaves_like 'an unauthenticated controller action'
 
@@ -90,7 +102,18 @@ RSpec.describe PlansController, :type => :controller do
       it_behaves_like "an invalid model action" do
         let (:template) { :new }
         let(:overrides) do
-          allow_any_instance_of(Plan).to receive(:update_attributes).and_return(false)
+          allow_any_instance_of(Plan)
+            .to receive(:update_attributes).and_return(false)
+        end
+      end
+
+      it_behaves_like "an invalid model action" do
+        let (:template) { :new }
+        let(:overrides) do
+          allow_any_instance_of(Plan)
+            .to receive(:update_attributes).and_return(true)
+          allow_any_instance_of(Plan)
+            .to receive(:update_document).and_return(false)
         end
       end
     end
