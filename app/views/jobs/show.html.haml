@@ -6,16 +6,18 @@
         %p= link_to "Back to your jobs", jobs_path(archived: @job.archived || nil)
 
         %nav
-          - if @job.archived
-            = form_for @job, html: { style: "display: inline" } do |f|
-              = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
-              = f.hidden_field :archived, value: false
-              %button.button.button-green{ href: "#", type: 'submit' } Unarchive
-          - else
-            = form_for @job, html: { style: "display: inline" } do |f|
-              = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
-              = f.hidden_field :archived, value: true
-              %button.button.button-red{ href: "#", type: 'submit' } Archive
+          - if current_user.can? :update, @job
+            - if @job.archived
+              = form_for @job, html: { style: "display: inline" } do |f|
+                = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
+                = f.hidden_field :archived, value: false
+                %button.button.button-green{ href: "#", type: 'submit' } Unarchive
+            - else
+              = form_for @job, html: { style: "display: inline" } do |f|
+                = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
+                = f.hidden_field :archived, value: true
+                %button.button.button-red{ href: "#", type: 'submit' } Archive
+          - if current_user.can? :create, ShareLink.new(job_id: @job.id)
             %a.button.button-blue{ href: "#" } Share Link
 
         %nav.jobs-controls
@@ -23,10 +25,6 @@
           = plans_tab_link('addendums', @tab)
 
           %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
-
-        %nav
-          - if !@job.archived
-            %a.button.button-blue.open-modal{ href: "#", data: { "modal-url": new_job_tab_plan_path(@job, @tab) } } Add Plan
 
         - if ['plans', 'addendums'].include? @tab
           = render partial: "plans_section", locals: { tab: @tab, plans: @job.send(@tab) }

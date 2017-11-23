@@ -14,9 +14,10 @@
 
   %p#single-document-name.bold= document.original_filename
   %p
-    %a#single-document-remove-file{ style: "display: #{remove_file_display}" } Remove File
+    %a#single-document-remove-file{ style: "display: #{remove_file_display}" }<
+      = document.new_record? ? "Remove File" : "Change File"
+    %span= document.new_record? ? "" : " (the old one will be under history in plan details)"
   #single-document-dnd.dropzone{ style: "display: #{dnd_display}" }
-
 
 :javascript
   Dropzone.autoDiscover = false;

@@ -6,7 +6,7 @@
 
     .row
       .col-md-6
-        - if current_user.can? :create, Job
+        - if current_user.can? :create, Job.new(user_id: current_user.id)
           %a.button.button-green.open-modal{ href: "#", data: { "modal-url": new_job_path } } + Add Job
       .col-md-6
         %form.share-search-form
@@ -33,7 +33,9 @@
                   %td
                     %ul.controls.pull-right.unstyled
                       %li= link_to "Open", job_path(job)
-                      %li
-                        %a.open-modal{ href: "#", data: { "modal-url": edit_job_path(job) } } Edit
-                      %li
-                        %a.open-modal{ href: "#", data: { "modal-url": should_delete_job_path(job) } } Delete
+                      - if current_user.can? :update, job
+                        %li
+                          %a.open-modal{ href: "#", data: { "modal-url": edit_job_path(job) } } Edit
+                      - if current_user.can? :destroy, job
+                        %li
+                          %a.open-modal{ href: "#", data: { "modal-url": should_delete_job_path(job) } } Delete

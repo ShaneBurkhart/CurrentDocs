@@ -12,7 +12,7 @@
       .buttons
         = link_to "Delete", plan_path(@plan), method: :delete, class: "button button-red"
         - if request.format == 'modal'
-          %a.button Cancel
+          %a.button.close-modal Cancel
         - else
           %a.button{ href: job_tab_path(@plan.job_id, @plan.tab) } Cancel
 

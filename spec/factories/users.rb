@@ -9,7 +9,7 @@ FactoryBot.define do
 
     transient do
       job_count 1
-      archived_job_count 0
+      archived_job_count 1
     end
 
     trait :no_jobs do

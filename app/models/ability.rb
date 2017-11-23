@@ -20,9 +20,6 @@ class Ability
   end
 
   def initialize(user)
-    # :manage = [:read, :create, :update, :destroy]
-    # You can't use :read for array of instances, so adding :read_multiple
-
     user ||= User.new
 
     # :manage returns true for all actions.  Not just CRUD actions.
@@ -38,16 +35,21 @@ class Ability
     can :crud, Job, user_id: user.id
 
     # Can manage plans for jobs that belong to them
-    can [:create, :update, :destroy], Plan, job: { user_id: user.id }
+    can :read, Plan, job: { user_id: user.id }
+    can [:create, :update, :destroy], Plan, job: { user_id: user.id, archived: false }
 
     # If we are given a Document, then we delegate to the
     # document_association permissions.
+    can :read, Document do |document|
+      can?(:read, document.document_association)
+    end
+
     can :download, Document do |document|
       can?(:download, document.document_association)
     end
 
     # Define document_association permissions.
-    can :download, PlanDocument, plan: { job: { user_id: user.id } }
+    can [:read, :download], PlanDocument, plan: { job: { user_id: user.id } }
 
     # Only users with accounts can upload Documents.
     if !user.new_record?

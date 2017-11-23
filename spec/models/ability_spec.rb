@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe "User Permissions for", :type => :model do
   let(:user) { create(:user) }
   let(:job) { user.open_jobs.first }
+  let(:archived_job) { user.archived_jobs.first }
   let(:not_my_job) { create(:user).open_jobs.first }
   let(:plan) { create(:plan, job: job) }
+  let(:archived_plan) { create(:plan, job: archived_job) }
   let(:not_my_plan) { create(:plan, job: not_my_job) }
 
   describe "Job" do
@@ -35,23 +37,37 @@ RSpec.describe "User Permissions for", :type => :model do
   end
 
   describe "Plan" do
+    # Read
+    it { expect(user).to be_able_to(:read, plan) }
+    it { expect(user).to be_able_to(:read, archived_plan) }
+    it { expect(user).not_to be_able_to(:read, not_my_plan) }
+    it { expect(user).not_to be_able_to(:read, Plan) }
+
     # Create
     it { expect(user).to be_able_to(:create, plan) }
     it { expect(user).not_to be_able_to(:create, not_my_plan) }
+    it { expect(user).not_to be_able_to(:create, archived_plan) }
     it { expect(user).not_to be_able_to(:create, Plan) }
 
     # Update
     it { expect(user).to be_able_to(:update, plan) }
     it { expect(user).not_to be_able_to(:update, not_my_plan) }
+    it { expect(user).not_to be_able_to(:update, archived_plan) }
     it { expect(user).not_to be_able_to(:update, Plan) }
 
     # Destroy
     it { expect(user).to be_able_to(:destroy, plan) }
     it { expect(user).not_to be_able_to(:destroy, not_my_plan) }
+    it { expect(user).not_to be_able_to(:destroy, archived_plan) }
     it { expect(user).not_to be_able_to(:destroy, Plan) }
   end
 
   describe "Document" do
+    # Read
+    it { expect(user).to be_able_to(:read, plan.document) }
+    it { expect(user).not_to be_able_to(:read, not_my_plan.document) }
+    it { expect(user).not_to be_able_to(:read, Document) }
+
     # Download
     it { expect(user).to be_able_to(:download, plan.document) }
     it { expect(user).not_to be_able_to(:download, not_my_plan.document) }

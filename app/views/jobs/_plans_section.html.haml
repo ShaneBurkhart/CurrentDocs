@@ -1,3 +1,7 @@
+%nav
+  - if current_user.can? :create, Plan.new(job_id: @job.id, tab: @tab)
+    %a.button.button-blue.open-modal{ href: "#", data: { "modal-url": new_job_tab_plan_path(@job, @tab) } } Add Plan
+
 .table-resonsive{ id: "#{tab}-table" }
   %table.table.table-hover
     %thead
@@ -14,12 +18,15 @@
           %td.word{ title: plan.name }= plan.name
           %td{ data: { value: plan.updated_at } }= plan.updated_at.strftime("%b %e, %Y")
           %td
-            - if plan.plan_file_name
-              = link_to plan.plan_file_name, "/api/download/#{plan.id}"
+            - if current_user.can? :download, plan.document
+              = link_to plan.document.original_filename, download_document_path(plan.document.id)
           %td
             %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
-              - if plan.plan_file_name
+              - if current_user.can? :read, plan.document
                 %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
-              %li= link_to "Delete", "#", class: "open-modal", data: { "modal-url": should_delete_plan_path(plan) }
-              %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
-              %li= link_to "Details", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
+              - if current_user.can? :destroy, plan
+                %li= link_to "Delete", "#", class: "open-modal", data: { "modal-url": should_delete_plan_path(plan) }
+              - if current_user.can? :update, plan
+                %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
+              - if current_user.can? :read, plan
+                %li= link_to "Details", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
