@@ -8,4 +8,8 @@ class Document < ActiveRecord::Base
   validates :document_association_type, presence: true, on: :update
   validates :s3_path, :original_filename, :user_id, presence: true
   validates :s3_path, uniqueness: true
+
+  def url
+    return "https://s3.amazonaws.com/#{ENV['AWS_BUCKET']}/#{self.s3_path}"
+  end
 end

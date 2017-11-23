@@ -2,6 +2,14 @@ class DocumentController < ApplicationController
   before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token, :only => [:upload]
 
+  def show
+    @document = Document.find(params[:id])
+
+    authorize! :read, @document
+
+    render :show, layout: false
+  end
+
   def upload
     # TODO Add expiration for uploaded files that aren't associated later.
     # Upload attachments to s3 and add to redis with expiration. On create
@@ -29,6 +37,7 @@ class DocumentController < ApplicationController
 
       obj = s3.buckets[ENV["AWS_BUCKET"]].objects[document.s3_path];
       obj.write(file.tempfile)
+      obj.acl = :public_read
 
       returnData[:files].push({
         id: document.id,

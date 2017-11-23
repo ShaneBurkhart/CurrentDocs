@@ -19,6 +19,7 @@ PlanSource::Application.routes.draw do
   resources :plans, only: [:show, :edit, :update, :destroy]
   get '/plans/:id/should_delete' => 'plans#should_delete', as: :should_delete_plan
 
+  get '/document/:id' => 'document#show', as: :document
   get '/document/:id/download' => 'document#download', as: :download_document
   post '/document/upload' => 'document#upload', as: :upload_document
 

@@ -23,7 +23,7 @@
           %td
             %ul.controls.text-right.unstyled{ style: "padding-left: 0;" }
               - if current_user.can? :read, plan.document
-                %li= link_to "View", "/api/plans/embedded/#{plan.id}", target: "_blank"
+                %li= link_to "View", document_path(plan.document), target: "_blank"
               - if current_user.can? :destroy, plan
                 %li= link_to "Delete", "#", class: "open-modal", data: { "modal-url": should_delete_plan_path(plan) }
               - if current_user.can? :update, plan
