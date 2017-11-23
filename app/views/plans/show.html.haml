@@ -1,0 +1,45 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    .header
+      %p.title Plan: #{@plan.name}
+
+    .body
+      %p.bold Tab
+      %p= @plan.tab.titleize
+
+      %p.bold Date Created
+      %p= @plan.created_at.strftime("%b %e, %Y")
+
+      %p.bold
+        Current Document
+        - if current_user.can? :update, @plan
+          = " - "
+          - if @plan.document
+            = link_to "Change Document", "#", class: "open-modal", data: { "modal-url": edit_plan_path(@plan) }
+          - else
+            = link_to "Upload Document", "#", class: "open-modal", data: { "modal-url": edit_plan_path(@plan) }
+
+      %p
+        - if @plan.document and current_user.can? :download, @plan.document
+          = link_to @plan.document.original_filename, download_document_path(@plan.document)
+        - else
+          No document
+
+      %p.bold Document History
+      - if !@plan.document_histories.empty?
+        - @plan.document_histories.each do |document_history|
+          - if current_user.can? :download, document_history
+            %p= link_to document_history.original_filename, download_document_path(document_history)
+      - else
+        %p No document histories.
+
+    .footer
+      .buttons
+        - if request.format == 'modal'
+          %a.button.close-modal Cancel
+        - else
+          %a.button{ href: job_tab_path(@plan.job_id, @plan.tab) } Cancel
+
+

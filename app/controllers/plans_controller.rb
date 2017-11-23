@@ -1,6 +1,17 @@
 class PlansController < ApplicationController
   before_filter :authenticate_user!
 
+  def show
+    @plan = Plan.find(params[:id])
+
+    authorize! :read, @plan
+
+    respond_to do |format|
+      format.html
+      format.modal{ render :show, formats: [:html], layout: false }
+    end
+  end
+
   def new
     @plan = Plan.new(job_id: params[:job_id], tab: params[:tab])
 

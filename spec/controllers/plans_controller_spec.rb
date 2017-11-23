@@ -7,6 +7,24 @@ RSpec.describe PlansController, :type => :controller do
   let(:addendum) { job.addendums.first }
   let(:document) { create(:document) }
 
+  describe "GET #show" do
+    let (:action) { get :show, id: addendum.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :show }
+      let (:can_action) { :read }
+      let (:can_param) { addendum }
+
+      it { expect(assigns(:plan)).to eq(addendum) }
+
+      it_behaves_like "a modal action" do
+        let (:action) { get :show, id: addendum.id, format: 'modal' }
+      end
+    end
+  end
+
   describe "GET #new" do
     let (:action) { get :new, job_id: job.id, tab: addendum.tab }
 

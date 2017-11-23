@@ -29,4 +29,4 @@
               - if current_user.can? :update, plan
                 %li= link_to "Edit", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
               - if current_user.can? :read, plan
-                %li= link_to "Details", "#", class: "open-modal", data: { "modal-url": edit_plan_path(plan) }
+                %li= link_to "Details", "#", class: "open-modal", data: { "modal-url": plan_path(plan) }
