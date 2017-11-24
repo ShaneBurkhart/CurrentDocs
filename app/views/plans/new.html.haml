@@ -19,12 +19,12 @@
             %label.control-label= "Plan name #{name_errors.join(' and ')}"
 
 
-        = render partial: "/dropzone/single_file_upload", locals: { document: @plan.document || @document }
+        = render partial: "/dropzone/single_file_upload", locals: { submit_selector: "#plan-submit", document: @plan.document || @document }
 
 
       .footer
         .buttons
-          %button.button.button-blue{ type: "submit" }
+          %button#plan-submit.button.button-blue{ type: "submit" }
             = @plan.new_record? ? "Create" : "Save"
 
           - if request.format == 'modal'

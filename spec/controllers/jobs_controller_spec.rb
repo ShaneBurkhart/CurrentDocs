@@ -16,12 +16,12 @@ RSpec.describe JobsController, :type => :controller do
       let (:can_param) { all(be_a(Job)) }
 
       context "with open jobs" do
-        it { expect(assigns(:jobs)).to all(have_attributes(archived: false)) }
+        it { expect(assigns(:jobs)).to all(have_attributes(is_archived: false)) }
       end
 
       context "with archived jobs" do
         let (:action) { get :index, archived: "true" }
-        it { expect(assigns(:jobs)).to all(have_attributes(archived: true)) }
+        it { expect(assigns(:jobs)).to all(have_attributes(is_archived: true)) }
       end
     end
   end

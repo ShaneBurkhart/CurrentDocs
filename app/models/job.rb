@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  attr_accessible :name, :user_id, :archived
+  attr_accessible :name, :user_id, :is_archived
 
   belongs_to :user
   has_many :all_plans, class_name: "Plan", foreign_key: "job_id"

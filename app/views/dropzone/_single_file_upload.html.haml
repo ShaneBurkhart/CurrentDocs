@@ -20,6 +20,8 @@
   #single-document-dnd.dropzone{ style: "display: #{dnd_display}" }
 
 :javascript
+  var submitButtonText = "";
+
   Dropzone.autoDiscover = false;
   Dropzone.options.singleDocumentDnd = {
     paramName: "files",
@@ -37,13 +39,18 @@
   });
 
   PlanSource.singleDocumentDropzone.on("sending", function (file, responseData) {
-    // TODO set a loading message
-    console.log("Uploading...");
+    var $submit = $("#{escape_javascript submit_selector}");
+    if (!$submit.length) return;
+
+    submitButtonText = $submit.text();
+    $submit.text("Uploading");
+    $submit.prop("disabled", true);
   });
 
   PlanSource.singleDocumentDropzone.on("complete", function (file, responseData) {
-    // TODO set a done message
-    console.log("Done.");
+    var $submit = $("#{escape_javascript submit_selector}");
+    submitButtonText = $submit.text(submitButtonText);
+    $submit.prop("disabled", false);
   });
 
   PlanSource.singleDocumentDropzone.on("success", function (file, responseData) {
@@ -53,8 +60,6 @@
     var $input = $("#single-document-input");
     var $dnd = $("#single-document-dnd");
     var $removeFile = $("#single-document-remove-file");
-
-    console.log('success');
 
     if (firstFile) {
       if (firstFile.original_filename !== file.name) return;

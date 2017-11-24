@@ -1,18 +1,30 @@
 class ShareLink < ActiveRecord::Base
-    attr_accessible :job_id, :user_id, :email_shared_with
+  attr_accessible :name, :token
 
-    belongs_to :user
-    belongs_to :job
+  belongs_to :user
 
-    validates :token, :job_id, :user_id, :email_shared_with, presence: true
+  validates :name, :token, :user_id, presence: true
+  validate :check_for_duplicate_name_for_user
 
-    before_validation :create_token, :unless => Proc.new { |model| model.persisted? }
+  before_validation :create_token, unless: :token
 
-    private
-        def create_token
-            self.token= loop do
-                random_token = SecureRandom.urlsafe_base64(20, false)
-                break random_token unless ShareLink.exists?(token: random_token)
-            end
-        end
+  private
+    def create_token
+      self.token= loop do
+        random_token = SecureRandom.urlsafe_base64(20, false)
+        break random_token unless ShareLink.exists?(token: random_token)
+      end
+    end
+
+    def check_for_duplicate_name_for_user
+      s = ShareLink.where(user_id: self.user_id, name: self.name)
+
+      if self.id
+        s = s.where('id != ?', self.id)
+      end
+
+      if s.count != 0
+        errors.add(:name, 'already exists')
+      end
+    end
 end

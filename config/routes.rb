@@ -8,7 +8,14 @@ PlanSource::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
-  resources :jobs
+  resources :jobs do
+    resources :share_links, only: [:new, :create]
+  end
+
+  resources :share_links, only: [:edit, :update, :destroy]
+  get '/share_links/:id/should_delete' => 'share_links#should_delete', as: :should_delete_share_link
+
+  get '/jobs/:id/shares' => 'jobs#shares', as: :job_shares
   get '/jobs/:id/should_delete' => 'jobs#should_delete', as: :should_delete_job
   get '/jobs/:id/:tab' => 'jobs#show', as: :job_tab
 

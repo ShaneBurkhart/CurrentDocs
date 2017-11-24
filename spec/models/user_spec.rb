@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe User, :type => :model do
   it { expect(subject).to have_many(:jobs) }
+  it { expect(subject).to have_many(:open_jobs) }
+  it { expect(subject).to have_many(:archived_jobs) }
+  it { expect(subject).to have_many(:share_links) }
 
   describe "validations" do
     subject { create(:user) }

@@ -18,7 +18,7 @@ FactoryBot.define do
     factory :job_without_plans, traits: [:no_plans]
 
     factory :archived_job do
-      archived true
+      is_archived true
     end
 
     after(:create) do |job, evaluator|

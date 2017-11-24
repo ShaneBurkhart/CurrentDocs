@@ -6,5 +6,8 @@ class CreatePlanDocuments < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :plan_documents, :is_current
+    add_index :plan_documents, :plan_id
   end
 end

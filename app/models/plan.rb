@@ -3,6 +3,8 @@ include Common
 class Plan < ActiveRecord::Base
   TABS = ["plans", "addendums"]
 
+  attr_accessible :job_id, :name, :order_num, :tab
+
   belongs_to :job
 
   has_one :plan_document, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: true }
@@ -11,14 +13,11 @@ class Plan < ActiveRecord::Base
   has_one :document, class_name: "Document", through: :plan_document, as: :document
   has_many :document_histories, class_name: "Document", through: :plan_document_histories, source: :document
 
-  attr_accessible :job_id, :name, :order_num, :num_pages, :tab, :csi,
-    :plan_updated_at, :description, :code, :tags
-
   validates :job_id, :name, :tab, presence: true
+  # We only want to add to list if it passes other validations.
+  # Check before_create :add_to_end_of_list for where order_num is set.
   validates :order_num, presence: true, on: :update
-  validates :status, :length => { :maximum => 50 }
-  validates :description, :length => { :maximum => 20000 }
-  validates :code, :length => { :maximum => 12 }
+
   validate :check_for_duplicate_name_for_tab
   validate :check_for_valid_tab_name
 

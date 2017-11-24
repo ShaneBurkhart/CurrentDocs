@@ -11,235 +11,84 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171122213023) do
-
-  create_table "asi_attachments", :force => true do |t|
-    t.string   "filename"
-    t.string   "s3_path"
-    t.integer  "asi_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "asis", :force => true do |t|
-    t.string   "asi_num"
-    t.string   "status"
-    t.string   "subject"
-    t.string   "notes"
-    t.string   "plan_sheets_affected"
-    t.string   "in_addendum"
-    t.integer  "job_id"
-    t.integer  "rfi_id"
-    t.integer  "user_id"
-    t.integer  "assigned_user_id"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-  end
-
-  create_table "attachments", :force => true do |t|
-    t.string   "filename"
-    t.string   "s3_path"
-    t.integer  "submittal_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  create_table "contacts", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "contact_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "contacts", ["contact_id"], :name => "index_contacts_on_contact_id"
-  add_index "contacts", ["user_id"], :name => "index_contacts_on_user_id"
+ActiveRecord::Schema.define(:version => 20171110202844) do
 
   create_table "documents", :force => true do |t|
     t.string   "original_filename",         :null => false
     t.string   "s3_path",                   :null => false
+    t.integer  "user_id",                   :null => false
     t.integer  "document_association_id"
     t.string   "document_association_type"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.integer  "user_id",                   :null => false
   end
 
-  create_table "events", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "target_type"
-    t.integer  "target_id"
-    t.string   "target_action"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  add_index "events", ["target_type", "target_id"], :name => "index_events_on_target_type_and_target_id"
-  add_index "events", ["user_id"], :name => "index_events_on_user_id"
+  add_index "documents", ["s3_path"], :name => "index_documents_on_s3_path", :unique => true
+  add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
   create_table "jobs", :force => true do |t|
-    t.string   "name",                          :null => false
-    t.integer  "user_id",                       :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "archived",   :default => false
+    t.string   "name",                           :null => false
+    t.boolean  "is_archived", :default => false
+    t.integer  "user_id",                        :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
-  create_table "notification_subscriptions", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "target_type"
-    t.string   "target_action"
-    t.integer  "target_id"
-    t.boolean  "is_active",     :default => true
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.string   "token"
-  end
-
-  add_index "notification_subscriptions", ["target_type", "target_id"], :name => "index_notification_subscriptions_on_target_type_and_target_id"
-  add_index "notification_subscriptions", ["user_id"], :name => "index_notification_subscriptions_on_user_id"
-
-  create_table "photos", :force => true do |t|
-    t.string   "description"
-    t.string   "filename"
-    t.datetime "date_taken"
-    t.string   "aws_filename"
-    t.integer  "job_id"
-    t.integer  "upload_user_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
+  add_index "jobs", ["is_archived"], :name => "index_jobs_on_is_archived"
+  add_index "jobs", ["user_id"], :name => "index_jobs_on_user_id"
 
   create_table "plan_documents", :force => true do |t|
-    t.integer  "plan_id",    :null => false
-    t.boolean  "is_current", :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "plan_id",                       :null => false
+    t.boolean  "is_current", :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
+
+  add_index "plan_documents", ["is_current"], :name => "index_plan_documents_on_is_current"
+  add_index "plan_documents", ["plan_id"], :name => "index_plan_documents_on_plan_id"
 
   create_table "plans", :force => true do |t|
-    t.string   "name"
-    t.string   "filename"
-    t.integer  "job_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.string   "plan_file_name"
-    t.string   "plan_content_type"
-    t.integer  "plan_file_size"
-    t.datetime "plan_updated_at"
-    t.string   "tab",               :default => "Plans"
-    t.string   "status"
-    t.string   "csi"
-    t.text     "description"
-    t.string   "code"
-    t.string   "tags"
-    t.integer  "order_num",                              :null => false
-  end
-
-  create_table "project_managers", :force => true do |t|
-    t.integer  "job_id"
-    t.integer  "user_id"
+    t.string   "name",       :null => false
+    t.string   "tab",        :null => false
+    t.integer  "job_id",     :null => false
+    t.integer  "order_num",  :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "rfi_attachments", :force => true do |t|
-    t.string   "filename"
-    t.string   "s3_path"
-    t.integer  "rfi_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "rfis", :force => true do |t|
-    t.string   "rfi_num"
-    t.string   "subject"
-    t.string   "notes"
-    t.datetime "due_date"
-    t.integer  "job_id"
-    t.integer  "user_id"
-    t.integer  "assigned_user_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
+  add_index "plans", ["job_id"], :name => "index_plans_on_job_id"
+  add_index "plans", ["order_num"], :name => "index_plans_on_order_num"
+  add_index "plans", ["tab"], :name => "index_plans_on_tab"
 
   create_table "share_links", :force => true do |t|
-    t.string   "token"
-    t.integer  "job_id"
-    t.integer  "user_id"
-    t.string   "email_shared_with"
-    t.string   "company_name"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
-  create_table "shares", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "job_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.string   "token"
-    t.integer  "sharer_id"
-    t.boolean  "can_reshare", :default => false
-    t.integer  "permissions", :default => 4
-  end
-
-  create_table "signup_links", :force => true do |t|
-    t.string   "key"
-    t.integer  "user_id"
+    t.string   "name",       :null => false
+    t.string   "token",      :null => false
+    t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "signup_links", ["user_id"], :name => "index_signup_links_on_user_id"
-
-  create_table "submittals", :force => true do |t|
-    t.text     "data"
-    t.boolean  "is_accepted", :default => false
-    t.integer  "user_id"
-    t.integer  "plan_id"
-    t.integer  "job_id"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-  end
+  add_index "share_links", ["token"], :name => "index_share_links_on_token", :unique => true
+  add_index "share_links", ["user_id"], :name => "index_share_links_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                :default => "",                    :null => false
-    t.string   "encrypted_password",                   :default => ""
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "first_name",                             :null => false
+    t.string   "last_name",                              :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                        :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                                              :null => false
-    t.datetime "updated_at",                                                              :null => false
-    t.string   "first_name",                                                              :null => false
-    t.string   "last_name",                                                               :null => false
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "invitation_token",       :limit => 60
-    t.datetime "invitation_sent_at"
-    t.datetime "invitation_accepted_at"
-    t.integer  "invitation_limit"
-    t.integer  "invited_by_id"
-    t.string   "invited_by_type"
-    t.string   "type"
-    t.string   "authentication_token",                                                    :null => false
-    t.boolean  "expired",                              :default => false
-    t.boolean  "cancelled"
-    t.string   "company",                                                                 :null => false
-    t.datetime "last_seen",                            :default => '2017-11-21 22:26:32'
-    t.boolean  "can_share_link",                       :default => false
-    t.boolean  "can_review_submittal",                 :default => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token", :unique => true
-  add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end
