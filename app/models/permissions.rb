@@ -4,6 +4,22 @@ class Permissions < ActiveRecord::Base
 
   validates :authenticatable_id, :authenticatable_type, presence: true
 
+  def find_or_create_job_permission(job)
+    return nil if job.nil?
+
+    job_permission = JobPermission.where(
+      job_id: job.id, permissions_id: self.id
+    ).first
+
+    if job_permission.nil?
+      job_permission = JobPermission.create(
+        job_id: job.id, permissions_id: self.id
+      )
+    end
+
+    return job_permission
+  end
+
   # See spec for permissions_hash structure
   def update_permissions(permissions_hash)
     permissions_hash = permissions_hash || {}

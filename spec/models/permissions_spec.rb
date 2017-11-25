@@ -15,6 +15,40 @@ RSpec.describe Permissions, :type => :model do
     it { expect(subject).to validate_presence_of(:authenticatable_type) }
   end
 
+  describe "#find_or_create_job_permission" do
+    let(:action) { permissions.find_or_create_job_permission(job) }
+
+    context "when job permission doesn't exist" do
+      let(:job) { @job }
+
+      before(:all) do
+        @job = create(:job_without_plans)
+        @permissions.job_permissions.destroy_all
+      end
+
+      it "creates a new job permission" do
+        expect(action.job_id).to eq(job.id)
+        expect(action.permissions_id).to eq(permissions.id)
+        expect(permissions.job_permissions.count).to eq(1)
+      end
+    end
+
+    context "when job permission exists" do
+      let(:job) { @job }
+
+      before(:all) do
+        @job = create(:job_without_plans)
+        @job_permission = JobPermission.create(
+          job_id: @job.id, permissions_id: @permissions.id
+        )
+      end
+
+      it "creates a new job permission" do
+        expect(action.id).to eq(@job_permission.id)
+      end
+    end
+  end
+
   # permissions_hash is a tree of permissions:
   # If a value is nil, then it should be destroyed.
   # {
@@ -63,11 +97,13 @@ RSpec.describe Permissions, :type => :model do
 
       it "receives JobPermission#update_permissions for each job" do
         expect_any_instance_of(JobPermission)
-          .to receive(:update_permissions)
+          .to receive(:update_permissions).once
           .with(@permissions_for_jobs[@jobs[0].id])
+          .and_return(true)
         expect_any_instance_of(JobPermission)
-          .to receive(:update_permissions)
+          .to receive(:update_permissions).once
           .with(@permissions_for_jobs[@jobs[1].id])
+          .and_return(true)
 
         @permissions.update_permissions(@permissions_hash)
       end
