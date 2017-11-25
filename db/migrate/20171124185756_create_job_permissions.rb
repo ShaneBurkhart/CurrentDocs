@@ -3,7 +3,7 @@ class CreateJobPermissions < ActiveRecord::Migration
     create_table :job_permissions do |t|
       t.integer :job_id, null: false
       t.integer :permissions_id, null: false
-      t.boolean :can_edit, default: false
+      t.boolean :can_update, default: false
 
       t.timestamps
     end

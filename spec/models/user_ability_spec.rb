@@ -1,18 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe "User Permissions for", :type => :model do
-  let(:user) { create(:user) }
-  let(:job) { user.open_jobs.first }
+  let(:user) { @user }
+  let(:jobs) { user.open_jobs }
+  let(:job) { jobs.first }
+  let(:plan) { job.plans.first }
   let(:archived_job) { user.archived_jobs.first }
-  let(:not_my_job) { create(:user).open_jobs.first }
-  let(:plan) { create(:plan, job: job) }
-  let(:archived_plan) { create(:plan, job: archived_job) }
-  let(:not_my_plan) { create(:plan, job: not_my_job) }
+  let(:archived_plan) { archived_job.plans.first }
+
+  let(:not_me_user) { @not_me_user }
+  let(:not_my_jobs) { not_me_user.open_jobs }
+  let(:not_my_job) { not_my_jobs.first }
+  let(:not_my_plan) { not_my_job.plans.first }
+
+  before(:all) do
+    @user = create(:user)
+    @not_me_user = create(:user)
+  end
 
   describe "Job" do
     # Index
-    it { expect(user).to be_able_to(:read_multiple, user.jobs) }
-    it { expect(user).not_to be_able_to(:read_multiple, create(:user).jobs) }
+    it { expect(user).to be_able_to(:read_multiple, jobs) }
+    it { expect(user).not_to be_able_to(:read_multiple, not_my_jobs) }
     it { expect(user).not_to be_able_to(:read_multiple, Array) }
 
     # Show
@@ -20,8 +29,8 @@ RSpec.describe "User Permissions for", :type => :model do
     it { expect(user).not_to be_able_to(:read, not_my_job) }
     it { expect(user).not_to be_able_to(:read, Job) }
 
-    # Create. The instance passed to :create needs to have a user_id
-    it { expect(user).to be_able_to(:create, build(:job, user: user)) }
+    # Create
+    it { expect(user).to be_able_to(:create, job) }
     it { expect(user).not_to be_able_to(:create, not_my_job) }
     it { expect(user).not_to be_able_to(:create, Job) }
 

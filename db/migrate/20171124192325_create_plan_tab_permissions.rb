@@ -4,7 +4,7 @@ class CreatePlanTabPermissions < ActiveRecord::Migration
       t.string :tab, null: false
       t.integer :job_permission_id, null: false
       t.boolean :can_create, default: false
-      t.boolean :can_edit, default: false
+      t.boolean :can_update, default: false
       t.boolean :can_destroy, default: false
 
       t.timestamps

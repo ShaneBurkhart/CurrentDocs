@@ -32,29 +32,29 @@ RSpec.describe PlanTabPermission, :type => :model do
   end
 
   describe "#update_permissions" do
-    let(:permissions) { [:create, :edit, :destroy] }
+    let(:permissions) { [:create, :update, :destroy] }
     let(:action) { plan_tab_permission.update_permissions(permissions) }
     before(:each) { action }
 
     it { expect(plan_tab_permission.can_create).to be(true) }
-    it { expect(plan_tab_permission.can_edit).to be(true) }
+    it { expect(plan_tab_permission.can_update).to be(true) }
     it { expect(plan_tab_permission.can_destroy).to be(true) }
     it { expect(action).to be(true) }
 
     context "when :create is not set" do
-      let(:permissions) { [:edit, :destroy] }
+      let(:permissions) { [:update, :destroy] }
       it { expect(plan_tab_permission.can_create).to be(false) }
       it { expect(action).to be(true) }
     end
 
-    context "when :edit is not set" do
+    context "when :update is not set" do
       let(:permissions) { [:create, :destroy] }
-      it { expect(plan_tab_permission.can_edit).to be(false) }
+      it { expect(plan_tab_permission.can_update).to be(false) }
       it { expect(action).to be(true) }
     end
 
     context "when :destroy is not set" do
-      let(:permissions) { [:create, :edit] }
+      let(:permissions) { [:create, :update] }
       it { expect(plan_tab_permission.can_destroy).to be(false) }
       it { expect(action).to be(true) }
     end

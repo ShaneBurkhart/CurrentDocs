@@ -1,10 +1,10 @@
 class PlanTabPermission < ActiveRecord::Base
-  attr_accessible :tab, :job_permission_id, :can_create, :can_edit, :can_destroy
+  attr_accessible :tab, :job_permission_id, :can_create, :can_update, :can_destroy
 
   belongs_to :job_permission
 
   validates :tab, :job_permission_id, presence: true
-  validates :can_create, :can_edit, :can_destroy, inclusion: { in: [ true, false ] }
+  validates :can_create, :can_update, :can_destroy, inclusion: { in: [ true, false ] }
 
   validate :check_for_valid_tab_name
 
@@ -17,7 +17,7 @@ class PlanTabPermission < ActiveRecord::Base
     permissions = permissions || []
 
     self.can_create = permissions.include?(:create)
-    self.can_edit = permissions.include?(:edit)
+    self.can_update = permissions.include?(:update)
     self.can_destroy = permissions.include?(:destroy)
 
     return self.save

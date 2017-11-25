@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20171124192325) do
   create_table "job_permissions", :force => true do |t|
     t.integer  "job_id",                            :null => false
     t.integer  "permissions_id",                    :null => false
-    t.boolean  "can_edit",       :default => false
+    t.boolean  "can_update",     :default => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
   end
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20171124192325) do
     t.string   "tab",                                  :null => false
     t.integer  "job_permission_id",                    :null => false
     t.boolean  "can_create",        :default => false
-    t.boolean  "can_edit",          :default => false
+    t.boolean  "can_update",        :default => false
     t.boolean  "can_destroy",       :default => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false

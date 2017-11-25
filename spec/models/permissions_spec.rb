@@ -16,23 +16,23 @@ RSpec.describe Permissions, :type => :model do
   # {
   #   jobs: {
   #     12: {
-  #       'permissions': [:edit]
+  #       'permissions': [:update]
   #       'tabs': {
   #         'plans': [:create]
-  #         'addendums': [:edit, :create]
+  #         'addendums': [:update, :create]
   #       }
   #     },
   #     53: {
   #       'permissions': []
-  #       'tabs': { 'plans': [:edit] }
+  #       'tabs': { 'plans': [:update] }
   #     }
   #   }
   # }
   describe "#update_permissions" do
     let(:jobs) { [ create(:job), create(:job) ] }
-    let(:permissions_for_tabs) { { 'plans': [:edit], 'addendums': [:create, :edit] } }
+    let(:permissions_for_tabs) { { 'plans': [:update], 'addendums': [:create, :update] } }
     let(:permissions_for_jobs) { {
-      jobs[0].id => { permissions: [:edit], tabs: permissions_for_tabs },
+      jobs[0].id => { permissions: [:update], tabs: permissions_for_tabs },
       jobs[1].id => { permissions: [], tabs: permissions_for_tabs },
     } }
     let(:action) do
@@ -74,7 +74,7 @@ RSpec.describe Permissions, :type => :model do
 
     context "when removing a job permission" do
       let(:new_permissions_for_jobs) { {
-        jobs[0].id => { permissions: [:edit], tabs: permissions_for_tabs },
+        jobs[0].id => { permissions: [:update], tabs: permissions_for_tabs },
       } }
 
       it { expect(action).to be(true) }

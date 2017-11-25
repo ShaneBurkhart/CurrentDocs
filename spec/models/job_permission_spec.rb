@@ -17,13 +17,13 @@ RSpec.describe JobPermission, :type => :model do
   #   {
   #     'permissions': []
   #     'tabs': {
-  #       'plans': [:edit]
+  #       'plans': [:update]
   #       'addendums': []
   #     }
   #   }
   describe "#update_permissions" do
-    let(:job_can_permissions) { [:edit] }
-    let(:permissions_for_tabs) { { "plans": [:edit], "addendums": [:create] } }
+    let(:job_can_permissions) { [:update] }
+    let(:permissions_for_tabs) { { "plans": [:update], "addendums": [:create] } }
     let(:action) do
       job_permission.update_permissions({
         permissions: job_can_permissions,
@@ -32,7 +32,7 @@ RSpec.describe JobPermission, :type => :model do
     end
     before(:each) { action }
 
-    it { expect(job_permission.can_edit).to be(true) }
+    it { expect(job_permission.can_update).to be(true) }
     it { expect(job_permission.plan_tab_permissions.count).to eq(2) }
     it { expect(action).to be(true) }
 
@@ -53,13 +53,13 @@ RSpec.describe JobPermission, :type => :model do
 
     context "with no job permissions" do
       let(:job_can_permissions) { [] }
-      it { expect(job_permission.can_edit).to be(false) }
+      it { expect(job_permission.can_update).to be(false) }
       it { expect(action).to be(true) }
     end
 
     context "with nil job permissions" do
       let(:job_can_permissions) { nil }
-      it { expect(job_permission.can_edit).to be(false) }
+      it { expect(job_permission.can_update).to be(false) }
       it { expect(action).to be(true) }
     end
 

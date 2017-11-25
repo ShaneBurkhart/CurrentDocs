@@ -6,7 +6,7 @@ class JobPermission < ActiveRecord::Base
   has_many :plan_tab_permissions
 
   validates :job_id, :permissions_id, presence: true
-  validates :can_edit, inclusion: { in: [ true, false ] }
+  validates :can_update, inclusion: { in: [ true, false ] }
 
   # See spec for permissions_hash structure
   def update_permissions(permissions_hash)
@@ -17,7 +17,7 @@ class JobPermission < ActiveRecord::Base
     # Make sure keys are strings for tabs
     permissions_hash_for_tabs = permissions_hash_for_tabs.stringify_keys
 
-    self.can_edit = permissions.include?(:edit)
+    self.can_update = permissions.include?(:update)
 
     success = self.save
 
