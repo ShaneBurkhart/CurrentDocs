@@ -54,7 +54,7 @@ tm:
 	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec spec/models
 
 ta:
-	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec spec/models/ability_spec.rb
+	docker-compose -f ${DEV_FILE} -p ${NAME} run --rm web bundle exec rspec spec/models/*ability_spec.rb
 
 pg:
 	echo "Enter 'postgres'..."

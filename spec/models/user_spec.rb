@@ -10,12 +10,10 @@ RSpec.describe User, :type => :model do
     subject { create(:user) }
     it { expect(subject).to validate_presence_of(:first_name) }
     it { expect(subject).to validate_presence_of(:last_name) }
-    it { expect(subject).to validate_presence_of(:company) }
   end
 
-  it "should generate authentication_token before validation" do
-    user = build(:user, authentication_token: nil)
-    user.valid?
-    expect(user.authentication_token).not_to be_nil
+  describe "abilities" do
+    it { expect(subject).to respond_to(:can?) }
+    it { expect(subject).to respond_to(:cannot?) }
   end
 end

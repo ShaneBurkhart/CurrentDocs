@@ -16,9 +16,6 @@ RSpec.describe Plan, :type => :model do
     it { expect(subject).to validate_presence_of(:name) }
     it { expect(subject).to validate_presence_of(:tab) }
     it { expect(subject).to validate_presence_of(:order_num).on(:update) }
-    it { expect(subject).to validate_length_of(:status).is_at_most(50) }
-    it { expect(subject).to validate_length_of(:description).is_at_most(20000) }
-    it { expect(subject).to validate_length_of(:code).is_at_most(12) }
 
     it "should check for duplicate name for tab in job" do
       new_plan = build(

@@ -69,7 +69,7 @@ class JobsController < ApplicationController
       return render :new
     end
 
-    redirect_url = params[:success_redirect_url] || jobs_path(archived: @job.archived)
+    redirect_url = params[:success_redirect_url] || jobs_path(archived: @job.is_archived)
 
     redirect_to redirect_url
   end

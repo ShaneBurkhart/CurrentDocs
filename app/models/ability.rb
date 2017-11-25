@@ -31,6 +31,14 @@ class Ability
       array.all? { |o| can?(:read, o) }
     end
 
+    if user.is_a? User
+      self.user_permissions(user)
+    elsif user.is_a? ShareLink
+      self.share_link_permissions(user)
+    end
+  end
+
+  def user_permissions(user)
     # Can manage jobs that belong to them
     can :crud, Job, user_id: user.id
 
@@ -55,5 +63,8 @@ class Ability
     if !user.new_record?
       can :upload, Document
     end
+  end
+
+  def share_link_permissions(share_link)
   end
 end

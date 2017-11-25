@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171110202844) do
+ActiveRecord::Schema.define(:version => 20171124192325) do
 
   create_table "documents", :force => true do |t|
     t.string   "original_filename",         :null => false
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(:version => 20171110202844) do
   add_index "documents", ["s3_path"], :name => "index_documents_on_s3_path", :unique => true
   add_index "documents", ["user_id"], :name => "index_documents_on_user_id"
 
+  create_table "job_permissions", :force => true do |t|
+    t.integer  "job_id",                            :null => false
+    t.integer  "permissions_id",                    :null => false
+    t.boolean  "can_edit",       :default => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "job_permissions", ["job_id"], :name => "index_job_permissions_on_job_id"
+  add_index "job_permissions", ["permissions_id"], :name => "index_job_permissions_on_permissions_id"
+
   create_table "jobs", :force => true do |t|
     t.string   "name",                           :null => false
     t.boolean  "is_archived", :default => false
@@ -37,6 +48,13 @@ ActiveRecord::Schema.define(:version => 20171110202844) do
   add_index "jobs", ["is_archived"], :name => "index_jobs_on_is_archived"
   add_index "jobs", ["user_id"], :name => "index_jobs_on_user_id"
 
+  create_table "permissions", :force => true do |t|
+    t.integer  "authenticatable_id"
+    t.string   "authenticatable_type"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+  end
+
   create_table "plan_documents", :force => true do |t|
     t.integer  "plan_id",                       :null => false
     t.boolean  "is_current", :default => false, :null => false
@@ -46,6 +64,18 @@ ActiveRecord::Schema.define(:version => 20171110202844) do
 
   add_index "plan_documents", ["is_current"], :name => "index_plan_documents_on_is_current"
   add_index "plan_documents", ["plan_id"], :name => "index_plan_documents_on_plan_id"
+
+  create_table "plan_tab_permissions", :force => true do |t|
+    t.string   "tab",                                  :null => false
+    t.integer  "job_permission_id",                    :null => false
+    t.boolean  "can_create",        :default => false
+    t.boolean  "can_edit",          :default => false
+    t.boolean  "can_destroy",       :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "plan_tab_permissions", ["job_permission_id"], :name => "index_plan_tab_permissions_on_job_permission_id"
 
   create_table "plans", :force => true do |t|
     t.string   "name",       :null => false

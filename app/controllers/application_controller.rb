@@ -13,9 +13,12 @@ class ApplicationController < ActionController::Base
       @devise_current_user ||= warden.authenticate(:scope => :user)
     end
 
-    # TODO add login for tokens and shared users, links, etc.
+    def current_share_link
+      @current_share_link ||= ShareLink.where(token: session[:share_link_token]).first
+    end
+
     def current_user
-      devise_current_user
+      devise_current_user || current_share_link
     end
 
     def render_modal(template)

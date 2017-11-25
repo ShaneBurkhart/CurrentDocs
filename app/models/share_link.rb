@@ -1,12 +1,20 @@
 class ShareLink < ActiveRecord::Base
-  attr_accessible :name, :token
+  attr_accessible :name, :token, :user_id
 
   belongs_to :user
+  has_one :permissions, as: :authenticatable
 
-  validates :name, :token, :user_id, presence: true
+  validates :name, :user_id, presence: true
   validate :check_for_duplicate_name_for_user
 
   before_validation :create_token, unless: :token
+  after_create :create_blank_permissions, unless: :permissions
+
+  delegate :can?, :cannot?, :to => :ability
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
 
   private
     def create_token
@@ -14,6 +22,16 @@ class ShareLink < ActiveRecord::Base
         random_token = SecureRandom.urlsafe_base64(20, false)
         break random_token unless ShareLink.exists?(token: random_token)
       end
+    end
+
+    def create_blank_permissions
+      return if self.permissions
+
+      permissions = Permissions.new
+      permissions.authenticatable = self
+      permissions.save
+
+      self.reload
     end
 
     def check_for_duplicate_name_for_user

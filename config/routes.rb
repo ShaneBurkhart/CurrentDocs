@@ -12,6 +12,7 @@ PlanSource::Application.routes.draw do
     resources :share_links, only: [:new, :create]
   end
 
+  get '/sl/:token' => 'share_links#login', as: :login_share_link
   resources :share_links, only: [:edit, :update, :destroy]
   get '/share_links/:id/should_delete' => 'share_links#should_delete', as: :should_delete_share_link
 
@@ -29,6 +30,8 @@ PlanSource::Application.routes.draw do
   get '/document/:id' => 'document#show', as: :document
   get '/document/:id/download' => 'document#download', as: :download_document
   post '/document/upload' => 'document#upload', as: :upload_document
+
+
 
   namespace :api do
     resources :jobs, except: ["new", "edit"], :as => :job

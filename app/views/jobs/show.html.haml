@@ -2,22 +2,22 @@
   .container
     .row
       .col-md-12
-        %h2= "#{@job.name} #{@job.archived ? '(Archived)' : ''}"
-        %p= link_to "Back to your jobs", jobs_path(archived: @job.archived || nil)
+        %h2= "#{@job.name} #{@job.is_archived ? '(Archived)' : ''}"
+        %p= link_to "Back to your jobs", jobs_path(archived: @job.is_archived || nil)
 
         %nav
           - if current_user.can? :update, @job
-            - if @job.archived
+            - if @job.is_archived
               = form_for @job, html: { style: "display: inline" } do |f|
                 = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
-                = f.hidden_field :archived, value: false
+                = f.hidden_field :is_archived, value: false
                 %button.button.button-green{ href: "#", type: 'submit' } Unarchive
             - else
               = form_for @job, html: { style: "display: inline" } do |f|
                 = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
-                = f.hidden_field :archived, value: true
+                = f.hidden_field :is_archived, value: true
                 %button.button.button-red{ href: "#", type: 'submit' } Archive
-          - if current_user.can? :create, ShareLink.new(job_id: @job.id)
+          - if current_user.can? :create, ShareLink.new(user_id: current_user.id)
             %a.button.button-blue{ href: "#" } Share Link
 
         %nav.jobs-controls

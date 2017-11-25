@@ -8,7 +8,6 @@ RSpec.describe ShareLink, :type => :model do
   describe "validations" do
     subject { share_link }
     it { expect(subject).to validate_presence_of(:name) }
-    it { expect(subject).to validate_presence_of(:token) }
     it { expect(subject).to validate_presence_of(:user_id) }
 
     it "should check for duplicate name for user" do
@@ -17,14 +16,18 @@ RSpec.describe ShareLink, :type => :model do
     end
   end
 
+  describe "abilities" do
+    it { expect(subject).to respond_to(:can?) }
+    it { expect(subject).to respond_to(:cannot?) }
+  end
+
   describe "#create_token" do
     before(:each) do
       @initial_token = share_link.token
-      share_link.validate
+      share_link.valid?
     end
 
     context "when token is set" do
-      let(:share_link) { share_link }
       it { expect(share_link.token).to eq(@initial_token) }
     end
 
@@ -33,5 +36,16 @@ RSpec.describe ShareLink, :type => :model do
       it { expect(share_link.token).not_to be_nil }
       it { expect(share_link.token).not_to eq(@initial_token) }
     end
+  end
+
+  describe "#create_blank_permissions" do
+    let(:share_link) { build(:share_link) }
+    before(:each) do
+      @initial_permissions = share_link.permissions
+      share_link.save
+    end
+
+    it { expect(@initial_token).to be_nil }
+    it { expect(share_link.permissions).not_to be_nil }
   end
 end
