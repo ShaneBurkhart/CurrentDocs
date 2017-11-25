@@ -55,7 +55,7 @@ class Ability
 
   def user_permissions(user)
     # Can manage jobs that belong to them
-    can :crud, Job, user_id: user.id
+    can [:crud, :share], Job, user_id: user.id
 
     # Can manage plans for jobs that belong to them
     can :read, Plan, job: { user_id: user.id }

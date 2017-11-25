@@ -43,6 +43,11 @@ RSpec.describe "User Permissions for", :type => :model do
     it { expect(user).to be_able_to(:destroy, job) }
     it { expect(user).not_to be_able_to(:destroy, not_my_job) }
     it { expect(user).not_to be_able_to(:destroy, Job) }
+
+    # Share
+    it { expect(user).to be_able_to(:share, job) }
+    it { expect(user).not_to be_able_to(:share, not_my_job) }
+    it { expect(user).not_to be_able_to(:share, Job) }
   end
 
   describe "Plan" do
