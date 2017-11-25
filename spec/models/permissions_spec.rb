@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Permissions, :type => :model do
-  let(:permissions) { create(:blank_permissions) }
+  let(:permissions) { @permissions }
+
+  before(:all) do
+    @permissions = create(:blank_permissions)
+  end
 
   it { expect(subject).to belong_to(:authenticatable) }
   it { expect(subject).to have_many(:job_permissions) }
@@ -29,60 +33,77 @@ RSpec.describe Permissions, :type => :model do
   #   }
   # }
   describe "#update_permissions" do
-    let(:jobs) { [ create(:job), create(:job) ] }
-    let(:permissions_for_tabs) { { 'plans': [:update], 'addendums': [:create, :update] } }
-    let(:permissions_for_jobs) { {
-      jobs[0].id => { permissions: [:update], tabs: permissions_for_tabs },
-      jobs[1].id => { permissions: [], tabs: permissions_for_tabs },
-    } }
-    let(:action) do
-      permissions.update_permissions({ jobs: permissions_for_jobs })
+    let(:jobs) { @jobs }
+
+    let(:permissions_for_tabs) { @permissions_for_tabs }
+    let(:permissions_for_jobs) { @permissions_for_jobs }
+
+    let(:permissions_hash) { @permissions_hash }
+
+    before(:all) do
+      @jobs = [ create(:job), create(:job) ]
+      @permissions_for_tabs = {
+        'plans': [:update], 'addendums': [:create, :update]
+      }
+      @permissions_for_jobs = {
+        @jobs[0].id => { permissions: [:update], tabs: @permissions_for_tabs },
+        @jobs[1].id => { permissions: [], tabs: @permissions_for_tabs },
+      }
+      @permissions_hash = { jobs: @permissions_for_jobs }
+
+      @permissions.update_permissions(@permissions_hash)
     end
-    before(:each) { action }
 
-    it { expect(permissions.job_permissions.count).to eq(2) }
-    it { expect(action).to be(true) }
-
-    describe "#update_permissions gets called on JobPermission instances" do
-      before(:each) do
-        allow_any_instance_of(JobPermission)
-          .to receive(:update_permissions)
-          .with(permissions_for_jobs[jobs[0].id])
-        allow_any_instance_of(JobPermission)
-          .to receive(:update_permissions)
-          .with(permissions_for_jobs[jobs[1].id])
-
-        action
+    context "with full permissions" do
+      before(:all) do
+        @permissions.update_permissions(@permissions_hash)
       end
 
-      it { expect(action).to be(true) }
+      it { expect(permissions.job_permissions.count).to eq(2) }
+
+      it "receives JobPermission#update_permissions for each job" do
+        expect_any_instance_of(JobPermission)
+          .to receive(:update_permissions)
+          .with(@permissions_for_jobs[@jobs[0].id])
+        expect_any_instance_of(JobPermission)
+          .to receive(:update_permissions)
+          .with(@permissions_for_jobs[@jobs[1].id])
+
+        @permissions.update_permissions(@permissions_hash)
+      end
     end
 
     context "with no job permissions" do
-      let(:permissions_for_jobs) { [] }
+      before(:all) do
+        @permissions.update_permissions({ jobs: {} })
+      end
 
-      it { expect(action).to be(true) }
       it { expect(permissions.job_permissions.count).to eq(0) }
     end
 
     context "with nil job permissions" do
-      let(:permissions_for_jobs) { nil }
+      before(:all) do
+        @permissions.update_permissions({ jobs: nil })
+      end
 
-      it { expect(action).to be(true) }
       it { expect(permissions.job_permissions.count).to eq(0) }
     end
 
     context "when removing a job permission" do
-      let(:new_permissions_for_jobs) { {
-        jobs[0].id => { permissions: [:update], tabs: permissions_for_tabs },
+      let(:new_permissions_hash) { {
+        jobs: {
+          jobs[0].id => { permissions: [:update], tabs: permissions_for_tabs },
+        }
       } }
 
-      it { expect(action).to be(true) }
+      before(:all) do
+        @permissions.update_permissions(@permissions_hash)
+      end
 
       it "has only one job permission" do
         expect(permissions.job_permissions.count).to eq(2)
 
-        permissions.update_permissions({ jobs: new_permissions_for_jobs })
+        permissions.update_permissions(new_permissions_hash)
 
         expect(permissions.job_permissions.count).to eq(1)
       end
