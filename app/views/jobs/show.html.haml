@@ -17,8 +17,8 @@
                 = hidden_field_tag :success_redirect_url, job_tab_path(@job, @tab)
                 = f.hidden_field :is_archived, value: true
                 %button.button.button-red{ href: "#", type: 'submit' } Archive
-          - if current_user.can? :create, ShareLink.new(user_id: current_user.id)
-            %a.button.button-blue{ href: "#" } Share Link
+          - if current_user.can? :share, @job
+            %a.button.button-blue{ href: new_job_share_link_path(@job) } Share Link
 
         %nav.jobs-controls
           = plans_tab_link('plans', @tab)

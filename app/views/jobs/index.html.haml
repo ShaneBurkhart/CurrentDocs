@@ -33,6 +33,8 @@
                   %td
                     %ul.controls.pull-right.unstyled
                       %li= link_to "Open", job_path(job)
+                      - if current_user.can? :share, job
+                        %li= link_to "Share", new_job_share_link_path(job)
                       - if current_user.can? :update, job
                         %li
                           %a.open-modal{ href: "#", data: { "modal-url": edit_job_path(job) } } Edit

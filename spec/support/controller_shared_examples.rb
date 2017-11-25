@@ -9,13 +9,11 @@ end
 
 shared_examples "an authorized controller action" do
   before(:each) do
-    authorize_can_action = anything
-    authorize_can_param = anything
+    authorize_params = authorize_params || []
 
-    # The can_action should always be a symbol
-    authorize_can_action = can_action if defined? can_action
-    # The can_param should always be a matcher
-    authorize_can_param = can_param if defined? can_param
+    if defined? can_action and defined? can_param
+      authorize_params.push({ action: can_action, param: can_param })
+    end
 
     login
 
@@ -23,20 +21,28 @@ shared_examples "an authorized controller action" do
     # Allow let calls with overrides and allows
     overrides if defined? overrides
 
-    expect(controller)
-      .to receive(:authorize!).once
-      .with(authorize_can_action, authorize_can_param)
+    if !authorize_params.empty?
+      authorize_params.each do |params|
+        expect(controller)
+          .to receive(:authorize!).once
+          .with(params[:action] || anything, params[:param] || anything)
+      end
+    end
 
     action
   end
 
-  if defined? template
-    it { expect(response).to be_authorized }
-    it { expect(response).to render_template(template) }
+  it "renders the correct template" do
+    if defined? template
+      expect(response).to be_authorized
+      expect(response).to render_template(template)
+    end
   end
 
-  if defined? redirect_path
-    it { expect(response).to redirect_to(redirect_path) }
+  it "redirects the correct path" do
+    if defined? redirect_path
+      expect(response).to redirect_to(redirect_path)
+    end
   end
 end
 

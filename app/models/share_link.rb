@@ -1,5 +1,5 @@
 class ShareLink < ActiveRecord::Base
-  attr_accessible :name, :token, :user_id
+  attr_accessible :name
 
   belongs_to :user
   has_one :permissions, as: :authenticatable
@@ -8,7 +8,7 @@ class ShareLink < ActiveRecord::Base
   validate :check_for_duplicate_name_for_user
 
   before_validation :create_token, unless: :token
-  after_create :create_blank_permissions, unless: :permissions
+  after_save :create_blank_permissions, unless: :permissions
 
   delegate :can?, :cannot?, :to => :ability
 

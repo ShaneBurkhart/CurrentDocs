@@ -41,6 +41,28 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
     @share_link.permissions.update_permissions(@permissions_hash)
   end
 
+  describe "ShareLink" do
+    # Index
+    it { expect(share_link).not_to be_able_to(:read_multiple, share_link) }
+    it { expect(share_link).not_to be_able_to(:read_multiple, Array) }
+
+    # Show
+    it { expect(share_link).not_to be_able_to(:read, share_link) }
+    it { expect(share_link).not_to be_able_to(:read, ShareLink) }
+
+    # Create
+    it { expect(share_link).not_to be_able_to(:create, share_link) }
+    it { expect(share_link).not_to be_able_to(:create, ShareLink) }
+
+    # Update
+    it { expect(share_link).not_to be_able_to(:update, share_link) }
+    it { expect(share_link).not_to be_able_to(:update, ShareLink) }
+
+    # Destroy
+    it { expect(share_link).not_to be_able_to(:destroy, share_link) }
+    it { expect(share_link).not_to be_able_to(:destroy, ShareLink) }
+  end
+
   describe "Job" do
     # Index
     it { expect(share_link).to be_able_to(:read_multiple, shared_jobs) }
@@ -52,10 +74,25 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
     it { expect(share_link).not_to be_able_to(:read, unshared_job) }
     it { expect(share_link).not_to be_able_to(:read, Job) }
 
+    # Create
+    it { expect(share_link).not_to be_able_to(:create, shared_job) }
+    it { expect(share_link).not_to be_able_to(:create, unshared_job) }
+    it { expect(share_link).not_to be_able_to(:create, Job) }
+
     # Update
     it { expect(share_link).to be_able_to(:update, shared_job) }
     it { expect(share_link).not_to be_able_to(:update, unshared_job) }
     it { expect(share_link).not_to be_able_to(:update, Job) }
+
+    # Destroy
+    it { expect(share_link).not_to be_able_to(:destroy, shared_job) }
+    it { expect(share_link).not_to be_able_to(:destroy, unshared_job) }
+    it { expect(share_link).not_to be_able_to(:destroy, Job) }
+
+    # Share
+    it { expect(share_link).not_to be_able_to(:share, shared_job) }
+    it { expect(share_link).not_to be_able_to(:share, unshared_job) }
+    it { expect(share_link).not_to be_able_to(:share, Job) }
   end
 
   describe "Plan" do

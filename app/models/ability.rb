@@ -54,6 +54,15 @@ class Ability
   end
 
   def user_permissions(user)
+    # Can manage share_links that belong to them
+    can :crud, ShareLink, user_id: user.id
+
+    # Can manage share_links that belong to them
+    can :update, JobPermission, {
+      job: { user_id: user.id },
+      permissions: { authenticatable: { user_id: user.id } }
+    }
+
     # Can manage jobs that belong to them
     can [:crud, :share], Job, user_id: user.id
 

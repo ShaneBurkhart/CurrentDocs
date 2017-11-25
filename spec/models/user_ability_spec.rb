@@ -15,6 +15,7 @@ RSpec.describe "User Permissions for", :type => :model do
 
   before(:all) do
     @user = create(:user)
+    @job = @user.open_jobs.first
     @not_me_user = create(:user)
   end
 
@@ -90,5 +91,33 @@ RSpec.describe "User Permissions for", :type => :model do
     # Upload. Only users that are persisted.
     it { expect(user).to be_able_to(:upload, Document) }
     it { expect(build(:user)).not_to be_able_to(:upload, Document) }
+  end
+
+  describe "JobPermission" do
+    before(:all) do
+      @share_link = create(:share_link, user: @user)
+      @job_permission = @share_link.permissions.find_or_create_job_permission(@job)
+    end
+
+    # Update
+    it { expect(user).to be_able_to(:update, @job_permission) }
+
+    context "when the job isn't the user's" do
+      before(:all) do
+        @job_permission = @share_link.permissions
+          .find_or_create_job_permission(create(:job_without_plans))
+      end
+
+      it { expect(user).not_to be_able_to(:update, @job_permission) }
+    end
+
+    context "when permissions isn't for a user's share link" do
+      before(:all) do
+        @job_permission = create(:share_link).permissions
+          .find_or_create_job_permission(@job)
+      end
+
+      it { expect(user).not_to be_able_to(:update, @job_permission) }
+    end
   end
 end
