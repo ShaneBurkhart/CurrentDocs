@@ -1,16 +1,62 @@
 require 'rails_helper'
 
 RSpec.describe JobPermission, :type => :model do
-  let(:job_permission) { build(:job_permission) }
+  let(:job_permission) { @job_permission }
+
+  before(:all) do
+    @job_permission = create(:job_permission)
+  end
 
   it { expect(subject).to belong_to(:job) }
   it { expect(subject).to belong_to(:permissions) }
   it { expect(subject).to have_many(:plan_tab_permissions) }
 
   describe "validations" do
-    subject { job_permission }
     it { expect(subject).to validate_presence_of(:job_id) }
     it { expect(subject).to validate_presence_of(:permissions_id) }
+  end
+
+  describe "#find_or_create_tab_permission" do
+    let(:action) { job_permission.find_or_create_tab_permission(tab) }
+
+    context "when tab is not a valid tab" do
+      let(:tab) { 'invalid_tab' }
+
+      it { expect(action).to be_nil }
+    end
+
+    context "when tab permission doesn't exist" do
+      let(:tab) { 'addendums' }
+
+      before(:all) do
+        @job_permission.plan_tab_permissions.destroy_all
+      end
+
+      it "creates a new PlanTabPermission" do
+        expect(action).to be_a(PlanTabPermission)
+        expect(action.tab).to eq(tab)
+        expect(action.job_permission_id).to eq(job_permission.id)
+        expect(job_permission.plan_tab_permissions.count).to eq(1)
+      end
+    end
+
+    context "when tab permission does exist" do
+      let(:tab) { @tab }
+      let(:plan_tab_permission) { @plan_tab_permission }
+
+      before(:all) do
+        @tab = 'addendums'
+        @job_permission.plan_tab_permissions.destroy_all
+        @plan_tab_permission = PlanTabPermission.create(
+          tab: @tab, job_permission_id: @job_permission.id
+        )
+      end
+
+      it "returns the existing tab permission" do
+        expect(action).to be_a(PlanTabPermission)
+        expect(action.id).to eq(plan_tab_permission.id)
+      end
+    end
   end
 
   # permissions_hash is a tree of permissions:

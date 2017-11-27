@@ -8,6 +8,31 @@ class JobPermission < ActiveRecord::Base
   validates :job_id, :permissions_id, presence: true
   validates :can_update, inclusion: { in: [ true, false ] }
 
+  def find_or_create_tab_permission(tab)
+    return nil if tab.nil?
+
+    tab_permission_class = nil
+
+    if Plan::TABS.include?(tab)
+      tab_permission_class = PlanTabPermission
+    else
+      # If not a valid tab name, then return nil
+      return nil
+    end
+
+    tab_permission = tab_permission_class.where(
+      tab: tab, job_permission_id: self.id
+    ).first
+
+    if tab_permission.nil?
+      tab_permission = tab_permission_class.create(
+        tab: tab, job_permission_id: self.id
+      )
+    end
+
+    return tab_permission
+  end
+
   # See spec for permissions_hash structure
   def update_permissions(permissions_hash)
     permissions_hash = permissions_hash || {}
