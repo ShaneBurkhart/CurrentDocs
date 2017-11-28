@@ -46,6 +46,16 @@ RSpec.configure do |config|
     mocks.allow_message_expectations_on_nil = true
   end
 
+  # Output will display the filename before running the test file.
+  # Only works with default test ordering.
+  current_file_path = nil
+  config.before(:each) do |x|
+    if current_file_path.nil? or current_file_path != x.file_path
+      current_file_path = x.file_path
+      puts "\n#{current_file_path}"
+    end
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
