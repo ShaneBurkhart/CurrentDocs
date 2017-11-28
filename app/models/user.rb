@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include UserRoles
+
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 
   has_many :jobs

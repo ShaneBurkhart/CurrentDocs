@@ -1,5 +1,3 @@
-include Common
-
 class Plan < ActiveRecord::Base
   # Keep these in order please. They determine some rendering orders:
   # - JobPermissionsController#edit

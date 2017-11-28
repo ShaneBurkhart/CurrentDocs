@@ -26,6 +26,12 @@ RSpec.describe ShareLink, :type => :model do
     it { expect(share_link).to respond_to(:cannot?) }
   end
 
+  describe "roles" do
+    # We don't have shared users yet so all Users are owners.
+    it { expect(share_link.owner?).to be(false) }
+    it { expect(share_link.share_link?).to be(true) }
+  end
+
   describe "#create_token" do
     # Make sure share_link has a token before continuing.
     after(:all) { @share_link.valid? }

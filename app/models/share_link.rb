@@ -1,4 +1,6 @@
 class ShareLink < ActiveRecord::Base
+  include UserRoles
+
   attr_accessible :name
 
   belongs_to :user
