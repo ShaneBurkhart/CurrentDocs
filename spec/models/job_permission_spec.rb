@@ -32,11 +32,23 @@ RSpec.describe JobPermission, :type => :model do
         @job_permission.plan_tab_permissions.destroy_all
       end
 
-      it "creates a new PlanTabPermission" do
-        expect(action).to be_a(PlanTabPermission)
-        expect(action.tab).to eq(tab)
-        expect(action.job_permission_id).to eq(job_permission.id)
-        expect(job_permission.plan_tab_permissions.count).to eq(1)
+      context "when save is true" do
+        it "creates a new PlanTabPermission" do
+          expect(action).to be_a(PlanTabPermission)
+          expect(action.tab).to eq(tab)
+          expect(action.job_permission_id).to eq(job_permission.id)
+          expect(job_permission.plan_tab_permissions.count).to eq(1)
+        end
+      end
+
+      context "when save is false" do
+        let(:action) { job_permission.find_or_create_tab_permission(tab, false) }
+
+        it "returns a new instance of PlanTabPermission but doesn't save" do
+          expect(action).to be_a_new(PlanTabPermission)
+          expect(action.tab).to eq(tab)
+          expect(action.job_permission_id).to eq(job_permission.id)
+        end
       end
     end
 
@@ -63,13 +75,15 @@ RSpec.describe JobPermission, :type => :model do
   #   {
   #     'permissions': []
   #     'tabs': {
-  #       'plans': [:update]
+  #       'plans': [:can_update]
   #       'addendums': []
   #     }
   #   }
   describe "#update_permissions" do
-    let(:job_can_permissions) { [:update] }
-    let(:permissions_for_tabs) { { "plans": [:update], "addendums": [:create] } }
+    let(:job_can_permissions) { [:can_update] }
+    let(:permissions_for_tabs) { {
+      "plans": [:can_update], "addendums": [:can_create]
+    } }
     let(:action) do
       job_permission.update_permissions({
         permissions: job_can_permissions,

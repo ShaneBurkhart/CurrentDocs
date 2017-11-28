@@ -1,5 +1,5 @@
 class JobPermission < ActiveRecord::Base
-  attr_accessible :job_id, :permissions_id, :can_edit
+  attr_accessible :job_id, :permissions_id, :can_update
 
   belongs_to :job
   belongs_to :permissions
@@ -8,7 +8,9 @@ class JobPermission < ActiveRecord::Base
   validates :job_id, :permissions_id, presence: true
   validates :can_update, inclusion: { in: [ true, false ] }
 
-  def find_or_create_tab_permission(tab)
+  # Set save to false if you want a new instance  instead of create.
+  # Useful for rendering job permissions for tabs that aren't shared.
+  def find_or_create_tab_permission(tab, should_save = true)
     return nil if tab.nil?
 
     tab_permission_class = nil
@@ -25,9 +27,15 @@ class JobPermission < ActiveRecord::Base
     ).first
 
     if tab_permission.nil?
-      tab_permission = tab_permission_class.create(
-        tab: tab, job_permission_id: self.id
-      )
+      if should_save
+        tab_permission = tab_permission_class.create(
+          tab: tab, job_permission_id: self.id
+        )
+      else
+        tab_permission = tab_permission_class.new(
+          tab: tab, job_permission_id: self.id
+        )
+      end
     end
 
     return tab_permission
@@ -42,7 +50,7 @@ class JobPermission < ActiveRecord::Base
     # Make sure keys are strings for tabs
     permissions_hash_for_tabs = permissions_hash_for_tabs.stringify_keys
 
-    self.can_update = permissions.include?(:update)
+    self.can_update = permissions.include?(:can_update)
 
     success = self.save
 

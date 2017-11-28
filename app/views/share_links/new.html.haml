@@ -1,8 +1,32 @@
+- form_url = @job.nil? ? share_links_path : job_share_links_path(@job)
+
 .section
   .container
     .row
-      .col-md-12
-        %h3 Step 1: Add or select an existing share link
-    .row
-      .col-md-12
-        %h3 Step 2: Select permissions for this job
+      .col-md-6.col-md-offset-3
+        %h3 Add a new share link
+
+        = form_for @share_link, url: form_url do |f|
+          .form-group
+            %label.control-label Enter a name for your share link (won't be seen by user).
+            = f.text_field :name, placeholder: "John Doe", class: "form-control"
+            %label.control-label Usually the name of the person(s) you are sharing with.
+
+          %p
+            %button.button.button-blue{ type: "submit" } Create Share Link
+
+        %br
+
+        - if !current_user.share_links.empty?
+          %h3 Or select an existing share link
+
+          = form_tag form_url, method: :post do
+            .form-group
+              %select.form-control{ name: "share_link_id" }
+                %option{ selected: "true", disabled: "disabled" } Pick a share link
+                - current_user.share_links.each do |share_link|
+                  %option{ value: share_link.id }= share_link.name
+
+            %p
+              %button.button.button-green{ type: "submit" } Use Share Link
+

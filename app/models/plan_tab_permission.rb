@@ -16,9 +16,9 @@ class PlanTabPermission < ActiveRecord::Base
   def update_permissions(permissions)
     permissions = permissions || []
 
-    self.can_create = permissions.include?(:create)
-    self.can_update = permissions.include?(:update)
-    self.can_destroy = permissions.include?(:destroy)
+    self.can_create = permissions.include?(:can_create)
+    self.can_update = permissions.include?(:can_update)
+    self.can_destroy = permissions.include?(:can_destroy)
 
     return self.save
   end

@@ -1,0 +1,67 @@
+.section
+  .container
+    .row
+      .col-md-12
+        %h2 "#{@share_link.name}" Share Link Permissions
+        %p= link_to "Share this job with a different share link", new_job_share_link_path(@job_permission.job)
+
+        %h3 Job: #{@job_permission.job.name}
+
+        = form_for @job_permission do |f|
+          .checkbox
+            %label
+              = f.check_box :can_update
+              Can this user
+              %span.bold EDIT JOB
+              attributes (job name, etc)?
+
+          %br
+
+          - @tab_permissions.each do |tab_permission|
+            - titleized_tab = tab_permission.tab.titleize
+            - form_name_prefix = "tab_permissions[#{tab_permission.tab.underscore}]"
+
+            %h3 Tab: #{titleized_tab}
+
+            = fields_for form_name_prefix, tab_permission do |tf|
+              .checkbox
+                %label
+                  = check_box_tag "#{form_name_prefix}[can_read]"
+                  Can this user
+                  %span.bold VIEW PLAN DETAILS
+                  and
+                  %span.bold DOWNLOAD DOCUMENTS
+                  for "#{titleized_tab}" tab?*
+
+              .checkbox
+                %label
+                  = tf.check_box :can_create
+                  Can this user
+                  %span.bold CREATE PLANS
+                  for "#{titleized_tab}" tab?
+
+              .checkbox
+                %label
+                  = tf.check_box :can_update
+                  Can this user
+                  %span.bold UPDATE PLANS
+                  and
+                  %span.bold UPLOAD DOCUMENTS
+                  for plans in the "#{titleized_tab}" tab?
+
+              .checkbox
+                %label
+                  = tf.check_box :can_destroy
+                  Can this user
+                  %span.bold DELETE PLANS
+                  for "#{titleized_tab}" tab?
+
+            %p
+              *Note: if
+              %span.bold any permissions
+              are set for this tab, the user can VIEW PLAN DETAILS and DOWNLOAD DOCUMENTS.
+
+            %br
+
+          %p
+            %button.button.button-blue{ type: "submit" } Set Permissions

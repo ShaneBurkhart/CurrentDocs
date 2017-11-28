@@ -1,6 +1,8 @@
 include Common
 
 class Plan < ActiveRecord::Base
+  # Keep these in order please. They determine some rendering orders:
+  # - JobPermissionsController#edit
   TABS = ["plans", "addendums"]
 
   attr_accessible :job_id, :name, :order_num, :tab

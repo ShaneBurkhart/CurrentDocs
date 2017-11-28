@@ -14,11 +14,11 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
 
   JOB_PERMISSIONS = [
     {
-      permissions: [:update],
-      tabs: { 'plans': [:create, :update], 'addendums': [:update, :destroy] }
+      permissions: [:can_update],
+      tabs: { 'plans': [:can_create, :can_update], 'addendums': [:can_update, :can_destroy] }
     }, {
       permissions: [],
-      tabs: { 'addendums': [:update, :destroy] }
+      tabs: { 'addendums': [:can_update, :can_destroy] }
     }
   ]
 

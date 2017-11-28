@@ -117,7 +117,7 @@ RSpec.describe JobsController, :type => :controller do
     it_behaves_like 'an unauthenticated controller action'
 
     it_behaves_like 'an authorized controller action' do
-      let (:redirect_path) { jobs_path }
+      let (:redirect_path) { jobs_path(archived: assigns(:job).is_archived) }
       let (:can_action) { :update }
       let (:can_param) { job }
 
