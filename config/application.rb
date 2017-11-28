@@ -26,12 +26,6 @@ module PlanSource
     # Probably something to do with deploy speeds.
     config.assets.initialize_on_precompile = false
 
-    # Add the main app source to precompile.
-    config.assets.precompile += ['plan_source.js']
-
-    # Set handlebars templates_root to subdirectory containing templates
-    config.handlebars.templates_root = 'plan_source/templates/'
-
     # Add JS and CSS for troubleshoot widget so we can include wherever
     config.assets.precompile += ['troubleshoot_widget.css', 'troubleshoot_widget.js']
 
