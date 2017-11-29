@@ -19,7 +19,14 @@
                 %tr
                   %td= link_to share_link.name, share_link_path(share_link)
                   %td= share_link.permissions.job_permissions.count
-                  %td= login_share_link_path(share_link.token)
+                  %td= share_link.login_url
                   %td
                     %ul.controls.pull-right.unstyled
-
+                      - if current_user.can? :read, share_link
+                        %li= link_to "View Permissions", share_link_path(share_link)
+                      - if current_user.can? :update, share_link
+                        %li
+                          %a.open-modal{ href: "#", data: { "modal-url": edit_share_link_path(share_link) } } Edit
+                      - if current_user.can? :destroy, share_link
+                        %li
+                          %a.open-modal{ href: "#", data: { "modal-url": should_delete_share_link_path(share_link) } } Delete

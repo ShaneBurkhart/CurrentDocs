@@ -1,0 +1,23 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    = form_for @share_link do |f|
+      .header
+        %p.title Enter a share link name.
+
+      .body
+        %p Enter a name for your share link.
+        .form-group
+          %label.control-label Enter a name for your share link.
+          = f.text_field :name, placeholder: "John Doe", class: "form-control"
+          %label.control-label Usually the name of the person(s) you are sharing with.
+
+      .footer
+        .buttons
+          %button.button.button-blue{ type: "submit" } Update
+
+          - if request.format == 'modal'
+            %a.button.close-modal Cancel
+          - else
+            %a.button{ href: share_links_path } Cancel

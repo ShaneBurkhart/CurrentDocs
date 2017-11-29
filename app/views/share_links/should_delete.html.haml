@@ -1,0 +1,17 @@
+.modal-wrapper
+  .overlay
+
+  .dialog.box.box-border
+    .header
+      %p.title Are you sure?
+
+    .body
+      %p Are you sure you want to delete #{@share_link.name}?
+
+    .footer
+      .buttons
+        = link_to "Delete", share_link_path(@share_link), method: :delete, class: "button button-red"
+        - if request.format == 'modal'
+          %a.button.close-modal Cancel
+        - else
+          %a.button{ href: share_links_path } Cancel

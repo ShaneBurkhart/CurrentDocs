@@ -27,6 +27,7 @@ FactoryBot.define do
     after(:create) do |user, evaluator|
       job_count = evaluator.job_count
       archived_job_count = evaluator.archived_job_count
+      share_link_count = evaluator.share_link_count
 
       if job_count > 0
         create_list(:job, job_count, user: user)
@@ -34,6 +35,10 @@ FactoryBot.define do
 
       if archived_job_count > 0
         create_list(:archived_job, archived_job_count, user: user)
+      end
+
+      if share_link_count > 0
+        create_list(:share_link, share_link_count, user: user)
       end
     end
   end

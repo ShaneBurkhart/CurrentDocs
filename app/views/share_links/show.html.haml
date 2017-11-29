@@ -1,0 +1,33 @@
+.section
+  .container
+    .row
+      .col-md-12
+        %h2 Share Link: #{@share_link.name}
+        %p Link: #{@share_link.login_url}
+        %p= link_to "Back to your share links", share_links_path
+
+    .row
+      .col-md-12
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %th Job Name
+              %th Job Permissions
+              %th Tabs Shared
+              %th.text-right Controls
+
+            %tbody
+              - @share_link.permissions.job_permissions.each do |job_permission|
+                %tr
+                  %td= link_to job_permission.job.name, edit_job_permission_path(job_permission)
+                  %td= job_permission.can_update ? "Update" : ""
+                  %td
+                    - job_permission.plan_tab_permissions.each do |tab_permission|
+                      = "#{tab_permission.tab.titleize}, "
+                  %td
+                    %ul.controls.pull-right.unstyled
+                      - if current_user.can? :update, job_permission
+                        %li= link_to "Edit Permissions", edit_job_permission_path(job_permission)
+                      - if current_user.can? :destroy, job_permission
+                        %li
+                          %a.open-modal{ href: "#", data: { "modal-url": should_delete_job_permission_path(job_permission) } } Unshare

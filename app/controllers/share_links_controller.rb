@@ -1,12 +1,32 @@
 class ShareLinksController < ApplicationController
   before_filter :authenticate_user!, except: [:login]
 
+  def login
+    @share_link = ShareLink.where(token: params[:token]).first
+
+    if !@share_link
+      return redirect_to new_user_session_path
+    end
+
+    session[:share_link_token] = @share_link.token
+
+    redirect_to jobs_path
+  end
+
   def index
     @share_links = current_user.share_links
 
     authorize! :read_multiple, @share_links
 
     render :index
+  end
+
+  def show
+    @share_link = ShareLink.find(params[:id])
+
+    authorize! :read, @share_link
+
+    render :show
   end
 
   def new
@@ -48,15 +68,49 @@ class ShareLinksController < ApplicationController
     redirect_to share_link_path(@share_link)
   end
 
-  def login
-    @share_link = ShareLink.where(token: params[:token]).first
+  def edit
+    @share_link = ShareLink.find(params[:id])
 
-    if !@share_link
-      return redirect_to new_user_session_path
+    authorize! :update, @share_link
+
+    respond_to do |format|
+      format.html{ render :edit }
+      format.modal{ render_modal :edit }
+    end
+  end
+
+  def update
+    @share_link = ShareLink.find(params[:id])
+
+    authorize! :update, @share_link
+
+    if !@share_link.update_attributes(params[:share_link])
+      return render :edit
     end
 
-    session[:share_link_token] = @share_link.token
+    redirect_url = params[:success_redirect_url] || share_links_path
 
-    redirect_to jobs_path
+    redirect_to redirect_url
+  end
+
+  def should_delete
+    @share_link = ShareLink.find(params[:id])
+
+    authorize! :destroy, @share_link
+
+    respond_to do |format|
+      format.html
+      format.modal{ render_modal :should_delete }
+    end
+  end
+
+  def destroy
+    @share_link = ShareLink.find(params[:id])
+
+    authorize! :destroy, @share_link
+
+    @share_link.destroy
+
+    redirect_to share_links_path
   end
 end

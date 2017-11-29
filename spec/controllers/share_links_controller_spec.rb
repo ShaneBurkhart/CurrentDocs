@@ -2,15 +2,29 @@ require 'rails_helper'
 
 RSpec.describe ShareLinksController, :type => :controller do
   let(:user) { @user }
+  let(:share_link) { @share_link }
   let(:job) { @job }
 
   before(:all) do
     @user = create(:user_with_share_links)
+    @share_link = @user.share_links.first
     @job = @user.open_jobs.first
   end
 
+  describe "GET #login" do
+    let (:action) { get :login, token: share_link.token }
+
+    it_behaves_like 'an authorized controller action' do
+      let (:redirect_path) { jobs_path }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
+      it { expect(session[:share_link_token]).to eq(share_link.token) }
+    end
+  end
+
+
   describe "GET #index" do
-    let (:action) { get :index, job_id: @job.id }
+    let (:action) { get :index }
 
     it_behaves_like 'an unauthenticated controller action'
 
@@ -21,6 +35,21 @@ RSpec.describe ShareLinksController, :type => :controller do
       ] }
 
       it { expect(assigns(:share_links)).to eq(user.share_links) }
+    end
+  end
+
+  describe "GET #show" do
+    let (:action) { get :show, id: share_link.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :show }
+      let(:authorize_params) { [
+        { action: :read, param: be_a(ShareLink) }
+      ] }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
     end
   end
 
@@ -105,6 +134,96 @@ RSpec.describe ShareLinksController, :type => :controller do
         it { expect(assigns(:job)).to be_nil }
         it { expect(assigns(:job_permission)).to be_nil }
       end
+    end
+  end
+
+  describe "GET #edit" do
+    let (:action) { get :edit, id: share_link.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :edit }
+      let (:can_action) { :update }
+      let (:can_param) { share_link }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
+
+      it_behaves_like "a modal action" do
+        let (:action) { get :edit, id: share_link.id, format: 'modal' }
+      end
+    end
+  end
+
+  describe "PUT #update" do
+    let (:new_share_link_name) { Faker::Name.name }
+    let (:action) {
+      put :update, id: share_link.id, share_link: { name: new_share_link_name }
+    }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:redirect_path) { share_links_path }
+      let (:can_action) { :update }
+      let (:can_param) { share_link }
+
+      it { expect(assigns(:share_link).id).to eq(share_link.id) }
+      it { expect(assigns(:share_link).name).to eq(new_share_link_name) }
+
+      context "with success_redirect_url" do
+        let (:redirect_url) { "/custom" }
+        let (:action) do
+          put :update, {
+            id: share_link.id,
+            success_redirect_url: redirect_url,
+            share_link: { name: new_share_link_name }
+          }
+        end
+
+        it { expect(response).to redirect_to(redirect_url) }
+      end
+
+      it_behaves_like "an invalid model action" do
+        let (:template) { :edit }
+        let(:overrides) do
+          allow_any_instance_of(ShareLink)
+            .to receive(:update_attributes).and_return(false)
+        end
+      end
+    end
+  end
+
+  describe "GET #should_delete" do
+    let (:action) { get :should_delete, id: share_link.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :should_delete }
+      let (:can_action) { :destroy }
+      let (:can_param) { share_link }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
+
+      it_behaves_like "a modal action" do
+        let (:action) { get :should_delete, id: share_link.id, format: 'modal' }
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    let (:action) { delete :destroy, id: share_link.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:redirect_path) { share_links_path }
+      let (:can_action) { :destroy }
+      let (:can_param) { share_link }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
+      it { expect(assigns(:share_link).destroyed?).to be(true) }
     end
   end
 end
