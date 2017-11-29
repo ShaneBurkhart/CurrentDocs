@@ -32,6 +32,15 @@ RSpec.describe ShareLink, :type => :model do
     it { expect(share_link.share_link?).to be(true) }
   end
 
+  describe "#login_url" do
+    it { expect(share_link.login_url).to include(ENV["DOMAIN"]) }
+    it do
+      url_helpers = Rails.application.routes.url_helpers
+      expect(share_link.login_url)
+        .to include(url_helpers.login_share_link_path(share_link.token))
+    end
+  end
+
   describe "#create_token" do
     # Make sure share_link has a token before continuing.
     after(:all) { @share_link.valid? }

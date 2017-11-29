@@ -1,6 +1,14 @@
 class ShareLinksController < ApplicationController
   before_filter :authenticate_user!, except: [:login]
 
+  def index
+    @share_links = current_user.share_links
+
+    authorize! :read_multiple, @share_links
+
+    render :index
+  end
+
   def new
     @share_link = ShareLink.new
     @job = Job.find_by_id(params[:job_id])

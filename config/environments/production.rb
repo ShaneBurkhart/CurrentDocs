@@ -1,4 +1,6 @@
 PlanSource::Application.configure do
+  Rails.application.routes.default_url_options[:host] = ENV["DOMAIN"]
+
   # Settings specified here will take precedence over those in config/application.rb
 
   config.logger = Logger.new(STDOUT)

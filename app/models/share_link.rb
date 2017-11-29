@@ -18,6 +18,11 @@ class ShareLink < ActiveRecord::Base
     @ability ||= Ability.new(self)
   end
 
+  def login_url
+    url_helpers = Rails.application.routes.url_helpers
+    return url_helpers.login_share_link_url(self.token, host: ENV["DOMAIN"])
+  end
+
   private
     def create_token
       self.token= loop do

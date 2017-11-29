@@ -1,4 +1,6 @@
 PlanSource::Application.configure do
+  Rails.application.routes.default_url_options[:host] = ENV["DOMAIN"]
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on

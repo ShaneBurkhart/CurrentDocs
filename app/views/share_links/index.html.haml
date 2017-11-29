@@ -1,0 +1,25 @@
+.section
+  .container
+    .row
+      .col-md-12
+        %h2 Share Links
+
+    .row
+      .col-md-12
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %th Name
+              %th # Jobs
+              %th Link
+              %th.text-right Controls
+
+            %tbody
+              - @share_links.each do |share_link|
+                %tr
+                  %td= link_to share_link.name, share_link_path(share_link)
+                  %td= share_link.permissions.job_permissions.count
+                  %td= login_share_link_path(share_link.token)
+                  %td
+                    %ul.controls.pull-right.unstyled
+

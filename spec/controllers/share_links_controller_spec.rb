@@ -5,8 +5,23 @@ RSpec.describe ShareLinksController, :type => :controller do
   let(:job) { @job }
 
   before(:all) do
-    @user = create(:user)
+    @user = create(:user_with_share_links)
     @job = @user.open_jobs.first
+  end
+
+  describe "GET #index" do
+    let (:action) { get :index, job_id: @job.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :index }
+      let(:authorize_params) { [
+        { action: :read_multiple, param: all(be_a(ShareLink)) }
+      ] }
+
+      it { expect(assigns(:share_links)).to eq(user.share_links) }
+    end
   end
 
   describe "GET #new" do

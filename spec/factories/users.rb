@@ -9,6 +9,7 @@ FactoryBot.define do
     transient do
       job_count 1
       archived_job_count 1
+      share_link_count 1
     end
 
     trait :no_jobs do
@@ -16,7 +17,12 @@ FactoryBot.define do
       archived_job_count 0
     end
 
+    trait :with_share_links do
+      share_link_count 3
+    end
+
     factory :user_without_jobs, traits: [:no_jobs]
+    factory :user_with_share_links, traits: [:with_share_links]
 
     after(:create) do |user, evaluator|
       job_count = evaluator.job_count
