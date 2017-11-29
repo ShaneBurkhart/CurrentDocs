@@ -31,7 +31,8 @@ PlanSource::Application.routes.draw do
   get '/share_links/:id/should_delete' => 'share_links#should_delete', as: :should_delete_share_link
   get '/sl/:token' => 'share_links#login', as: :login_share_link
 
-  resources :job_permissions, only: [:edit, :update]
+  resources :job_permissions, only: [:edit, :update, :destroy]
+  get '/job_permissions/:id/should_delete' => 'job_permissions#should_delete', as: :should_delete_job_permission
 
 
 

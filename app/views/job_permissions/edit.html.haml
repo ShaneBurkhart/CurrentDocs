@@ -21,12 +21,12 @@
             - titleized_tab = tab_permission.tab.titleize
             - form_name_prefix = "tab_permissions[#{tab_permission.tab.underscore}]"
 
-            %h3 Tab: #{titleized_tab}
+            %h4 Tab: #{titleized_tab}
 
             = fields_for form_name_prefix, tab_permission do |tf|
               .checkbox
                 %label
-                  = check_box_tag "#{form_name_prefix}[can_read]"
+                  = check_box_tag "#{form_name_prefix}[can_read]", "1", !tab_permission.new_record?
                   Can this user
                   %span.bold VIEW PLAN DETAILS
                   and
