@@ -1,0 +1,25 @@
+%nav{ class: "navigation navigation-dark" }
+  .container
+    %ul
+      .pull-right
+        - if current_user
+          %li{ class: active_class(controller_name, "share_links") }
+            = link_to 'Share Links', share_links_path
+
+          %li{ class: active_class(controller_name, "jobs") }
+            = link_to 'My Jobs', jobs_path
+
+          %li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+
+        - else
+          %li{ class: active_class("#{controller_name}##{action_name}", "registrations#new") }
+            = link_to 'Sign up', new_user_registration_path
+
+          %li{ class: active_class("#{controller_name}##{action_name}", "sessions#new") }
+            = link_to 'Login', new_user_session_path
+
+
+.brand-container
+  .container
+    - link_url = current_user ? jobs_path : root_path
+    %h3= link_to (image_tag "logo.png"), link_url, class: 'logo'

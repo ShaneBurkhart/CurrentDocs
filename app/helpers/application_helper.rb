@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def active_class(expected, current)
+    return expected == current ? 'active' : ''
+  end
 
   def title title
     base = "PlanSource.io"
