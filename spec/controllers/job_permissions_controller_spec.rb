@@ -81,4 +81,39 @@ RSpec.describe JobPermissionsController, :type => :controller do
       end
     end
   end
+
+  describe "GET #should_delete" do
+    let (:action) { get :should_delete, id: job_permission.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:template) { :should_delete }
+      let (:can_action) { :destroy }
+      let (:can_param) { job_permission }
+
+      it { expect(assigns(:job_permission)).to eq(job_permission) }
+      it { expect(assigns(:share_link)).to eq(share_link) }
+
+      it_behaves_like "a modal action" do
+        let (:action) { get :should_delete, id: job_permission.id, format: 'modal' }
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    let (:action) { delete :destroy, id: job_permission.id }
+
+    it_behaves_like 'an unauthenticated controller action'
+
+    it_behaves_like 'an authorized controller action' do
+      let (:redirect_path) { share_link_path(share_link) }
+      let (:can_action) { :destroy }
+      let (:can_param) { job_permission }
+
+      it { expect(assigns(:share_link)).to eq(share_link) }
+      it { expect(assigns(:job_permission)).to eq(job_permission) }
+      it { expect(assigns(:job_permission).destroyed?).to be(true) }
+    end
+  end
 end

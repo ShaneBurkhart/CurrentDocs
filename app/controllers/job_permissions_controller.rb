@@ -25,6 +25,29 @@ class JobPermissionsController < ApplicationController
     redirect_to share_link_path(@share_link)
   end
 
+  def should_delete
+    @job_permission = JobPermission.find(params[:id])
+    @share_link = @job_permission.permissions.authenticatable
+
+    authorize! :destroy, @job_permission
+
+    respond_to do |format|
+      format.html
+      format.modal{ render_modal :should_delete }
+    end
+  end
+
+  def destroy
+    @job_permission = JobPermission.find(params[:id])
+    @share_link = @job_permission.permissions.authenticatable
+
+    authorize! :destroy, @job_permission
+
+    @job_permission.destroy
+
+    redirect_to share_link_path(@job_permission.permissions.authenticatable)
+  end
+
   private
 
     def build_job_permissions_hash

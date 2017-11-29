@@ -58,7 +58,7 @@ class Ability
     can :crud, ShareLink, user_id: user.id
 
     # Can manage share_links that belong to them
-    can :update, JobPermission, {
+    can [:update, :destroy], JobPermission, {
       job: { user_id: user.id },
       permissions: { authenticatable: { user_id: user.id } }
     }

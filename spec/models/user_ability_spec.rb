@@ -101,6 +101,8 @@ RSpec.describe "User Permissions for", :type => :model do
 
     # Update
     it { expect(user).to be_able_to(:update, @job_permission) }
+    # Destroy
+    it { expect(user).to be_able_to(:destroy, @job_permission) }
 
     context "when the job isn't the user's" do
       before(:all) do
@@ -109,6 +111,7 @@ RSpec.describe "User Permissions for", :type => :model do
       end
 
       it { expect(user).not_to be_able_to(:update, @job_permission) }
+      it { expect(user).not_to be_able_to(:destroy, @job_permission) }
     end
 
     context "when permissions isn't for a user's share link" do
@@ -118,6 +121,7 @@ RSpec.describe "User Permissions for", :type => :model do
       end
 
       it { expect(user).not_to be_able_to(:update, @job_permission) }
+      it { expect(user).not_to be_able_to(:destroy, @job_permission) }
     end
   end
 end
