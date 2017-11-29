@@ -50,8 +50,12 @@ RSpec.configure do |config|
   # Only works with default test ordering.
   current_file_path = nil
   config.before(:each) do |x|
-    if current_file_path.nil? or current_file_path != x.file_path
-      current_file_path = x.file_path
+    file_path = x.example_group.file_path
+
+    next if file_path.include?("./spec/support/")
+
+    if current_file_path.nil? or current_file_path != file_path
+      current_file_path = file_path
       puts "\n#{current_file_path}"
     end
   end
