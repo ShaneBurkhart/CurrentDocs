@@ -9,6 +9,15 @@ class ApplicationController < ActionController::Base
       redirect_to jobs_path, :alert => exception.message
     end
 
+    def authenticate_user!
+      # We don't need to authenticate user if current_share_link exists
+      # and the user isn't logged in.
+      return if current_share_link and !devise_current_user
+
+      # Calling super with no arguments passes them through
+      super
+    end
+
     def devise_current_user
       @devise_current_user ||= warden.authenticate(:scope => :user)
     end
