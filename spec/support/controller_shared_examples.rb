@@ -11,6 +11,7 @@ shared_examples "an authorized controller action" do
   before(:each) do
     authorize_params = authorize_params || []
 
+    # Backwards compatibility for how we were doing authorization params.
     if defined? can_action and defined? can_param
       authorize_params.push({ action: can_action, param: can_param })
     end
@@ -18,6 +19,7 @@ shared_examples "an authorized controller action" do
     login
 
     allow(controller).to receive(:authorize!).and_return(true)
+
     # Allow let calls with overrides and allows
     overrides if defined? overrides
 
@@ -39,7 +41,7 @@ shared_examples "an authorized controller action" do
     end
   end
 
-  it "redirects the correct path" do
+  it "redirects to the correct path" do
     if defined? redirect_path
       expect(response).to redirect_to(redirect_path)
     end
