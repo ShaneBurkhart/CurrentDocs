@@ -6,9 +6,9 @@ RSpec.describe ShareLinksController, :type => :controller do
   let(:job) { @job }
 
   before(:all) do
-    @user = create(:user_with_share_links)
+    @user = create(:user, :with_share_links)
     @share_link = @user.share_links.first
-    @job = @user.open_jobs.first
+    @job = create(:job, user: @user)
   end
 
   describe "GET #login" do

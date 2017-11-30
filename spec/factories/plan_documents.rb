@@ -1,17 +1,19 @@
 FactoryBot.define do
   factory :plan_document do
     is_current true
-    plan { create(:plan_without_documents) }
+    plan { create(:plan) }
 
     transient do
-      has_document true
-    end
-
-    trait :no_documents do
       has_document false
     end
 
-    factory :plan_document_without_document, traits: [:no_documents]
+    trait :as_history do
+      is_current false
+    end
+
+    trait :with_document do
+      has_document true
+    end
 
     after(:create) do |plan_document, evaluator|
       has_document = evaluator.has_document

@@ -1,20 +1,29 @@
 FactoryBot.define do
   factory :plan do
-    job
+    job { create(:job) }
     name { Faker::Address.street_address }
     tab { Plan::TABS.sample }
 
     transient do
-      has_current_doc true
-      document_history_count 2
-    end
-
-    trait :no_documents do
       has_current_doc false
       document_history_count 0
     end
 
-    factory :plan_without_documents, traits: [:no_documents]
+    trait :as_plan do
+      tab "plans"
+    end
+
+    trait :as_addendum do
+      tab "addendums"
+    end
+
+    trait :with_current_doc do
+      has_current_doc true
+    end
+
+    trait :with_document_histories do
+      document_history_count 2
+    end
 
     after(:create) do |plan, evaluator|
       has_current_doc = evaluator.has_current_doc

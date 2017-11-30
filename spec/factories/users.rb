@@ -7,22 +7,27 @@ FactoryBot.define do
     password_confirmation "password"
 
     transient do
-      job_count 1
-      archived_job_count 1
-      share_link_count 1
-    end
-
-    trait :no_jobs do
       job_count 0
       archived_job_count 0
+      share_link_count 0
+    end
+
+    trait :with_jobs do
+      job_count 2
+      archived_job_count 2
+    end
+
+    trait :with_open_jobs do
+      job_count 2
+    end
+
+    trait :with_archived_jobs do
+      archived_job_count 2
     end
 
     trait :with_share_links do
       share_link_count 3
     end
-
-    factory :user_without_jobs, traits: [:no_jobs]
-    factory :user_with_share_links, traits: [:with_share_links]
 
     after(:create) do |user, evaluator|
       job_count = evaluator.job_count

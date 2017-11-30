@@ -1,11 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe PlansController, :type => :controller do
-  let(:user) { create(:user) }
-  let(:job) { user.open_jobs.first }
-  let(:plan) { job.plans.first }
-  let(:addendum) { job.addendums.first }
+  let(:plan) { @plan }
+  let(:addendum) { @addendum }
+  let(:job) { @job }
+  let(:user) { @job.user }
   let(:document) { create(:document) }
+
+  before(:all) do
+    @job = create(:job)
+    @plan = create(:plan, :as_plan, job: @job)
+    @addendum = create(:plan, :as_addendum, job: @job)
+  end
 
   describe "GET #show" do
     let (:action) { get :show, id: addendum.id }

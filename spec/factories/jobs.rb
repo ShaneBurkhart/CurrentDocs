@@ -2,22 +2,29 @@ require 'faker'
 
 FactoryBot.define do
   factory :job do
-    user
+    user { create(:user) }
     name { Faker::Address.street_address }
+    is_archived false
 
     transient do
-      plan_count 2
-      addendum_count 2
-    end
-
-    trait :no_plans do
       plan_count 0
       addendum_count 0
     end
 
-    factory :job_without_plans, traits: [:no_plans]
+    trait :with_all_plans do
+      plan_count 2
+      addendum_count 2
+    end
 
-    factory :archived_job do
+    trait :with_plans do
+      plan_count 2
+    end
+
+    trait :with_addendums do
+      addendum_count 2
+    end
+
+    trait :as_archived do
       is_archived true
     end
 
