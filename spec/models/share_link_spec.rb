@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe ShareLink, :type => :model do
   let(:share_link) { @share_link }
+  let(:all_shared_jobs) { share_link.permissions.job_permissions.map{ |jp| jp.job } }
 
   before(:all) do
-    @share_link = create(:share_link)
+    @share_link = create(:share_link, :with_job_permissions)
   end
 
   it { expect(subject).to belong_to(:user) }
@@ -39,6 +40,18 @@ RSpec.describe ShareLink, :type => :model do
       expect(share_link.login_url)
         .to include(url_helpers.login_share_link_path(share_link.token))
     end
+  end
+
+  describe "#open_jobs" do
+    let(:jobs) { share_link.open_jobs }
+    it { jobs.each{ |j| expect(all_shared_jobs).to include(j) } }
+    it { expect(jobs).to all(have_attributes(is_archived: false)) }
+  end
+
+  describe "#archived_jobs" do
+    let(:jobs) { share_link.archived_jobs }
+    it { jobs.each{ |j| expect(all_shared_jobs).to include(j) } }
+    it { expect(jobs).to all(have_attributes(is_archived: true)) }
   end
 
   describe "#create_token" do
