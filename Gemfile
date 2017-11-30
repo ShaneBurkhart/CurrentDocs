@@ -11,7 +11,6 @@ gem 'haml', '~> 5.0'
 gem 'test-unit', '~> 3.1', '>= 3.1.7'
 
 gem "figaro", ">= 0.6.3"
-gem 'active_model_serializers', '0.8.1'
 gem 'newrelic_rpm', '3.7.1.182'
 gem 'sendgrid', '1.2.0'
 
