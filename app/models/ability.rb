@@ -46,9 +46,9 @@ class Ability
       can :upload, Document
     end
 
-    if user.is_a? User
+    if user.is_a?(User)
       self.user_permissions(user)
-    elsif user.is_a? ShareLink
+    elsif user.is_a?(ShareLink)
       self.share_link_permissions(user)
     end
   end

@@ -5,9 +5,9 @@ class JobsController < ApplicationController
     @is_archived = params[:archived] == "true"
 
     if @is_archived
-      @jobs = user.archived_jobs || []
+      @jobs = current_user.archived_jobs || []
     else
-      @jobs = user.open_jobs || []
+      @jobs = current_user.open_jobs || []
     end
 
     authorize! :read_multiple, @jobs

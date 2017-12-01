@@ -37,6 +37,11 @@ class ShareLink < ActiveRecord::Base
     return Job.where(id: job_ids || [], is_archived: true)
   end
 
+  # We are matching User interface with this.
+  def share_links
+    return nil
+  end
+
   private
     def create_token
       self.token= loop do
