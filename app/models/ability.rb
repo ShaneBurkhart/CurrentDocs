@@ -95,8 +95,10 @@ class Ability
     can :read, Plan do |plan|
       PlanTabPermission.where(tab: plan.tab)
         .includes(:job_permission)
-        .where('job_permissions.job_id' => plan.job_id)
-        .count != 0
+        .where(
+          'job_permissions.job_id' => plan.job_id,
+          'job_permissions.permissions_id' => permissions.id,
+        ).count != 0
     end
 
     can :create, Plan do |plan|
@@ -104,8 +106,10 @@ class Ability
 
       PlanTabPermission.where(tab: plan.tab, can_create: true)
         .includes(:job_permission)
-        .where('job_permissions.job_id' => plan.job_id)
-        .count != 0
+        .where(
+          'job_permissions.job_id' => plan.job_id,
+          'job_permissions.permissions_id' => permissions.id,
+        ).count != 0
     end
 
     can :update, Plan do |plan|
@@ -113,8 +117,10 @@ class Ability
 
       PlanTabPermission.where(tab: plan.tab, can_update: true)
         .includes(:job_permission)
-        .where('job_permissions.job_id' => plan.job_id)
-        .count != 0
+        .where(
+          'job_permissions.job_id' => plan.job_id,
+          'job_permissions.permissions_id' => permissions.id,
+        ).count != 0
     end
 
     can :destroy, Plan do |plan|
@@ -122,8 +128,10 @@ class Ability
 
       PlanTabPermission.where(tab: plan.tab, can_destroy: true)
         .includes(:job_permission)
-        .where('job_permissions.job_id' => plan.job_id)
-        .count != 0
+        .where(
+          'job_permissions.job_id' => plan.job_id,
+          'job_permissions.permissions_id' => permissions.id,
+        ).count != 0
     end
 
     can [:download, :read], PlanDocument do |plan_document|
