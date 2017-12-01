@@ -18,6 +18,18 @@ class ApplicationController < ActionController::Base
       super
     end
 
+    def authorize!(action, subject)
+      # We need relations to be in array format.
+      if subject.is_a?(ActiveRecord::Relation)
+        subject = subject.to_a
+      end
+
+      return true if current_user.can?(action, subject)
+
+      # Raise exception if current_user is not authorized
+      raise CanCan::AccessDenied.new("Not authorized!", action, subject)
+    end
+
     def devise_current_user
       @devise_current_user ||= warden.authenticate(:scope => :user)
     end
@@ -46,10 +58,6 @@ class ApplicationController < ActionController::Base
 
     def not_found
 	     raise ActionController::RoutingError.new('Not Found')
-    end
-
-    def go_to_app?
-      redirect_to jobs_path if current_user
     end
 
     def after_sign_in_path_for(resource_or_scope)
