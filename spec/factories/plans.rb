@@ -31,13 +31,12 @@ FactoryBot.define do
 
       # If we have document histories, then we need a current doc
       if has_current_doc or document_history_count > 0
-        create(:plan_document, plan: plan)
+        create(:plan_document, :with_document, plan: plan)
       end
 
       if document_history_count > 0
-        create_list(:plan_document, document_history_count, {
-          plan: plan, is_current: false
-        })
+        create_list(:plan_document, document_history_count, :as_history,
+                    :with_document, plan: plan)
       end
     end
   end

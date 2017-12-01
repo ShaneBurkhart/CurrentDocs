@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe JobsController, :type => :controller do
   before(:all) do
-    @share_link = create(:share_link)
-    @user = create(:user, job_count: 2, archived_job_count: 2)
+    @share_link = create(:share_link, :with_job_permissions)
+    @user = create(:user, :with_jobs)
   end
 
   [:@user, :@share_link].each do |user_variable_name|

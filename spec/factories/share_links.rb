@@ -35,8 +35,9 @@ FactoryBot.define do
 
       if archived_job_permission_count > 0
         create_list(
-          :job_permission_for_archived_job,
+          :job_permission,
           archived_job_permission_count,
+          :with_archived_job,
           permissions: share_link.permissions
         )
       end

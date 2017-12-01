@@ -4,7 +4,7 @@ RSpec.describe Permissions, :type => :model do
   let(:permissions) { @permissions }
 
   before(:all) do
-    @permissions = create(:blank_permissions)
+    @permissions = create(:permissions)
   end
 
   it { expect(subject).to belong_to(:authenticatable) }
@@ -22,7 +22,7 @@ RSpec.describe Permissions, :type => :model do
       let(:job) { @job }
 
       before(:all) do
-        @job = create(:job_without_plans)
+        @job = create(:job)
         @permissions.job_permissions.destroy_all
       end
 
@@ -37,7 +37,7 @@ RSpec.describe Permissions, :type => :model do
       let(:job) { @job }
 
       before(:all) do
-        @job = create(:job_without_plans)
+        @job = create(:job)
         @job_permission = JobPermission.create(
           job_id: @job.id, permissions_id: @permissions.id
         )

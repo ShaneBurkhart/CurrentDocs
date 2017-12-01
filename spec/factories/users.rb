@@ -39,7 +39,7 @@ FactoryBot.define do
       end
 
       if archived_job_count > 0
-        create_list(:archived_job, archived_job_count, user: user)
+        create_list(:job, archived_job_count, :as_archived, user: user)
       end
 
       if share_link_count > 0

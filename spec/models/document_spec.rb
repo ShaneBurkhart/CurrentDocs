@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Document, :type => :model do
-  subject { create(:document) }
+  let(:document) { @document }
+
+  before(:all) { @document = create(:document) }
 
   it { expect(subject).to belong_to(:user) }
   it { expect(subject).to belong_to(:document_association) }

@@ -2,21 +2,28 @@ require 'rails_helper'
 
 RSpec.describe "User Permissions for", :type => :model do
   let(:user) { @user }
-  let(:jobs) { user.open_jobs }
-  let(:job) { jobs.first }
+  let(:jobs) { @jobs }
+  let(:job) { @job }
   let(:plan) { job.plans.first }
+  let(:archived_jobs) { @archived_jobs }
   let(:archived_job) { user.archived_jobs.first }
   let(:archived_plan) { archived_job.plans.first }
 
   let(:not_me_user) { @not_me_user }
-  let(:not_my_jobs) { not_me_user.open_jobs }
+  let(:not_my_jobs) { @not_my_jobs }
   let(:not_my_job) { not_my_jobs.first }
   let(:not_my_plan) { not_my_job.plans.first }
 
   before(:all) do
     @user = create(:user)
-    @job = @user.open_jobs.first
     @not_me_user = create(:user)
+
+    @jobs = create_list(:job, 2, :with_plans, user: @user)
+    @job = @jobs.first
+    @archived_jobs = create_list(:job, 2, :as_archived, :with_plans, user: @user)
+
+    @not_my_jobs = create_list(:job, 2, :with_plans, user: @not_me_user)
+    @not_my_job = @not_my_jobs.first
   end
 
   describe "Job" do
@@ -78,6 +85,14 @@ RSpec.describe "User Permissions for", :type => :model do
   end
 
   describe "Document" do
+    let(:plan) { @plan }
+    let(:not_my_plan) { @not_my_plan }
+
+    before(:all) do
+      @plan = create(:plan, :as_plan, :with_current_doc, job: @job)
+      @not_my_plan = create(:plan, :as_plan, :with_current_doc, job: @not_my_job)
+    end
+
     # Read
     it { expect(user).to be_able_to(:read, plan.document) }
     it { expect(user).not_to be_able_to(:read, not_my_plan.document) }
@@ -107,7 +122,7 @@ RSpec.describe "User Permissions for", :type => :model do
     context "when the job isn't the user's" do
       before(:all) do
         @job_permission = @share_link.permissions
-          .find_or_create_job_permission(create(:job_without_plans))
+          .find_or_create_job_permission(create(:job))
       end
 
       it { expect(user).not_to be_able_to(:update, @job_permission) }

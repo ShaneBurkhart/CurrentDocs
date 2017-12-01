@@ -1,8 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Plan, :type => :model do
-  let(:plan) { create(:plan) }
-  let(:document) { create(:document) }
+  let(:job) { @job }
+  let(:plan) { job.plans.first }
+  let(:document) { @document }
+
+  before(:all) do
+    @job = create(:job)
+    @document = create(:document)
+
+    # Add plans for job and reload
+    create_list(:plan, 4, :as_plan, :with_current_doc, job: @job)
+  end
 
   it { expect(subject).to belong_to(:job) }
   it { expect(subject).to have_one(:plan_document) }
@@ -11,19 +20,13 @@ RSpec.describe Plan, :type => :model do
   it { expect(subject).to have_many(:document_histories) }
 
   describe "validations" do
-    subject { plan }
     it { expect(subject).to validate_presence_of(:job_id) }
     it { expect(subject).to validate_presence_of(:name) }
     it { expect(subject).to validate_presence_of(:tab) }
     it { expect(subject).to validate_presence_of(:order_num).on(:update) }
 
     it "should check for duplicate name for tab in job" do
-      new_plan = build(
-        :plan,
-        job_id: subject.job_id,
-        name: subject.name,
-        tab: subject.tab
-      )
+      new_plan = build(:plan, job: plan.job, name: plan.name, tab: plan.tab)
 
       expect(new_plan).not_to be_valid
     end
@@ -38,29 +41,30 @@ RSpec.describe Plan, :type => :model do
   end
 
   describe "before_create #add_to_end_of_list" do
-    let(:job) { create(:job) }
-
     it "adds plan to end of list" do
-      plan = build(:plan, tab: "plans", job: job)
+      new_plan = build(:plan, :as_plan, job: job)
       job_plans_count = job.plans.count
 
-      expect(plan.order_num).to be_nil
-      plan.save
-      expect(plan.order_num).to eq(job_plans_count)
+      expect(new_plan.order_num).to be_nil
+      new_plan.save
+      expect(new_plan.order_num).to eq(job_plans_count)
     end
   end
 
   describe "before_destroy #delete_plan_in_list" do
-    let(:plan_count) { 5 }
-    let(:job) { create(:job, plan_count: plan_count) }
-    let(:plan) { job.plans[1] }
+    let(:plan) { @plan }
+
+    before(:all) { @plan = create(:plan, :as_plan, job: @job) }
 
     it "removes plan from list" do
+      plan_count = job.plans.count
+
       plan.destroy
+      job.reload
 
       expect(job.plans.count).to eq(plan_count - 1)
-      job.plans.each_with_index do |plan, i|
-        expect(plan.order_num).to eq(i)
+      job.plans.each_with_index do |p, i|
+        expect(p.order_num).to eq(i)
       end
     end
   end
@@ -104,11 +108,8 @@ RSpec.describe Plan, :type => :model do
       expect(action).to be(expected_return_value)
     end
 
-    it "updates document to current document" do
+    it "updates current document and adds old doc to history" do
       expect(plan.document).to eq(document)
-    end
-
-    it "moves current plan to plan history" do
       expect(plan.document_histories).to include(@previous_current_document)
     end
 
@@ -116,29 +117,27 @@ RSpec.describe Plan, :type => :model do
       let(:action) { plan.update_document(plan.document) }
       let(:expected_return_value) { true }
 
-      it "does nothing when given nil" do
-        expect(plan.document).to eq(@previous_current_document)
-      end
+      it { expect(plan.document).to eq(@previous_current_document) }
     end
 
     context "when passed a nil document" do
       let(:action) { plan.update_document(nil) }
       let(:expected_return_value) { false }
 
-      it "does nothing when given nil" do
-        expect(plan.document).to eq(@previous_current_document)
-      end
+      it { expect(plan.document).to eq(@previous_current_document) }
     end
   end
 
   describe "#move_to_position" do
-    let(:plan_count) { 5 }
-    let(:dest_pos) { 4 }
-    let(:job) { create(:job, plan_count: plan_count) }
+    let(:plan_count) { @job.plans.count }
+    let(:dest_pos) { 3 }
+    let(:job) { @job }
     let(:plan) { job.plans[1] }
 
+    before(:all) { @job = create(:job, plan_count: 5) }
+
     it "doesn't move new plan" do
-      expect(build(:plan).move_to_position(3)).to be(false)
+      expect(Plan.new.move_to_position(3)).to be(false)
     end
 
     it "moves plan and keeps sequential order" do

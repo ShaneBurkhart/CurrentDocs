@@ -1,12 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe PlanTabPermission, :type => :model do
-  let(:plan_tab_permission) { build(:plan_tab_permission) }
+  let(:plan_tab_permission) { @plan_tab_permission }
+
+  before(:all) { @plan_tab_permission = build(:plan_tab_permission) }
 
   it { expect(subject).to belong_to(:job_permission) }
 
   describe "validations" do
-    subject { plan_tab_permission }
+    after(:all) { @plan_tab_permission.tab = "plans" }
+
     it { expect(subject).to validate_presence_of(:tab) }
     it { expect(subject).to validate_presence_of(:job_permission_id) }
 
@@ -20,6 +23,8 @@ RSpec.describe PlanTabPermission, :type => :model do
   end
 
   describe "#tab=" do
+    after(:all) { @plan_tab_permission.tab = "plans" }
+
     it "downcases assignment value" do
       plan_tab_permission.tab = "AdDenDumS"
       expect(plan_tab_permission.tab).to eq("addendums")

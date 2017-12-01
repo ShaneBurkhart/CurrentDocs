@@ -12,6 +12,20 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
   let(:unshared_job) { unshared_jobs.first }
   let(:unshared_plan) { unshared_job.plans.first }
 
+  before(:all) do
+    @share_link = create(:share_link)
+    @shared_jobs = [ create(:job), create(:job) ]
+    @unshared_jobs = [ create(:job), create(:job) ]
+
+    (@shared_jobs + @unshared_jobs).each do |j|
+      create_list(:plan, 2, :as_plan, :with_current_doc, job: j)
+      create_list(:plan, 2, :as_addendum, :with_current_doc, job: j)
+    end
+
+    @permissions_hash = generate_permissions_hash(@shared_jobs)
+    @share_link.permissions.update_permissions(@permissions_hash)
+  end
+
   JOB_PERMISSIONS = [
     {
       permissions: [:can_update],
@@ -32,19 +46,11 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
     return { jobs: jobs_permissions_hash }
   end
 
-  before(:all) do
-    @share_link = create(:share_link)
-    @shared_jobs = [ create(:job), create(:job) ]
-    @unshared_jobs = [ create(:job), create(:job) ]
-
-    @permissions_hash = generate_permissions_hash(@shared_jobs)
-    @share_link.permissions.update_permissions(@permissions_hash)
-  end
-
   describe "ShareLink" do
     # Index
     it { expect(share_link).not_to be_able_to(:read_multiple, share_link) }
     it { expect(share_link).not_to be_able_to(:read_multiple, Array) }
+    it { expect(share_link).not_to be_able_to(:read_multiple, nil) }
 
     # Show
     it { expect(share_link).not_to be_able_to(:read, share_link) }
@@ -68,6 +74,7 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
     it { expect(share_link).to be_able_to(:read_multiple, shared_jobs) }
     it { expect(share_link).not_to be_able_to(:read_multiple, unshared_jobs) }
     it { expect(share_link).not_to be_able_to(:read_multiple, Array) }
+    it { expect(share_link).not_to be_able_to(:read_multiple, nil) }
 
     # Show
     it { expect(share_link).to be_able_to(:read, shared_job) }
@@ -127,7 +134,7 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
 
       before(:all) do
         @archived_share_link = create(:share_link)
-        @archived_shared_jobs = [ create(:archived_job) ]
+        @archived_shared_jobs = [ create(:job, :as_archived, :with_plans) ]
 
         archived_permissions_hash = generate_permissions_hash(@archived_shared_jobs)
         @archived_share_link.permissions.update_permissions(archived_permissions_hash)
