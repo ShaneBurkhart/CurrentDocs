@@ -1,10 +1,4 @@
 PlanSource::Application.routes.draw do
-  get "signup_links/edit"
-
-  authenticated :user do
-    root :to => 'home#index'
-  end
-
   root :to => "home#index"
   devise_for :users
 

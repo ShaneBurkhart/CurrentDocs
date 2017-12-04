@@ -9,8 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :share_links
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :trackable, :validatable
 
   validates :first_name, :last_name, presence: true
 
