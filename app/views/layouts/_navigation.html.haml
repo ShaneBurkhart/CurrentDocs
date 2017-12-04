@@ -12,11 +12,15 @@
 
       .pull-right
         - if current_user
-          %li{ class: active_class(controller_name, "share_links") }
-            = link_to 'Share Links', share_links_path
+          - if current_user.owner?
+            %li{ class: active_class(controller_name, "share_links") }
+              = link_to 'Share Links', share_links_path
 
           %li{ class: active_class(controller_name, "jobs") }
-            = link_to 'My Jobs', jobs_path
+            - if current_user.share_link?
+              = link_to 'Shared Jobs', jobs_path
+            - else
+              = link_to 'My Jobs', jobs_path
 
           %li= link_to "Logout", destroy_user_session_path, :method=>'delete'
 
