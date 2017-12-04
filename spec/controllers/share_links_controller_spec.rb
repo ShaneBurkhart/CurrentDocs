@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe ShareLinksController, :type => :controller do
   before(:all) do
-    @share_link = create(:share_link)
-    @user = create(:user, :with_share_links)
+    @share_link = create(:share_link, :with_job_permissions)
+    @user = create(:user, :with_share_links, :with_jobs)
   end
 
   describe "GET #login" do
@@ -61,6 +61,13 @@ RSpec.describe ShareLinksController, :type => :controller do
         ] }
 
         it { expect(assigns(:share_link)).to eq(share_link) }
+        it "excludes shared jobs from @unshared_jobs" do
+          jobs_to_exclude = share_link.permissions.job_permissions.map do |jp|
+            jp.job
+          end
+
+          expect(assigns(:unshared_jobs)).not_to include(jobs_to_exclude)
+        end
       end
     end
 

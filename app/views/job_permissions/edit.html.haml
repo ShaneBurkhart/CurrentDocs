@@ -3,7 +3,7 @@
     .row
       .col-md-12
         %h2 "#{@share_link.name}" Share Link Permissions
-        %p= link_to "Share this job with a different share link", new_job_share_link_path(@job_permission.job)
+        %p= link_to "Back to all permissions for this share link", share_link_path(@share_link)
 
         %h3 Job: #{@job_permission.job.name}
 

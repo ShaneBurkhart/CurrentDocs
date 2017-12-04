@@ -8,6 +8,7 @@
 
     .row
       .col-md-12
+        %h3 Shared Jobs
         .table-responsive
           %table.table.table-hover
             %thead
@@ -22,8 +23,11 @@
                   %td= link_to job_permission.job.name, edit_job_permission_path(job_permission)
                   %td= job_permission.can_update ? "Update" : ""
                   %td
-                    - job_permission.plan_tab_permissions.each do |tab_permission|
-                      = "#{tab_permission.tab.titleize}, "
+                    - if !job_permission.plan_tab_permissions.empty?
+                      - job_permission.plan_tab_permissions.each do |tab_permission|
+                        = "#{tab_permission.tab.titleize}, "
+                    - else
+                      No Tabs
                   %td
                     %ul.controls.pull-right.unstyled
                       - if current_user.can? :update, job_permission
@@ -31,3 +35,26 @@
                       - if current_user.can? :destroy, job_permission
                         %li
                           %a.open-modal{ href: "#", data: { "modal-url": should_delete_job_permission_path(job_permission) } } Unshare
+
+    .row
+      .col-md-12
+        %h3 Unshared Jobs
+        .table-responsive
+          %table.table.table-hover
+            %thead
+              %th Job Name
+              %th Status
+              %th.text-right Controls
+
+            %tbody
+              - @unshared_jobs.each do |unshared_job|
+                %tr
+                  %td= unshared_job.name
+                  %td
+                    - if unshared_job.is_archived
+                      Archived
+                    - else
+                      Open
+                  %td
+                    %ul.controls.pull-right.unstyled
+                      %li= link_to "Share", job_share_links_path(unshared_job.id, share_link_id: @share_link.id), method: :post

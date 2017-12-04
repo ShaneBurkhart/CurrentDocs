@@ -10,7 +10,7 @@
 
     .footer
       .buttons
-        = link_to "Delete", job_permission_path(@job_permission), method: :delete, class: "button button-red"
+        = link_to "Unshare", job_permission_path(@job_permission), method: :delete, class: "button button-red"
         - if request.format == 'modal'
           %a.button.close-modal Cancel
         - else

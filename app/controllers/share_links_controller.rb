@@ -23,6 +23,12 @@ class ShareLinksController < ApplicationController
 
   def show
     @share_link = ShareLink.find(params[:id])
+    @unshared_jobs = current_user.jobs.order("is_archived ASC").to_a
+
+    # Remove already shared jobs
+    @share_link.permissions.job_permissions.each do |job_permission|
+      @unshared_jobs.delete(job_permission.job)
+    end
 
     authorize! :read, @share_link
 
