@@ -4,7 +4,7 @@ web:
         - "3000:3000"
     links:
         - pg
-        - redis
+        #- redis
         #- mailcatcher
     volumes:
         - ../../app:/app/app
@@ -31,5 +31,5 @@ pg:
     volumes:
         - ../../data/pg:/var/lib/postgresql/data
 
-redis:
-        image: redis:3.2
+#redis:
+        #image: redis:3.2
