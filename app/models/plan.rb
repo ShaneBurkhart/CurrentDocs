@@ -8,10 +8,10 @@ class Plan < ActiveRecord::Base
   belongs_to :job
 
   has_one :plan_document, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: true }
-  has_many :plan_document_histories, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: false }
+  has_many :plan_document_histories, class_name: "PlanDocument", foreign_key: "plan_id", conditions: { is_current: false }, order: "created_at DESC"
 
   has_one :document, class_name: "Document", through: :plan_document, as: :document
-  has_many :document_histories, class_name: "Document", through: :plan_document_histories, source: :document
+  has_many :document_histories, class_name: "Document", through: :plan_document_histories, source: :document, order: "created_at DESC"
 
   validates :job_id, :name, :tab, presence: true
   # We only want to add to list if it passes other validations.
