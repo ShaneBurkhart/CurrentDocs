@@ -49,6 +49,16 @@ class ShareLink < ActiveRecord::Base
     return nil
   end
 
+  # We use these to check CanCan permissions for buttons, but in the case
+  # of a share link, they can't create share links or jobs.
+  def new_share_link
+    return nil
+  end
+
+  def new_job
+    return nil
+  end
+
   private
     def create_token
       self.token= loop do
