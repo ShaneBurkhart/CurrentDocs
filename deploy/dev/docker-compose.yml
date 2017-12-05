@@ -1,5 +1,5 @@
 web:
-    image: shaneburkhart/plansource:dev
+    image: shaneburkhart/currentdocs:dev
     ports:
         - "3000:3000"
     links:
@@ -15,7 +15,7 @@ web:
         - ../../user.env
 
 #mailcatcher:
-    #image: shaneburkhart/plansource:dev
+    #image: shaneburkhart/currentdocs:dev
     #ports:
         #- "1080:1080"
     #command: "mailcatcher --ip=0.0.0.0"
