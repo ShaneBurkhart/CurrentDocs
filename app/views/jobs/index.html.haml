@@ -9,8 +9,6 @@
         - if current_user.can? :create, current_user.new_job
           %a.button.button-green.open-modal{ href: "#", data: { "modal-url": new_job_path } } + Add Job
       .col-md-6
-        %form.share-search-form
-          %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
 
     .row
       .col-md-12

@@ -24,7 +24,5 @@
           = plans_tab_link('plans', @tab)
           = plans_tab_link('addendums', @tab)
 
-          %input#share-search-input.form-control.form-smaller.form-control-padding.pull-right{ style: "max-width: 250px", placeholder: "Search..." }
-
         - if ['plans', 'addendums'].include? @tab
           = render partial: "plans_section", locals: { tab: @tab, plans: @job.send(@tab) }
