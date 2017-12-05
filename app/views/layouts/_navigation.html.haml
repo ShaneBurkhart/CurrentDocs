@@ -1,17 +1,19 @@
-%nav{ class: "navigation navigation-dark" }
+%nav.navigation.navigation-dark
   .container
-    %ul
-      - if current_user
-        - if current_user.share_link?
-          %li
-            Logged in with a
-            %span.bold Share Link
-        - else
-          %li
-            Logged in as
-            %span.bold= current_user.full_name
+    .row
+      .col-12
+      %ul.pull-left
+        - if current_user
+          - if current_user.share_link?
+            %li
+              Logged in with a
+              %span.bold Share Link
+          - else
+            %li
+              Logged in as
+              %span.bold= current_user.full_name
 
-      .pull-right
+      %ul.pull-right
         - if current_user
           - if current_user.owner?
             %li{ class: active_class(controller_name, "share_links") }
