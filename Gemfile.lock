@@ -243,7 +243,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers (= 0.8.1)
   async-rails
   aws-sdk (= 1.32.0)
   better_errors (>= 0.7.2)
