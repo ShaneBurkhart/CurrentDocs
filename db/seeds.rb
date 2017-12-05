@@ -28,11 +28,10 @@ def create_plans_for_job(job)
   (1..20).each do |i|
     tab = Plan::TABS.sample
 
-    plan = Plan.create(
-      job_id: job.id,
-      name: Faker::Address.secondary_address,
-      tab: tab
-    )
+    plan = Plan.new(name: Faker::Address.secondary_address)
+    plan.job_id = job.id
+    plan.tab = tab
+    plan.save
   end
 end
 
@@ -48,11 +47,12 @@ end
 end
 
 (1..10).each do
-  job = Job.create(
+  job = Job.new(
     name: Faker::Address.street_address,
     is_archived: [true, false].sample,
-    user_id: @user.id
   )
+  job.user_id = @user.id
+  job.save
 
   create_plans_for_job(job)
 end

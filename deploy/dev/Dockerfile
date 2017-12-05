@@ -1,4 +1,4 @@
-FROM shaneburkhart/plansource
+FROM shaneburkhart/currentdocs
 MAINTAINER Shane Burkhart <shaneburkhart@gmail.com>
 
 ENV RAILS_ENV development
