@@ -1,4 +1,4 @@
-%nav
+%p
   - if current_user.can? :create, @job.new_plan(@tab)
     %a.button.button-blue.open-modal{ href: "#", data: { "modal-url": new_job_tab_plan_path(@job, @tab) } } Add Plan
 

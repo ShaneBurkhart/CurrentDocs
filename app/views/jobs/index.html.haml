@@ -6,8 +6,9 @@
 
     .row
       .col-md-6
-        - if current_user.can? :create, current_user.new_job
-          %a.button.button-green.open-modal{ href: "#", data: { "modal-url": new_job_path } } + Add Job
+        %p
+          - if current_user.can? :create, current_user.new_job
+            %a.button.button-green.open-modal{ href: "#", data: { "modal-url": new_job_path } } + Add Job
       .col-md-6
 
     .row

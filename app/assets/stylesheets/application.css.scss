@@ -13,18 +13,6 @@
  *= require_tree ./application
 */
 
-// nav select {
-//   display:none;
-//   border: 1px solid #fff;
-//   background-color: transparent;
-//   color:#fff;
-//   line-height: 1.428571429;
-//   font-size: 14px;
-//   margin-top:3px;
-//   padding: 2px 6px;
-// }
-
-
 @media (max-width: 480px) {
   nav ul     { font-size: 0.8em; }
 
@@ -32,14 +20,10 @@
       ul {
           float: none !important;
           display: block;
-          text-align: center;
+          text-align: right;
       }
   }
 }
-
-// @media (max-width: 700px) {
-//   nav ul     { font-size: 0.9em; }
-// }
 
 .pika-single {
   z-index: 100;
@@ -191,7 +175,8 @@ iframe{
     padding: 8px 0;
     border-top: 1px solid #dddddd;
     border-bottom: 1px solid #dddddd;
-    margin: 13px 0 15px;
+    margin: 0 0 15px;
+
     a, span {
         margin-right: 15px;
 

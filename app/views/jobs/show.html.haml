@@ -5,7 +5,7 @@
         %h2= "#{@job.name} #{@job.is_archived ? '(Archived)' : ''}"
         %p= link_to "Back to your jobs", jobs_path(archived: @job.is_archived || nil)
 
-        %nav
+        %p
           - if current_user.can? :update, @job
             - if @job.is_archived
               = form_for @job, html: { style: "display: inline" } do |f|
