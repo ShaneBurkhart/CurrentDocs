@@ -23,6 +23,13 @@ class ShareLink < ActiveRecord::Base
     return url_helpers.login_share_link_url(self.token, host: ENV["DOMAIN"])
   end
 
+  def jobs
+    permissions_id = self.permissions.id
+    job_ids = JobPermission.where(permissions_id: permissions_id).pluck(:job_id)
+
+    return Job.where(id: job_ids || [])
+  end
+
   def open_jobs
     permissions_id = self.permissions.id
     job_ids = JobPermission.where(permissions_id: permissions_id).pluck(:job_id)

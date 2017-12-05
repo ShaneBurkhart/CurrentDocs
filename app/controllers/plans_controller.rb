@@ -13,7 +13,9 @@ class PlansController < ApplicationController
   end
 
   def new
-    @plan = Plan.new(job_id: params[:job_id], tab: params[:tab])
+    @plan = Plan.new
+    @plan.job_id = params[:job_id]
+    @plan.tab = params[:tab]
 
     authorize! :create, @plan
 

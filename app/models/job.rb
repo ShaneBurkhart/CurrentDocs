@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  attr_accessible :name, :user_id, :is_archived
+  attr_accessible :name, :is_archived
 
   belongs_to :user
   has_many :all_plans, class_name: "Plan", foreign_key: "job_id"
@@ -10,6 +10,15 @@ class Job < ActiveRecord::Base
   validate :check_for_duplicate_name_for_user
 
   before_destroy :destroy_plans
+
+  # We're adding these because #plans.build adds the unsaved record
+  # to plan when we are just using it to check CanCan permissions.
+  def new_plan(tab)
+    p = Plan.new
+    p.job_id = self.id
+    p.tab = tab
+    return p
+  end
 
   private
 

@@ -25,4 +25,14 @@ RSpec.describe User, :type => :model do
     it { expect(user.owner?).to be(true) }
     it { expect(user.share_link?).to be(false) }
   end
+
+  describe "#new_share_link" do
+    it { expect(user.new_share_link).to be_a(ShareLink) }
+    it { expect(user.new_share_link.user_id).to eq(user.id) }
+  end
+
+  describe "#new_job" do
+    it { expect(user.new_job).to be_a(Job) }
+    it { expect(user.new_job.user_id).to eq(user.id) }
+  end
 end

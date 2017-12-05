@@ -1,5 +1,5 @@
 class PlanTabPermission < ActiveRecord::Base
-  attr_accessible :tab, :job_permission_id, :can_create, :can_update, :can_destroy
+  attr_accessible :can_create, :can_update, :can_destroy
 
   belongs_to :job_permission
 

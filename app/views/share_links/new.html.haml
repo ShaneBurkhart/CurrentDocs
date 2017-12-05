@@ -17,7 +17,9 @@
 
         %br
 
-        - if !current_user.share_links.empty?
+        - # We check for job because we select an existing share link only if
+        - # we are sharing from a job.
+        - if !@job.nil? and !current_user.share_links.empty?
           %h3 Or select an existing share link
 
           = form_tag form_url, method: :post do

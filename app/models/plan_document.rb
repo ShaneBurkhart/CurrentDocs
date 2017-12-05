@@ -1,6 +1,4 @@
 class PlanDocument < ActiveRecord::Base
-  attr_accessible :plan_id, :is_current
-
   belongs_to :plan
   has_one :document, as: :document_association
 

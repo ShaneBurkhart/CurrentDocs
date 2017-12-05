@@ -59,8 +59,8 @@ RSpec.describe JobPermission, :type => :model do
       before(:all) do
         @tab = 'addendums'
         @job_permission.plan_tab_permissions.destroy_all
-        @plan_tab_permission = PlanTabPermission.create(
-          tab: @tab, job_permission_id: @job_permission.id
+        @plan_tab_permission = create(
+          :plan_tab_permission, tab: @tab, job_permission_id: @job_permission.id
         )
       end
 

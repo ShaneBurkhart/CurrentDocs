@@ -27,15 +27,11 @@ class JobPermission < ActiveRecord::Base
     ).first
 
     if tab_permission.nil?
-      if should_save
-        tab_permission = tab_permission_class.create(
-          tab: tab, job_permission_id: self.id
-        )
-      else
-        tab_permission = tab_permission_class.new(
-          tab: tab, job_permission_id: self.id
-        )
-      end
+      tab_permission = tab_permission_class.new
+      tab_permission.tab = tab
+      tab_permission.job_permission_id = self.id
+
+      tab_permission.save if should_save
     end
 
     return tab_permission
@@ -69,9 +65,10 @@ class JobPermission < ActiveRecord::Base
       ).first
 
       if plan_tab_permission.nil?
-        plan_tab_permission = PlanTabPermission.create(
-          tab: tab, job_permission_id: self.id
-        )
+        plan_tab_permission = PlanTabPermission.new
+        plan_tab_permission.tab = tab
+        plan_tab_permission.job_permission_id = self.id
+        plan_tab_permission.save
       end
 
       success = success && plan_tab_permission.update_permissions(permissions)

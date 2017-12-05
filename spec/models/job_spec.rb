@@ -28,4 +28,10 @@ RSpec.describe Job, :type => :model do
   describe "#addendums" do
     it { expect(job.addendums).to all(have_attributes(tab: "addendums")) }
   end
+
+  describe "#new_plan" do
+    it { expect(job.new_plan('plans')).to be_a(Plan) }
+    it { expect(job.new_plan('addendums').job_id).to eq(job.id) }
+    it { expect(job.new_plan('addendums').tab).to eq('addendums') }
+  end
 end

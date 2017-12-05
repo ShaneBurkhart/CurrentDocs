@@ -22,4 +22,18 @@ class User < ActiveRecord::Base
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
+
+  # We're adding these because #share_links.build adds the  unsaved record
+  # to share_links when we are just using it to check CanCan permissions.
+  def new_share_link
+    s = ShareLink.new
+    s.user_id = self.id
+    return s
+  end
+
+  def new_job
+    j = Job.new
+    j.user_id = self.id
+    return j
+  end
 end

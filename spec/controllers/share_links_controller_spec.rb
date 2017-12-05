@@ -61,6 +61,8 @@ RSpec.describe ShareLinksController, :type => :controller do
         ] }
 
         it { expect(assigns(:share_link)).to eq(share_link) }
+        it { expect(assigns(:unshared_jobs)).to all(be_a(Job)) }
+
         it "excludes shared jobs from @unshared_jobs" do
           jobs_to_exclude = share_link.permissions.job_permissions.map do |jp|
             jp.job

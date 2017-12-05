@@ -12,10 +12,8 @@ class DocumentController < ApplicationController
 
   def upload
     # TODO Add expiration for uploaded files that aren't associated later.
-    # Upload attachments to s3 and add to redis with expiration. On create
-    # plan association (PlanDocument, etc), we fetch the attachments from
-    # redis from hidden inputs. When record expires, we remove s3 file.
-    # Remove record manually when used.
+    # We upload to S3 and create a Document for the upload. We then send the id
+    # back to the form which gets added to the plan when form is submitted.
     s3 = AWS::S3.new
     files = params["files"]
     # Make sure files is an multi file hash even when only uploading one file.

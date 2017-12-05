@@ -3,7 +3,7 @@ class Plan < ActiveRecord::Base
   # - JobPermissionsController#edit
   TABS = ["plans", "addendums"]
 
-  attr_accessible :job_id, :name, :order_num, :tab
+  attr_accessible :name
 
   belongs_to :job
 
@@ -49,7 +49,9 @@ class Plan < ActiveRecord::Base
       end
     end
 
-    current_doc = PlanDocument.new(plan_id: self.id, is_current: true)
+    current_doc = PlanDocument.new
+    current_doc.is_current = true
+    current_doc.plan_id = self.id
 
     if !current_doc.save
       errors.add(:document, "couldn't be set to current document")

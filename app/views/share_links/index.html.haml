@@ -5,6 +5,11 @@
         %h2 Share Links
 
     .row
+      .col-md-6
+        - if current_user.can? :create, current_user.new_share_link
+          = link_to "Create Share Link", new_share_link_path, class: "button button-green"
+
+    .row
       .col-md-12
         .table-responsive
           %table.table.table-hover
