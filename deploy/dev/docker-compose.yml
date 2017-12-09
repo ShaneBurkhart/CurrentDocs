@@ -4,8 +4,8 @@ web:
         - "3000:3000"
     links:
         - pg
+        - mailcatcher
         #- redis
-        #- mailcatcher
     volumes:
         - ../../app:/app/app
         - ../../spec:/app/spec
@@ -14,11 +14,11 @@ web:
     env_file:
         - ../../user.env
 
-#mailcatcher:
-    #image: shaneburkhart/currentdocs:dev
-    #ports:
-        #- "1080:1080"
-    #command: "mailcatcher --ip=0.0.0.0"
+mailcatcher:
+    image: shaneburkhart/currentdocs:dev
+    ports:
+        - "1080:1080"
+    command: "mailcatcher --http-ip=0.0.0.0 --smtp-ip=0.0.0.0"
 
 pg:
     image: postgres
