@@ -46,6 +46,13 @@ RSpec.describe "ShareLink Permissions for", :type => :model do
     return { jobs: jobs_permissions_hash }
   end
 
+  describe "User" do
+    it { expect(share_link).not_to be_able_to(:read, share_link.user) }
+    it { expect(share_link).not_to be_able_to(:create, share_link.user) }
+    it { expect(share_link).not_to be_able_to(:update, share_link.user) }
+    it { expect(share_link).not_to be_able_to(:destroy, share_link.user) }
+  end
+
   describe "ShareLink" do
     # Index
     it { expect(share_link).not_to be_able_to(:read_multiple, share_link) }

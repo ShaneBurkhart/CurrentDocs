@@ -54,6 +54,9 @@ class Ability
   end
 
   def user_permissions(user)
+    # Can update their own User
+    can :update, User, id: user.id
+
     # Can manage share_links that belong to them
     can :crud, ShareLink, user_id: user.id
 

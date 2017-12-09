@@ -26,6 +26,22 @@ RSpec.describe "User Permissions for", :type => :model do
     @not_my_job = @not_my_jobs.first
   end
 
+  describe "User" do
+    context "when the user is me" do
+      it { expect(user).not_to be_able_to(:read, user) }
+      it { expect(user).not_to be_able_to(:create, user) }
+      it { expect(user).to be_able_to(:update, user) }
+      it { expect(user).not_to be_able_to(:destroy, user) }
+    end
+
+    context "when the user is not me" do
+      it { expect(user).not_to be_able_to(:read, not_me_user) }
+      it { expect(user).not_to be_able_to(:create, not_me_user) }
+      it { expect(user).not_to be_able_to(:update, not_me_user) }
+      it { expect(user).not_to be_able_to(:destroy, not_me_user) }
+    end
+  end
+
   describe "Job" do
     # Index
     it { expect(user).to be_able_to(:read_multiple, jobs) }
