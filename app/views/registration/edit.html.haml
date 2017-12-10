@@ -1,0 +1,35 @@
+.container
+  .row
+    .col-md-4.col-md-offset-4
+      %h2 Update Your Account
+
+      = form_for current_user, url: user_registration_path do |f|
+        = devise_error_messages!
+
+        .form-group
+          = f.label :first_name, class: "control-label"
+          = f.text_field :first_name, class: "form-control"
+
+        .form-group
+          = f.label :last_name, class: "control-label"
+          = f.text_field :last_name, class: "form-control"
+
+        .form-group
+          = f.label :password, class: "control-label"
+          = f.password_field :password, class: "form-control"
+
+        .form-group
+          = f.label :password_confirmation, class: "control-label"
+          = f.password_field :password_confirmation, class: "form-control"
+
+        - current_password_errors = current_user.errors.messages[:current_password]
+        .form-group{ class: current_password_errors.nil? ? "" : "has-error" }
+          = f.label :current_password, class: "control-label"
+          = f.password_field :current_password, class: "form-control"
+
+          - if !current_password_errors.nil?
+            %label.control-label= "#{current_password_errors.join(' and ').capitalize}"
+
+        .form-group
+          = f.submit "Update", class: 'form-control btn-primary'
+
