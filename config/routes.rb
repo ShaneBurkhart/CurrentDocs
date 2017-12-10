@@ -2,6 +2,11 @@ PlanSource::Application.routes.draw do
   root :to => "home#index"
   devise_for :users
 
+  # TODO Let Devise handle registration with the :registerable module
+  # when we let users create their own account.
+  get '/user/registration/edit' => 'registration#edit', as: :edit_user_registration
+  put '/user/registration' => 'registration#update', as: :user_registration
+
   resources :jobs do
     resources :share_links, only: [:new, :create]
   end
