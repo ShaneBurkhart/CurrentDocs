@@ -9,11 +9,13 @@ end
 
 shared_examples "an authorized controller action" do
   before(:each) do
-    authorize_params = authorize_params || []
+    authorize_expectations = []
 
     # Backwards compatibility for how we were doing authorization params.
     if defined? can_action and defined? can_param
-      authorize_params.push({ action: can_action, param: can_param })
+      authorize_expectations.push({ action: can_action, param: can_param })
+    elsif defined? authorize_params
+      authorize_expectations = authorize_params
     end
 
     login
@@ -23,8 +25,8 @@ shared_examples "an authorized controller action" do
     # Allow let calls with overrides and allows
     overrides if defined? overrides
 
-    if !authorize_params.empty?
-      authorize_params.each do |params|
+    if !authorize_expectations.empty?
+      authorize_expectations.each do |params|
         expect(controller)
           .to receive(:authorize!).once
           .with(params[:action] || anything, params[:param] || anything)
