@@ -68,9 +68,14 @@
 .logo{
 	text-decoration: none;
 	color:black;
+
 	&:hover{
 		text-decoration: none;
 	}
+
+    img {
+        max-height: 30px;
+    }
 }
 
 .icon-huge{
