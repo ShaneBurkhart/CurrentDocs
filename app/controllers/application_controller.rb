@@ -9,7 +9,16 @@ class ApplicationController < ActionController::Base
       redirect_to jobs_path, :alert => exception.message
     end
 
-    def authenticate_user!
+    def authenticate_user!(options={})
+      # Check if current_user's class is in allows.  If not, then throw access
+      # denied since we have to be logged in to redirect.
+      if current_user
+        if !options[:allow].nil?
+          is_allowed = options[:allow].find { |a| current_user.class.name.underscore.to_sym == a }
+          raise CanCan::AccessDenied if !is_allowed
+        end
+      end
+
       # We don't need to authenticate user if current_share_link exists
       # and the user isn't logged in.
       return if current_share_link and !devise_current_user
