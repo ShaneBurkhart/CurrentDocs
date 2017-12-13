@@ -1,30 +1,30 @@
 %nav.navigation.navigation-dark
   .container
     .row
-      .col-12
-      %ul.pull-left
-        - if current_user
-          %li{ class: active_class(controller_name, "jobs") }
+      .col-xs-12
+        %ul.pull-left
+          - if current_user
+            %li{ class: active_class(controller_name, "jobs") }
+              - if current_user.share_link?
+                = link_to 'Shared Jobs', jobs_path
+              - else
+                = link_to 'My Jobs', jobs_path
+
+            - if current_user.owner?
+              %li{ class: active_class(controller_name, "share_links") }
+                = link_to 'Share Links', share_links_path
+
+        %ul.pull-right
+          - if current_user
             - if current_user.share_link?
-              = link_to 'Shared Jobs', jobs_path
+              %li= link_to "Logout (Share Link)", destroy_user_session_path, :method=>'delete'
             - else
-              = link_to 'My Jobs', jobs_path
+              %li= link_to "My Account (#{current_user.full_name})", edit_user_registration_path
+              %li= link_to "Logout", destroy_user_session_path, :method=>'delete'
 
-          - if current_user.owner?
-            %li{ class: active_class(controller_name, "share_links") }
-              = link_to 'Share Links', share_links_path
-
-      %ul.pull-right
-        - if current_user
-          - if current_user.share_link?
-            %li= link_to "Logout (Share Link)", destroy_user_session_path, :method=>'delete'
           - else
-            %li= link_to "My Account (#{current_user.full_name})", edit_user_registration_path
-            %li= link_to "Logout", destroy_user_session_path, :method=>'delete'
-
-        - else
-          %li{ class: active_class("#{controller_name}##{action_name}", "sessions#new") }
-            = link_to 'Login', new_user_session_path
+            %li{ class: active_class("#{controller_name}##{action_name}", "sessions#new") }
+              = link_to 'Login', new_user_session_path
 
 
 .brand-container
