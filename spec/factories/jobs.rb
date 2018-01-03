@@ -2,6 +2,7 @@ require 'faker'
 
 FactoryBot.define do
   factory :job do
+    team { create(:team) }
     user { create(:user) }
     name { Faker::Address.street_address }
     is_archived false

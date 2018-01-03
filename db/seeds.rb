@@ -1,5 +1,9 @@
 require 'faker'
 
+@team = Team.create(
+  name: Faker::Company.name
+)
+
 @viewer = User.new(
   email: "viewer@plansource.io",
   password: "password",
@@ -23,6 +27,10 @@ require 'faker'
   last_name: Faker::Name.last_name,
 })
 @user.save
+
+@team.add_user(@viewer)
+@team.add_user(@manager)
+@team.add_user(@user)
 
 def create_plans_for_job(job)
   (1..20).each do |i|
@@ -51,6 +59,7 @@ end
     name: Faker::Address.street_address,
     is_archived: [true, false].sample,
   )
+  job.team_id = @team.id
   job.user_id = @user.id
   job.save
 

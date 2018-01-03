@@ -8,10 +8,12 @@ RSpec.describe ShareLink, :type => :model do
     @share_link = create(:share_link, :with_job_permissions)
   end
 
+  it { expect(subject).to belong_to(:team) }
   it { expect(subject).to belong_to(:user) }
 
   describe "validations" do
     it { expect(subject).to validate_presence_of(:name) }
+    it { expect(subject).to validate_presence_of(:team_id) }
     it { expect(subject).to validate_presence_of(:user_id) }
 
     it "should check for duplicate name for user" do

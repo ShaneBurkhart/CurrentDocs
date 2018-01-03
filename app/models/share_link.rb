@@ -3,10 +3,11 @@ class ShareLink < ActiveRecord::Base
 
   attr_accessible :name
 
+  belongs_to :team
   belongs_to :user
   has_one :permissions, as: :authenticatable
 
-  validates :name, :user_id, presence: true
+  validates :name, :team_id, :user_id, presence: true
   validate :check_for_duplicate_name_for_user
 
   before_validation :create_token, unless: :token

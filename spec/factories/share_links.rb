@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :share_link do
     name { Faker::Name.name }
+    team { create(:team) }
     user { create(:user) }
 
     transient do

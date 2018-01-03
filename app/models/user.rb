@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :open_jobs, class_name: "Job", foreign_key: "user_id", conditions: { is_archived: false }
   has_many :archived_jobs, class_name: "Job", foreign_key: "user_id", conditions: { is_archived: true }
 
+  has_many :team_users
+  has_many :teams, through: :team_users
   has_many :share_links
 
   devise :database_authenticatable, :trackable, :validatable, :recoverable

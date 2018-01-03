@@ -8,6 +8,8 @@ RSpec.describe User, :type => :model do
   it { expect(subject).to have_many(:jobs) }
   it { expect(subject).to have_many(:open_jobs).conditions(is_archived: false) }
   it { expect(subject).to have_many(:archived_jobs).conditions(is_archived: true) }
+  it { expect(subject).to have_many(:team_users) }
+  it { expect(subject).to have_many(:teams).through(:team_users) }
   it { expect(subject).to have_many(:share_links) }
 
   describe "validations" do

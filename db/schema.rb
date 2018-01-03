@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171124192325) do
+ActiveRecord::Schema.define(:version => 20180103190528) do
 
   create_table "documents", :force => true do |t|
     t.string   "original_filename",         :null => false
@@ -43,9 +43,11 @@ ActiveRecord::Schema.define(:version => 20171124192325) do
     t.integer  "user_id",                        :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "team_id",                        :null => false
   end
 
   add_index "jobs", ["is_archived"], :name => "index_jobs_on_is_archived"
+  add_index "jobs", ["team_id"], :name => "index_jobs_on_team_id"
   add_index "jobs", ["user_id"], :name => "index_jobs_on_user_id"
 
   create_table "permissions", :force => true do |t|
@@ -96,10 +98,29 @@ ActiveRecord::Schema.define(:version => 20171124192325) do
     t.integer  "user_id",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "team_id",    :null => false
   end
 
+  add_index "share_links", ["team_id"], :name => "index_share_links_on_team_id"
   add_index "share_links", ["token"], :name => "index_share_links_on_token", :unique => true
   add_index "share_links", ["user_id"], :name => "index_share_links_on_user_id"
+
+  create_table "team_users", :force => true do |t|
+    t.integer  "team_id",                       :null => false
+    t.integer  "user_id",                       :null => false
+    t.boolean  "is_owner",   :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "team_users", ["team_id"], :name => "index_team_users_on_team_id"
+  add_index "team_users", ["user_id"], :name => "index_team_users_on_user_id"
+
+  create_table "teams", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
