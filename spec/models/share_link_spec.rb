@@ -30,8 +30,7 @@ RSpec.describe ShareLink, :type => :model do
   end
 
   describe "roles" do
-    # We don't have shared users yet so all Users are owners.
-    it { expect(share_link.owner?).to be(false) }
+    it { expect(share_link.user?).to be(false) }
     it { expect(share_link.share_link?).to be(true) }
   end
 

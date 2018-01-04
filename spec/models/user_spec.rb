@@ -23,8 +23,7 @@ RSpec.describe User, :type => :model do
   end
 
   describe "roles" do
-    # We don't have shared users yet so all Users are owners.
-    it { expect(user.owner?).to be(true) }
+    it { expect(user.user?).to be(true) }
     it { expect(user.share_link?).to be(false) }
   end
 

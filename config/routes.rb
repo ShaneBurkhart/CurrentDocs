@@ -1,4 +1,6 @@
 PlanSource::Application.routes.draw do
+  get "teams/index"
+
   root :to => "home#index"
   devise_for :users
 

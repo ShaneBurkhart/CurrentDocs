@@ -16,4 +16,8 @@ class Team < ActiveRecord::Base
     team_user.user_id = user.id
     team_user.save
   end
+
+  def is_user(user)
+    return self.users.include?(user)
+  end
 end

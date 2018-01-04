@@ -9,6 +9,10 @@ class ApplicationController < ActionController::Base
       redirect_to jobs_path, :alert => exception.message
     end
 
+    def ensure_team_selected
+      return if session[]
+    end
+
     def authenticate_user!(options={})
       # Check if current_user's class is in allows.  If not, then throw access
       # denied since we have to be logged in to redirect.

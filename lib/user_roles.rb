@@ -1,6 +1,5 @@
 module UserRoles
-  def owner?
-    # We don't have shared users yet so any User is an owner.
+  def user?
     return self.is_a?(User)
   end
 
