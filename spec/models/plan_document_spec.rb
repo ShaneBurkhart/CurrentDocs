@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: plan_documents
+#
+#  id         :integer          not null, primary key
+#  plan_id    :integer          not null
+#  is_current :boolean          default(FALSE), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_plan_documents_on_is_current  (is_current)
+#  index_plan_documents_on_plan_id     (plan_id)
+#
+
 require 'rails_helper'
 
 RSpec.describe PlanDocument, :type => :model do

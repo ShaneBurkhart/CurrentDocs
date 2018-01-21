@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: job_permissions
+#
+#  id             :integer          not null, primary key
+#  job_id         :integer          not null
+#  permissions_id :integer          not null
+#  can_update     :boolean          default(FALSE)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#
+# Indexes
+#
+#  index_job_permissions_on_job_id          (job_id)
+#  index_job_permissions_on_permissions_id  (permissions_id)
+#
+
 require 'rails_helper'
 
 RSpec.describe JobPermission, :type => :model do

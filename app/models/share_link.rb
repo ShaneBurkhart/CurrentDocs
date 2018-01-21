@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: share_links
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
+#  token      :string(255)      not null
+#  user_id    :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_share_links_on_token    (token) UNIQUE
+#  index_share_links_on_user_id  (user_id)
+#
+
 class ShareLink < ActiveRecord::Base
   include UserRoles
 

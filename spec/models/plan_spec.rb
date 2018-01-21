@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: plans
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)      not null
+#  tab        :string(255)      not null
+#  job_id     :integer          not null
+#  order_num  :integer          not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_plans_on_job_id     (job_id)
+#  index_plans_on_order_num  (order_num)
+#  index_plans_on_tab        (tab)
+#
+
 require 'rails_helper'
 
 RSpec.describe Plan, :type => :model do

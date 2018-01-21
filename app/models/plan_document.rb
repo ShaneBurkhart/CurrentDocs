@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: plan_documents
+#
+#  id         :integer          not null, primary key
+#  plan_id    :integer          not null
+#  is_current :boolean          default(FALSE), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_plan_documents_on_is_current  (is_current)
+#  index_plan_documents_on_plan_id     (plan_id)
+#
+
 class PlanDocument < ActiveRecord::Base
   belongs_to :plan
   has_one :document, as: :document_association

@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id                   :integer          not null, primary key
+#  authenticatable_id   :integer
+#  authenticatable_type :string(255)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#
+
 FactoryBot.define do
   factory :permissions, class: 'Permissions' do
     authenticatable { create(:share_link) }
