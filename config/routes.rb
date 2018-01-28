@@ -1,4 +1,8 @@
 PlanSource::Application.routes.draw do
+  get "team/view"
+
+  get "team/edit"
+
   root :to => "home#index"
   devise_for :users
 

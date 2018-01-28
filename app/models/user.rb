@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_many :jobs
   has_many :open_jobs, class_name: "Job", foreign_key: "user_id", conditions: { is_archived: false }
   has_many :archived_jobs, class_name: "Job", foreign_key: "user_id", conditions: { is_archived: true }
+  belongs_to :team
 
   has_many :share_links
 
