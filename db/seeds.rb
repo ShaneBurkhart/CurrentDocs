@@ -23,6 +23,14 @@ require 'faker'
   last_name: Faker::Name.last_name,
 })
 @user.save
+# Create user team if none exists.
+if @user.team.nil?
+  @team = Team.new
+  @team.name = 'CurrentDocs Hackers'
+  @team.save
+  @user.team = @team
+  @user.save
+end
 
 def create_plans_for_job(job)
   (1..20).each do |i|
