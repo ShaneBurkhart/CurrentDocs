@@ -29,6 +29,7 @@
 class User < ActiveRecord::Base
   include UserRoles
 
+  # TODO(rzendacott) Remove password and conf from attr_accessible? Maybe.
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation
 
   has_many :jobs

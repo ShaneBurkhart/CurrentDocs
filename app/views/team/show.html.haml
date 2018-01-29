@@ -5,5 +5,23 @@
         %h2
           Team Overview -
           = @team.name
+    .row
+      .col-md-12
+        .table-responsive
+        %table.table.table-hover
+          %thead
+            %th Email
+            %th First Name
+            %th Last Name
+            %th Role / Permissions
+            -# TODO(rzendacott) Popup here to explain permissions?
 
+          %tbody
+            - @team.users.each do |user|
+              %tr
+                %td= user.email
+                %td= user.first_name
+                %td= user.last_name
+                %td role dropdown
+                -# TODO(rzendacott) Delete button, save changes button, cancel button, add user button.
 
