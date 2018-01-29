@@ -1,10 +1,9 @@
 PlanSource::Application.routes.draw do
-  get "team/view"
-
-  get "team/edit"
-
   root :to => "home#index"
   devise_for :users
+
+  get 'team/' => 'team#show'
+  post "team/" => 'team#update'
 
   # TODO Let Devise handle registration with the :registerable module
   # when we let users create their own account.
